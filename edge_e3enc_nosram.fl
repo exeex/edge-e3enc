@@ -1,0 +1,2 @@
+-f src/edge-e3enc/edge_rv64_public.fl
+src/edge-e3enc/edge_e3enc.v

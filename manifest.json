@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "top": "edge_core_top",
+  "soc_core_module": "edge_core_debug",
+  "private_rtl_inputs": 46,
+  "private_sram_inputs": 4,
+  "public_rtl_inputs": 44,
+  "public_sram_inputs": 5,
+  "semantic_symbols": 4522,
+  "obfuscated_symbols": 3692,
+  "public_symbols": 1710,
+  "source_warning_count": 175,
+  "mixed_warning_count": 180,
+  "soc_warning_count": 147,
+  "salt_sha256": "38ee42f41e1b2025d2658fac6a7a0c0cdc46bed166cd5ea7c4c342342a55da35",
+  "public_root": "src/edge-rv64",
+  "private_root": "src/edge-e3"
+}
