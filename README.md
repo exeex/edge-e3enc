@@ -1,7 +1,9 @@
 # Generated edge-e3 RTL
 
 `edge_e3enc.v` and `edge_e3enc_sram.v` contain only obfuscated private edge-e3 RTL.
-`edge_rv64_public.fl` lists the unchanged open RV64 RTL. Use `edge_e3enc_mixed.fl` for the complete design, or combine the private RTL with target-specific SRAM models/replacements for FPGA/OpenROAD.
+`edge_rv_public.fl` lists the unchanged open RV64 RTL from `src/edge-rv`.
+Use `edge_e3enc_mixed.fl` for the complete design, or combine the encrypted RTL
+with target-specific SRAM models/replacements for FPGA/OpenROAD.
 
 The obfuscated edge-e3 RTL is distributed under the edge-e3 Hardware License in `LICENSE.md`.
 
