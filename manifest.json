@@ -13,6 +13,6 @@
   "mixed_warning_count": 180,
   "soc_warning_count": 147,
   "salt_sha256": "38ee42f41e1b2025d2658fac6a7a0c0cdc46bed166cd5ea7c4c342342a55da35",
-  "public_root": "src/edge-rv64",
+  "public_root": "src/edge-rv",
   "private_root": "src/edge-e3"
 }
