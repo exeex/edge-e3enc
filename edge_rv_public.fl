@@ -48,3 +48,4 @@ src/edge-rv/edge_dcache/rtl/edge_dcache_banked_data_array.v
 src/edge-rv/edge_dcache/rtl/edge_dcache_tag_array.v
 src/edge-rv/edge_dcache/rtl/edge_dcache_dirty_array.v
 src/edge-rv/edge_pc_redirect_ctrl/edge_pc_redirect_ctrl.v
+src/edge-rv/edge_biu/edge_biu_top.v
