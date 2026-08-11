@@ -452,6 +452,418 @@ module x781447dc8ea689ec #(
 endmodule
 
 
+module xb485a9f3b65691fd (
+  input  wire        clk,
+  input  wire        xc33b352aafa3d245,
+  input  wire        x74c0d78af745a25a,
+  output wire        x1eae06400be9ae01,
+  input  wire [63:0] x9de335eb005dcb34,
+  input  wire [63:0] x22ba05321e93915c,
+  output wire        cmd_valid,
+  input  wire        cmd_ready,
+  output wire [63:0] x2b006793f4ba7037,
+  output wire        cmd_capture_valid,
+  output wire [63:0] cmd_capture_value,
+  input  wire        x4d26a56e6173b27c,
+  input  wire        x2c22d1b8912de3c6,
+  input  wire [63:0] x50f1034748e881f3,
+  output reg         x6788c74469d1d8fe,
+  output reg         x0f37dd3cd17e48f6,
+  output reg  [63:0] x26f114d64a2ebc83
+);
+  wire x0b96d5a463b43c5a = cmd_valid && cmd_ready;
+
+  assign cmd_valid = x74c0d78af745a25a && !x6788c74469d1d8fe;
+  assign x1eae06400be9ae01 = cmd_ready && !x6788c74469d1d8fe;
+  assign x2b006793f4ba7037 = x9de335eb005dcb34;
+  assign cmd_capture_valid = 1'b1;
+  assign cmd_capture_value = x22ba05321e93915c;
+
+  always @(posedge clk or negedge xc33b352aafa3d245) begin
+    if (!xc33b352aafa3d245) begin
+      x6788c74469d1d8fe <= 1'b0;
+      x0f37dd3cd17e48f6 <= 1'b0;
+      x26f114d64a2ebc83 <= 64'b0;
+    end else begin
+      x6788c74469d1d8fe <= x0b96d5a463b43c5a;
+      if (x0b96d5a463b43c5a) begin
+        x0f37dd3cd17e48f6 <= x4d26a56e6173b27c;
+        x26f114d64a2ebc83 <= x2c22d1b8912de3c6 ? x50f1034748e881f3 : 64'b0;
+      end
+    end
+  end
+endmodule
+
+
+module xea9a93b12a75edfe (
+  input wire clk,input wire xc33b352aafa3d245,
+  input wire [39:0] mem_region_base,input wire [39:0] mem_region_mask,
+  input wire mem_region_enable,input wire x74c0d78af745a25a,output wire x1eae06400be9ae01,
+  input wire [63:0] x9de335eb005dcb34,input wire [63:0] x22ba05321e93915c,
+  output wire x6788c74469d1d8fe,output wire x0f37dd3cd17e48f6,output wire [63:0] x26f114d64a2ebc83,
+  input wire dma_start_ready,input wire dma_start_circular_ready,
+  input wire dma_sync_done,
+  input wire tensor_cmd_ready,input wire tensor_start_ready,
+  input wire tensor_wld_cmd_ready,input wire tensor_sld_cmd_ready,
+  input wire tensor_wld_circular_ready,input wire tensor_wsld_circular_ready,
+  input wire tensor_sld_circular_ready,
+  input wire tensor_sync_stall,input wire actu_cmd_ready,
+  input wire actu_start_ready,input wire actu_sync_stall,
+  input wire cmpu_cmd_ready,input wire cmpu_start_ready,input wire cmpu_sync_stall,
+  input wire [31:0] actu_last_sum_bits,input wire [15:0] cmpu_max_value,
+  input wire [15:0] cmpu_argmax_idx,input wire [15:0] cmpu_min_value,
+  input wire [15:0] cmpu_argmin_idx,
+  output wire dma_start_req,output wire [63:0] dma_start_src,
+  output wire [63:0] dma_start_dst,output wire [31:0] dma_start_len,
+  output wire dma_start_circular_req,
+  output wire [31:0] dma_start_entry_bytes,
+  output wire [15:0] dma_start_circular_tiles,
+  output wire dma_start_use_xy,output wire dma_start_circular,
+  output wire [63:0] dma_start_x,output wire [63:0] dma_start_y,
+  output wire dma_sync_req,
+  output wire [3:0] cmd_setcsr_dtype,output wire cmd_setcsr_req,
+  output wire [3:0] cmd_setcsr_wtype,output wire [15:0] cmd_setin_ptr,
+  output wire cmd_setin_req,output wire cmd_setn_req,output wire [15:0] cmd_setn_value,
+  output wire [15:0] cmd_setout_ptr,output wire cmd_setout_req,
+  output wire [15:0] cmd_setpsum_ptr,output wire cmd_setpsum_req,
+  output wire cmd_start_req,output wire cmd_start_tile_req,
+  output wire [7:0] cmd_start_mode,output wire cmd_sync_req,
+  output wire [15:0] cmd_wld_ptr,output wire cmd_wld_req,
+  output wire cmd_wld_trans_req,output wire cmd_wld_reuse,
+  output wire cmd_wld_circular_req,
+  output wire [15:0] cmd_sld_ptr,output wire cmd_sld_req,output wire cmd_sld_reuse,
+  output wire [15:0] cmd_sld_stream_ptr,output wire cmd_sld_stream_req,
+  output wire cmd_wsld_circular_req,output wire cmd_wsld_circular_transpose,
+  output wire cmd_sld_circular_req,
+  output wire [3:0] actu_cmd_setcsr_dtype,output wire [3:0] actu_cmd_setcsr_mode,
+  output wire actu_cmd_setcsr_req,output wire [15:0] actu_cmd_setin_ptr,
+  output wire actu_cmd_setin_req,output wire actu_cmd_setn_req,
+  output wire [15:0] actu_cmd_setn_value,output wire [15:0] actu_cmd_setout_ptr,
+  output wire actu_cmd_setout_req,output wire actu_cmd_setscalar_req,
+  output wire [63:0] actu_cmd_setscalar_value,output wire actu_cmd_start_req,
+  output wire actu_cmd_sync_req,output wire [3:0] cmpu_cmd_setcsr_mode,
+  output wire cmpu_cmd_setcsr_req,output wire [15:0] cmpu_cmd_setlhs_ptr,
+  output wire cmpu_cmd_setlhs_req,output wire [15:0] cmpu_cmd_setrhs_ptr,
+  output wire cmpu_cmd_setrhs_req,output wire [15:0] cmpu_cmd_setmask_ptr,
+  output wire cmpu_cmd_setmask_req,output wire [15:0] cmpu_cmd_setout_ptr,
+  output wire cmpu_cmd_setout_req,output wire cmpu_cmd_setn_req,
+  output wire [15:0] cmpu_cmd_setn_value,output wire cmpu_cmd_start_req,
+  output wire cmpu_cmd_sync_req
+);
+  wire cmd_valid,cmd_ready,cmd_capture_valid,decode_illegal,x870a8efef558b2e3;
+  wire [63:0] x2b006793f4ba7037,cmd_capture_value,xdc5e74fb3cc3b0aa;
+  xb485a9f3b65691fd x566220eb1b59dd1c(
+    .clk(clk),.xc33b352aafa3d245(xc33b352aafa3d245),.x74c0d78af745a25a(x74c0d78af745a25a),.x1eae06400be9ae01(x1eae06400be9ae01),
+    .x9de335eb005dcb34(x9de335eb005dcb34),.x22ba05321e93915c(x22ba05321e93915c),.cmd_valid(cmd_valid),
+    .cmd_ready(cmd_ready),.x2b006793f4ba7037(x2b006793f4ba7037),.cmd_capture_valid(cmd_capture_valid),
+    .cmd_capture_value(cmd_capture_value),.x4d26a56e6173b27c(decode_illegal),
+    .x2c22d1b8912de3c6(x870a8efef558b2e3),.x50f1034748e881f3(xdc5e74fb3cc3b0aa),
+    .x6788c74469d1d8fe(x6788c74469d1d8fe),.x0f37dd3cd17e48f6(x0f37dd3cd17e48f6),.x26f114d64a2ebc83(x26f114d64a2ebc83));
+  /* verilator lint_off PINMISSING */
+  edge_accel_pipe xf964865cb4fb616d(
+    .forever_cpuclk(clk),.cpurst_b(xc33b352aafa3d245),.mem_region_base(mem_region_base),
+    .mem_region_mask(mem_region_mask),.mem_region_enable(mem_region_enable),
+    .cmd_valid(cmd_valid),.cmd_opcode8(8'b0),.cmd_imm8(8'b0),.cmd_inst64(x2b006793f4ba7037),
+    .cmd_seq_id(8'b0),.cmd_epoch(4'b0),.cmd_capture_valid(cmd_capture_valid),
+    .cmd_capture_value(cmd_capture_value),.dma_start_ready(dma_start_ready),
+    .dma_start_circular_ready(dma_start_circular_ready),.dma_sync_done(dma_sync_done),
+    .tensor_cmd_ready(tensor_cmd_ready),.tensor_start_ready(tensor_start_ready),
+    .tensor_wld_cmd_ready(tensor_wld_cmd_ready),.tensor_sld_cmd_ready(tensor_sld_cmd_ready),
+    .tensor_wld_circular_ready(tensor_wld_circular_ready),
+    .tensor_wsld_circular_ready(tensor_wsld_circular_ready),
+    .tensor_sld_circular_ready(tensor_sld_circular_ready),
+    .tensor_sync_stall(tensor_sync_stall),
+    .actu_cmd_ready(actu_cmd_ready),.actu_start_ready(actu_start_ready),
+    .actu_sync_stall(actu_sync_stall),.cmpu_cmd_ready(cmpu_cmd_ready),
+    .cmpu_start_ready(cmpu_start_ready),.cmpu_sync_stall(cmpu_sync_stall),
+    .actu_last_sum_bits(actu_last_sum_bits),.cmpu_max_value(cmpu_max_value),
+    .cmpu_argmax_idx(cmpu_argmax_idx),.cmpu_min_value(cmpu_min_value),
+    .cmpu_argmin_idx(cmpu_argmin_idx),.reverse_snapshot_write_ready(1'b1),
+    .cmd_ready(cmd_ready),.decode_illegal(decode_illegal),
+    .dma_start_req(dma_start_req),.dma_start_src(dma_start_src),
+    .dma_start_dst(dma_start_dst),.dma_start_len(dma_start_len),.dma_sync_req(dma_sync_req),
+    .dma_start_circular_req(dma_start_circular_req),
+    .dma_start_entry_bytes(dma_start_entry_bytes),
+    .dma_start_circular_tiles(dma_start_circular_tiles),
+    .dma_start_use_xy(dma_start_use_xy),.dma_start_circular(dma_start_circular),
+    .dma_start_x(dma_start_x),.dma_start_y(dma_start_y),
+    .cmd_setcsr_dtype(cmd_setcsr_dtype),.cmd_setcsr_req(cmd_setcsr_req),
+    .cmd_setcsr_wtype(cmd_setcsr_wtype),.cmd_setin_ptr(cmd_setin_ptr),
+    .cmd_setin_req(cmd_setin_req),.cmd_setn_req(cmd_setn_req),.cmd_setn_value(cmd_setn_value),
+    .cmd_setout_ptr(cmd_setout_ptr),.cmd_setout_req(cmd_setout_req),
+    .cmd_setpsum_ptr(cmd_setpsum_ptr),.cmd_setpsum_req(cmd_setpsum_req),
+    .cmd_start_req(cmd_start_req),.cmd_start_tile_req(cmd_start_tile_req),
+    .cmd_start_mode(cmd_start_mode),.cmd_sync_req(cmd_sync_req),
+    .cmd_wld_ptr(cmd_wld_ptr),.cmd_wld_req(cmd_wld_req),
+    .cmd_wld_circular_req(cmd_wld_circular_req),
+    .cmd_wld_trans_req(cmd_wld_trans_req),.cmd_wld_reuse(cmd_wld_reuse),
+    .cmd_sld_ptr(cmd_sld_ptr),.cmd_sld_req(cmd_sld_req),.cmd_sld_reuse(cmd_sld_reuse),
+    .cmd_sld_stream_ptr(cmd_sld_stream_ptr),.cmd_sld_stream_req(cmd_sld_stream_req),
+    .cmd_wsld_circular_req(cmd_wsld_circular_req),
+    .cmd_wsld_circular_transpose(cmd_wsld_circular_transpose),
+    .cmd_sld_circular_req(cmd_sld_circular_req),
+    .actu_cmd_setcsr_dtype(actu_cmd_setcsr_dtype),.actu_cmd_setcsr_mode(actu_cmd_setcsr_mode),
+    .actu_cmd_setcsr_req(actu_cmd_setcsr_req),.actu_cmd_setin_ptr(actu_cmd_setin_ptr),
+    .actu_cmd_setin_req(actu_cmd_setin_req),.actu_cmd_setn_req(actu_cmd_setn_req),
+    .actu_cmd_setn_value(actu_cmd_setn_value),.actu_cmd_setout_ptr(actu_cmd_setout_ptr),
+    .actu_cmd_setout_req(actu_cmd_setout_req),.actu_cmd_setscalar_req(actu_cmd_setscalar_req),
+    .actu_cmd_setscalar_value(actu_cmd_setscalar_value),.actu_cmd_start_req(actu_cmd_start_req),
+    .actu_cmd_sync_req(actu_cmd_sync_req),.cmpu_cmd_setcsr_mode(cmpu_cmd_setcsr_mode),
+    .cmpu_cmd_setcsr_req(cmpu_cmd_setcsr_req),.cmpu_cmd_setlhs_ptr(cmpu_cmd_setlhs_ptr),
+    .cmpu_cmd_setlhs_req(cmpu_cmd_setlhs_req),.cmpu_cmd_setrhs_ptr(cmpu_cmd_setrhs_ptr),
+    .cmpu_cmd_setrhs_req(cmpu_cmd_setrhs_req),.cmpu_cmd_setmask_ptr(cmpu_cmd_setmask_ptr),
+    .cmpu_cmd_setmask_req(cmpu_cmd_setmask_req),.cmpu_cmd_setout_ptr(cmpu_cmd_setout_ptr),
+    .cmpu_cmd_setout_req(cmpu_cmd_setout_req),.cmpu_cmd_setn_req(cmpu_cmd_setn_req),
+    .cmpu_cmd_setn_value(cmpu_cmd_setn_value),.cmpu_cmd_start_req(cmpu_cmd_start_req),
+    .cmpu_cmd_sync_req(cmpu_cmd_sync_req),.reverse_snapshot_write_valid(x870a8efef558b2e3),
+    .reverse_snapshot_write_value(xdc5e74fb3cc3b0aa));
+  /* verilator lint_on PINMISSING */
+endmodule
+
+
+module xb397b39547a7541e #(
+  parameter x9cc3f416666cb94a=40,parameter AXI_DATA_WIDTH=128,
+  parameter AXI_ID_WIDTH=8,parameter AXI_LEN_WIDTH=8
+)(
+  input wire forever_cpuclk,input wire cpurst_b,
+  input wire [x9cc3f416666cb94a-1:0] mem_region_base,input wire [x9cc3f416666cb94a-1:0] mem_region_mask,
+  input wire mem_region_enable,input wire x74c0d78af745a25a,output wire x1eae06400be9ae01,
+  input wire [63:0] x9de335eb005dcb34,input wire [63:0] x22ba05321e93915c,
+  output wire x6788c74469d1d8fe,output wire x0f37dd3cd17e48f6,output wire [63:0] x26f114d64a2ebc83,
+  input wire [13:0] x0e5a4e5909945f64,input wire xa19e6d071ff22e5a,input wire x3582c14df66f2c5f,
+  input wire [63:0] x0653869c426add10,input wire [7:0] x55630933c4e2398f,
+  output wire [63:0] x598d194db1cb59dc,output wire x6eab096bb2c19391,output wire xff2f4834028f86e6,
+  output wire [x9cc3f416666cb94a-1:0] x802803e7ead5247b,output wire [1:0] x901207c39f775ab8,
+  output wire [3:0] x68ffd7d46c2d5021,output wire [AXI_ID_WIDTH-1:0] x8c329ae65d3cd957,
+  output wire [AXI_LEN_WIDTH-1:0] xfe785dca32e92250,output wire x5aeca9ae86773fdc,
+  output wire [2:0] xa5f3e197b0da77e5,output wire [2:0] xfaddab98f3f06e52,
+  output wire xe8820d254f2f494b,input wire xd96635669c231555,
+  input wire [AXI_DATA_WIDTH-1:0] x3f67a3584cd34e9d,input wire xd592875998405809,
+  output wire x7fdd80e8aff1d0f0,input wire x05c7b73691e8d963,
+  output wire [x9cc3f416666cb94a-1:0] xa379a9b650733b9f,output wire [1:0] x0802e9220ddc6c66,
+  output wire [3:0] x5f51f7970a85dba6,output wire [AXI_ID_WIDTH-1:0] x03581ad5b12629ed,
+  output wire [AXI_LEN_WIDTH-1:0] x3a06cb80249a9ace,output wire xe09cbf088a5ea075,
+  output wire [2:0] x785edd59dfa0dcff,output wire [2:0] xfbc98c3ce96fc504,
+  output wire x92524d9afffe9f82,input wire x374e22e8fac3dcbf,input wire x282701f64e2f28bc,
+  output wire xb8c0f5e802c7913c,output wire [AXI_DATA_WIDTH-1:0] x87bf240fa7665e15,
+  output wire x3ccdd9cf75d96f03,input wire x61dfa30c37be308a,
+  output wire [(AXI_DATA_WIDTH/8)-1:0] x7e9eb6aef75e284f,output wire x0831131230695c38,
+  output wire x08b751660a1349d1,output wire x62781c70da108b0f,output wire x2ad775b79fb89b98,output wire x146a4fec530c3c75
+);
+  wire [3:0] x54cdede8c42d1ae4,x037e49339c1ca5a4;
+  wire x514066028f08fc2a,x059ec12031447922,x50dd0f631e4673bf;
+  wire xc8e4d97293f61034,x20ef4b12c90ca6f7,xea10f86a506cb5dd;
+  wire x6a9c6af71b51aa5c,x47a26014700ff768,x8e0145cd7db1adf5;
+  wire xa360be4355aab627,x3593a42fd284a893,xda6ac29095382f7e;
+  wire x4314fc27898e1000,x3f0764341ee46421;
+  wire [15:0] x3b7817e0856f3c2a,x295ec7af42ad3d7f,x884ab95a5f8ef33d;
+  wire [15:0] x50b7642b3661b6ab,xb5f95e0c3d2dab74,xd6b62d28574606e8;
+  wire [15:0] x341dd8eb40f0e76a; wire [7:0] x908aa19ab8d7885e;
+  wire tensor_cmd_ready,tensor_start_ready,tensor_sync_stall;
+  wire x3908be0a049ddff3,x463c89d027af8120,x9a2bef20fdfa0953;
+  wire tensor_wld_cmd_ready,tensor_sld_cmd_ready;
+  wire tensor_wld_circular_ready,tensor_wsld_circular_ready;
+  wire tensor_sld_circular_ready;
+  wire xea5d726b74f362d6,x74ba3818ee09fe1a;
+  wire x1717ba5d108e5a7b,xc2dd65b731876ef6;
+  wire [15:0] x8f824afeb2fdbf9f,x31aa64f7f1786a48;
+  wire xcd60b9d9b2c1ec72,x96bea65d6b252aa6;
+  wire x5c45a47882fa134f,xedb0032dd496001b;
+  wire x5d1f20971f34a856,x32b703970cc90cb9;
+  wire [3:0] actu_cmd_setcsr_dtype,actu_cmd_setcsr_mode;
+  wire actu_cmd_setcsr_req,actu_cmd_setin_req,actu_cmd_setn_req;
+  wire actu_cmd_setout_req,actu_cmd_setscalar_req,actu_cmd_start_req,actu_cmd_sync_req;
+  wire [15:0] actu_cmd_setin_ptr,actu_cmd_setn_value,actu_cmd_setout_ptr;
+  wire [63:0] actu_cmd_setscalar_value; wire actu_cmd_ready,actu_start_ready,actu_sync_stall;
+  wire [31:0] actu_last_sum_bits;
+  wire [3:0] cmpu_cmd_setcsr_mode; wire cmpu_cmd_setcsr_req,cmpu_cmd_setlhs_req;
+  wire cmpu_cmd_setrhs_req,cmpu_cmd_setmask_req,cmpu_cmd_setout_req;
+  wire cmpu_cmd_setn_req,cmpu_cmd_start_req,cmpu_cmd_sync_req;
+  wire [15:0] cmpu_cmd_setlhs_ptr,cmpu_cmd_setrhs_ptr,cmpu_cmd_setmask_ptr;
+  wire [15:0] cmpu_cmd_setout_ptr,cmpu_cmd_setn_value;
+  wire cmpu_cmd_ready,cmpu_start_ready,cmpu_sync_stall;
+  wire [15:0] cmpu_max_value,cmpu_argmax_idx,cmpu_min_value,cmpu_argmin_idx;
+  wire dma_start_req,dma_start_circular_req,dma_sync_req;
+  wire [63:0] dma_start_src,dma_start_dst,dma_start_x,dma_start_y;
+  wire [31:0] dma_start_len,dma_start_entry_bytes;
+  wire [15:0] dma_start_circular_tiles;
+  wire dma_start_use_xy,dma_start_circular;
+  wire dma_start_ready,dma_start_circular_ready,dma_sync_done;
+  wire [x9cc3f416666cb94a-1:0] x129587f2bef78398,x36489e56cf717969;
+  wire [31:0] xa4493b9360c04cfe;
+  wire x3ecea58734b28935,x88e87f20747d392b;
+  wire x4ec324d969a6355e=1'b0;
+  wire [7:0] xab8ff766dd7ba0b2=8'b0; wire [3:0] x0e2bd18ccc859f22=4'b0;
+  wire x114890cf6729161e;
+  wire xf253e04eaeac629d; wire [x9cc3f416666cb94a-1:0] x736cc918b4bdb02d;
+  wire [15:0] xd295b6098abb3b77;
+  wire x92883ee9b6249820,x061b31851cbc5468,x602e9f658ee0a705;
+  wire [7:0] x189d2ad35fcf695b; wire [3:0] x63e00bbdff855562;
+  wire [4:0] xe0612209e186717b; wire xd3f9dbb53dd08b63;
+  wire xe1479181ae378b69,xc741cb8afdee49ee,xa98993e5edb54ae7;
+  wire [7:0] xb6a05cf7434e064a,xd9e1fd27e553d209;
+  wire [7:0] xde4e194cc36237d7,xcb294b623c354586;
+  wire [8:0] xa78cb01ac05cd327,x765d37f9a523ba74;
+  wire [8:0] x5c0ba6e78b16036d,x0a3888838542ca9b;
+  wire [3:0] x29eda94c03249438,xeec961acb94cf0c7;
+  wire [3:0] x9fa73fb41eff428e,x2c40f918c3755ca7;
+  wire xc8b540acf0bd8fad,x0db43aec62fb6e8d,xccafdf41d27a36de;
+  wire x339c6056beb99768;
+  reg x0827d96c800a6d86,x5ff3927800d7cc87,x10073dc9f6f9c08a;
+  always @(posedge forever_cpuclk or negedge cpurst_b) begin
+    if(!cpurst_b) begin
+      x0827d96c800a6d86<=1'b0; x5ff3927800d7cc87<=1'b0; x10073dc9f6f9c08a<=1'b0;
+    end else begin
+      x0827d96c800a6d86<=tensor_start_ready;
+      x5ff3927800d7cc87<=actu_start_ready;
+      x10073dc9f6f9c08a<=cmpu_start_ready;
+    end
+  end
+
+  xea9a93b12a75edfe x206cddee460d7e59(
+    .clk(forever_cpuclk),.xc33b352aafa3d245(cpurst_b),.mem_region_base(mem_region_base),
+    .mem_region_mask(mem_region_mask),.mem_region_enable(mem_region_enable),
+    .x74c0d78af745a25a(x74c0d78af745a25a),.x1eae06400be9ae01(x1eae06400be9ae01),.x9de335eb005dcb34(x9de335eb005dcb34),
+    .x22ba05321e93915c(x22ba05321e93915c),.x6788c74469d1d8fe(x6788c74469d1d8fe),
+    .x0f37dd3cd17e48f6(x0f37dd3cd17e48f6),.x26f114d64a2ebc83(x26f114d64a2ebc83),.dma_start_ready(dma_start_ready),
+    .dma_start_circular_ready(dma_start_circular_ready),
+    .dma_sync_done(dma_sync_done),.tensor_cmd_ready(tensor_cmd_ready),
+    .tensor_start_ready(x0827d96c800a6d86),.tensor_wld_cmd_ready(tensor_wld_cmd_ready),
+    .tensor_sld_cmd_ready(tensor_sld_cmd_ready),
+    .tensor_wld_circular_ready(tensor_wld_circular_ready),
+    .tensor_wsld_circular_ready(tensor_wsld_circular_ready),
+    .tensor_sld_circular_ready(tensor_sld_circular_ready),
+    .tensor_sync_stall(tensor_sync_stall),
+    .actu_cmd_ready(actu_cmd_ready),.actu_start_ready(x5ff3927800d7cc87),
+    .actu_sync_stall(actu_sync_stall),.cmpu_cmd_ready(cmpu_cmd_ready),
+    .cmpu_start_ready(x10073dc9f6f9c08a),.cmpu_sync_stall(cmpu_sync_stall),
+    .actu_last_sum_bits(actu_last_sum_bits),.cmpu_max_value(cmpu_max_value),
+    .cmpu_argmax_idx(cmpu_argmax_idx),.cmpu_min_value(cmpu_min_value),
+    .cmpu_argmin_idx(cmpu_argmin_idx),.dma_start_req(dma_start_req),
+    .dma_start_src(dma_start_src),.dma_start_dst(dma_start_dst),
+    .dma_start_len(dma_start_len),.dma_sync_req(dma_sync_req),
+    .dma_start_circular_req(dma_start_circular_req),
+    .dma_start_entry_bytes(dma_start_entry_bytes),
+    .dma_start_circular_tiles(dma_start_circular_tiles),
+    .dma_start_use_xy(dma_start_use_xy),.dma_start_circular(dma_start_circular),
+    .dma_start_x(dma_start_x),.dma_start_y(dma_start_y),
+    .cmd_setcsr_dtype(x54cdede8c42d1ae4),.cmd_setcsr_req(x514066028f08fc2a),
+    .cmd_setcsr_wtype(x037e49339c1ca5a4),.cmd_setin_ptr(x3b7817e0856f3c2a),
+    .cmd_setin_req(x059ec12031447922),.cmd_setn_req(x50dd0f631e4673bf),
+    .cmd_setn_value(x295ec7af42ad3d7f),.cmd_setout_ptr(x884ab95a5f8ef33d),
+    .cmd_setout_req(xc8e4d97293f61034),.cmd_setpsum_ptr(x50b7642b3661b6ab),
+    .cmd_setpsum_req(x20ef4b12c90ca6f7),.cmd_start_req(xea10f86a506cb5dd),
+    .cmd_start_tile_req(x6a9c6af71b51aa5c),.cmd_start_mode(x908aa19ab8d7885e),
+    .cmd_sync_req(x47a26014700ff768),.cmd_wld_ptr(xb5f95e0c3d2dab74),
+    .cmd_wld_req(x8e0145cd7db1adf5),.cmd_wld_trans_req(xa360be4355aab627),
+    .cmd_wld_reuse(x3593a42fd284a893),
+    .cmd_wld_circular_req(xea5d726b74f362d6),
+    .cmd_sld_ptr(xd6b62d28574606e8),
+    .cmd_sld_req(xda6ac29095382f7e),.cmd_sld_reuse(x4314fc27898e1000),
+    .cmd_sld_stream_ptr(x341dd8eb40f0e76a),
+    .cmd_sld_stream_req(x3f0764341ee46421),
+    .cmd_wsld_circular_req(x74ba3818ee09fe1a),
+    .cmd_wsld_circular_transpose(x1717ba5d108e5a7b),
+    .cmd_sld_circular_req(xc2dd65b731876ef6),
+    .actu_cmd_setcsr_dtype(actu_cmd_setcsr_dtype),.actu_cmd_setcsr_mode(actu_cmd_setcsr_mode),
+    .actu_cmd_setcsr_req(actu_cmd_setcsr_req),.actu_cmd_setin_ptr(actu_cmd_setin_ptr),
+    .actu_cmd_setin_req(actu_cmd_setin_req),.actu_cmd_setn_req(actu_cmd_setn_req),
+    .actu_cmd_setn_value(actu_cmd_setn_value),.actu_cmd_setout_ptr(actu_cmd_setout_ptr),
+    .actu_cmd_setout_req(actu_cmd_setout_req),.actu_cmd_setscalar_req(actu_cmd_setscalar_req),
+    .actu_cmd_setscalar_value(actu_cmd_setscalar_value),.actu_cmd_start_req(actu_cmd_start_req),
+    .actu_cmd_sync_req(actu_cmd_sync_req),.cmpu_cmd_setcsr_mode(cmpu_cmd_setcsr_mode),
+    .cmpu_cmd_setcsr_req(cmpu_cmd_setcsr_req),.cmpu_cmd_setlhs_ptr(cmpu_cmd_setlhs_ptr),
+    .cmpu_cmd_setlhs_req(cmpu_cmd_setlhs_req),.cmpu_cmd_setrhs_ptr(cmpu_cmd_setrhs_ptr),
+    .cmpu_cmd_setrhs_req(cmpu_cmd_setrhs_req),.cmpu_cmd_setmask_ptr(cmpu_cmd_setmask_ptr),
+    .cmpu_cmd_setmask_req(cmpu_cmd_setmask_req),.cmpu_cmd_setout_ptr(cmpu_cmd_setout_ptr),
+    .cmpu_cmd_setout_req(cmpu_cmd_setout_req),.cmpu_cmd_setn_req(cmpu_cmd_setn_req),
+    .cmpu_cmd_setn_value(cmpu_cmd_setn_value),.cmpu_cmd_start_req(cmpu_cmd_start_req),
+    .cmpu_cmd_sync_req(cmpu_cmd_sync_req));
+
+  x8023aa87e17e21fc #(.ADDR_WIDTH(x9cc3f416666cb94a),.VALUE_WIDTH(64)) xf7529f64121ac404(
+    .forever_cpuclk(forever_cpuclk),.cpurst_b(cpurst_b),
+    .mem_region_base(mem_region_base),
+    .xbd08b44e4d152b49(1'b0),.xac31e807f1e3ea4d({x9cc3f416666cb94a{1'b0}}),
+    .xf416b90c877ae298({x9cc3f416666cb94a{1'b0}}),.x2140f42156df26eb(32'b0),
+    .xde16004772cbc0a5(1'b0),.x591f7c1bbf79578f(64'b0),
+    .xdfe6f6548283169c(64'b0),.xb4387f91ad6d08fb(64'b0),
+    .xcd2ec0e04a1dd2d4(dma_start_req),
+    .xa5b4834c7c7b06db(dma_start_circular_req),
+    .x49b8151edadd15e8(dma_start_src),.xe34a540e68360635(dma_start_dst),
+    .x833327f1efd9a97d(dma_start_len),
+    .x92d854a06241d314(dma_start_entry_bytes),
+    .xadedae645c79d893(dma_start_circular_tiles),
+    .x0d86ec0961201120(dma_start_use_xy),
+    .x89d1bee017426876(dma_start_circular),
+    .x5710f5db37cd31bb(dma_start_x),.x7ff0f0284328cedf(dma_start_y),
+    .edge_dma_busy(x146a4fec530c3c75),.xe1479181ae378b69(xe1479181ae378b69),
+    .xc741cb8afdee49ee(xc741cb8afdee49ee),.xa98993e5edb54ae7(xa98993e5edb54ae7),
+    .x8e0145cd7db1adf5(x8e0145cd7db1adf5),
+    .xea5d726b74f362d6(xea5d726b74f362d6),
+    .xa360be4355aab627(xa360be4355aab627),
+    .x3593a42fd284a893(x3593a42fd284a893),.xb5f95e0c3d2dab74(xb5f95e0c3d2dab74),
+    .x74ba3818ee09fe1a(x74ba3818ee09fe1a),
+    .x1717ba5d108e5a7b(x1717ba5d108e5a7b),
+    .xda6ac29095382f7e(xda6ac29095382f7e),
+    .xc2dd65b731876ef6(xc2dd65b731876ef6),
+    .x4314fc27898e1000(x4314fc27898e1000),.xd6b62d28574606e8(xd6b62d28574606e8),
+    .x3908be0a049ddff3(x3908be0a049ddff3),
+    .x463c89d027af8120(x463c89d027af8120),
+    .x9a2bef20fdfa0953(x9a2bef20fdfa0953),
+    .x602e9f658ee0a705(x602e9f658ee0a705),
+    .x061b31851cbc5468(x061b31851cbc5468),
+    .xe0612209e186717b(xe0612209e186717b),
+    .x92883ee9b6249820(x92883ee9b6249820),
+    .dma_start_ready(dma_start_ready),
+    .dma_start_circular_ready(dma_start_circular_ready),
+    .dma_sync_done(dma_sync_done),.x8633d03b2985363c(x88e87f20747d392b),
+    .xa1c579daceafbd40(),.xd18a491d0739ff12(),
+    .x3ecea58734b28935(x3ecea58734b28935),
+    .x4a26c488a3863d11(x129587f2bef78398),
+    .x268abc4bdd6db0e4(x36489e56cf717969),
+    .xa4493b9360c04cfe(xa4493b9360c04cfe),
+    .xf253e04eaeac629d(xf253e04eaeac629d),
+    .x736cc918b4bdb02d(x736cc918b4bdb02d),
+    .xd295b6098abb3b77(xd295b6098abb3b77),
+    .tensor_wld_cmd_ready(tensor_wld_cmd_ready),
+    .tensor_sld_cmd_ready(tensor_sld_cmd_ready),
+    .tensor_wld_circular_ready(tensor_wld_circular_ready),
+    .tensor_wsld_circular_ready(tensor_wsld_circular_ready),
+    .tensor_sld_circular_ready(tensor_sld_circular_ready),
+    .tensor_sync_stall(tensor_sync_stall),
+    .x8f824afeb2fdbf9f(x8f824afeb2fdbf9f),
+    .xcd60b9d9b2c1ec72(xcd60b9d9b2c1ec72),
+    .x96bea65d6b252aa6(x96bea65d6b252aa6),
+    .x5c45a47882fa134f(x5c45a47882fa134f),
+    .x31aa64f7f1786a48(x31aa64f7f1786a48),
+    .xedb0032dd496001b(xedb0032dd496001b),
+    .x5d1f20971f34a856(x5d1f20971f34a856),
+    .x32b703970cc90cb9(x32b703970cc90cb9));
+
+  /* verilator lint_off PINMISSING */
+  x1bf8829620a3095a #(.x9cc3f416666cb94a(x9cc3f416666cb94a),.AXI_DATA_WIDTH(AXI_DATA_WIDTH),
+    .AXI_ID_WIDTH(AXI_ID_WIDTH),.AXI_LEN_WIDTH(AXI_LEN_WIDTH)) xfc6b6b7bee36fdc9(
+    .xb5f95e0c3d2dab74(x8f824afeb2fdbf9f),
+    .x8e0145cd7db1adf5(xcd60b9d9b2c1ec72),
+    .xa360be4355aab627(x96bea65d6b252aa6),
+    .x3593a42fd284a893(x5c45a47882fa134f),
+    .xd6b62d28574606e8(x31aa64f7f1786a48),
+    .xda6ac29095382f7e(xedb0032dd496001b),
+    .x4314fc27898e1000(x5d1f20971f34a856),
+    .x114890cf6729161e(x32b703970cc90cb9),
+    .tensor_sync_stall(x3908be0a049ddff3),
+    .tensor_wld_cmd_ready(x463c89d027af8120),
+    .tensor_sld_cmd_ready(x9a2bef20fdfa0953),
+    .x129587f2bef78398(x129587f2bef78398),
+    .x36489e56cf717969(x36489e56cf717969),
+    .dma_start_len(xa4493b9360c04cfe),.dma_start_req(x3ecea58734b28935),
+    .xf253e04eaeac629d(xf253e04eaeac629d),
+    .x736cc918b4bdb02d(x736cc918b4bdb02d),
+    .xd295b6098abb3b77(xd295b6098abb3b77[13:0]),.*);
+  /* verilator lint_on PINMISSING */
+endmodule
+
+
 `timescale 1ns/1ps
 module xcec7b839ea5a5726 #(
   parameter ADDR_WIDTH = 40,
@@ -937,6 +1349,502 @@ module xd1a6d50fd76eab29 #(
     end
   end
 
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+module x8023aa87e17e21fc #(
+  parameter ADDR_WIDTH = 40,
+  parameter VALUE_WIDTH = 64
+) (
+  input  wire                   forever_cpuclk,
+  input  wire                   cpurst_b,
+  input  wire [ADDR_WIDTH-1:0]  mem_region_base,
+
+  input  wire                   xbd08b44e4d152b49,
+  input  wire [ADDR_WIDTH-1:0]  xac31e807f1e3ea4d,
+  input  wire [ADDR_WIDTH-1:0]  xf416b90c877ae298,
+  input  wire [31:0]            x2140f42156df26eb,
+  input  wire                   xde16004772cbc0a5,
+  input  wire [VALUE_WIDTH-1:0] x591f7c1bbf79578f,
+  input  wire [VALUE_WIDTH-1:0] xdfe6f6548283169c,
+  input  wire [VALUE_WIDTH-1:0] xb4387f91ad6d08fb,
+
+  input  wire                   xcd2ec0e04a1dd2d4,
+  input  wire                   xa5b4834c7c7b06db,
+  input  wire [VALUE_WIDTH-1:0] x49b8151edadd15e8,
+  input  wire [VALUE_WIDTH-1:0] xe34a540e68360635,
+  input  wire [31:0]            x833327f1efd9a97d,
+  input  wire [31:0]            x92d854a06241d314,
+  input  wire [15:0]            xadedae645c79d893,
+  input  wire                   x0d86ec0961201120,
+  input  wire                   x89d1bee017426876,
+  input  wire [63:0]            x5710f5db37cd31bb,
+  input  wire [63:0]            x7ff0f0284328cedf,
+
+  input  wire                   edge_dma_busy,
+  input  wire                   xe1479181ae378b69,
+  input  wire                   xc741cb8afdee49ee,
+  input  wire                   xa98993e5edb54ae7,
+
+  input  wire                   x8e0145cd7db1adf5,
+  input  wire                   xea5d726b74f362d6,
+  input  wire                   xa360be4355aab627,
+  input  wire                   x3593a42fd284a893,
+  input  wire [15:0]            xb5f95e0c3d2dab74,
+  input  wire                   x74ba3818ee09fe1a,
+  input  wire                   x1717ba5d108e5a7b,
+  input  wire                   xda6ac29095382f7e,
+  input  wire                   xc2dd65b731876ef6,
+  input  wire                   x4314fc27898e1000,
+  input  wire [15:0]            xd6b62d28574606e8,
+  input  wire                   x3908be0a049ddff3,
+  input  wire                   x463c89d027af8120,
+  input  wire                   x9a2bef20fdfa0953,
+  input  wire                   x602e9f658ee0a705,
+  input  wire                   x061b31851cbc5468,
+  input  wire [4:0]             xe0612209e186717b,
+  input  wire                   x92883ee9b6249820,
+
+  output wire                   dma_start_ready,
+  output wire                   dma_start_circular_ready,
+  output wire                   dma_sync_done,
+  output wire                   x8633d03b2985363c,
+  output wire                   xa1c579daceafbd40,
+  output wire                   xd18a491d0739ff12,
+  output wire                   x3ecea58734b28935,
+  output wire [ADDR_WIDTH-1:0]  x4a26c488a3863d11,
+  output wire [ADDR_WIDTH-1:0]  x268abc4bdd6db0e4,
+  output wire [31:0]            xa4493b9360c04cfe,
+  output wire                   xf253e04eaeac629d,
+  output wire [ADDR_WIDTH-1:0]  x736cc918b4bdb02d,
+  output wire [15:0]            xd295b6098abb3b77,
+
+  output wire                   tensor_wld_cmd_ready,
+  output wire                   tensor_sld_cmd_ready,
+  output wire                   tensor_wld_circular_ready,
+  output wire                   tensor_wsld_circular_ready,
+  output wire                   tensor_sld_circular_ready,
+  output wire                   tensor_sync_stall,
+  output wire [15:0]            x8f824afeb2fdbf9f,
+  output wire                   xcd60b9d9b2c1ec72,
+  output wire                   x96bea65d6b252aa6,
+  output wire                   x5c45a47882fa134f,
+  output wire [15:0]            x31aa64f7f1786a48,
+  output wire                   xedb0032dd496001b,
+  output wire                   x5d1f20971f34a856,
+  output wire                   x32b703970cc90cb9
+);
+  reg xebcb947632419313;
+  reg x5afdffe5af373bc2, x21fcf2d9dcec904f;
+  reg [VALUE_WIDTH-1:0] x9f53ae8b0c87d59e, xe9f46f5dd390f791;
+  reg [15:0] x5a04a93457f9c506, x5137447ea330b3f9;
+  reg [31:0] xc89b951253ed0ac7;
+  reg [15:0] xcde6b5f755892e79, x643cddbc1feed5c2;
+  reg [15:0] x7af8ef17c48cfe92, xe44641f36c6ac3e7;
+  reg xabf1b13cb5f9fbe0;
+  reg [31:0] x0dd85ac6b6187314, xc3d3d0e0c66979a9, x4f82478ddae30863;
+  reg [31:0] xdcebf405e32e9a6e;
+  reg [15:0] x183786d829fcc110, xff1ae2ac34c86102;
+  reg [15:0] x994bb9977fe52c72, x8c9bae9a81a54583;
+  reg [15:0] x4b30b96088b4c963, x675d1bed1170b8a2;
+  reg [15:0] xed464c26824f8cc1;
+  reg [15:0] x95f2cb18b7945d06;
+  reg [15:0] x1c16a6ba83dabf4c;
+  reg [15:0] x00f151f4f71b8b73;
+  reg x1cf29dbfcbb2f843, xa880af8909c4bad1, x3cf79fd4e8742cc7;
+  reg x010357cbda8d38ae, xcb0a26144484ce22, xca577b7c0d7cd78c;
+  reg [2:0] x54ba947a7828c68b, x770e5755162cab81;
+  reg xde201d73847ee064;
+  reg [2:0] x3c00ce22658fe36e, xc2e6b4bce8a035d2;
+  reg [15:0] x3f8179960579cd40;
+
+  wire [63:0] xff81dde27e6ce63c = x5710f5db37cd31bb[63:32] *
+                             x7ff0f0284328cedf[63:32];
+  wire x7bdf2218aafa95ae = (x5137447ea330b3f9 != 16'd0) &&
+                               (xed464c26824f8cc1 != 16'd0);
+  wire x9103b59923bb7c28 = x183786d829fcc110 ==
+                             xff1ae2ac34c86102;
+  wire xe066b4dc6b44275d = x7bdf2218aafa95ae &&
+    ((x00f151f4f71b8b73 - xff1ae2ac34c86102) >=
+     x5137447ea330b3f9);
+  wire x9134619cc9faf5b1 = xcd2ec0e04a1dd2d4 &&
+                                     !x0d86ec0961201120 &&
+                                     !x89d1bee017426876;
+  wire x465aed049d9ae6eb = xcd2ec0e04a1dd2d4 &&
+                                      x0d86ec0961201120 &&
+                                      !x89d1bee017426876;
+  wire xfe231789ca3be4c6, x5d7525b2431bf690;
+  wire [ADDR_WIDTH-1:0] x1f088f07e67f39d3, xdade2ebed525f367;
+  wire [31:0] x9ebfe8bace936993;
+  wire x84e5238dce6c5135;
+  wire x1815e432e807faf8 = x5afdffe5af373bc2 &&
+    x7bdf2218aafa95ae &&
+    (!xe066b4dc6b44275d || (x95f2cb18b7945d06 != 16'd0)) &&
+    (xdcebf405e32e9a6e < xc89b951253ed0ac7) &&
+    !xbd08b44e4d152b49 && !xcd2ec0e04a1dd2d4;
+  wire [ADDR_WIDTH-1:0] x4ed294c98a1e0e02 =
+    xe34a540e68360635[ADDR_WIDTH-1:0] - mem_region_base;
+  wire [15:0] x591c91a787e3a0f9 = x4ed294c98a1e0e02[18:3];
+  wire [ADDR_WIDTH-1:0] x4f900ec30ddac4ca = x9f53ae8b0c87d59e +
+    {{(ADDR_WIDTH-19){1'b0}}, x7af8ef17c48cfe92, 3'b000};
+  wire [ADDR_WIDTH-1:0] x2e7c9a604949ede5 = mem_region_base +
+    {{(ADDR_WIDTH-19){1'b0}},
+      (x4b30b96088b4c963 + x95f2cb18b7945d06), 3'b000};
+  wire x25b1e90105bed53c =
+    (x95f2cb18b7945d06 + xe44641f36c6ac3e7) ==
+    xed464c26824f8cc1;
+  wire x0141f302e29ac347 =
+    (x7af8ef17c48cfe92 + xe44641f36c6ac3e7) ==
+    x0dd85ac6b6187314[18:3];
+  wire xc0997a2efc8da394 = !x5afdffe5af373bc2 && !xa98993e5edb54ae7 &&
+    ((xff1ae2ac34c86102 + 16'd1) >= x183786d829fcc110);
+  wire xc4fb4d5a3aecbf48 = x5afdffe5af373bc2 || xa98993e5edb54ae7 ||
+                       (x183786d829fcc110 != xff1ae2ac34c86102);
+  wire x06badc1eb9be6145, xbbd94f76353c6c45, x09cee7a275baa3b9;
+  wire x26b8aa06f376fb7f, x44709804a4464c15, xd72b605518cf4b86;
+
+  assign x84e5238dce6c5135 = x1815e432e807faf8 && xe1479181ae378b69;
+  assign xf253e04eaeac629d = x1815e432e807faf8;
+  assign x736cc918b4bdb02d = x4f900ec30ddac4ca;
+  assign xd295b6098abb3b77 = x2e7c9a604949ede5[18:3];
+
+  xd1a6d50fd76eab29 #(
+    .ADDR_WIDTH(ADDR_WIDTH), .VALUE_WIDTH(VALUE_WIDTH)
+  ) x06173ed2520df512 (
+    .forever_cpuclk(forever_cpuclk), .cpurst_b(cpurst_b),
+    .x08570e3f0c0051d4(x465aed049d9ae6eb),
+    .x632ec9a09585d069(x49b8151edadd15e8), .x2ca003cfe0628d44(xe34a540e68360635),
+    .xf2d6068abb876836(x833327f1efd9a97d),
+    .x356ad5d075f1ef69(x5710f5db37cd31bb[31:0]),
+    .x01641ebaf92fefca(x7ff0f0284328cedf[31:0]),
+    .xadbe1f44efe5c1d8(x5710f5db37cd31bb[63:32]),
+    .x0f9d2b07c5a98e1e(x7ff0f0284328cedf[63:32]),
+    .xf9e7cdd65a1f9457(xff81dde27e6ce63c[31:0]), .x146a4fec530c3c75(edge_dma_busy),
+    .x278ff873c0358104(xbd08b44e4d152b49),
+    .xf8eff2820f18520c(xcd2ec0e04a1dd2d4),
+    .xbb005106bf06e35c(x84e5238dce6c5135), .x83f20ae9351715e6(xfe231789ca3be4c6),
+    .x9d873d9c0989e1e3(x1f088f07e67f39d3), .xc2d2a2cb734f8027(xdade2ebed525f367),
+    .xfd4137e32710bcc7(x9ebfe8bace936993), .x785d1dc2b63cc926(x5d7525b2431bf690)
+  );
+
+  assign dma_start_ready = !edge_dma_busy && !xbd08b44e4d152b49 &&
+                           !x21fcf2d9dcec904f && !x5d7525b2431bf690 &&
+                           !x84e5238dce6c5135 && !xfe231789ca3be4c6;
+  assign dma_start_circular_ready = !edge_dma_busy && !xbd08b44e4d152b49 &&
+                                    !x5afdffe5af373bc2 &&
+                                    !x21fcf2d9dcec904f && !x5d7525b2431bf690;
+  assign dma_sync_done = !edge_dma_busy && !xbd08b44e4d152b49 &&
+                         !xebcb947632419313 && !x21fcf2d9dcec904f &&
+                         !x84e5238dce6c5135 && !x5d7525b2431bf690;
+  assign x8633d03b2985363c = xebcb947632419313;
+  assign xa1c579daceafbd40 = !edge_dma_busy && !xbd08b44e4d152b49 &&
+                              !xcd2ec0e04a1dd2d4 && !x84e5238dce6c5135 &&
+                              !xfe231789ca3be4c6;
+  assign xd18a491d0739ff12 = !edge_dma_busy && !xbd08b44e4d152b49 &&
+                             !xebcb947632419313 && !xcd2ec0e04a1dd2d4 &&
+                             !xc4fb4d5a3aecbf48 && !x5d7525b2431bf690;
+  assign x3ecea58734b28935 = xbd08b44e4d152b49 || x9134619cc9faf5b1 ||
+                              xfe231789ca3be4c6 || xde16004772cbc0a5;
+  assign x4a26c488a3863d11 = xbd08b44e4d152b49 ? xac31e807f1e3ea4d :
+    (x9134619cc9faf5b1 ? x49b8151edadd15e8[ADDR_WIDTH-1:0] :
+      (xfe231789ca3be4c6 ? x1f088f07e67f39d3 : x591f7c1bbf79578f[ADDR_WIDTH-1:0]));
+  assign x268abc4bdd6db0e4 = xbd08b44e4d152b49 ? xf416b90c877ae298 :
+    (x9134619cc9faf5b1 ? xe34a540e68360635[ADDR_WIDTH-1:0] :
+      (xfe231789ca3be4c6 ? xdade2ebed525f367 : xdfe6f6548283169c[ADDR_WIDTH-1:0]));
+  assign xa4493b9360c04cfe = xbd08b44e4d152b49 ? x2140f42156df26eb :
+    (x9134619cc9faf5b1 ? x833327f1efd9a97d :
+      (xfe231789ca3be4c6 ? x9ebfe8bace936993 : xb4387f91ad6d08fb[31:0]));
+
+  assign tensor_wld_cmd_ready = x463c89d027af8120 &&
+                                !xa880af8909c4bad1 && !x3cf79fd4e8742cc7;
+  assign tensor_sld_cmd_ready = x9a2bef20fdfa0953 &&
+                                !xa880af8909c4bad1 && !x3cf79fd4e8742cc7;
+  assign tensor_wld_circular_ready = tensor_wld_cmd_ready &&
+    x7bdf2218aafa95ae && !x9103b59923bb7c28 &&
+    (xed464c26824f8cc1 == {11'b0, xe0612209e186717b});
+  assign tensor_wsld_circular_ready = x7bdf2218aafa95ae &&
+    !xa880af8909c4bad1 && !x1cf29dbfcbb2f843 && !x3908be0a049ddff3 &&
+    x463c89d027af8120 && x9a2bef20fdfa0953 &&
+    (xed464c26824f8cc1 == 16'd34);
+  assign tensor_sld_circular_ready = x7bdf2218aafa95ae &&
+    !x3cf79fd4e8742cc7 && !xa880af8909c4bad1 && !x1cf29dbfcbb2f843 &&
+    (xed464c26824f8cc1 == 16'd2);
+  assign tensor_sync_stall = x3908be0a049ddff3 || xa880af8909c4bad1 ||
+                             x3cf79fd4e8742cc7;
+  assign xd72b605518cf4b86 = x3cf79fd4e8742cc7 &&
+    !x010357cbda8d38ae && !x9103b59923bb7c28 && x9a2bef20fdfa0953;
+  assign x06badc1eb9be6145 = xea5d726b74f362d6 &&
+                               tensor_wld_circular_ready;
+  assign xbbd94f76353c6c45 = xa880af8909c4bad1 && !xcb0a26144484ce22 &&
+                            !x9103b59923bb7c28;
+  assign x09cee7a275baa3b9 = xcb0a26144484ce22 && (x54ba947a7828c68b < 3'd4) &&
+                           (x54ba947a7828c68b <= xc2e6b4bce8a035d2) &&
+                           x9a2bef20fdfa0953;
+  assign x26b8aa06f376fb7f = xcb0a26144484ce22 && xde201d73847ee064 &&
+                           (x770e5755162cab81 < 3'd4) &&
+                           (x770e5755162cab81 < x54ba947a7828c68b) &&
+                           (x770e5755162cab81 <= xc2e6b4bce8a035d2) &&
+                           x463c89d027af8120;
+  assign x44709804a4464c15 = xcb0a26144484ce22 &&
+                              (x3c00ce22658fe36e == 3'd4) &&
+                              (xc2e6b4bce8a035d2 == 3'd4);
+  assign x8f824afeb2fdbf9f = x26b8aa06f376fb7f ?
+    (x3f8179960579cd40 + 16'd2 + {x770e5755162cab81, 3'b000}) :
+    (x06badc1eb9be6145 ? x675d1bed1170b8a2 : xb5f95e0c3d2dab74);
+  assign xcd60b9d9b2c1ec72 =
+    (x8e0145cd7db1adf5 && !xa880af8909c4bad1) ||
+    (x26b8aa06f376fb7f && !xca577b7c0d7cd78c) ||
+    (x06badc1eb9be6145 && !xa360be4355aab627);
+  assign x96bea65d6b252aa6 =
+    (xa360be4355aab627 && !xa880af8909c4bad1) ||
+    (x26b8aa06f376fb7f && xca577b7c0d7cd78c);
+  assign x5c45a47882fa134f = x3593a42fd284a893 && !xa880af8909c4bad1;
+  assign x31aa64f7f1786a48 = xd72b605518cf4b86 ?
+    x675d1bed1170b8a2 :
+    (x09cee7a275baa3b9 ? x3f8179960579cd40 : xd6b62d28574606e8);
+  assign xedb0032dd496001b = xd72b605518cf4b86 || x09cee7a275baa3b9 ||
+    (xda6ac29095382f7e && !xa880af8909c4bad1 && !x3cf79fd4e8742cc7);
+  assign x5d1f20971f34a856 = xa880af8909c4bad1 ?
+    (x54ba947a7828c68b != 3'd0) : x4314fc27898e1000;
+  assign x32b703970cc90cb9 = xd72b605518cf4b86;
+
+  always @(posedge forever_cpuclk or negedge cpurst_b) begin
+    if (!cpurst_b)
+      xebcb947632419313 <= 1'b0;
+    else if (x3ecea58734b28935)
+      xebcb947632419313 <= 1'b1;
+    else if (xebcb947632419313 && !edge_dma_busy)
+      xebcb947632419313 <= 1'b0;
+  end
+
+  always @(posedge forever_cpuclk or negedge cpurst_b) begin
+    if (!cpurst_b) begin
+      x5afdffe5af373bc2 <= 1'b0;
+      x21fcf2d9dcec904f <= 1'b0;
+      x9f53ae8b0c87d59e <= {VALUE_WIDTH{1'b0}};
+      xe9f46f5dd390f791 <= {VALUE_WIDTH{1'b0}};
+      x5a04a93457f9c506 <= 16'd0;
+      x5137447ea330b3f9 <= 16'd0;
+      xc89b951253ed0ac7 <= 32'd0;
+      xcde6b5f755892e79 <= 16'd0;
+      x643cddbc1feed5c2 <= 16'd0;
+      x7af8ef17c48cfe92 <= 16'd0;
+      xe44641f36c6ac3e7 <= 16'd2;
+      xabf1b13cb5f9fbe0 <= 1'b0;
+      x0dd85ac6b6187314 <= 32'd64;
+      xc3d3d0e0c66979a9 <= 32'd64;
+      x4f82478ddae30863 <= 32'd0;
+      xdcebf405e32e9a6e <= 32'd0;
+      x183786d829fcc110 <= 16'd0;
+      xff1ae2ac34c86102 <= 16'd0;
+      x994bb9977fe52c72 <= 16'd0;
+      x8c9bae9a81a54583 <= 16'd0;
+      x4b30b96088b4c963 <= 16'd0;
+      x675d1bed1170b8a2 <= 16'd0;
+      xed464c26824f8cc1 <= 16'd8;
+      x95f2cb18b7945d06 <= 16'd0;
+      x1c16a6ba83dabf4c <= 16'd0;
+      x00f151f4f71b8b73 <= 16'd0;
+      x1cf29dbfcbb2f843 <= 1'b0;
+      xa880af8909c4bad1 <= 1'b0;
+      x3cf79fd4e8742cc7 <= 1'b0;
+      x010357cbda8d38ae <= 1'b0;
+      xcb0a26144484ce22 <= 1'b0;
+      xca577b7c0d7cd78c <= 1'b0;
+      x54ba947a7828c68b <= 3'd0;
+      xde201d73847ee064 <= 1'b0;
+      x770e5755162cab81 <= 3'd0;
+      x3c00ce22658fe36e <= 3'd0;
+      xc2e6b4bce8a035d2 <= 3'd0;
+      x3f8179960579cd40 <= 16'd0;
+    end else begin
+      if (xa5b4834c7c7b06db) begin
+        x5afdffe5af373bc2 <= (xadedae645c79d893 != 16'b0) &&
+          (!x0d86ec0961201120 ||
+           ((x833327f1efd9a97d != 32'b0) &&
+            (x92d854a06241d314 != 32'b0) &&
+            (x833327f1efd9a97d[2:0] == 3'b0) &&
+            (x92d854a06241d314[2:0] == 3'b0) &&
+            (x833327f1efd9a97d <= x92d854a06241d314) &&
+            (x5710f5db37cd31bb[63:32] != 32'b0) &&
+            (x7ff0f0284328cedf[63:32] != 32'b0)));
+        x9f53ae8b0c87d59e <= x49b8151edadd15e8;
+        xe9f46f5dd390f791 <= x49b8151edadd15e8;
+        x5a04a93457f9c506 <= x591c91a787e3a0f9;
+        x5137447ea330b3f9 <= xadedae645c79d893;
+        xc89b951253ed0ac7 <=
+          (x0d86ec0961201120 ? {16'b0, xff81dde27e6ce63c[15:0]} :
+                                     {16'b0, xadedae645c79d893}) *
+          (x0d86ec0961201120 ? {17'b0, x833327f1efd9a97d[18:4]} :
+                                     {27'b0, xe0612209e186717b[4:1]});
+        xcde6b5f755892e79 <= 16'd0;
+        x643cddbc1feed5c2 <= x0d86ec0961201120 ?
+          x5710f5db37cd31bb[47:32] : xadedae645c79d893;
+        xabf1b13cb5f9fbe0 <= x0d86ec0961201120;
+        x7af8ef17c48cfe92 <= 16'd0;
+        xe44641f36c6ac3e7 <= 16'd2;
+        x0dd85ac6b6187314 <= x0d86ec0961201120 ? x833327f1efd9a97d :
+          {24'b0, xe0612209e186717b, 3'b000};
+        xc3d3d0e0c66979a9 <= x0d86ec0961201120 ?
+          x5710f5db37cd31bb[31:0] : {24'b0, xe0612209e186717b, 3'b000};
+        x4f82478ddae30863 <= x0d86ec0961201120 ?
+          x7ff0f0284328cedf[31:0] : 32'd0;
+        xdcebf405e32e9a6e <= 32'd0;
+        x183786d829fcc110 <= 16'd0;
+        xff1ae2ac34c86102 <= 16'd0;
+        x994bb9977fe52c72 <= 16'd0;
+        x8c9bae9a81a54583 <= 16'd0;
+        x4b30b96088b4c963 <= x591c91a787e3a0f9;
+        x675d1bed1170b8a2 <= x591c91a787e3a0f9;
+        xed464c26824f8cc1 <= x0d86ec0961201120 ?
+          x92d854a06241d314[18:3] : {11'b0, xe0612209e186717b};
+        x95f2cb18b7945d06 <= 16'd0;
+        x1c16a6ba83dabf4c <= 16'd0;
+        x00f151f4f71b8b73 <= 16'd0;
+        x1cf29dbfcbb2f843 <= 1'b0;
+        xa880af8909c4bad1 <= 1'b0;
+        x3cf79fd4e8742cc7 <= 1'b0;
+        x010357cbda8d38ae <= 1'b0;
+        xcb0a26144484ce22 <= 1'b0;
+      end
+
+      if (x84e5238dce6c5135) begin
+        xdcebf405e32e9a6e <= xdcebf405e32e9a6e + 32'd1;
+        if (x95f2cb18b7945d06 == 16'd0)
+          x00f151f4f71b8b73 <= x00f151f4f71b8b73 + 16'd1;
+        if (x25b1e90105bed53c) begin
+          x95f2cb18b7945d06 <= 16'd0;
+          if (x994bb9977fe52c72 == x5137447ea330b3f9 - 16'd1) begin
+            x994bb9977fe52c72 <= 16'd0;
+            x4b30b96088b4c963 <= x5a04a93457f9c506;
+          end else begin
+            x994bb9977fe52c72 <= x994bb9977fe52c72 + 16'd1;
+            x4b30b96088b4c963 <= x4b30b96088b4c963 + xed464c26824f8cc1;
+          end
+        end else begin
+          x95f2cb18b7945d06 <=
+            x95f2cb18b7945d06 + xe44641f36c6ac3e7;
+        end
+        if (xdcebf405e32e9a6e + 32'd1 >= xc89b951253ed0ac7)
+          x5afdffe5af373bc2 <= 1'b0;
+        if (x0141f302e29ac347) begin
+          x7af8ef17c48cfe92 <= 16'd0;
+          if (xabf1b13cb5f9fbe0) begin
+            if (xcde6b5f755892e79 == x643cddbc1feed5c2 - 16'd1) begin
+              xcde6b5f755892e79 <= 16'd0;
+              xe9f46f5dd390f791 <= xe9f46f5dd390f791 +
+                {{(VALUE_WIDTH-32){1'b0}}, x4f82478ddae30863};
+              x9f53ae8b0c87d59e <= xe9f46f5dd390f791 +
+                {{(VALUE_WIDTH-32){1'b0}}, x4f82478ddae30863};
+            end else begin
+              xcde6b5f755892e79 <= xcde6b5f755892e79 + 16'd1;
+              x9f53ae8b0c87d59e <= x9f53ae8b0c87d59e +
+                {{(VALUE_WIDTH-32){1'b0}}, xc3d3d0e0c66979a9};
+            end
+          end else begin
+            x9f53ae8b0c87d59e <= x9f53ae8b0c87d59e +
+              {{(VALUE_WIDTH-32){1'b0}}, xc3d3d0e0c66979a9};
+          end
+        end else begin
+          x7af8ef17c48cfe92 <=
+            x7af8ef17c48cfe92 + xe44641f36c6ac3e7;
+        end
+      end
+
+      if (xc741cb8afdee49ee) begin
+        if (x1c16a6ba83dabf4c +
+            xe44641f36c6ac3e7 == xed464c26824f8cc1) begin
+          x183786d829fcc110 <= x183786d829fcc110 + 16'd1;
+          x1c16a6ba83dabf4c <= 16'd0;
+        end else begin
+          x1c16a6ba83dabf4c <=
+            x1c16a6ba83dabf4c + xe44641f36c6ac3e7;
+        end
+      end
+      x21fcf2d9dcec904f <= xa98993e5edb54ae7;
+
+      if (x602e9f658ee0a705 && x1cf29dbfcbb2f843)
+        x1cf29dbfcbb2f843 <= 1'b0;
+      if (x06badc1eb9be6145) begin
+        x1cf29dbfcbb2f843 <= 1'b1;
+        if (x8c9bae9a81a54583 == x5137447ea330b3f9 - 16'd1) begin
+          x8c9bae9a81a54583 <= 16'd0;
+          x675d1bed1170b8a2 <= x5a04a93457f9c506;
+        end else begin
+          x8c9bae9a81a54583 <= x8c9bae9a81a54583 + 16'd1;
+          x675d1bed1170b8a2 <= x675d1bed1170b8a2 + xed464c26824f8cc1;
+        end
+      end
+      if (x74ba3818ee09fe1a && tensor_wsld_circular_ready) begin
+        xa880af8909c4bad1 <= 1'b1;
+        xca577b7c0d7cd78c <= x1717ba5d108e5a7b;
+      end
+      if (xc2dd65b731876ef6 && tensor_sld_circular_ready)
+        x3cf79fd4e8742cc7 <= 1'b1;
+      if (xd72b605518cf4b86) begin
+        x010357cbda8d38ae <= 1'b1;
+        if (x8c9bae9a81a54583 == x5137447ea330b3f9 - 16'd1) begin
+          x8c9bae9a81a54583 <= 16'd0;
+          x675d1bed1170b8a2 <= x5a04a93457f9c506;
+        end else begin
+          x8c9bae9a81a54583 <= x8c9bae9a81a54583 + 16'd1;
+          x675d1bed1170b8a2 <= x675d1bed1170b8a2 + xed464c26824f8cc1;
+        end
+      end
+      if (x3cf79fd4e8742cc7 && x010357cbda8d38ae && x061b31851cbc5468) begin
+        x010357cbda8d38ae <= 1'b0;
+        xff1ae2ac34c86102 <= xff1ae2ac34c86102 + 16'd1;
+        if (xc0997a2efc8da394)
+          x3cf79fd4e8742cc7 <= 1'b0;
+      end
+      if (xbbd94f76353c6c45) begin
+        xcb0a26144484ce22 <= 1'b1;
+        x3f8179960579cd40 <= x675d1bed1170b8a2;
+        x54ba947a7828c68b <= 3'd0;
+        xde201d73847ee064 <= 1'b0;
+        x770e5755162cab81 <= 3'd0;
+        x3c00ce22658fe36e <= 3'd0;
+        xc2e6b4bce8a035d2 <= 3'd0;
+        if (x8c9bae9a81a54583 == x5137447ea330b3f9 - 16'd1) begin
+          x8c9bae9a81a54583 <= 16'd0;
+          x675d1bed1170b8a2 <= x5a04a93457f9c506;
+        end else begin
+          x8c9bae9a81a54583 <= x8c9bae9a81a54583 + 16'd1;
+          x675d1bed1170b8a2 <= x675d1bed1170b8a2 + xed464c26824f8cc1;
+        end
+      end
+      if (x09cee7a275baa3b9)
+        x54ba947a7828c68b <= x54ba947a7828c68b + 3'd1;
+      if (xa880af8909c4bad1 && x061b31851cbc5468)
+        xde201d73847ee064 <= 1'b1;
+      if (x26b8aa06f376fb7f)
+        x770e5755162cab81 <= x770e5755162cab81 + 3'd1;
+      if (xcb0a26144484ce22 && x602e9f658ee0a705 && x3c00ce22658fe36e < 3'd4)
+        x3c00ce22658fe36e <= x3c00ce22658fe36e + 3'd1;
+      if (xcb0a26144484ce22 && x92883ee9b6249820 && xc2e6b4bce8a035d2 < 3'd4)
+        xc2e6b4bce8a035d2 <= xc2e6b4bce8a035d2 + 3'd1;
+      if (x44709804a4464c15) begin
+        xcb0a26144484ce22 <= 1'b0;
+        xff1ae2ac34c86102 <= xff1ae2ac34c86102 + 16'd1;
+        if (xc0997a2efc8da394)
+          xa880af8909c4bad1 <= 1'b0;
+      end
+      if (!xa880af8909c4bad1 && x1cf29dbfcbb2f843 && x602e9f658ee0a705 &&
+          x183786d829fcc110 != xff1ae2ac34c86102)
+        xff1ae2ac34c86102 <= xff1ae2ac34c86102 + 16'd1;
+      if (x7bdf2218aafa95ae &&
+          ((xff1ae2ac34c86102 +
+            ((!xa880af8909c4bad1 && x1cf29dbfcbb2f843 && x602e9f658ee0a705 &&
+              x183786d829fcc110 != xff1ae2ac34c86102) ?
+             16'd1 : 16'd0)) >= x183786d829fcc110) &&
+          !x5afdffe5af373bc2 && !x21fcf2d9dcec904f)
+        x1cf29dbfcbb2f843 <= 1'b0;
+    end
+  end
 endmodule
 
 
@@ -1609,82 +2517,16 @@ module xcd6854272ab729af #(
   wire [PC_WIDTH-1:0]     xc39c7c0ba25e84c0;
   wire [PC_WIDTH-1:0]     xe27163309334a3cf;
   wire [31:0]             xa4493b9360c04cfe;
-  reg                     xc10fa1c41c1c8c94;
-  reg                     xccaa3ec36b04f0a2;
-  reg [VALUE_WIDTH-1:0]   x3df59dceeb210ab7;
-  reg [VALUE_WIDTH-1:0]   x56a942d3d78a4c45;
-  reg [VALUE_WIDTH-1:0]   x3a3aa7877aca944a;
-  reg [15:0]              xfd0361660bfac761;
-  reg [15:0]              xb4e46fe7f8e4e74e;
-  reg [31:0]              x86c9398a1d3fe366;
-  reg [15:0]              x3d815fb7bbd97c57;
-  reg [15:0]              xeba2da93377a4397;
-  
-  
-  
-  reg [15:0]              x940756aad69c20e4;
-  reg [15:0]              x14d515d84b609cff;
-  reg                     x4a84d3dd1b7c0b1c;
-  reg [31:0]              xa012025b7a0010aa;
-  reg [31:0]              x9687c307dcae27fa;
-  reg [31:0]              x00a35527e7fcdd3b;
-  reg [31:0]              x25468a78d543d494;
-  reg [15:0]              x67bee9dadd54ed3c;
-  reg [15:0]              xfcc45d8173dbe960;
-  reg [15:0]              xf961e0aef073d557;
-  reg [15:0]              x74ffc12580db3499;
-  reg [15:0]              xdf79dd48637b3d63;
-  reg [15:0]              x69a490ecf303f2cd;
-  reg [15:0]              x0c4e8a08bd0f84ca;
-  reg [15:0]              x99abdf846bbbac3c;
-  reg [15:0]              xa323d61783e7f7ad;
-  reg [15:0]              x27dd46fe5378e6e2;
-  reg                     x1e9adfb52cb05833;
-  reg                     x967950fc771e9fd9;
-  reg                     xeb4af388c164b7c9;
-  reg                     xc94bd7b016746b02;
-  reg                     x6aa83a144a9ee600;
-  reg                     x28a6a2e37087b94b;
-  reg [2:0]               x9d23c949b06cd571;
-  reg                     x0590a1e8a09f1565;
-  reg [2:0]               x5e744ad62e1e63a6;
-  reg [2:0]               x0b343c8d79888d72;
-  reg [2:0]               x70014caaff819820;
-  reg [15:0]              x841b66f178befe9c;
-  wire                    x072ffbfd34bcbe96;
-  wire [15:0]             x314f6fd920746846;
-  wire                    xf2a8e6a30e3febb5;
-  wire                    x02a16afe25904572;
-  wire                    xa81b6d01a916fd91;
-  wire                    x6f60cf96ec544c8b;
-  wire                    x898060801c36ae98;
-  wire                    xcb54ceb5161e51a5;
-  wire                    x8b385d0de4fa975d;
-  wire                    x8aed0447c1d243ac;
-  wire                    x18208215fa58391f;
-  wire                    x31de608deb9709d8;
-  wire                    x0a370ce6f3a47eb3;
-  wire                    xfa19463ded22ead8;
-  wire                    x296320c869dd6657;
-  wire [15:0]             x2879ade6e3ee1d13;
-  wire [15:0]             x27f710376b9ad62d;
-  wire [15:0]             x50cfa617399940c0;
-  wire [PC_WIDTH-1:0]     xeced117f92d7d663;
-  wire [VALUE_WIDTH-1:0]  x3c17cc0267f3bc0c;
-  wire [PC_WIDTH-1:0]     xbaf70943a5679604;
-  wire [63:0]             x7360774b2383e774;
-  wire                    xeb2bfd493db078e7;
-  wire                    x9134619cc9faf5b1;
-  wire                    x465aed049d9ae6eb;
-  wire                    x605235f7b67bcbe8;
-  wire                    x7947c0c8ab50784d;
-  wire [PC_WIDTH-1:0]     x3032276c21428ee5;
-  wire [PC_WIDTH-1:0]     x0722f6d11affe204;
-  wire [31:0]             x23e08b584de63e30;
   wire                    xe1479181ae378b69;
   wire                    xc741cb8afdee49ee;
   wire                    xa98993e5edb54ae7;
-  wire                    xe0c70f1c90bc973f;
+  wire                    x07f2898333745af3;
+  wire [PC_WIDTH-1:0]     x5158d3d1f3e5295d;
+  wire [15:0]             x581eb65837c93727;
+  wire                    x2852f9be9ce4eb8e;
+  wire                    xda1d7ec6a575e61e;
+  wire                    xf75b017f20749985;
+  wire                    x88e87f20747d392b;
 
   wire                    retire_alloc_ready;
   wire                    retire_alloc_valid;
@@ -1851,7 +2693,6 @@ module xcd6854272ab729af #(
   wire                    x7698f7020f783b23;
   wire [(AXI_DATA_WIDTH/8)-1:0] x17b5d82e4bf844fe;
   wire                    xac03103c76fbda86;
-  reg                     xebcb947632419313;
   reg                     x38b4242fe2e03bd0;
 
 
@@ -1965,8 +2806,8 @@ module xcd6854272ab729af #(
   ) x7b311927e7f84d7b (
     .forever_cpuclk(forever_cpuclk),
     .cpurst_b(cpurst_b),
-    .x0cbe05e5621f7509(xebcb947632419313),
-    .x8325113dbca7183e(xe0c70f1c90bc973f),
+    .x0cbe05e5621f7509(x88e87f20747d392b),
+    .x8325113dbca7183e(x07f2898333745af3),
     .xec1ff14a19efc903(xa98993e5edb54ae7),
     .xc146d8be7e055e6e(x71299884ebdc7ac9),
     .x611b63c79e82703d(x2d93c86c700dfff0),
@@ -2073,320 +2914,6 @@ module xcd6854272ab729af #(
 
   always @(posedge forever_cpuclk or negedge cpurst_b) begin
     if (!cpurst_b)
-      xebcb947632419313 <= 1'b0;
-    else if (x3ecea58734b28935)
-      xebcb947632419313 <= 1'b1;
-    else if (xebcb947632419313 && !edge_dma_busy)
-      xebcb947632419313 <= 1'b0;
-  end
-
-  always @(posedge forever_cpuclk or negedge cpurst_b) begin
-    if (!cpurst_b) begin
-      xc10fa1c41c1c8c94 <= 1'b0;
-      xccaa3ec36b04f0a2 <= 1'b0;
-      x3df59dceeb210ab7[VALUE_WIDTH-1:0] <= {VALUE_WIDTH{1'b0}};
-      x56a942d3d78a4c45[VALUE_WIDTH-1:0] <= {VALUE_WIDTH{1'b0}};
-      x3a3aa7877aca944a[VALUE_WIDTH-1:0] <= {VALUE_WIDTH{1'b0}};
-      xfd0361660bfac761[15:0] <= 16'd0;
-      xb4e46fe7f8e4e74e[15:0] <= 16'd0;
-      x86c9398a1d3fe366[31:0] <= 32'd0;
-      x3d815fb7bbd97c57[15:0] <= 16'd0;
-      xeba2da93377a4397[15:0] <= 16'd0;
-      x940756aad69c20e4[15:0] <= 16'd0;
-      x14d515d84b609cff[15:0] <= 16'd2;
-      x4a84d3dd1b7c0b1c <= 1'b0;
-      xa012025b7a0010aa[31:0] <= 32'd64;
-      x9687c307dcae27fa[31:0] <= 32'd64;
-      x00a35527e7fcdd3b[31:0] <= 32'd0;
-      x25468a78d543d494[31:0] <= 32'd0;
-      x67bee9dadd54ed3c[15:0] <= 16'd0;
-      xfcc45d8173dbe960[15:0] <= 16'd0;
-      xf961e0aef073d557[15:0] <= 16'd0;
-      x74ffc12580db3499[15:0] <= 16'd0;
-      xdf79dd48637b3d63[15:0] <= 16'd0;
-      x69a490ecf303f2cd[15:0] <= 16'd0;
-      x0c4e8a08bd0f84ca[15:0] <= 16'd8;
-      x99abdf846bbbac3c[15:0] <= 16'd0;
-      xa323d61783e7f7ad[15:0] <= 16'd0;
-      x27dd46fe5378e6e2[15:0] <= 16'd0;
-      x1e9adfb52cb05833 <= 1'b0;
-      x967950fc771e9fd9 <= 1'b0;
-      xeb4af388c164b7c9 <= 1'b0;
-      xc94bd7b016746b02 <= 1'b0;
-      x6aa83a144a9ee600 <= 1'b0;
-      x28a6a2e37087b94b <= 1'b0;
-      x9d23c949b06cd571[2:0] <= 3'd0;
-      x0590a1e8a09f1565 <= 1'b0;
-      x5e744ad62e1e63a6[2:0] <= 3'd0;
-      x0b343c8d79888d72[2:0] <= 3'd0;
-      x70014caaff819820[2:0] <= 3'd0;
-      x841b66f178befe9c[15:0] <= 16'd0;
-    end else begin
-      if (xa5b4834c7c7b06db) begin
-        xc10fa1c41c1c8c94 <=
-          (xadedae645c79d893[15:0] != 16'b0) &&
-          (!x0d86ec0961201120 ||
-           ((x833327f1efd9a97d[31:0] != 32'b0) &&
-            (x92d854a06241d314[31:0] != 32'b0) &&
-            (x833327f1efd9a97d[2:0] == 3'b0) &&
-            (x92d854a06241d314[2:0] == 3'b0) &&
-            (x833327f1efd9a97d[31:0] <=
-             x92d854a06241d314[31:0]) &&
-            (x5710f5db37cd31bb[63:32] != 32'b0) &&
-            (x7ff0f0284328cedf[63:32] != 32'b0)));
-        x3df59dceeb210ab7[VALUE_WIDTH-1:0] <=
-          x49b8151edadd15e8[VALUE_WIDTH-1:0];
-        x56a942d3d78a4c45[VALUE_WIDTH-1:0] <=
-          x49b8151edadd15e8[VALUE_WIDTH-1:0];
-        x3a3aa7877aca944a[VALUE_WIDTH-1:0] <=
-          x49b8151edadd15e8[VALUE_WIDTH-1:0];
-        xfd0361660bfac761[15:0] <= x50cfa617399940c0[15:0];
-        xb4e46fe7f8e4e74e[15:0] <=
-          xadedae645c79d893[15:0];
-        x86c9398a1d3fe366[31:0] <=
-          (x0d86ec0961201120
-           ? {16'b0, x7360774b2383e774[15:0]}
-           : {16'b0, xadedae645c79d893[15:0]}) *
-          (x0d86ec0961201120
-           ? {17'b0, x833327f1efd9a97d[18:4]}
-           : {27'b0, xe0612209e186717b[4:1]});
-        x3d815fb7bbd97c57[15:0] <= 16'd0;
-        xeba2da93377a4397[15:0] <=
-          x0d86ec0961201120 ? x5710f5db37cd31bb[47:32] :
-                                    xadedae645c79d893[15:0];
-        x4a84d3dd1b7c0b1c <= x0d86ec0961201120;
-        x940756aad69c20e4[15:0] <= 16'd0;
-        x14d515d84b609cff[15:0] <= 16'd2;
-        xa012025b7a0010aa[31:0] <=
-          x0d86ec0961201120
-          ? x833327f1efd9a97d[31:0]
-          : {24'b0, xe0612209e186717b[4:0], 3'b000};
-        x9687c307dcae27fa[31:0] <=
-          x0d86ec0961201120
-          ? x5710f5db37cd31bb[31:0]
-          : {24'b0, xe0612209e186717b[4:0], 3'b000};
-        x00a35527e7fcdd3b[31:0] <=
-          x0d86ec0961201120 ? x7ff0f0284328cedf[31:0] : 32'd0;
-        x25468a78d543d494[31:0] <= 32'd0;
-        x67bee9dadd54ed3c[15:0] <= 16'd0;
-        xfcc45d8173dbe960[15:0] <= 16'd0;
-        xf961e0aef073d557[15:0] <= 16'd0;
-        x74ffc12580db3499[15:0] <= 16'd0;
-        xdf79dd48637b3d63[15:0] <= x50cfa617399940c0[15:0];
-        x69a490ecf303f2cd[15:0] <= x50cfa617399940c0[15:0];
-        x0c4e8a08bd0f84ca[15:0] <=
-          x0d86ec0961201120
-          ? x92d854a06241d314[18:3]
-          : {11'b0, xe0612209e186717b[4:0]};
-        x99abdf846bbbac3c[15:0] <= 16'd0;
-        xa323d61783e7f7ad[15:0] <= 16'd0;
-        x27dd46fe5378e6e2[15:0] <= 16'd0;
-        x1e9adfb52cb05833 <= 1'b0;
-        x967950fc771e9fd9 <= 1'b0;
-        xeb4af388c164b7c9 <= 1'b0;
-        xc94bd7b016746b02 <= 1'b0;
-        x6aa83a144a9ee600 <= 1'b0;
-      end
-
-      if (x6f60cf96ec544c8b) begin
-        x25468a78d543d494[31:0] <=
-          x25468a78d543d494[31:0] + 32'd1;
-        if (x99abdf846bbbac3c[15:0] == 16'd0)
-          x27dd46fe5378e6e2[15:0] <=
-            x27dd46fe5378e6e2[15:0] + 16'd1;
-        if (x898060801c36ae98) begin
-          x99abdf846bbbac3c[15:0] <= 16'd0;
-          if (xf961e0aef073d557[15:0] ==
-              (xb4e46fe7f8e4e74e[15:0] - 16'd1)) begin
-            xf961e0aef073d557[15:0] <= 16'd0;
-            xdf79dd48637b3d63[15:0] <=
-              xfd0361660bfac761[15:0];
-          end else begin
-            xf961e0aef073d557[15:0] <=
-              xf961e0aef073d557[15:0] + 16'd1;
-            xdf79dd48637b3d63[15:0] <=
-              xdf79dd48637b3d63[15:0] +
-              x0c4e8a08bd0f84ca[15:0];
-          end
-        end else begin
-          x99abdf846bbbac3c[15:0] <=
-            x99abdf846bbbac3c[15:0] +
-            x14d515d84b609cff[15:0];
-        end
-        if ((x25468a78d543d494[31:0] + 32'd1) >=
-            x86c9398a1d3fe366[31:0])
-          xc10fa1c41c1c8c94 <= 1'b0;
-        if (xcb54ceb5161e51a5) begin
-          x940756aad69c20e4[15:0] <= 16'd0;
-          if (x4a84d3dd1b7c0b1c) begin
-            if (x3d815fb7bbd97c57[15:0] ==
-                (xeba2da93377a4397[15:0] - 16'd1)) begin
-              x3d815fb7bbd97c57[15:0] <= 16'd0;
-              x3a3aa7877aca944a[VALUE_WIDTH-1:0] <=
-                x3a3aa7877aca944a[VALUE_WIDTH-1:0] +
-                {{(VALUE_WIDTH-32){1'b0}},
-                  x00a35527e7fcdd3b[31:0]};
-              x56a942d3d78a4c45[VALUE_WIDTH-1:0] <=
-                x3a3aa7877aca944a[VALUE_WIDTH-1:0] +
-                {{(VALUE_WIDTH-32){1'b0}},
-                  x00a35527e7fcdd3b[31:0]};
-            end else begin
-              x3d815fb7bbd97c57[15:0] <=
-                x3d815fb7bbd97c57[15:0] + 16'd1;
-              x56a942d3d78a4c45[VALUE_WIDTH-1:0] <=
-                x56a942d3d78a4c45[VALUE_WIDTH-1:0] +
-                {{(VALUE_WIDTH-32){1'b0}},
-                  x9687c307dcae27fa[31:0]};
-            end
-          end else begin
-            x56a942d3d78a4c45[VALUE_WIDTH-1:0] <=
-              x56a942d3d78a4c45[VALUE_WIDTH-1:0] +
-              {{(VALUE_WIDTH-32){1'b0}},
-                x9687c307dcae27fa[31:0]};
-          end
-        end else begin
-          x940756aad69c20e4[15:0] <=
-            x940756aad69c20e4[15:0] +
-            x14d515d84b609cff[15:0];
-        end
-      end
-
-      if (xa81b6d01a916fd91) begin
-        if ((xa323d61783e7f7ad[15:0] +
-             x14d515d84b609cff[15:0]) ==
-            x0c4e8a08bd0f84ca[15:0]) begin
-          x67bee9dadd54ed3c[15:0] <=
-            x67bee9dadd54ed3c[15:0] + 16'd1;
-          xa323d61783e7f7ad[15:0] <= 16'd0;
-        end else begin
-          xa323d61783e7f7ad[15:0] <=
-            xa323d61783e7f7ad[15:0] +
-            x14d515d84b609cff[15:0];
-        end
-      end
-
-      xccaa3ec36b04f0a2 <= xa98993e5edb54ae7;
-
-      if (x602e9f658ee0a705 && x1e9adfb52cb05833)
-        x1e9adfb52cb05833 <= 1'b0;
-
-      if (x8aed0447c1d243ac) begin
-        x1e9adfb52cb05833 <= 1'b1;
-        
-        
-        
-        if (x74ffc12580db3499[15:0] ==
-            (xb4e46fe7f8e4e74e[15:0] - 16'd1)) begin
-          x74ffc12580db3499[15:0] <= 16'd0;
-          x69a490ecf303f2cd[15:0] <= xfd0361660bfac761[15:0];
-        end else begin
-          x74ffc12580db3499[15:0] <=
-            x74ffc12580db3499[15:0] + 16'd1;
-          x69a490ecf303f2cd[15:0] <=
-            x69a490ecf303f2cd[15:0] +
-            x0c4e8a08bd0f84ca[15:0];
-        end
-      end
-
-      if (x74ba3818ee09fe1a && tensor_wsld_circular_ready) begin
-        x967950fc771e9fd9 <= 1'b1;
-        x28a6a2e37087b94b <= x1717ba5d108e5a7b;
-      end
-
-      if (xc2dd65b731876ef6 && tensor_sld_circular_ready)
-        xeb4af388c164b7c9 <= 1'b1;
-
-      if (x296320c869dd6657) begin
-        xc94bd7b016746b02 <= 1'b1;
-        if (x74ffc12580db3499[15:0] ==
-            (xb4e46fe7f8e4e74e[15:0] - 16'd1)) begin
-          x74ffc12580db3499[15:0] <= 16'd0;
-          x69a490ecf303f2cd[15:0] <= xfd0361660bfac761[15:0];
-        end else begin
-          x74ffc12580db3499[15:0] <=
-            x74ffc12580db3499[15:0] + 16'd1;
-          x69a490ecf303f2cd[15:0] <=
-            x69a490ecf303f2cd[15:0] + x0c4e8a08bd0f84ca[15:0];
-        end
-      end
-
-      if (xeb4af388c164b7c9 && xc94bd7b016746b02 &&
-          x061b31851cbc5468) begin
-        xc94bd7b016746b02 <= 1'b0;
-        xfcc45d8173dbe960[15:0] <=
-          xfcc45d8173dbe960[15:0] + 16'd1;
-        if (x8b385d0de4fa975d)
-          xeb4af388c164b7c9 <= 1'b0;
-      end
-
-      if (x18208215fa58391f) begin
-        x6aa83a144a9ee600 <= 1'b1;
-        x841b66f178befe9c[15:0] <= x69a490ecf303f2cd[15:0];
-        x9d23c949b06cd571[2:0] <= 3'd0;
-        x0590a1e8a09f1565 <= 1'b0;
-        x5e744ad62e1e63a6[2:0] <= 3'd0;
-        x0b343c8d79888d72[2:0] <= 3'd0;
-        x70014caaff819820[2:0] <= 3'd0;
-        if (x74ffc12580db3499[15:0] ==
-            (xb4e46fe7f8e4e74e[15:0] - 16'd1)) begin
-          x74ffc12580db3499[15:0] <= 16'd0;
-          x69a490ecf303f2cd[15:0] <= xfd0361660bfac761[15:0];
-        end else begin
-          x74ffc12580db3499[15:0] <=
-            x74ffc12580db3499[15:0] + 16'd1;
-          x69a490ecf303f2cd[15:0] <=
-            x69a490ecf303f2cd[15:0] +
-            x0c4e8a08bd0f84ca[15:0];
-        end
-      end
-
-      if (x31de608deb9709d8)
-        x9d23c949b06cd571[2:0] <=
-          x9d23c949b06cd571[2:0] + 3'd1;
-      if (x967950fc771e9fd9 && x061b31851cbc5468)
-        x0590a1e8a09f1565 <= 1'b1;
-      if (x0a370ce6f3a47eb3)
-        x5e744ad62e1e63a6[2:0] <= x5e744ad62e1e63a6[2:0] + 3'd1;
-      if (x6aa83a144a9ee600 && x602e9f658ee0a705 &&
-          (x0b343c8d79888d72[2:0] < 3'd4))
-        x0b343c8d79888d72[2:0] <= x0b343c8d79888d72[2:0] + 3'd1;
-      if (x6aa83a144a9ee600 && x92883ee9b6249820 &&
-          (x70014caaff819820[2:0] < 3'd4))
-        x70014caaff819820[2:0] <= x70014caaff819820[2:0] + 3'd1;
-
-      if (xfa19463ded22ead8) begin
-        x6aa83a144a9ee600 <= 1'b0;
-        xfcc45d8173dbe960[15:0] <=
-          xfcc45d8173dbe960[15:0] + 16'd1;
-        if (x8b385d0de4fa975d)
-          x967950fc771e9fd9 <= 1'b0;
-      end
-
-      
-      
-      if (!x967950fc771e9fd9 && x1e9adfb52cb05833 &&
-          x602e9f658ee0a705 &&
-          (x67bee9dadd54ed3c !=
-           xfcc45d8173dbe960)) begin
-        xfcc45d8173dbe960[15:0] <=
-          xfcc45d8173dbe960[15:0] + 16'd1;
-      end
-
-      if (x072ffbfd34bcbe96 &&
-          ((xfcc45d8173dbe960[15:0] +
-            ((!x967950fc771e9fd9 && x1e9adfb52cb05833 &&
-              x602e9f658ee0a705 &&
-              (x67bee9dadd54ed3c !=
-               xfcc45d8173dbe960)) ?
-             16'd1 : 16'd0)) >=
-           x67bee9dadd54ed3c[15:0]) &&
-          !xc10fa1c41c1c8c94 && !xccaa3ec36b04f0a2)
-        x1e9adfb52cb05833 <= 1'b0;
-    end
-  end
-
-  always @(posedge forever_cpuclk or negedge cpurst_b) begin
-    if (!cpurst_b)
       x38b4242fe2e03bd0 <= 1'b0;
     else begin
       if (x9b1e17b4b008b9fd)
@@ -2454,197 +2981,82 @@ module xcd6854272ab729af #(
     .core_rvalid(xe33f8d82e982ac53)
   );
 
-  assign x072ffbfd34bcbe96 =
-    (xb4e46fe7f8e4e74e != 16'd0) &&
-    (x0c4e8a08bd0f84ca != 16'd0);
-  assign x7360774b2383e774 =
-    x5710f5db37cd31bb[63:32] * x7ff0f0284328cedf[63:32];
-  assign x314f6fd920746846 =
-    x67bee9dadd54ed3c - xfcc45d8173dbe960;
-  assign xf2a8e6a30e3febb5 =
-    (x67bee9dadd54ed3c == xfcc45d8173dbe960);
-  assign x02a16afe25904572 =
-    x072ffbfd34bcbe96 &&
-    ((x27dd46fe5378e6e2 -
-      xfcc45d8173dbe960) >=
-     xb4e46fe7f8e4e74e);
-  assign xa81b6d01a916fd91 = xc741cb8afdee49ee;
-  assign x9134619cc9faf5b1 = xcd2ec0e04a1dd2d4 &&
-                                       !x0d86ec0961201120 &&
-                                       !x89d1bee017426876;
-  assign x465aed049d9ae6eb = xcd2ec0e04a1dd2d4 &&
-                                        x0d86ec0961201120 &&
-                                        !x89d1bee017426876;
-  xd1a6d50fd76eab29 #(
+  x8023aa87e17e21fc #(
     .ADDR_WIDTH(PC_WIDTH),
     .VALUE_WIDTH(VALUE_WIDTH)
-  ) x06173ed2520df512 (
+  ) xeff51a4df8181412 (
     .forever_cpuclk(forever_cpuclk),
     .cpurst_b(cpurst_b),
-    .x08570e3f0c0051d4(x465aed049d9ae6eb),
-    .x632ec9a09585d069(x49b8151edadd15e8),
-    .x2ca003cfe0628d44(xe34a540e68360635),
-    .xf2d6068abb876836(x833327f1efd9a97d[31:0]),
-    .x356ad5d075f1ef69(x5710f5db37cd31bb[31:0]),
-    .x01641ebaf92fefca(x7ff0f0284328cedf[31:0]),
-    .xadbe1f44efe5c1d8(x5710f5db37cd31bb[63:32]),
-    .x0f9d2b07c5a98e1e(x7ff0f0284328cedf[63:32]),
-    .xf9e7cdd65a1f9457(x7360774b2383e774[31:0]),
-    .x146a4fec530c3c75(edge_dma_busy),
-    .x278ff873c0358104(edge_dma_start_req),
-    .xf8eff2820f18520c(xcd2ec0e04a1dd2d4),
-    .xbb005106bf06e35c(x6f60cf96ec544c8b),
-    .x83f20ae9351715e6(x605235f7b67bcbe8),
-    .x9d873d9c0989e1e3(x3032276c21428ee5),
-    .xc2d2a2cb734f8027(x0722f6d11affe204),
-    .xfd4137e32710bcc7(x23e08b584de63e30),
-    .x785d1dc2b63cc926(x7947c0c8ab50784d)
+    .mem_region_base(x0e05b98433f84421),
+    .xbd08b44e4d152b49(edge_dma_start_req),
+    .xac31e807f1e3ea4d(edge_dma_start_addr_src),
+    .xf416b90c877ae298(edge_dma_start_addr_dst),
+    .x2140f42156df26eb(edge_dma_start_len),
+    .xde16004772cbc0a5(x85cc7ce3e2dd70b4),
+    .x591f7c1bbf79578f(xf9c7fc31420555da),
+    .xdfe6f6548283169c(xba768e92973ed2bc),
+    .xb4387f91ad6d08fb(x4ce600720ae03e3c),
+    .xcd2ec0e04a1dd2d4(xcd2ec0e04a1dd2d4),
+    .xa5b4834c7c7b06db(xa5b4834c7c7b06db),
+    .x49b8151edadd15e8(x49b8151edadd15e8),
+    .xe34a540e68360635(xe34a540e68360635),
+    .x833327f1efd9a97d(x833327f1efd9a97d),
+    .x92d854a06241d314(x92d854a06241d314),
+    .xadedae645c79d893(xadedae645c79d893),
+    .x0d86ec0961201120(x0d86ec0961201120),
+    .x89d1bee017426876(x89d1bee017426876),
+    .x5710f5db37cd31bb(x5710f5db37cd31bb),
+    .x7ff0f0284328cedf(x7ff0f0284328cedf),
+    .edge_dma_busy(edge_dma_busy),
+    .xe1479181ae378b69(xe1479181ae378b69),
+    .xc741cb8afdee49ee(xc741cb8afdee49ee),
+    .xa98993e5edb54ae7(xa98993e5edb54ae7),
+    .x8e0145cd7db1adf5(x8e0145cd7db1adf5),
+    .xea5d726b74f362d6(xea5d726b74f362d6),
+    .xa360be4355aab627(xa360be4355aab627),
+    .x3593a42fd284a893(x3593a42fd284a893),
+    .xb5f95e0c3d2dab74(xb5f95e0c3d2dab74),
+    .x74ba3818ee09fe1a(x74ba3818ee09fe1a),
+    .x1717ba5d108e5a7b(x1717ba5d108e5a7b),
+    .xda6ac29095382f7e(xda6ac29095382f7e),
+    .xc2dd65b731876ef6(xc2dd65b731876ef6),
+    .x4314fc27898e1000(x4314fc27898e1000),
+    .xd6b62d28574606e8(xd6b62d28574606e8),
+    .x3908be0a049ddff3(x3908be0a049ddff3),
+    .x463c89d027af8120(x463c89d027af8120),
+    .x9a2bef20fdfa0953(x9a2bef20fdfa0953),
+    .x602e9f658ee0a705(x602e9f658ee0a705),
+    .x061b31851cbc5468(x061b31851cbc5468),
+    .xe0612209e186717b(xe0612209e186717b),
+    .x92883ee9b6249820(x92883ee9b6249820),
+    .dma_start_ready(x2852f9be9ce4eb8e),
+    .dma_start_circular_ready(xda1d7ec6a575e61e),
+    .dma_sync_done(xf75b017f20749985),
+    .x8633d03b2985363c(x88e87f20747d392b),
+    .xa1c579daceafbd40(x92b47f7432600714),
+    .xd18a491d0739ff12(x3b38947a999ec294),
+    .x3ecea58734b28935(x3ecea58734b28935),
+    .x4a26c488a3863d11(xc39c7c0ba25e84c0),
+    .x268abc4bdd6db0e4(xe27163309334a3cf),
+    .xa4493b9360c04cfe(xa4493b9360c04cfe),
+    .xf253e04eaeac629d(x07f2898333745af3),
+    .x736cc918b4bdb02d(x5158d3d1f3e5295d),
+    .xd295b6098abb3b77(x581eb65837c93727),
+    .tensor_wld_cmd_ready(tensor_wld_cmd_ready),
+    .tensor_sld_cmd_ready(tensor_sld_cmd_ready),
+    .tensor_wld_circular_ready(tensor_wld_circular_ready),
+    .tensor_wsld_circular_ready(tensor_wsld_circular_ready),
+    .tensor_sld_circular_ready(tensor_sld_circular_ready),
+    .tensor_sync_stall(tensor_sync_stall),
+    .x8f824afeb2fdbf9f(x8f824afeb2fdbf9f),
+    .xcd60b9d9b2c1ec72(xcd60b9d9b2c1ec72),
+    .x96bea65d6b252aa6(x96bea65d6b252aa6),
+    .x5c45a47882fa134f(x5c45a47882fa134f),
+    .x31aa64f7f1786a48(x31aa64f7f1786a48),
+    .xedb0032dd496001b(xedb0032dd496001b),
+    .x5d1f20971f34a856(x5d1f20971f34a856),
+    .x32b703970cc90cb9(x32b703970cc90cb9)
   );
-  assign xeb2bfd493db078e7 =
-    xc10fa1c41c1c8c94 || xa98993e5edb54ae7 ||
-    (x67bee9dadd54ed3c != xfcc45d8173dbe960);
-  assign xe0c70f1c90bc973f =
-    xc10fa1c41c1c8c94 && x072ffbfd34bcbe96 &&
-    (!x02a16afe25904572 ||
-     (x99abdf846bbbac3c != 16'd0)) &&
-    (x25468a78d543d494 <
-     x86c9398a1d3fe366) &&
-    !edge_dma_start_req && !xcd2ec0e04a1dd2d4;
-  assign x6f60cf96ec544c8b =
-    xe0c70f1c90bc973f && xe1479181ae378b69;
-  assign x2879ade6e3ee1d13 = xdf79dd48637b3d63[15:0];
-  assign x27f710376b9ad62d = x69a490ecf303f2cd[15:0];
-  assign x3c17cc0267f3bc0c =
-    x56a942d3d78a4c45[VALUE_WIDTH-1:0] +
-    {{(VALUE_WIDTH-19){1'b0}},
-      x940756aad69c20e4[15:0], 3'b000};
-  assign xeced117f92d7d663[PC_WIDTH-1:0] =
-    xe34a540e68360635[PC_WIDTH-1:0] - x0e05b98433f84421;
-  assign x50cfa617399940c0[15:0] =
-    xeced117f92d7d663[18:3];
-  assign xbaf70943a5679604 =
-    x0e05b98433f84421 +
-    {{(PC_WIDTH-19){1'b0}},
-      (x2879ade6e3ee1d13[15:0] +
-       x99abdf846bbbac3c[15:0]), 3'b000};
-  assign x898060801c36ae98 =
-    (x99abdf846bbbac3c[15:0] +
-     x14d515d84b609cff[15:0]) ==
-    x0c4e8a08bd0f84ca[15:0];
-  assign xcb54ceb5161e51a5 =
-    (x940756aad69c20e4[15:0] +
-     x14d515d84b609cff[15:0]) ==
-    xa012025b7a0010aa[18:3];
-  assign x8b385d0de4fa975d =
-    !xc10fa1c41c1c8c94 && !xa98993e5edb54ae7 &&
-    ((xfcc45d8173dbe960[15:0] + 16'd1) >=
-     x67bee9dadd54ed3c[15:0]);
-  assign tensor_wld_circular_ready =
-    tensor_wld_cmd_ready && x072ffbfd34bcbe96 &&
-    !xf2a8e6a30e3febb5 &&
-    (x0c4e8a08bd0f84ca[15:0] ==
-     {11'b0, xe0612209e186717b[4:0]});
-  assign tensor_wsld_circular_ready = x072ffbfd34bcbe96 &&
-                                      !x967950fc771e9fd9 &&
-                                      !x1e9adfb52cb05833 &&
-                                      !x3908be0a049ddff3 &&
-                                      x463c89d027af8120 &&
-                                      x9a2bef20fdfa0953 &&
-                                      (x0c4e8a08bd0f84ca == 16'd34);
-  assign tensor_sld_circular_ready = x072ffbfd34bcbe96 &&
-                                     !xeb4af388c164b7c9 &&
-                                     !x967950fc771e9fd9 &&
-                                     !x1e9adfb52cb05833 &&
-                                     (x0c4e8a08bd0f84ca == 16'd2);
-  assign tensor_wld_cmd_ready = x463c89d027af8120 &&
-                                !x967950fc771e9fd9 &&
-                                !xeb4af388c164b7c9;
-  assign tensor_sld_cmd_ready = x9a2bef20fdfa0953 &&
-                                !x967950fc771e9fd9 &&
-                                !xeb4af388c164b7c9;
-  assign tensor_sync_stall = x3908be0a049ddff3 || x967950fc771e9fd9 ||
-                             xeb4af388c164b7c9;
-  assign x296320c869dd6657 = xeb4af388c164b7c9 &&
-                                      !xc94bd7b016746b02 &&
-                                      !xf2a8e6a30e3febb5 &&
-                                      x9a2bef20fdfa0953;
-  assign x8aed0447c1d243ac = xea5d726b74f362d6 &&
-                                      tensor_wld_circular_ready;
-  assign x18208215fa58391f = x967950fc771e9fd9 &&
-                                   !x6aa83a144a9ee600 &&
-                                   !xf2a8e6a30e3febb5;
-  assign x31de608deb9709d8 = x6aa83a144a9ee600 &&
-                                  (x9d23c949b06cd571[2:0] < 3'd4) &&
-                                  (x9d23c949b06cd571[2:0] <=
-                                   x70014caaff819820[2:0]) &&
-                                  x9a2bef20fdfa0953;
-  assign x0a370ce6f3a47eb3 = x6aa83a144a9ee600 &&
-                                  x0590a1e8a09f1565 &&
-                                  (x5e744ad62e1e63a6[2:0] < 3'd4) &&
-                                  (x5e744ad62e1e63a6[2:0] <
-                                   x9d23c949b06cd571[2:0]) &&
-                                  (x5e744ad62e1e63a6[2:0] <=
-                                   x70014caaff819820[2:0]) &&
-                                  x463c89d027af8120;
-  assign xfa19463ded22ead8 = x6aa83a144a9ee600 &&
-                                     (x0b343c8d79888d72[2:0] == 3'd4) &&
-                                     (x70014caaff819820[2:0] == 3'd4);
-  assign x8f824afeb2fdbf9f =
-    x0a370ce6f3a47eb3 ?
-      (x841b66f178befe9c + 16'd2 +
-       {x5e744ad62e1e63a6[2:0], 3'b000}) :
-    x8aed0447c1d243ac ? x27f710376b9ad62d :
-                                  xb5f95e0c3d2dab74;
-  assign xcd60b9d9b2c1ec72 =
-    (x8e0145cd7db1adf5 && !x967950fc771e9fd9) ||
-    (x0a370ce6f3a47eb3 && !x28a6a2e37087b94b) ||
-    (x8aed0447c1d243ac && !xa360be4355aab627);
-  assign x96bea65d6b252aa6 =
-    (xa360be4355aab627 && !x967950fc771e9fd9) ||
-    (x0a370ce6f3a47eb3 && x28a6a2e37087b94b);
-  assign x5c45a47882fa134f = x3593a42fd284a893 &&
-                                     !x967950fc771e9fd9;
-  assign x31aa64f7f1786a48 = x296320c869dd6657 ?
-                                    x27f710376b9ad62d :
-                                    x31de608deb9709d8 ?
-                                    x841b66f178befe9c :
-                                    xd6b62d28574606e8;
-  assign xedb0032dd496001b = x296320c869dd6657 ||
-                                   x31de608deb9709d8 ||
-                                   (xda6ac29095382f7e && !x967950fc771e9fd9 &&
-                                    !xeb4af388c164b7c9);
-  assign x5d1f20971f34a856 = x967950fc771e9fd9 ?
-                                      (x9d23c949b06cd571[2:0] != 3'd0) :
-                                      x4314fc27898e1000;
-  assign x32b703970cc90cb9 = x296320c869dd6657;
-
-  assign x92b47f7432600714 = !edge_dma_busy && !edge_dma_start_req &&
-                                  !xcd2ec0e04a1dd2d4 &&
-                                  !x6f60cf96ec544c8b &&
-                                  !x605235f7b67bcbe8;
-  assign x3b38947a999ec294 = !edge_dma_busy && !edge_dma_start_req &&
-                                 !xebcb947632419313 &&
-                                 !xcd2ec0e04a1dd2d4 &&
-                                 !xeb2bfd493db078e7 &&
-                                 !x7947c0c8ab50784d;
-  assign x3ecea58734b28935 = edge_dma_start_req || x9134619cc9faf5b1 ||
-                              x605235f7b67bcbe8 ||
-                              x85cc7ce3e2dd70b4;
-  assign xc39c7c0ba25e84c0 = edge_dma_start_req ?
-    edge_dma_start_addr_src[PC_WIDTH-1:0] :
-    (x9134619cc9faf5b1 ? x49b8151edadd15e8[PC_WIDTH-1:0] :
-      (x605235f7b67bcbe8 ? x3032276c21428ee5[PC_WIDTH-1:0] :
-                                  xf9c7fc31420555da[PC_WIDTH-1:0]));
-  assign xe27163309334a3cf = edge_dma_start_req ?
-    edge_dma_start_addr_dst[PC_WIDTH-1:0] :
-    (x9134619cc9faf5b1 ? xe34a540e68360635[PC_WIDTH-1:0] :
-      (x605235f7b67bcbe8 ? x0722f6d11affe204[PC_WIDTH-1:0] :
-                                  xba768e92973ed2bc[PC_WIDTH-1:0]));
-  assign xa4493b9360c04cfe = edge_dma_start_req ?
-    edge_dma_start_len[31:0] :
-    (x9134619cc9faf5b1 ? x833327f1efd9a97d[31:0] :
-      (x605235f7b67bcbe8 ? x23e08b584de63e30[31:0] :
-                                  x4ce600720ae03e3c[31:0]));
 
   xec563d799211ec67 #(
     .ADDR_WIDTH(PC_WIDTH),
@@ -2991,20 +3403,9 @@ module xcd6854272ab729af #(
     .cmd_epoch(x599405ff71868a2d),
     .cmd_capture_valid(xc0c73fdb55d001a1),
     .cmd_capture_value(xc95fe33dc5083fac),
-    .dma_start_ready(!edge_dma_busy && !edge_dma_start_req &&
-                     !xccaa3ec36b04f0a2 &&
-                     !x7947c0c8ab50784d &&
-                     !x6f60cf96ec544c8b &&
-                     !x605235f7b67bcbe8),
-    .dma_start_circular_ready(!edge_dma_busy && !edge_dma_start_req &&
-                              !xc10fa1c41c1c8c94 &&
-                              !xccaa3ec36b04f0a2 &&
-                              !x7947c0c8ab50784d),
-    .dma_sync_done(!edge_dma_busy && !edge_dma_start_req &&
-                   !xebcb947632419313 &&
-                   !xccaa3ec36b04f0a2 &&
-                   !x6f60cf96ec544c8b &&
-                   !x7947c0c8ab50784d),
+    .dma_start_ready(x2852f9be9ce4eb8e),
+    .dma_start_circular_ready(xda1d7ec6a575e61e),
+    .dma_sync_done(xf75b017f20749985),
     .tensor_cmd_ready(tensor_cmd_ready),
     .tensor_start_ready(tensor_start_ready),
     .tensor_wld_cmd_ready(tensor_wld_cmd_ready),
@@ -3686,7 +4087,6 @@ module xcd6854272ab729af #(
     .x908aa19ab8d7885e(x908aa19ab8d7885e),
     .xab8ff766dd7ba0b2(xb019bd082bb8a404),
     .x0e2bd18ccc859f22(x599405ff71868a2d),
-    .x47a26014700ff768(x47a26014700ff768),
     .xb5f95e0c3d2dab74(x8f824afeb2fdbf9f[15:0]),
     .x8e0145cd7db1adf5(xcd60b9d9b2c1ec72),
     .xa360be4355aab627(x96bea65d6b252aa6),
@@ -3755,11 +4155,10 @@ module xcd6854272ab729af #(
     .dma_start_len(xa4493b9360c04cfe[31:0]),
     .dma_start_req(x3ecea58734b28935),
     .x146a4fec530c3c75(edge_dma_busy),
-    .xf253e04eaeac629d(xe0c70f1c90bc973f),
+    .xf253e04eaeac629d(x07f2898333745af3),
     .xe1479181ae378b69(xe1479181ae378b69),
-    .x736cc918b4bdb02d(x3c17cc0267f3bc0c[PC_WIDTH-1:0]),
-    .xd295b6098abb3b77(
-      xbaf70943a5679604[18:3]),
+    .x736cc918b4bdb02d(x5158d3d1f3e5295d),
+    .xd295b6098abb3b77(x581eb65837c93727),
     .xc741cb8afdee49ee(xc741cb8afdee49ee),
     .xa98993e5edb54ae7(xa98993e5edb54ae7),
     .xb6a05cf7434e064a(xb6a05cf7434e064a[7:0]),
@@ -5864,7 +6263,7 @@ xfb8948c55080fb96 x981085af563020f0 (
   .x967f789db1078ac2       (xdc606c3719306402)
 );
 
-xa6a92dc368aa4bcc x0fb0d7c433924a1e (
+x448b47bfbb011c0b x363a478f7f72db52 (
   .clk                 (clk),
   .rst_b               (cpurst_b),
   .x5b74621c47643bf6       (x44a01e6d9a258a56),
@@ -6809,14 +7208,19 @@ end
 endmodule
 
 
-module xb219762673f28405(
+module x2a5091ad5e6ef946(
   clk, cpurst_b, x22d4589045c4d1a8, x2361e4ca94fb6668, x6ed526ae4184fee3, x6f8eba07449aa14e,
-  x8b7215efd0c1b5b0, x7ebb4d3f8798d466, x7d88bd85a9438b1f, x14763d99de7c1f5a,
+  x7ebb4d3f8798d466, x7d88bd85a9438b1f, x14763d99de7c1f5a,
   x1c6e4a06ede759fa, xdfb0c5b9a35fe08b, xf178fe13ba72192a,
   x51f7833b3f150823, xdea24a9dcf4995ff, x461cf36690126388,
   x28fd586b898678bd, x05b96fb67b59f034, x07fa53e44d324a4b,
   xadb712b1acd54bff, x967f789db1078ac2, xe94e2d784c071f58,
   xabd263c88a866189, xb74f40342a35442e, x971be0a4d31095b8, xf1d89bdb86f0b8e6,
+  xdf49dcbb0fe0093f, xb2903c2f5b271507,
+  xd596e4a8e950d462, x65dfbc73612c53eb,
+  xc196d05b39dea2b8, x9c2c3b499397d72a,
+  x6966db1d206c13cf, x2b14d4d46e0c4d02,
+  xb73410643116c4aa, x8b821ab19f3f1427,
   x5acf3cdb4c97744a, xdd4291644b41620f,
   x47822ea4cd19b7b2,
   x48c7179eed5020c7, x785d1dc2b63cc926, x4e124931f57ab5eb, xdd7689623f764c8b, x5e9760892503d5c1, xb1ad2b837fb620af, xe2fb40e59a2d368c,
@@ -6837,6 +7241,7 @@ parameter DATA_WIDTH = 64;
 parameter xb9377408880f7051 = 16;
 parameter xf33a3d23b7d86cb5 = 4;
 parameter x16a12c273dd15520 = 16;
+parameter xfe21ce5abacbbe0f = 0;
 
 localparam BYTE_WIDTH = DATA_WIDTH / 8;
 localparam x26926d642d594097 = DATA_WIDTH * 2;
@@ -6853,7 +7258,6 @@ input x22d4589045c4d1a8;
 input [ADDR_WIDTH-1:0] x2361e4ca94fb6668;
 input [ADDR_WIDTH-1:0] x6ed526ae4184fee3;
 input [ADDR_WIDTH-1:0] x6f8eba07449aa14e;
-input [ADDR_WIDTH-1:0] x8b7215efd0c1b5b0;
 input [x16a12c273dd15520-1:0] x7ebb4d3f8798d466;
 input [7:0] x7d88bd85a9438b1f;
 input [127:0] x14763d99de7c1f5a;
@@ -6873,6 +7277,14 @@ output xabd263c88a866189;
 input xb74f40342a35442e;
 input x971be0a4d31095b8;
 output xf1d89bdb86f0b8e6;
+input xdf49dcbb0fe0093f;
+output xb2903c2f5b271507;
+input xd596e4a8e950d462, x65dfbc73612c53eb;
+output xc196d05b39dea2b8, x9c2c3b499397d72a;
+input x6966db1d206c13cf;
+output x2b14d4d46e0c4d02;
+input [2:0] xb73410643116c4aa;
+input [x26926d642d594097-1:0] x8b821ab19f3f1427;
 input x5acf3cdb4c97744a;
 input [ADDR_WIDTH-1:0] xdd4291644b41620f;
 input [x16a12c273dd15520-1:0] x47822ea4cd19b7b2;
@@ -7409,7 +7821,7 @@ x2aa9137698f914da #(
   .xf39cd5cd18c3c8d1(xb407c37893f92062)
 );
 
-xa6a92dc368aa4bcc xaed55ef9228df49f (
+x549d52f6f7bd36cf #(.xfe21ce5abacbbe0f(xfe21ce5abacbbe0f)) x363a478f7f72db52 (
   .clk(clk), .rst_b(cpurst_b), .x5b74621c47643bf6(x44a01e6d9a258a56),
   .xbb17c88db047d946(xbe9f180e75eace85),
   .x99a0417d4564b7a8(xbe9f180e75eace85 ? xa3a361d73f474461 : 1'b1),
@@ -7422,20 +7834,29 @@ xa6a92dc368aa4bcc xaed55ef9228df49f (
   .x054b2cf4b3fcbf32(xdd92ead078da52d2
                && (x618522951b3ad8c0 + {{x16a12c273dd15520-1{1'b0}}, 1'b1}
                    == xbf703d1ef8972e45)),
-  .x3b0884f626d60d77(x51f7833b3f150823),
-  .xdea24a9dcf4995ff(xdea24a9dcf4995ff),
-  .x461cf36690126388(x75d87f7613437831),
-  .x28fd586b898678bd(x28fd586b898678bd),
-  .x05b96fb67b59f034(xdb5370168dd42ff9),
-  .x07fa53e44d324a4b(x07fa53e44d324a4b),
-  .xadb712b1acd54bff(xadb712b1acd54bff), .x967f789db1078ac2(x967f789db1078ac2),
-  .xb3c7f8f3dd3efd71(xb74f40342a35442e || (x9be107c658cf41ab && !x971be0a4d31095b8)),
-  .x3e1b5d972f66ef63(xdca1c9723a61c723),
-  .xc9595a46bb758887(x1a2c23f70076e428),
-  .xabd263c88a866189(x1c9ac1dfa8561123),
-  .xe94e2d784c071f58(x16fb349973b9958a),
+  .xf9516f1f7d3f8f7a(x51f7833b3f150823),
+  .x9bdf57398d4aad08(xdea24a9dcf4995ff),
+  .x781f293ed28bb926(x75d87f7613437831),
+  .xde248a5a4539acfb(x28fd586b898678bd),
+  .xf174af5b948a7de2(xdb5370168dd42ff9),
+  .x54096017a1e852ff(x07fa53e44d324a4b),
+  .x33a1add1aba46894(xadb712b1acd54bff), .x721c7b4efc5b3816(x967f789db1078ac2),
+  .x9c56e6d443b61f6f(xdf49dcbb0fe0093f),
+  .x66089cc978bcd759(xb2903c2f5b271507),
+  .x31de3ceb121de4f6(xd596e4a8e950d462),
+  .xdbf3bc8c6154163b(x65dfbc73612c53eb),
+  .xf57cd445e084f946(xc196d05b39dea2b8), .xfc5f9c3a037a1129(x9c2c3b499397d72a),
+  .xccdf45c607063ccf(x6966db1d206c13cf),
+  .x7609fb8ba281aadf(x2b14d4d46e0c4d02),
+  .x32699815b4ff72ef(xb73410643116c4aa),
+  .x17a6b672896a2f85(x8b821ab19f3f1427),
+  .x9e292bcf4d221086(xb74f40342a35442e || (x9be107c658cf41ab && !x971be0a4d31095b8)),
+  .xfd3cc55250e8b78a(xdca1c9723a61c723),
+  .xe6ab078404872cdc(x1a2c23f70076e428),
+  .xb80b2ddca37d049e(x1c9ac1dfa8561123),
+  .x9afa367769f31bab(x16fb349973b9958a),
   .x97eee2bb17e0902a(xb462c0929300c907),
-  .x84a3e534a50080d1(xb779b648848aaa82), .xfa257824cfbd54d8(x92c0bdecfe9e42c2)
+  .x762bc51e04520bde(xb779b648848aaa82), .xfa257824cfbd54d8(x92c0bdecfe9e42c2)
 );
 
 always @(posedge clk or negedge cpurst_b) begin
@@ -7643,7 +8064,8 @@ module x4bbf3983a85b95aa #(
   parameter DATA_WIDTH = 64,
   parameter x16a12c273dd15520 = 16,
   parameter SEQ_ID_WIDTH = 8,
-  parameter EPOCH_WIDTH = 4
+  parameter EPOCH_WIDTH = 4,
+  parameter xfe21ce5abacbbe0f = 0
 ) (
   input  wire                         clk,
   input  wire                         cpurst_b,
@@ -7664,7 +8086,6 @@ module x4bbf3983a85b95aa #(
   input  wire [7:0]                   cmd_start_mode,
   input  wire [SEQ_ID_WIDTH-1:0]      xe7e44a038400ff25,
   input  wire [EPOCH_WIDTH-1:0]       xa89dad0dcccb4973,
-  input  wire                         cmd_sync_req,
   input  wire [ADDR_WIDTH-1:0]        cmd_wld_ptr,
   input  wire                         cmd_wld_req,
   input  wire                         cmd_wld_trans_req,
@@ -7736,7 +8157,6 @@ reg  [ADDR_WIDTH-1:0]         x92019468d9755945 [0:1];
 reg  [ADDR_WIDTH-1:0]         xf7f0d57a2e2449eb [0:1];
 reg  [x16a12c273dd15520-1:0] x0d472e93c2daced8 [0:1];
 reg                           x60a359c1f2c579ea;
-reg  [ADDR_WIDTH-1:0]         xb1666364ece8f3a1;
 reg                           x28d90859ecdeead2;
 reg                           x9a06056c11ece9e6;
 reg                           x21767ca47c59a7b3;
@@ -7750,13 +8170,11 @@ reg  [x16a12c273dd15520-1:0] x026e0300ff55a808;
 reg  [ADDR_WIDTH-1:0]         x7660e150b4dcb41f;
 reg  [ADDR_WIDTH-1:0]         x83b7072558574253;
 reg  [ADDR_WIDTH-1:0]         x6c211e7786ecea2f;
-reg  [ADDR_WIDTH-1:0]         x7bf40a551322cf17;
 reg                           x489ba03768735059;
 reg  [x16a12c273dd15520-1:0] xe69493832f9ec422;
 reg  [ADDR_WIDTH-1:0]         xd0f860fb04a854d3;
 reg  [ADDR_WIDTH-1:0]         xb4e67a2bf79d64b7;
 reg  [ADDR_WIDTH-1:0]         xad85480bd3527da8;
-reg  [ADDR_WIDTH-1:0]         x7fb7e20ff51cdaf7;
 reg                           xc4dbae91d89b318a;
 reg  [7:0]                    x45cce572f1742364;
 reg                           x61f3dd6ab57fa640;
@@ -7826,7 +8244,6 @@ wire [ADDR_WIDTH-1:0]         x653909f79bd3a218;
 wire [ADDR_WIDTH-1:0]         x7e88aafdcd7ae1af;
 wire [ADDR_WIDTH-1:0]         x3435daf696e9fe5a;
 wire [ADDR_WIDTH-1:0]         x1d2d9fbbd7562ac2;
-wire [ADDR_WIDTH-1:0]         x459faee11195c5bd;
 wire [x16a12c273dd15520-1:0] x11151cf21a638b5b;
 wire                          x55399ab0719aad5c;
 wire [7:0]                    x898c352fdaf8a580;
@@ -7859,6 +8276,10 @@ wire [1:0]                    x15b408e9e011947f;
 wire [x26926d642d594097-1:0]         x44b993cc06f34bf8;
 wire                          xdc606c3719306402;
 wire                          x16fb349973b9958a;
+wire                          xb2903c2f5b271507;
+wire                          xc196d05b39dea2b8;
+wire                          x9c2c3b499397d72a;
+wire                          x2b14d4d46e0c4d02;
 wire [xb9377408880f7051-1:0]           x8e18e6c5e5216fc4;
 wire [xb9377408880f7051-1:0]           x2c78f3577b2507b3;
 wire [xb9377408880f7051*x1edacd58b2f9b15e-1:0] x81ea1cbf732823d6;
@@ -8121,10 +8542,6 @@ assign x1d2d9fbbd7562ac2[ADDR_WIDTH-1:0] =
     xdc15b1135cc32040 ? x6c211e7786ecea2f[ADDR_WIDTH-1:0]
   : x3346b575df77422c ? xad85480bd3527da8[ADDR_WIDTH-1:0]
                        : x653909f79bd3a218[ADDR_WIDTH-1:0];
-assign x459faee11195c5bd[ADDR_WIDTH-1:0] =
-    xdc15b1135cc32040 ? x7bf40a551322cf17[ADDR_WIDTH-1:0]
-  : x3346b575df77422c ? x7fb7e20ff51cdaf7[ADDR_WIDTH-1:0]
-                       : xb1666364ece8f3a1[ADDR_WIDTH-1:0];
 assign x11151cf21a638b5b[x16a12c273dd15520-1:0] =
     xdc15b1135cc32040 ? x026e0300ff55a808[x16a12c273dd15520-1:0]
   : x3346b575df77422c ? xe69493832f9ec422[x16a12c273dd15520-1:0]
@@ -8182,26 +8599,25 @@ assign xf8b7dd3bd2d6b659[x26926d642d594097-1:0] =
      x2f6709e68aacdca8(xc210e88b68f0fd71[xb9377408880f7051*DATA_WIDTH-1:0], xdca839d6760f125e)};
 assign x27b6dd6363da36f4 = cmd_setcsr_req || (|cmd_setcsr_dtype[3:0])
                       || (|cmd_setcsr_wtype[3:0])
-                      || cmd_sync_req
                       || cmd_wld_trans_req
                       || (|cmd_start_mode[7:5])
                       || x837324766a47f870;
 
-xb219762673f28405 #(
+x2a5091ad5e6ef946 #(
   .ADDR_WIDTH(ADDR_WIDTH),
   .x1edacd58b2f9b15e(x1edacd58b2f9b15e),
   .DATA_WIDTH(DATA_WIDTH),
   .xb9377408880f7051(xb9377408880f7051),
   .xf33a3d23b7d86cb5(xf33a3d23b7d86cb5),
-  .x16a12c273dd15520(x16a12c273dd15520)
-) xaf47501492610590 (
+  .x16a12c273dd15520(x16a12c273dd15520),
+  .xfe21ce5abacbbe0f(xfe21ce5abacbbe0f)
+) x1869ae315b702ea4 (
   .clk(clk),
   .cpurst_b(cpurst_b),
   .x22d4589045c4d1a8(x4881783e0dcdb27d),
   .x2361e4ca94fb6668(x7e88aafdcd7ae1af[ADDR_WIDTH-1:0]),
   .x6ed526ae4184fee3(x1d2d9fbbd7562ac2[ADDR_WIDTH-1:0]),
   .x6f8eba07449aa14e(x3435daf696e9fe5a[ADDR_WIDTH-1:0]),
-  .x8b7215efd0c1b5b0(x459faee11195c5bd[ADDR_WIDTH-1:0]),
   .x7ebb4d3f8798d466(x11151cf21a638b5b[x16a12c273dd15520-1:0]),
   .x7d88bd85a9438b1f(x898c352fdaf8a580[7:0]),
   .x14763d99de7c1f5a(x9d4b6ec252d941a4[127:0]),
@@ -8221,6 +8637,16 @@ xb219762673f28405 #(
   .xb74f40342a35442e(x3293da62aa208f3e),
   .x971be0a4d31095b8(x96ac589d58223d59),
   .xf1d89bdb86f0b8e6(x2d49c9fde3bd8cf5),
+  .xdf49dcbb0fe0093f(xfe21ce5abacbbe0f ? x6a116a63f79930f1 : 1'b0),
+  .xb2903c2f5b271507(xb2903c2f5b271507),
+  .xd596e4a8e950d462(x4c1e97e40d44eb09),
+  .x65dfbc73612c53eb(x87d6e392841abe41),
+  .xc196d05b39dea2b8(xc196d05b39dea2b8),
+  .x9c2c3b499397d72a(x9c2c3b499397d72a),
+  .x6966db1d206c13cf(xfe21ce5abacbbe0f ? xa94daec3dd5547de : 1'b0),
+  .x2b14d4d46e0c4d02(x2b14d4d46e0c4d02),
+  .xb73410643116c4aa(xccb95fb089c60cea[2:0]),
+  .x8b821ab19f3f1427(xf79aeac4b2c09eec[x26926d642d594097-1:0]),
   .x5acf3cdb4c97744a(x21767ca47c59a7b3),
   .xdd4291644b41620f(x7660e150b4dcb41f[ADDR_WIDTH-1:0]),
   .x47822ea4cd19b7b2(
@@ -8268,31 +8694,41 @@ xb219762673f28405 #(
   .x7f5344ffde23a416(x7f5344ffde23a416)
 );
 
-xfb8948c55080fb96 #(
-  .DATA_WIDTH(DATA_WIDTH),
-  .x26926d642d594097(x26926d642d594097)
-) x981085af563020f0 (
-  .clk(clk),
-  .rst_b(cpurst_b),
-  .x22d4589045c4d1a8(x6a116a63f79930f1),
-  .xc9a019b1e19d2207(x39f3bba914a09dec),
-  .x5eac9d32b5d97872(x4c1e97e40d44eb09),
-  .x32ad82e3ac20bda9(x87d6e392841abe41),
-  .x785d1dc2b63cc926(),
-  .x4e124931f57ab5eb(xae8102415ed64c3a),
-  .x7a65abcd3086d5ed(xa94daec3dd5547de),
-  .xb4e6daa5b1e4aed6(xccb95fb089c60cea[2:0]),
-  .x9cea447ad0fd5162(xf79aeac4b2c09eec[x26926d642d594097-1:0]),
-  .x7d7df3bb4d704104(),
-  .xdea24a9dcf4995ff(x35b6583f64337091),
-  .x51f7833b3f150823(xe32fb0341f527759),
-  .x461cf36690126388(x75d87f7613437831),
-  .x28fd586b898678bd(x6741edddbc7f5447),
-  .x05b96fb67b59f034(xdb5370168dd42ff9),
-  .x07fa53e44d324a4b(x15b408e9e011947f[1:0]),
-  .xadb712b1acd54bff(x44b993cc06f34bf8[x26926d642d594097-1:0]),
-  .x967f789db1078ac2(xdc606c3719306402)
-);
+generate
+  if (xfe21ce5abacbbe0f) begin : xb506c61330c18efe
+    assign x39f3bba914a09dec = xb2903c2f5b271507;
+    assign xae8102415ed64c3a = x9c2c3b499397d72a;
+    assign x35b6583f64337091 = 1'b0;
+    assign xe32fb0341f527759 = 1'b0;
+    assign x6741edddbc7f5447 = 1'b0;
+    assign x15b408e9e011947f = 2'b0;
+    assign x44b993cc06f34bf8 = {x26926d642d594097{1'b0}};
+    assign xdc606c3719306402 = 1'b0;
+  end else begin : x3f0f4ef304ba9926
+    xfb8948c55080fb96 #(
+      .DATA_WIDTH(DATA_WIDTH), .x26926d642d594097(x26926d642d594097)
+    ) x981085af563020f0 (
+      .clk(clk), .rst_b(cpurst_b), .x22d4589045c4d1a8(x6a116a63f79930f1),
+      .xc9a019b1e19d2207(x39f3bba914a09dec),
+      .x5eac9d32b5d97872(x4c1e97e40d44eb09),
+      .x32ad82e3ac20bda9(x87d6e392841abe41), .x785d1dc2b63cc926(),
+      .x4e124931f57ab5eb(xae8102415ed64c3a), .x7a65abcd3086d5ed(xa94daec3dd5547de),
+      .xb4e6daa5b1e4aed6(xccb95fb089c60cea[2:0]),
+      .x9cea447ad0fd5162(xf79aeac4b2c09eec[x26926d642d594097-1:0]), .x7d7df3bb4d704104(),
+      .xdea24a9dcf4995ff(x35b6583f64337091),
+      .x51f7833b3f150823(xe32fb0341f527759),
+      .x461cf36690126388(x75d87f7613437831),
+      .x28fd586b898678bd(x6741edddbc7f5447),
+      .x05b96fb67b59f034(xdb5370168dd42ff9),
+      .x07fa53e44d324a4b(x15b408e9e011947f[1:0]),
+      .xadb712b1acd54bff(x44b993cc06f34bf8[x26926d642d594097-1:0]),
+      .x967f789db1078ac2(xdc606c3719306402)
+    );
+  end
+endgenerate
+
+wire xaaff0747f1a47399 = xc196d05b39dea2b8
+                                 || x2b14d4d46e0c4d02;
 
 generate
   for (xf590b094523d51d2 = 0; xf590b094523d51d2 < xb9377408880f7051; xf590b094523d51d2 = xf590b094523d51d2 + 1) begin: xa42232eedca0eeb5
@@ -8371,7 +8807,6 @@ always @(posedge clk or negedge cpurst_b) begin
     x0d472e93c2daced8[0] <= {{x16a12c273dd15520-1{1'b0}}, 1'b1};
     x0d472e93c2daced8[1] <= {{x16a12c273dd15520-1{1'b0}}, 1'b1};
     x60a359c1f2c579ea <= 1'b0;
-    xb1666364ece8f3a1 <= {ADDR_WIDTH{1'b0}};
     x28d90859ecdeead2 <= 1'b0;
     x9a06056c11ece9e6 <= 1'b0;
     x21767ca47c59a7b3 <= 1'b0;
@@ -8385,13 +8820,11 @@ always @(posedge clk or negedge cpurst_b) begin
     x7660e150b4dcb41f <= {ADDR_WIDTH{1'b0}};
     x83b7072558574253 <= {ADDR_WIDTH{1'b0}};
     x6c211e7786ecea2f <= {ADDR_WIDTH{1'b0}};
-    x7bf40a551322cf17 <= {ADDR_WIDTH{1'b0}};
     x489ba03768735059 <= 1'b0;
     xe69493832f9ec422 <= {x16a12c273dd15520{1'b0}};
     xd0f860fb04a854d3 <= {ADDR_WIDTH{1'b0}};
     xb4e67a2bf79d64b7 <= {ADDR_WIDTH{1'b0}};
     xad85480bd3527da8 <= {ADDR_WIDTH{1'b0}};
-    x7fb7e20ff51cdaf7 <= {ADDR_WIDTH{1'b0}};
     xc4dbae91d89b318a <= 1'b0;
     x45cce572f1742364 <= 8'b0;
     x61f3dd6ab57fa640 <= 1'b0;
@@ -8532,7 +8965,6 @@ always @(posedge clk or negedge cpurst_b) begin
     end
 
     if (x6a116a63f79930f1) begin
-      xb1666364ece8f3a1 <= xaf0049465b7a1e8f[ADDR_WIDTH-1:0];
       x28d90859ecdeead2 <= 1'b0;
       x4e2f58aede7e8930 <= 1'b1;
       x8358fd7f8c730e96 <= x4c1e97e40d44eb09;
@@ -8585,9 +9017,6 @@ always @(posedge clk or negedge cpurst_b) begin
       x6c211e7786ecea2f <= xb0345cd66b46bf8b
                      ? xad85480bd3527da8[ADDR_WIDTH-1:0]
                      : x653909f79bd3a218[ADDR_WIDTH-1:0];
-      x7bf40a551322cf17 <= xb0345cd66b46bf8b
-                       ? x7fb7e20ff51cdaf7[ADDR_WIDTH-1:0]
-                       : xb1666364ece8f3a1[ADDR_WIDTH-1:0];
       x026e0300ff55a808 <= xb0345cd66b46bf8b
                       ? xe69493832f9ec422[x16a12c273dd15520-1:0]
                       : x5f973dbabf04685f[x16a12c273dd15520-1:0];
@@ -8611,7 +9040,6 @@ always @(posedge clk or negedge cpurst_b) begin
       xd0f860fb04a854d3 <= x20e3f73218dbca25[ADDR_WIDTH-1:0];
       xb4e67a2bf79d64b7 <= x1a9942e3e8ff14d8[ADDR_WIDTH-1:0];
       xad85480bd3527da8 <= x653909f79bd3a218[ADDR_WIDTH-1:0];
-      x7fb7e20ff51cdaf7 <= xb1666364ece8f3a1[ADDR_WIDTH-1:0];
       xe69493832f9ec422 <= x5f973dbabf04685f[x16a12c273dd15520-1:0];
       xc4dbae91d89b318a <= xe4dfd308e2da5435
                                   && !x4e2f58aede7e8930
@@ -8839,6 +9267,7 @@ end
 endmodule
 
 
+
 module xa255f8b8ca46c726(
   clk,
   x8b6b61366606aa32,
@@ -9006,6 +9435,7 @@ end
 endmodule
 
 
+
 module xfb8948c55080fb96(
   clk,
   rst_b,
@@ -9137,7 +9567,7 @@ endmodule
 
 
 
-module x94d0153ad6891510(
+module x1852be4a5602b63c(
   clk,
   rst_b,
   in_valid,
@@ -9149,6 +9579,7 @@ module x94d0153ad6891510(
   xbe13730a7094392c,
   x054b2cf4b3fcbf32,
   out_valid,
+  xd6bdc9f261eb0815,
   x3476e0e6c813dfd1
 );
 
@@ -9163,6 +9594,7 @@ input          x837075243a1a83a4;
 input          xbe13730a7094392c;
 input          x054b2cf4b3fcbf32;
 output         out_valid;
+output [31:0]  xd6bdc9f261eb0815;
 output [15:0]  x3476e0e6c813dfd1;
 
 reg         xb83b057dec9ce0fc;
@@ -9212,6 +9644,7 @@ reg         x3e1414dab8f2b577;
 reg         x7f53ee327e52d400;
 reg [31:0]  xc831b5443f2f0a14;
 reg         xf3e314435f09360b;
+reg [31:0]  x6190702755db1710;
 reg [15:0]  xd5627c9dfd7455c2;
 
 integer x5ce21f903fc5ffc6;
@@ -9232,6 +9665,7 @@ wire [31:0] x40b3575b27c5cc1c;
 wire [31:0] xb17644126c364e46;
 
 assign out_valid = xf3e314435f09360b || (xefdae0773df66012 && !x62e41d259c4b2011);
+assign xd6bdc9f261eb0815 = xf3e314435f09360b ? x6190702755db1710 : xc82bd291b2a2d0a7;
 assign x3476e0e6c813dfd1 = xf3e314435f09360b ? xd5627c9dfd7455c2 : x6b5d85ae5848c342;
 assign x4b82802325e17600 = x8ea6224229b861ee ? 32'b0 : xc831b5443f2f0a14;
 assign x40b3575b27c5cc1c = x3ccdb2a8c2c573aa(
@@ -9693,6 +10127,7 @@ always @(posedge clk or negedge rst_b) begin
     x7f53ee327e52d400 <= 1'b0;
     xc831b5443f2f0a14 <= 32'b0;
     xf3e314435f09360b <= 1'b0;
+    x6190702755db1710 <= 32'b0;
     xd5627c9dfd7455c2 <= 16'b0;
   end else begin
     xb83b057dec9ce0fc <= in_valid;
@@ -9724,6 +10159,7 @@ always @(posedge clk or negedge rst_b) begin
     if (xefdae0773df66012 && x62e41d259c4b2011) begin
       xc831b5443f2f0a14 <= x40b3575b27c5cc1c;
       if (x7f53ee327e52d400) begin
+        x6190702755db1710 <= x40b3575b27c5cc1c;
         xd5627c9dfd7455c2 <= xb17644126c364e46[31:16];
         xf3e314435f09360b <= 1'b1;
       end
@@ -9810,7 +10246,57 @@ end
 endmodule
 
 
-module x5b29351eb6c2276e(
+
+module xdd6da3b7de2c52f6(
+  clk,
+  rst_b,
+  in_valid,
+  xac232893b3823c96,
+  x52357374f505f442,
+  xfaff2eac01931c69,
+  xd0f8509a03d0375c,
+  x837075243a1a83a4,
+  xbe13730a7094392c,
+  x054b2cf4b3fcbf32,
+  out_valid,
+  x3476e0e6c813dfd1
+);
+
+input          clk;
+input          rst_b;
+input          in_valid;
+input  [127:0] xac232893b3823c96;
+input  [63:0]  x52357374f505f442;
+input          xfaff2eac01931c69;
+input  [127:0] xd0f8509a03d0375c;
+input          x837075243a1a83a4;
+input          xbe13730a7094392c;
+input          x054b2cf4b3fcbf32;
+output         out_valid;
+output [15:0]  x3476e0e6c813dfd1;
+
+wire [31:0] xd33c6bdfab510d67;
+
+x1852be4a5602b63c x78e7ef89ee9712d8 (
+  .clk                 (clk),
+  .rst_b               (rst_b),
+  .in_valid            (in_valid),
+  .xac232893b3823c96          (xac232893b3823c96),
+  .x52357374f505f442          (x52357374f505f442),
+  .xfaff2eac01931c69  (xfaff2eac01931c69),
+  .xd0f8509a03d0375c   (xd0f8509a03d0375c),
+  .x837075243a1a83a4       (x837075243a1a83a4),
+  .xbe13730a7094392c        (xbe13730a7094392c),
+  .x054b2cf4b3fcbf32         (x054b2cf4b3fcbf32),
+  .out_valid           (out_valid),
+  .xd6bdc9f261eb0815              (xd33c6bdfab510d67),
+  .x3476e0e6c813dfd1              (x3476e0e6c813dfd1)
+);
+
+endmodule
+
+
+module x80814579ee53d600(
   x77ee3ac0fb73f112,
   xaea6dd42a5a1f189,
   x12c2dedc988093f3
@@ -9964,7 +10450,7 @@ endfunction
 endmodule
 
 
-// Eight synthesis-friendly BF16 multipliers for the optional Q8 scale stage.
+// Eight reusable synthesis-friendly BF16 multipliers for the Q8 scale stage.
 
 
 
@@ -10224,7 +10710,7 @@ endmodule
 
 
 
-module xa6a92dc368aa4bcc(
+module x448b47bfbb011c0b(
   clk,
   rst_b,
   x5b74621c47643bf6,
@@ -10406,7 +10892,7 @@ generate
                                       ? x2f581b11f012b8f9[xbcd8297dae5b6c10*16 +: 16]
                                       : x1f95c439fd3e93dc[xbcd8297dae5b6c10*16 +: 16];
 
-    x94d0153ad6891510 x94a4fb6d2b861f9e (
+    xdd6da3b7de2c52f6 x94a4fb6d2b861f9e (
       .clk        (clk),
       .rst_b      (rst_b),
       .in_valid   (x5b74621c47643bf6),
@@ -10421,13 +10907,13 @@ generate
       .x3476e0e6c813dfd1     (x5db11e735e4aab64[xbcd8297dae5b6c10][15:0])
     );
 
-    x5b29351eb6c2276e x33c4126bf6ff919b (
+    x80814579ee53d600 x33c4126bf6ff919b (
       .x77ee3ac0fb73f112(x5db11e735e4aab64[xbcd8297dae5b6c10][15:0]),
       .xaea6dd42a5a1f189(x46e0fea96b257e50[xbcd8297dae5b6c10][15:0]),
       .x12c2dedc988093f3    (x91fd3aef382b1944[xbcd8297dae5b6c10][15:0])
     );
 
-    x5b29351eb6c2276e x74e4f80f4bd7076e (
+    x80814579ee53d600 x74e4f80f4bd7076e (
       .x77ee3ac0fb73f112(x433aaee9804e1832[xbcd8297dae5b6c10*16 +: 16]),
       .xaea6dd42a5a1f189(xfaf27092cae54a7e[xbcd8297dae5b6c10*16 +: 16]),
       .x12c2dedc988093f3    (x4a96c1560ed144ec[xbcd8297dae5b6c10][15:0])
@@ -10603,6 +11089,920 @@ always @(posedge clk or negedge rst_b) begin
     end
   end
 end
+
+endmodule
+
+
+
+module x7ae1c8e1807135d4(
+  clk, rst_b, x5d8ea037adf8553c, xb26fe775eee0d384, xe1b115477a2e5386, xfeb1582340ff4fc5, xc2a6b3287e2c27b2,
+  xb488efce181b34c5, xde64a8bd1625131d, x6f6df2adde6864cf,
+  xb06f8e05baee8619, x49a1fbff848cf653, x70578fc21eba69d5,
+  x571088fa91b50385, xd9e7d6d809712465
+);
+input clk, rst_b, x5d8ea037adf8553c;
+output xb26fe775eee0d384, xfeb1582340ff4fc5, xc2a6b3287e2c27b2;
+input [2:0] xe1b115477a2e5386;
+input xb488efce181b34c5;
+output xde64a8bd1625131d;
+input [127:0] x6f6df2adde6864cf;
+output [3:0] xb06f8e05baee8619;
+input [3:0] x49a1fbff848cf653;
+output [127:0] x70578fc21eba69d5;
+output [11:0] x571088fa91b50385;
+output [7:0] xd9e7d6d809712465;
+
+localparam x592e7f946b04f0e4=3'd0, x66159e6290330079=3'd1;
+localparam x31eedd6fb28626ae =3'd2, x07735dd6551c4b00 =3'd3;
+localparam xa84885b01714cc20 =3'd4, x06ef7f592a923862 =3'd5;
+
+reg x3d32ab200cadc25a, x1c20549bd6fb566a, x1d6a3706837de9c8, x8d97b4c919814c19;
+reg [2:0] xf295233e23064221, x6df97cc18c087d5e, x0768664379522733;
+reg [31:0] x2a16eb9ef5670887 [0:3][0:3];
+reg [2:0] xbd2eab6b4486952c [0:3][0:3];
+reg [1:0] xbf0e4e2cbf3b7df0 [0:3][0:3];
+reg [1:0] xdcafa8a54ed0562f [0:3], x5237e7e5a425aa2d [0:3];
+reg [2:0] x13f9a20969058f30 [0:3];
+reg [3:0] xa39813e2000910e3;
+reg [7:0] x977c5a7e96b7cfbb;
+reg [2:0] xc87150264f12e304;
+wire [3:0] x9c436b664fddb70b = xa39813e2000910e3 & x49a1fbff848cf653;
+wire x82dc6d643bd22d62 = xf295233e23064221[0];
+wire x7cdef0935a5735fd = xb488efce181b34c5 && xde64a8bd1625131d;
+integer x4acc3e72cc7a3020;
+
+function [3:0] xf7ac2879118bcf4f;
+  input [2:0] x45b61ec9431591ff;
+  begin
+    case (x45b61ec9431591ff)
+      x592e7f946b04f0e4,x66159e6290330079: xf7ac2879118bcf4f=4'd8;
+      x31eedd6fb28626ae, x07735dd6551c4b00:  xf7ac2879118bcf4f=4'd4;
+      default:            xf7ac2879118bcf4f=4'd2;
+    endcase
+  end
+endfunction
+
+function [31:0] xc0622a50344ea679;
+  input [2:0] x45b61ec9431591ff;
+  input [2:0] xc87f2d979b2612cf;
+  input [127:0] x2784bf62f4372ea6;
+  input [127:0] xc5b857dafa336985;
+  integer x57a0b6947d430fa3;
+  begin
+    xc0622a50344ea679=0;
+    case (x45b61ec9431591ff)
+      x66159e6290330079:
+        xc0622a50344ea679={xc5b857dafa336985[xc87f2d979b2612cf*16 +: 16],x2784bf62f4372ea6[xc87f2d979b2612cf*16 +: 16]};
+      x07735dd6551c4b00: begin
+        for (x57a0b6947d430fa3=0;x57a0b6947d430fa3<2;x57a0b6947d430fa3=x57a0b6947d430fa3+1) begin
+          xc0622a50344ea679[x57a0b6947d430fa3*8 +: 8]=x2784bf62f4372ea6[(x57a0b6947d430fa3*8+xc87f2d979b2612cf)*8 +: 8];
+          xc0622a50344ea679[(x57a0b6947d430fa3+2)*8 +: 8]=xc5b857dafa336985[(x57a0b6947d430fa3*8+xc87f2d979b2612cf)*8 +: 8];
+        end
+      end
+      x06ef7f592a923862: begin
+        for (x57a0b6947d430fa3=0;x57a0b6947d430fa3<4;x57a0b6947d430fa3=x57a0b6947d430fa3+1) begin
+          xc0622a50344ea679[x57a0b6947d430fa3*4 +: 4]=x2784bf62f4372ea6[(x57a0b6947d430fa3*8+xc87f2d979b2612cf)*4 +: 4];
+          xc0622a50344ea679[(x57a0b6947d430fa3+4)*4 +: 4]=xc5b857dafa336985[(x57a0b6947d430fa3*8+xc87f2d979b2612cf)*4 +: 4];
+        end
+      end
+      default: xc0622a50344ea679=0;
+    endcase
+  end
+endfunction
+
+wire [127:0] x5285f9e019efc79a = {
+  x2a16eb9ef5670887[3][x5237e7e5a425aa2d[3]], x2a16eb9ef5670887[2][x5237e7e5a425aa2d[2]],
+  x2a16eb9ef5670887[1][x5237e7e5a425aa2d[1]], x2a16eb9ef5670887[0][x5237e7e5a425aa2d[0]]};
+wire [3:0] x796926864643914b = xf7ac2879118bcf4f(xf295233e23064221);
+wire [2:0] xbe33ea040e35cd92 = x82dc6d643bd22d62 ? (x8d97b4c919814c19 ? 3'd2 : 3'd0)
+                                          : 3'd1;
+
+always @(*) begin
+  xa39813e2000910e3=0;
+  x977c5a7e96b7cfbb=0;
+  for (x4acc3e72cc7a3020=0;x4acc3e72cc7a3020<4;x4acc3e72cc7a3020=x4acc3e72cc7a3020+1) begin
+    xc87150264f12e304=xbd2eab6b4486952c[x4acc3e72cc7a3020][xdcafa8a54ed0562f[x4acc3e72cc7a3020]];
+    if (x13f9a20969058f30[x4acc3e72cc7a3020] != 0 && !x977c5a7e96b7cfbb[xc87150264f12e304]) begin
+      xa39813e2000910e3[x4acc3e72cc7a3020]=1'b1;
+      x977c5a7e96b7cfbb[xc87150264f12e304]=1'b1;
+    end
+  end
+end
+
+generate
+  genvar xa46b6eeedc7c49c3;
+  for (xa46b6eeedc7c49c3=0;xa46b6eeedc7c49c3<4;xa46b6eeedc7c49c3=xa46b6eeedc7c49c3+1) begin : x73a4da4104a42f34
+    assign xb06f8e05baee8619[xa46b6eeedc7c49c3]=xa39813e2000910e3[xa46b6eeedc7c49c3];
+    assign x70578fc21eba69d5[xa46b6eeedc7c49c3*32 +: 32]=x2a16eb9ef5670887[xa46b6eeedc7c49c3][xdcafa8a54ed0562f[xa46b6eeedc7c49c3]];
+    assign x571088fa91b50385[xa46b6eeedc7c49c3*3 +: 3]=xbd2eab6b4486952c[xa46b6eeedc7c49c3][xdcafa8a54ed0562f[xa46b6eeedc7c49c3]];
+    assign xd9e7d6d809712465[xa46b6eeedc7c49c3*2 +: 2]=xbf0e4e2cbf3b7df0[xa46b6eeedc7c49c3][xdcafa8a54ed0562f[xa46b6eeedc7c49c3]];
+  end
+endgenerate
+
+assign xb26fe775eee0d384=!x3d32ab200cadc25a;
+assign xfeb1582340ff4fc5=x3d32ab200cadc25a;
+assign xc2a6b3287e2c27b2=x1c20549bd6fb566a;
+assign xde64a8bd1625131d=x3d32ab200cadc25a && !x1d6a3706837de9c8
+  && ((!x82dc6d643bd22d62
+       && ((x13f9a20969058f30[0] < 4 || x9c436b664fddb70b[0])
+           && (x13f9a20969058f30[1] < 4 || x9c436b664fddb70b[1])
+           && (x13f9a20969058f30[2] < 4 || x9c436b664fddb70b[2])
+           && (x13f9a20969058f30[3] < 4 || x9c436b664fddb70b[3])))
+      || (x82dc6d643bd22d62 && !x8d97b4c919814c19
+          && x13f9a20969058f30[0] < 4 && x13f9a20969058f30[1] < 4
+          && x13f9a20969058f30[2] < 4 && x13f9a20969058f30[3] < 4)
+      || (x82dc6d643bd22d62 && x8d97b4c919814c19
+          && ((x13f9a20969058f30[0] <= 2 || (x13f9a20969058f30[0] == 3 && x9c436b664fddb70b[0]))
+              && (x13f9a20969058f30[1] <= 2 || (x13f9a20969058f30[1] == 3 && x9c436b664fddb70b[1]))
+              && (x13f9a20969058f30[2] <= 2 || (x13f9a20969058f30[2] == 3 && x9c436b664fddb70b[2]))
+              && (x13f9a20969058f30[3] <= 2 || (x13f9a20969058f30[3] == 3 && x9c436b664fddb70b[3])))));
+
+always @(posedge clk or negedge rst_b) begin
+  if (!rst_b) begin
+    x3d32ab200cadc25a<=0; x1c20549bd6fb566a<=0; x1d6a3706837de9c8<=0; x8d97b4c919814c19<=0;
+    xf295233e23064221<=0; x6df97cc18c087d5e<=0; x0768664379522733<=0;
+    for (x4acc3e72cc7a3020=0;x4acc3e72cc7a3020<4;x4acc3e72cc7a3020=x4acc3e72cc7a3020+1) begin
+      xdcafa8a54ed0562f[x4acc3e72cc7a3020]<=0; x5237e7e5a425aa2d[x4acc3e72cc7a3020]<=0; x13f9a20969058f30[x4acc3e72cc7a3020]<=0;
+    end
+  end else begin
+    x1c20549bd6fb566a<=0;
+    if (x5d8ea037adf8553c && xb26fe775eee0d384) begin
+      x3d32ab200cadc25a<=1; x1d6a3706837de9c8<=0; x8d97b4c919814c19<=0;
+      xf295233e23064221<=xe1b115477a2e5386; x6df97cc18c087d5e<=0; x0768664379522733<=0;
+      for (x4acc3e72cc7a3020=0;x4acc3e72cc7a3020<4;x4acc3e72cc7a3020=x4acc3e72cc7a3020+1) begin
+        xdcafa8a54ed0562f[x4acc3e72cc7a3020]<=0; x5237e7e5a425aa2d[x4acc3e72cc7a3020]<=0; x13f9a20969058f30[x4acc3e72cc7a3020]<=0;
+      end
+    end else if (x3d32ab200cadc25a) begin
+      for (x4acc3e72cc7a3020=0;x4acc3e72cc7a3020<4;x4acc3e72cc7a3020=x4acc3e72cc7a3020+1) begin
+        if (x9c436b664fddb70b[x4acc3e72cc7a3020]) xdcafa8a54ed0562f[x4acc3e72cc7a3020]<=xdcafa8a54ed0562f[x4acc3e72cc7a3020]+2'd1;
+        case ({x7cdef0935a5735fd && xbe33ea040e35cd92!=0,x9c436b664fddb70b[x4acc3e72cc7a3020]})
+          2'b10: x13f9a20969058f30[x4acc3e72cc7a3020]<=x13f9a20969058f30[x4acc3e72cc7a3020]+xbe33ea040e35cd92;
+          2'b01: x13f9a20969058f30[x4acc3e72cc7a3020]<=x13f9a20969058f30[x4acc3e72cc7a3020]-3'd1;
+          2'b11: x13f9a20969058f30[x4acc3e72cc7a3020]<=x13f9a20969058f30[x4acc3e72cc7a3020]+xbe33ea040e35cd92-3'd1;
+          default: begin end
+        endcase
+      end
+
+      if (x7cdef0935a5735fd) begin
+        x6df97cc18c087d5e<=x6df97cc18c087d5e+3'd1;
+        if (x6df97cc18c087d5e+1 >= x796926864643914b) x1d6a3706837de9c8<=1'b1;
+        if (!x82dc6d643bd22d62) begin
+          for (x4acc3e72cc7a3020=0;x4acc3e72cc7a3020<4;x4acc3e72cc7a3020=x4acc3e72cc7a3020+1) begin
+            x2a16eb9ef5670887[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=x6f6df2adde6864cf[x4acc3e72cc7a3020*32 +: 32];
+            if (xf295233e23064221==x592e7f946b04f0e4) begin
+              xbd2eab6b4486952c[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=x6df97cc18c087d5e;
+              xbf0e4e2cbf3b7df0[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=x4acc3e72cc7a3020[1:0];
+            end else if (xf295233e23064221==x31eedd6fb28626ae) begin
+              xbd2eab6b4486952c[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<={x6df97cc18c087d5e[1:0],1'b0}+x4acc3e72cc7a3020[1];
+              xbf0e4e2cbf3b7df0[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<={1'b0,x4acc3e72cc7a3020[0]};
+            end else begin
+              xbd2eab6b4486952c[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<={x6df97cc18c087d5e[0],2'b00}+x4acc3e72cc7a3020[1:0];
+              xbf0e4e2cbf3b7df0[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=0;
+            end
+            x5237e7e5a425aa2d[x4acc3e72cc7a3020]<=x5237e7e5a425aa2d[x4acc3e72cc7a3020]+2'd1;
+          end
+        end else if (!x8d97b4c919814c19) begin
+          for (x4acc3e72cc7a3020=0;x4acc3e72cc7a3020<4;x4acc3e72cc7a3020=x4acc3e72cc7a3020+1)
+            x2a16eb9ef5670887[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=x6f6df2adde6864cf[x4acc3e72cc7a3020*32 +: 32];
+          x8d97b4c919814c19<=1'b1;
+        end else begin
+          for (x4acc3e72cc7a3020=0;x4acc3e72cc7a3020<4;x4acc3e72cc7a3020=x4acc3e72cc7a3020+1) begin
+            x2a16eb9ef5670887[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=
+                xc0622a50344ea679(xf295233e23064221,x4acc3e72cc7a3020*2,x5285f9e019efc79a,x6f6df2adde6864cf);
+            xbd2eab6b4486952c[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=x4acc3e72cc7a3020*2;
+            xbf0e4e2cbf3b7df0[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]]<=x0768664379522733[1:0];
+            x2a16eb9ef5670887[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]+2'd1]<=
+                xc0622a50344ea679(xf295233e23064221,x4acc3e72cc7a3020*2+1,x5285f9e019efc79a,x6f6df2adde6864cf);
+            xbd2eab6b4486952c[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]+2'd1]<=x4acc3e72cc7a3020*2+1;
+            xbf0e4e2cbf3b7df0[x4acc3e72cc7a3020][x5237e7e5a425aa2d[x4acc3e72cc7a3020]+2'd1]<=x0768664379522733[1:0];
+            x5237e7e5a425aa2d[x4acc3e72cc7a3020]<=x5237e7e5a425aa2d[x4acc3e72cc7a3020]+2'd2;
+          end
+          x0768664379522733<=x0768664379522733+3'd1;
+          x8d97b4c919814c19<=1'b0;
+        end
+      end
+
+      if (x1d6a3706837de9c8 && !x8d97b4c919814c19
+          && x13f9a20969058f30[0]==x9c436b664fddb70b[0] && x13f9a20969058f30[1]==x9c436b664fddb70b[1]
+          && x13f9a20969058f30[2]==x9c436b664fddb70b[2] && x13f9a20969058f30[3]==x9c436b664fddb70b[3]) begin
+        x3d32ab200cadc25a<=0; x1c20549bd6fb566a<=1;
+      end
+    end
+  end
+end
+endmodule
+
+
+
+module x92f172aaf7978569(
+  clk, rst_b,
+  x6817191be66feb14, xc4125bbfc31ef559, x0e33fc9005799ea7, x1e401da99e4170a6, x376e78829075132e,
+  x5130fbe38f9e94b7, xc389d6c0e7137c5f, x29cabcd77e109ba9
+);
+input clk, rst_b, x6817191be66feb14;
+input [1:0] xc4125bbfc31ef559;
+input [1:0] x0e33fc9005799ea7;
+input [31:0] x1e401da99e4170a6;
+input x376e78829075132e, x5130fbe38f9e94b7, xc389d6c0e7137c5f;
+output [127:0] x29cabcd77e109ba9;
+
+localparam x96c0b0d7cbf7108a = 2'd0;
+localparam x9b555e0a859dd809 = 2'd1;
+reg [127:0] x41d9d37496edae46;
+reg [127:0] x0f607568c78fec5d;
+reg x52aa2d7d6e96e1d3;
+reg [63:0] x6c5d80b37361b0fd;
+integer x9c29c4bcee6e0cf9;
+
+assign x29cabcd77e109ba9 = x52aa2d7d6e96e1d3 ? x0f607568c78fec5d : x41d9d37496edae46;
+
+function [15:0] xd610de21dc6ae459;
+  input [7:0] value;
+  reg sign;
+  reg [7:0] x643ae0ca8596eaca;
+  begin
+    sign = value[7];
+    x643ae0ca8596eaca = sign ? (~value + 8'b1) : value;
+    casez (x643ae0ca8596eaca)
+      8'b1???????: xd610de21dc6ae459 = {sign, 8'd134, x643ae0ca8596eaca[6:0]};
+      8'b01??????: xd610de21dc6ae459 = {sign, 8'd133, x643ae0ca8596eaca[5:0], 1'b0};
+      8'b001?????: xd610de21dc6ae459 = {sign, 8'd132, x643ae0ca8596eaca[4:0], 2'b0};
+      8'b0001????: xd610de21dc6ae459 = {sign, 8'd131, x643ae0ca8596eaca[3:0], 3'b0};
+      8'b00001???: xd610de21dc6ae459 = {sign, 8'd130, x643ae0ca8596eaca[2:0], 4'b0};
+      8'b000001??: xd610de21dc6ae459 = {sign, 8'd129, x643ae0ca8596eaca[1:0], 5'b0};
+      8'b0000001?: xd610de21dc6ae459 = {sign, 8'd128, x643ae0ca8596eaca[0], 6'b0};
+      8'b00000001: xd610de21dc6ae459 = {sign, 8'd127, 7'b0};
+      default:     xd610de21dc6ae459 = 16'b0;
+    endcase
+  end
+endfunction
+
+always @(*) begin
+  x6c5d80b37361b0fd = 64'b0;
+  for (x9c29c4bcee6e0cf9=0; x9c29c4bcee6e0cf9<4; x9c29c4bcee6e0cf9=x9c29c4bcee6e0cf9+1)
+    x6c5d80b37361b0fd[x9c29c4bcee6e0cf9*16 +: 16] =
+        xd610de21dc6ae459(x1e401da99e4170a6[x9c29c4bcee6e0cf9*8 +: 8]);
+end
+
+always @(posedge clk or negedge rst_b) begin
+  if (!rst_b) begin
+    x41d9d37496edae46 <= 128'b0;
+    x0f607568c78fec5d <= 128'b0;
+    x52aa2d7d6e96e1d3 <= 1'b0;
+  end else begin
+    if (x6817191be66feb14 && x376e78829075132e) begin
+      if (xc4125bbfc31ef559 == x96c0b0d7cbf7108a) begin
+        case (x0e33fc9005799ea7)
+          2'd0: x0f607568c78fec5d[31:0] <= x1e401da99e4170a6;
+          2'd1: x0f607568c78fec5d[63:32] <= x1e401da99e4170a6;
+          2'd2: x0f607568c78fec5d[95:64] <= x1e401da99e4170a6;
+          2'd3: x0f607568c78fec5d[127:96] <= x1e401da99e4170a6;
+        endcase
+      end else if (xc4125bbfc31ef559 == x9b555e0a859dd809) begin
+        if (x0e33fc9005799ea7[0]) x0f607568c78fec5d[127:64] <= x6c5d80b37361b0fd;
+        else x0f607568c78fec5d[63:0] <= x6c5d80b37361b0fd;
+      end
+    end else if (x6817191be66feb14) begin
+      if (xc4125bbfc31ef559 == x96c0b0d7cbf7108a) begin
+        case (x0e33fc9005799ea7)
+          2'd0: x41d9d37496edae46[31:0] <= x1e401da99e4170a6;
+          2'd1: x41d9d37496edae46[63:32] <= x1e401da99e4170a6;
+          2'd2: x41d9d37496edae46[95:64] <= x1e401da99e4170a6;
+          2'd3: x41d9d37496edae46[127:96] <= x1e401da99e4170a6;
+        endcase
+      end else if (xc4125bbfc31ef559 == x9b555e0a859dd809) begin
+        if (x0e33fc9005799ea7[0]) x41d9d37496edae46[127:64] <= x6c5d80b37361b0fd;
+        else x41d9d37496edae46[63:0] <= x6c5d80b37361b0fd;
+      end
+    end
+    if (x5130fbe38f9e94b7) x52aa2d7d6e96e1d3 <= xc389d6c0e7137c5f;
+  end
+end
+endmodule
+
+
+
+module x5fb7bf8846611649(
+  clk, rst_b,
+  x8509d7c32c3e7bbb, xa7b146ea698b58e6, xc8b18a629638e891,
+  x385c6fc183663e07, x6d3808166ec9fa40,
+  x9e292bcf4d221086, xd86a1331cb1a160b,
+  in_valid, xf367ffcace8025cb, x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
+  out_valid, x450ee4c94aaa36d9
+);
+
+input          clk;
+input          rst_b;
+input          x8509d7c32c3e7bbb;
+input  [1:0]   xa7b146ea698b58e6;
+input  [1:0]   xc8b18a629638e891;
+input  [31:0]  x385c6fc183663e07;
+input          x6d3808166ec9fa40;
+input          x9e292bcf4d221086;
+input          xd86a1331cb1a160b;
+input          in_valid;
+input  [127:0] xf367ffcace8025cb;
+input          x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
+output         out_valid;
+output [15:0]  x450ee4c94aaa36d9;
+
+wire [127:0] xca8c28ffa4a7693a;
+wire [31:0] xd33c6bdfab510d67;
+
+x92f172aaf7978569 xe6f80d26a16c04a4 (
+  .clk(clk), .rst_b(rst_b),
+  .x6817191be66feb14(x8509d7c32c3e7bbb),
+  .xc4125bbfc31ef559(xa7b146ea698b58e6), .x0e33fc9005799ea7(xc8b18a629638e891),
+  .x1e401da99e4170a6(x385c6fc183663e07), .x376e78829075132e(x6d3808166ec9fa40),
+  .x5130fbe38f9e94b7(x9e292bcf4d221086), .xc389d6c0e7137c5f(xd86a1331cb1a160b),
+  .x29cabcd77e109ba9(xca8c28ffa4a7693a)
+);
+
+x1852be4a5602b63c x78e7ef89ee9712d8 (
+  .clk(clk), .rst_b(rst_b), .in_valid(in_valid),
+  .xac232893b3823c96(xf367ffcace8025cb), .x52357374f505f442(64'b0),
+  .xfaff2eac01931c69(1'b1), .xd0f8509a03d0375c(xca8c28ffa4a7693a),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
+  .out_valid(out_valid), .xd6bdc9f261eb0815(xd33c6bdfab510d67), .x3476e0e6c813dfd1(x450ee4c94aaa36d9)
+);
+
+endmodule
+
+
+
+module xb7458a59f9a81240(
+  clk, rst_b,
+  x8509d7c32c3e7bbb, x57cb3b5bc4e30529,
+  xa7b146ea698b58e6, x385c6fc183663e07,
+  x5f5747fd81750fdb, xc8b18a629638e891, x6d3808166ec9fa40,
+  x9e292bcf4d221086, xd86a1331cb1a160b,
+  in_valid, xf367ffcace8025cb, x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
+  out_valid, xfa257824cfbd54d8
+);
+
+input          clk;
+input          rst_b;
+input          x8509d7c32c3e7bbb;
+input  [3:0]   x57cb3b5bc4e30529;
+input  [1:0]   xa7b146ea698b58e6;
+input  [127:0] x385c6fc183663e07;
+input  [11:0]  x5f5747fd81750fdb;
+input  [7:0]   xc8b18a629638e891;
+input          x6d3808166ec9fa40;
+input          x9e292bcf4d221086;
+input          xd86a1331cb1a160b;
+input          in_valid;
+input  [127:0] xf367ffcace8025cb;
+input          x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
+output         out_valid;
+output [127:0] xfa257824cfbd54d8;
+
+wire [7:0] x5b3e7b14daf75a37;
+reg [7:0] x3aa587b7dc2d41f5;
+reg [31:0] x114dbc96da7e0734 [0:7];
+reg [1:0] x4a08e491c0a615b3 [0:7];
+integer x4acc3e72cc7a3020;
+integer x551ca77288917d06;
+
+assign out_valid = x5b3e7b14daf75a37[0];
+
+always @(*) begin
+  x3aa587b7dc2d41f5 = 8'b0;
+  for (x551ca77288917d06 = 0; x551ca77288917d06 < 8; x551ca77288917d06 = x551ca77288917d06 + 1) begin
+    x114dbc96da7e0734[x551ca77288917d06] = 32'b0;
+    x4a08e491c0a615b3[x551ca77288917d06] = 2'b0;
+  end
+  if (x8509d7c32c3e7bbb) begin
+    for (x4acc3e72cc7a3020 = 0; x4acc3e72cc7a3020 < 4; x4acc3e72cc7a3020 = x4acc3e72cc7a3020 + 1) begin
+      for (x551ca77288917d06 = 0; x551ca77288917d06 < 8; x551ca77288917d06 = x551ca77288917d06 + 1) begin
+        if (x57cb3b5bc4e30529[x4acc3e72cc7a3020]
+            && x5f5747fd81750fdb[x4acc3e72cc7a3020*3 +: 3] == x551ca77288917d06[2:0]) begin
+          x3aa587b7dc2d41f5[x551ca77288917d06] = 1'b1;
+          x114dbc96da7e0734[x551ca77288917d06] = x385c6fc183663e07[x4acc3e72cc7a3020*32 +: 32];
+          x4a08e491c0a615b3[x551ca77288917d06] = xc8b18a629638e891[x4acc3e72cc7a3020*2 +: 2];
+        end
+      end
+    end
+  end
+end
+
+generate
+  genvar x82ceb4aaafcd4dac;
+  for (x82ceb4aaafcd4dac = 0; x82ceb4aaafcd4dac < 8; x82ceb4aaafcd4dac = x82ceb4aaafcd4dac + 1) begin : xb5c91236ad648885
+    x5fb7bf8846611649 xb876cf1ce329cd07 (
+      .clk(clk), .rst_b(rst_b),
+      .x8509d7c32c3e7bbb(x3aa587b7dc2d41f5[x82ceb4aaafcd4dac]),
+      .xa7b146ea698b58e6(xa7b146ea698b58e6),
+      .xc8b18a629638e891(x4a08e491c0a615b3[x82ceb4aaafcd4dac]),
+      .x385c6fc183663e07(x114dbc96da7e0734[x82ceb4aaafcd4dac]),
+      .x6d3808166ec9fa40(x6d3808166ec9fa40),
+      .x9e292bcf4d221086(x9e292bcf4d221086),
+      .xd86a1331cb1a160b(xd86a1331cb1a160b),
+      .in_valid(in_valid), .xf367ffcace8025cb(xf367ffcace8025cb),
+      .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+      .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
+      .out_valid(x5b3e7b14daf75a37[x82ceb4aaafcd4dac]),
+      .x450ee4c94aaa36d9(xfa257824cfbd54d8[x82ceb4aaafcd4dac*16 +: 16])
+    );
+  end
+endgenerate
+
+endmodule
+
+
+
+module x64167339fea729a8(
+  clk, rst_b,
+  x8509d7c32c3e7bbb, x57cb3b5bc4e30529,
+  xa7b146ea698b58e6, x385c6fc183663e07,
+  x5f5747fd81750fdb, xc8b18a629638e891, x6d3808166ec9fa40,
+  x9e292bcf4d221086, xd86a1331cb1a160b,
+  in_valid, xbb17c88db047d946, x99a0417d4564b7a8,
+  xf367ffcace8025cb, x2f581b11f012b8f9, x9b4c0137fe1b0cca, xcd92d73d9663c32d,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
+  x97eee2bb17e0902a, out_valid, xfa257824cfbd54d8
+);
+
+input clk, rst_b, x8509d7c32c3e7bbb;
+input [3:0] x57cb3b5bc4e30529;
+input [1:0] xa7b146ea698b58e6;
+input [127:0] x385c6fc183663e07;
+input [11:0] x5f5747fd81750fdb;
+input [7:0] xc8b18a629638e891;
+input x6d3808166ec9fa40, x9e292bcf4d221086, xd86a1331cb1a160b;
+input in_valid;
+input xbb17c88db047d946, x99a0417d4564b7a8;
+input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
+input x9b4c0137fe1b0cca;
+input [127:0] xcd92d73d9663c32d;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
+output out_valid;
+output x97eee2bb17e0902a;
+output [127:0] xfa257824cfbd54d8;
+
+wire x5b3e7b14daf75a37;
+wire [127:0] x5db11e735e4aab64;
+wire x2f5d7edfd512452c;
+wire [127:0] x433aaee9804e1832;
+wire [15:0] x06e53399d6c0a30b [0:7];
+wire [15:0] x4a96c1560ed144ec [0:7];
+wire [15:0] xe484a6677cb59772 [0:7];
+reg [127:0] x56a65f7c04f67fa1, x56144888caa54ee3, x3895c1df4e7d12c5, xcf448da0e308d878, xbc27cab1560121cd, x1f95c439fd3e93dc;
+reg [127:0] x460d3034f1e3079a, x1766b706cc459b91, x054556762a106986, x823ee73d1cfe1a7d, xb59aab3595da3055, xb6077fe787b138be;
+reg xf094d33f7bec2ed6, xcb534eb82b7880f7, x396c37099dff8db4;
+reg xad899cab8eabad07, x705f5d7443476407, x0a72388a1d2e4e92;
+reg [127:0] xcf6adeae6d5bbbe6, xfaf27092cae54a7e;
+reg [127:0] x6851af4a90449354;
+reg x80c917ca5b9e92c2;
+
+assign out_valid = x80c917ca5b9e92c2;
+assign x97eee2bb17e0902a = x5b3e7b14daf75a37;
+assign xfa257824cfbd54d8 = x6851af4a90449354;
+
+xb7458a59f9a81240 xe3a9ecb945dbf534 (
+  .clk(clk), .rst_b(rst_b),
+  .x8509d7c32c3e7bbb(x8509d7c32c3e7bbb),
+  .x57cb3b5bc4e30529(x57cb3b5bc4e30529),
+  .xa7b146ea698b58e6(xa7b146ea698b58e6),
+  .x385c6fc183663e07(x385c6fc183663e07),
+  .x5f5747fd81750fdb(x5f5747fd81750fdb),
+  .xc8b18a629638e891(xc8b18a629638e891),
+  .x6d3808166ec9fa40(x6d3808166ec9fa40),
+  .x9e292bcf4d221086(x9e292bcf4d221086),
+  .xd86a1331cb1a160b(xd86a1331cb1a160b),
+  .in_valid(in_valid), .xf367ffcace8025cb(xf367ffcace8025cb),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
+  .out_valid(x5b3e7b14daf75a37), .xfa257824cfbd54d8(x5db11e735e4aab64)
+);
+
+x47f7634d48bf3396 xda3e5c31243d926f (
+  .clk(clk), .rst_b(rst_b),
+  .in_valid(x5b3e7b14daf75a37 && x0a72388a1d2e4e92
+            && (!xbb17c88db047d946 || x99a0417d4564b7a8)),
+  .x49743b4a10f0d49a(x5db11e735e4aab64), .x31438a0d41d7666c(xb6077fe787b138be),
+  .out_valid(x2f5d7edfd512452c), .xc823f10afd6c5dda(x433aaee9804e1832)
+);
+
+generate
+  genvar xa46b6eeedc7c49c3;
+  for (xa46b6eeedc7c49c3=0; xa46b6eeedc7c49c3<8; xa46b6eeedc7c49c3=xa46b6eeedc7c49c3+1) begin : x908476d6f5677f88
+    x80814579ee53d600 x02594033c71f8e28 (
+      .x77ee3ac0fb73f112(x5db11e735e4aab64[xa46b6eeedc7c49c3*16 +: 16]),
+      .xaea6dd42a5a1f189(xbb17c88db047d946 ? x2f581b11f012b8f9[xa46b6eeedc7c49c3*16 +: 16]
+                              : x1f95c439fd3e93dc[xa46b6eeedc7c49c3*16 +: 16]),
+      .x12c2dedc988093f3(x06e53399d6c0a30b[xa46b6eeedc7c49c3])
+    );
+    assign xe484a6677cb59772[xa46b6eeedc7c49c3] = x837075243a1a83a4
+                                           ? x5db11e735e4aab64[xa46b6eeedc7c49c3*16 +: 16]
+                                           : x06e53399d6c0a30b[xa46b6eeedc7c49c3];
+    x80814579ee53d600 x71e2fea71249de74 (
+      .x77ee3ac0fb73f112(x433aaee9804e1832[xa46b6eeedc7c49c3*16 +: 16]),
+      .xaea6dd42a5a1f189(xfaf27092cae54a7e[xa46b6eeedc7c49c3*16 +: 16]),
+      .x12c2dedc988093f3(x4a96c1560ed144ec[xa46b6eeedc7c49c3])
+    );
+  end
+endgenerate
+
+always @(posedge clk or negedge rst_b) begin
+  if (!rst_b) begin
+    x56a65f7c04f67fa1<=0; x56144888caa54ee3<=0; x3895c1df4e7d12c5<=0; xcf448da0e308d878<=0; xbc27cab1560121cd<=0; x1f95c439fd3e93dc<=0;
+    x460d3034f1e3079a<=0; x1766b706cc459b91<=0; x054556762a106986<=0; x823ee73d1cfe1a7d<=0; xb59aab3595da3055<=0; xb6077fe787b138be<=0;
+    xf094d33f7bec2ed6<=0; xcb534eb82b7880f7<=0; x396c37099dff8db4<=0;
+    xad899cab8eabad07<=0; x705f5d7443476407<=0; x0a72388a1d2e4e92<=0;
+    xcf6adeae6d5bbbe6<=0; xfaf27092cae54a7e<=0;
+    x6851af4a90449354<=0; x80c917ca5b9e92c2<=0;
+  end else begin
+    x56a65f7c04f67fa1<=x2f581b11f012b8f9; x56144888caa54ee3<=x56a65f7c04f67fa1; x3895c1df4e7d12c5<=x56144888caa54ee3;
+    xcf448da0e308d878<=x3895c1df4e7d12c5; xbc27cab1560121cd<=xcf448da0e308d878; x1f95c439fd3e93dc<=xbc27cab1560121cd;
+    x460d3034f1e3079a<=xcd92d73d9663c32d; x1766b706cc459b91<=x460d3034f1e3079a; x054556762a106986<=x1766b706cc459b91;
+    x823ee73d1cfe1a7d<=x054556762a106986; xb59aab3595da3055<=x823ee73d1cfe1a7d; xb6077fe787b138be<=xb59aab3595da3055;
+    xf094d33f7bec2ed6<=x9b4c0137fe1b0cca; xcb534eb82b7880f7<=xf094d33f7bec2ed6;
+    x396c37099dff8db4<=xcb534eb82b7880f7; xad899cab8eabad07<=x396c37099dff8db4;
+    x705f5d7443476407<=xad899cab8eabad07; x0a72388a1d2e4e92<=x705f5d7443476407;
+    xcf6adeae6d5bbbe6<=xbb17c88db047d946 ? x2f581b11f012b8f9 : x1f95c439fd3e93dc;
+    xfaf27092cae54a7e<=xcf6adeae6d5bbbe6;
+
+    x80c917ca5b9e92c2 <= (x5b3e7b14daf75a37 && !x0a72388a1d2e4e92
+                       && (!xbb17c88db047d946 || x99a0417d4564b7a8))
+                      || x2f5d7edfd512452c;
+    if (x2f5d7edfd512452c)
+      x6851af4a90449354 <= {x4a96c1560ed144ec[7], x4a96c1560ed144ec[6],
+                   x4a96c1560ed144ec[5], x4a96c1560ed144ec[4],
+                   x4a96c1560ed144ec[3], x4a96c1560ed144ec[2],
+                   x4a96c1560ed144ec[1], x4a96c1560ed144ec[0]};
+    else if (x5b3e7b14daf75a37 && !x0a72388a1d2e4e92)
+      x6851af4a90449354 <= {xe484a6677cb59772[7], xe484a6677cb59772[6],
+                   xe484a6677cb59772[5], xe484a6677cb59772[4],
+                   xe484a6677cb59772[3], xe484a6677cb59772[2],
+                   xe484a6677cb59772[1], xe484a6677cb59772[0]};
+  end
+end
+endmodule
+
+
+
+module x5c08c699e8996710(
+  clk, rst_b,
+  x71a1fb7853990a36, x4b3d2ecb21a25f8b,
+  x51163ebe9466d386, x3cf1f13f7a6b8b3b,
+  x881caa172f64e5b4, x7a526d189e8a6b13, x569cb5d6b8dd52c3,
+  x32ea36ba190b0901, x7e3f86f2fe4b2fae,
+  x6d3808166ec9fa40, x9e292bcf4d221086, xd86a1331cb1a160b,
+  x78c01d4063ab1498, xf367ffcace8025cb, x2f581b11f012b8f9,
+  xbb17c88db047d946, x99a0417d4564b7a8,
+  x9b4c0137fe1b0cca, xcd92d73d9663c32d,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
+  x97eee2bb17e0902a, x762bc51e04520bde, xfa257824cfbd54d8
+);
+
+input clk, rst_b;
+input x71a1fb7853990a36;
+output x4b3d2ecb21a25f8b;
+input [1:0] x51163ebe9466d386;
+input x3cf1f13f7a6b8b3b;
+input x881caa172f64e5b4;
+output x7a526d189e8a6b13;
+input [127:0] x569cb5d6b8dd52c3;
+input x32ea36ba190b0901;
+output x7e3f86f2fe4b2fae;
+input x6d3808166ec9fa40, x9e292bcf4d221086, xd86a1331cb1a160b;
+input x78c01d4063ab1498;
+input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
+input xbb17c88db047d946, x99a0417d4564b7a8;
+input x9b4c0137fe1b0cca;
+input [127:0] xcd92d73d9663c32d;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
+output x97eee2bb17e0902a;
+output x762bc51e04520bde;
+output [127:0] xfa257824cfbd54d8;
+
+wire [127:0] drain_data;
+wire [3:0] x20f2c51cf2486df6;
+wire [7:0] x7bfe9c2b6f945773;
+wire [11:0] x8a656d6a824f6691;
+wire xc4fb4d5a3aecbf48;
+reg [1:0] x80adaaad64000e07;
+wire [2:0] xd2816ee2183718ea = x51163ebe9466d386 == 2'd0
+                             ? (x3cf1f13f7a6b8b3b ? 3'd1 : 3'd0)
+                             : (x3cf1f13f7a6b8b3b ? 3'd3 : 3'd2);
+
+x7ae1c8e1807135d4 x78663880009ae72d (
+  .clk(clk), .rst_b(rst_b),
+  .x5d8ea037adf8553c(x71a1fb7853990a36), .xb26fe775eee0d384(x4b3d2ecb21a25f8b),
+  .xe1b115477a2e5386(xd2816ee2183718ea), .xfeb1582340ff4fc5(xc4fb4d5a3aecbf48), .xc2a6b3287e2c27b2(x7e3f86f2fe4b2fae),
+  .xb488efce181b34c5(x881caa172f64e5b4), .xde64a8bd1625131d(x7a526d189e8a6b13),
+  .x6f6df2adde6864cf(x569cb5d6b8dd52c3),
+  .xb06f8e05baee8619(x20f2c51cf2486df6),
+  .x49a1fbff848cf653({4{x32ea36ba190b0901}}),
+  .x70578fc21eba69d5(drain_data), .x571088fa91b50385(x8a656d6a824f6691),
+  .xd9e7d6d809712465(x7bfe9c2b6f945773)
+);
+
+x64167339fea729a8 x1193ff19cd581a88 (
+  .clk(clk), .rst_b(rst_b),
+  .x8509d7c32c3e7bbb(|x20f2c51cf2486df6 && x32ea36ba190b0901),
+  .x57cb3b5bc4e30529(x20f2c51cf2486df6 & {4{x32ea36ba190b0901}}),
+  .xa7b146ea698b58e6(x80adaaad64000e07), .x385c6fc183663e07(drain_data),
+  .x5f5747fd81750fdb(x8a656d6a824f6691),
+  .xc8b18a629638e891(x7bfe9c2b6f945773), .x6d3808166ec9fa40(x6d3808166ec9fa40),
+  .x9e292bcf4d221086(x9e292bcf4d221086),
+  .xd86a1331cb1a160b(xd86a1331cb1a160b),
+  .in_valid(x78c01d4063ab1498), .xf367ffcace8025cb(xf367ffcace8025cb),
+  .xbb17c88db047d946(xbb17c88db047d946),
+  .x99a0417d4564b7a8(x99a0417d4564b7a8),
+  .x2f581b11f012b8f9(x2f581b11f012b8f9),
+  .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca), .xcd92d73d9663c32d(xcd92d73d9663c32d),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32), .x97eee2bb17e0902a(x97eee2bb17e0902a),
+  .out_valid(x762bc51e04520bde), .xfa257824cfbd54d8(xfa257824cfbd54d8)
+);
+
+always @(posedge clk or negedge rst_b) begin
+  if (!rst_b)
+    x80adaaad64000e07 <= 2'd0;
+  else if (x71a1fb7853990a36 && x4b3d2ecb21a25f8b)
+    x80adaaad64000e07 <= x51163ebe9466d386;
+end
+
+wire x0271504f567c9b9c = xc4fb4d5a3aecbf48;
+endmodule
+
+
+
+module x1233009e52e6cf38(
+  clk, rst_b,
+  x71a1fb7853990a36, x4b3d2ecb21a25f8b,
+  x51163ebe9466d386, x3cf1f13f7a6b8b3b,
+  x881caa172f64e5b4, x7a526d189e8a6b13, x569cb5d6b8dd52c3,
+  x32ea36ba190b0901, x7e3f86f2fe4b2fae,
+  x9e292bcf4d221086, xfd3cc55250e8b78a,
+  xb80b2ddca37d049e, x9afa367769f31bab,
+  x78c01d4063ab1498, xf367ffcace8025cb, x2f581b11f012b8f9,
+  xbb17c88db047d946, x99a0417d4564b7a8,
+  x9b4c0137fe1b0cca, xcd92d73d9663c32d,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
+  x97eee2bb17e0902a, x762bc51e04520bde, xfa257824cfbd54d8
+);
+
+input clk, rst_b;
+input x71a1fb7853990a36;
+output x4b3d2ecb21a25f8b;
+input [1:0] x51163ebe9466d386;
+input x3cf1f13f7a6b8b3b;
+input x881caa172f64e5b4;
+output x7a526d189e8a6b13;
+input [127:0] x569cb5d6b8dd52c3;
+input x32ea36ba190b0901;
+output x7e3f86f2fe4b2fae;
+input x9e292bcf4d221086;
+output xfd3cc55250e8b78a;
+output xb80b2ddca37d049e, x9afa367769f31bab;
+input x78c01d4063ab1498;
+input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
+input xbb17c88db047d946, x99a0417d4564b7a8;
+input x9b4c0137fe1b0cca;
+input [127:0] xcd92d73d9663c32d;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
+output x97eee2bb17e0902a;
+output x762bc51e04520bde;
+output [127:0] xfa257824cfbd54d8;
+
+reg x52aa2d7d6e96e1d3;
+reg x11f4bf4d43209279;
+reg xa332027cec315012;
+reg xedbc790d05da3f95;
+reg xb9ca039b81e78880;
+wire xcad7bc01dbd5d496;
+wire xd62e9ba54f48a2e5;
+wire x9be107c658cf41ab = x71a1fb7853990a36 && x4b3d2ecb21a25f8b;
+wire x9bf553a9a6599316 = x9e292bcf4d221086 && xfd3cc55250e8b78a;
+
+assign x4b3d2ecb21a25f8b = xcad7bc01dbd5d496 && !xb9ca039b81e78880;
+assign xfd3cc55250e8b78a = xb9ca039b81e78880 || xd62e9ba54f48a2e5;
+assign xb80b2ddca37d049e = x11f4bf4d43209279;
+assign x9afa367769f31bab = xb9ca039b81e78880;
+assign x7e3f86f2fe4b2fae = xd62e9ba54f48a2e5;
+
+x5c08c699e8996710 x5908cd39e288badb (
+  .clk(clk), .rst_b(rst_b),
+  .x71a1fb7853990a36(x71a1fb7853990a36 && x4b3d2ecb21a25f8b),
+  .x4b3d2ecb21a25f8b(xcad7bc01dbd5d496),
+  .x51163ebe9466d386(x51163ebe9466d386),
+  .x3cf1f13f7a6b8b3b(x3cf1f13f7a6b8b3b),
+  .x881caa172f64e5b4(x881caa172f64e5b4),
+  .x7a526d189e8a6b13(x7a526d189e8a6b13),
+  .x569cb5d6b8dd52c3(x569cb5d6b8dd52c3),
+  .x32ea36ba190b0901(x32ea36ba190b0901), .x7e3f86f2fe4b2fae(xd62e9ba54f48a2e5),
+  .x6d3808166ec9fa40(xa332027cec315012),
+  .x9e292bcf4d221086(x9bf553a9a6599316),
+  .xd86a1331cb1a160b(xd62e9ba54f48a2e5 ? xa332027cec315012 : xedbc790d05da3f95),
+  .x78c01d4063ab1498(x78c01d4063ab1498), .xf367ffcace8025cb(xf367ffcace8025cb),
+  .x2f581b11f012b8f9(x2f581b11f012b8f9), .xbb17c88db047d946(xbb17c88db047d946),
+  .x99a0417d4564b7a8(x99a0417d4564b7a8), .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca),
+  .xcd92d73d9663c32d(xcd92d73d9663c32d),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32), .x97eee2bb17e0902a(x97eee2bb17e0902a),
+  .x762bc51e04520bde(x762bc51e04520bde), .xfa257824cfbd54d8(xfa257824cfbd54d8)
+);
+
+always @(posedge clk or negedge rst_b) begin
+  if (!rst_b) begin
+    x52aa2d7d6e96e1d3 <= 1'b0;
+    x11f4bf4d43209279 <= 1'b0;
+    xa332027cec315012 <= 1'b1;
+    xedbc790d05da3f95 <= 1'b0;
+    xb9ca039b81e78880 <= 1'b0;
+  end else begin
+    if (x9be107c658cf41ab)
+      xa332027cec315012 <= !x52aa2d7d6e96e1d3;
+
+    if (xd62e9ba54f48a2e5) begin
+      xedbc790d05da3f95 <= xa332027cec315012;
+      xb9ca039b81e78880 <= 1'b1;
+    end
+
+    if (x9bf553a9a6599316) begin
+      x52aa2d7d6e96e1d3 <= xd62e9ba54f48a2e5 ? xa332027cec315012 : xedbc790d05da3f95;
+      x11f4bf4d43209279 <= 1'b1;
+      xb9ca039b81e78880 <= 1'b0;
+    end
+  end
+end
+endmodule
+
+
+
+module x8ded35e5c9f9d880(
+  clk, rst_b,
+  x22d4589045c4d1a8, xc9a019b1e19d2207, x5eac9d32b5d97872, x32ad82e3ac20bda9,
+  x785d1dc2b63cc926, x4e124931f57ab5eb,
+  x7a65abcd3086d5ed, xdabc31bc87c9547c, xb4e6daa5b1e4aed6, x9cea447ad0fd5162,
+  xb3c7f8f3dd3efd71, x3e1b5d972f66ef63,
+  xabd263c88a866189, xe94e2d784c071f58,
+  x5b74621c47643bf6, xbb17c88db047d946, x99a0417d4564b7a8,
+  xf367ffcace8025cb, x2f581b11f012b8f9,
+  x9b4c0137fe1b0cca, xcd92d73d9663c32d, x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
+  x97eee2bb17e0902a, x84a3e534a50080d1, xfa257824cfbd54d8
+);
+
+input clk, rst_b;
+input x22d4589045c4d1a8, x5eac9d32b5d97872, x32ad82e3ac20bda9;
+output xc9a019b1e19d2207, x785d1dc2b63cc926, x4e124931f57ab5eb;
+input x7a65abcd3086d5ed;
+output xdabc31bc87c9547c;
+input [2:0] xb4e6daa5b1e4aed6;
+input [127:0] x9cea447ad0fd5162;
+input xb3c7f8f3dd3efd71;
+output x3e1b5d972f66ef63;
+output xabd263c88a866189, xe94e2d784c071f58;
+input x5b74621c47643bf6;
+input xbb17c88db047d946, x99a0417d4564b7a8;
+input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
+input x9b4c0137fe1b0cca;
+input [127:0] xcd92d73d9663c32d;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
+output x97eee2bb17e0902a;
+output x84a3e534a50080d1;
+output [127:0] xfa257824cfbd54d8;
+
+localparam x96c0b0d7cbf7108a = 2'd0;
+localparam x9b555e0a859dd809   = 2'd1;
+
+wire [1:0] x5265689d67f7b180 = x5eac9d32b5d97872 ? x96c0b0d7cbf7108a : x9b555e0a859dd809;
+
+
+
+wire xf2973dd0e83ebbc0 = &{1'b0, xb4e6daa5b1e4aed6};
+
+assign x785d1dc2b63cc926 = !xc9a019b1e19d2207;
+
+x1233009e52e6cf38 x077b2bedfc5a382f (
+  .clk(clk), .rst_b(rst_b),
+  .x71a1fb7853990a36(x22d4589045c4d1a8), .x4b3d2ecb21a25f8b(xc9a019b1e19d2207),
+  .x51163ebe9466d386(x5265689d67f7b180), .x3cf1f13f7a6b8b3b(x32ad82e3ac20bda9),
+  .x881caa172f64e5b4(x7a65abcd3086d5ed), .x7a526d189e8a6b13(xdabc31bc87c9547c),
+  .x569cb5d6b8dd52c3(x9cea447ad0fd5162), .x32ea36ba190b0901(1'b1),
+  .x7e3f86f2fe4b2fae(x4e124931f57ab5eb),
+  .x9e292bcf4d221086(xb3c7f8f3dd3efd71),
+  .xfd3cc55250e8b78a(x3e1b5d972f66ef63),
+  .xb80b2ddca37d049e(xabd263c88a866189),
+  .x9afa367769f31bab(xe94e2d784c071f58),
+  .x78c01d4063ab1498(x5b74621c47643bf6), .xf367ffcace8025cb(xf367ffcace8025cb),
+  .x2f581b11f012b8f9(x2f581b11f012b8f9), .xbb17c88db047d946(xbb17c88db047d946),
+  .x99a0417d4564b7a8(x99a0417d4564b7a8), .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca),
+  .xcd92d73d9663c32d(xcd92d73d9663c32d),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32), .x97eee2bb17e0902a(x97eee2bb17e0902a),
+  .x762bc51e04520bde(x84a3e534a50080d1), .xfa257824cfbd54d8(xfa257824cfbd54d8)
+);
+
+endmodule
+
+
+
+module x549d52f6f7bd36cf #(
+  parameter xfe21ce5abacbbe0f = 0
+)(
+  clk, rst_b,
+  x5b74621c47643bf6, xbb17c88db047d946, x99a0417d4564b7a8,
+  xf367ffcace8025cb, x2f581b11f012b8f9, x9b4c0137fe1b0cca, xcd92d73d9663c32d,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
+  xf9516f1f7d3f8f7a, x9bdf57398d4aad08,
+  x781f293ed28bb926, xde248a5a4539acfb, xf174af5b948a7de2,
+  x54096017a1e852ff, x33a1add1aba46894, x721c7b4efc5b3816,
+  x9c56e6d443b61f6f, x66089cc978bcd759, x31de3ceb121de4f6,
+  xdbf3bc8c6154163b, xf57cd445e084f946, xfc5f9c3a037a1129,
+  xccdf45c607063ccf, x7609fb8ba281aadf, x32699815b4ff72ef,
+  x17a6b672896a2f85,
+  x9e292bcf4d221086, xfd3cc55250e8b78a,
+  xe6ab078404872cdc, xb80b2ddca37d049e, x9afa367769f31bab,
+  x97eee2bb17e0902a, x762bc51e04520bde, xfa257824cfbd54d8
+);
+
+input clk, rst_b;
+input x5b74621c47643bf6, xbb17c88db047d946, x99a0417d4564b7a8;
+input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
+input x9b4c0137fe1b0cca;
+input [127:0] xcd92d73d9663c32d;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
+input xf9516f1f7d3f8f7a, x9bdf57398d4aad08, xde248a5a4539acfb;
+output x781f293ed28bb926, xf174af5b948a7de2;
+input [1:0] x54096017a1e852ff;
+input [127:0] x33a1add1aba46894;
+input x721c7b4efc5b3816;
+input x9c56e6d443b61f6f, x31de3ceb121de4f6, xdbf3bc8c6154163b;
+output x66089cc978bcd759, xf57cd445e084f946, xfc5f9c3a037a1129;
+input xccdf45c607063ccf;
+output x7609fb8ba281aadf;
+input [2:0] x32699815b4ff72ef;
+input [127:0] x17a6b672896a2f85;
+input x9e292bcf4d221086;
+output xfd3cc55250e8b78a, xe6ab078404872cdc;
+output xb80b2ddca37d049e, x9afa367769f31bab;
+output x97eee2bb17e0902a, x762bc51e04520bde;
+output [127:0] xfa257824cfbd54d8;
+
+generate
+  if (xfe21ce5abacbbe0f) begin : xa2fa06f4e2ad0533
+    wire x05f744cd2056e160, x0cfb9989ad76c739;
+    x8ded35e5c9f9d880 x1193ff19cd581a88 (
+      .clk(clk), .rst_b(rst_b),
+      .x22d4589045c4d1a8(x9c56e6d443b61f6f), .xc9a019b1e19d2207(x66089cc978bcd759),
+      .x5eac9d32b5d97872(x31de3ceb121de4f6),
+      .x32ad82e3ac20bda9(xdbf3bc8c6154163b),
+      .x785d1dc2b63cc926(xf57cd445e084f946), .x4e124931f57ab5eb(xfc5f9c3a037a1129),
+      .x7a65abcd3086d5ed(xccdf45c607063ccf), .xdabc31bc87c9547c(x7609fb8ba281aadf),
+      .xb4e6daa5b1e4aed6(x32699815b4ff72ef), .x9cea447ad0fd5162(x17a6b672896a2f85),
+      .xb3c7f8f3dd3efd71(x9e292bcf4d221086),
+      .x3e1b5d972f66ef63(xfd3cc55250e8b78a),
+      .xabd263c88a866189(x05f744cd2056e160),
+      .xe94e2d784c071f58(x0cfb9989ad76c739),
+      .x5b74621c47643bf6(x5b74621c47643bf6), .xbb17c88db047d946(xbb17c88db047d946),
+      .x99a0417d4564b7a8(x99a0417d4564b7a8), .xf367ffcace8025cb(xf367ffcace8025cb),
+      .x2f581b11f012b8f9(x2f581b11f012b8f9), .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca),
+      .xcd92d73d9663c32d(xcd92d73d9663c32d), .x837075243a1a83a4(x837075243a1a83a4),
+      .xbe13730a7094392c(xbe13730a7094392c), .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
+      .x97eee2bb17e0902a(x97eee2bb17e0902a), .x84a3e534a50080d1(x762bc51e04520bde),
+      .xfa257824cfbd54d8(xfa257824cfbd54d8)
+    );
+    assign x781f293ed28bb926 = 1'b0;
+    assign xf174af5b948a7de2 = 1'b0;
+    assign xe6ab078404872cdc = xf57cd445e084f946;
+    assign xb80b2ddca37d049e = x05f744cd2056e160;
+    assign x9afa367769f31bab = x0cfb9989ad76c739;
+  end else begin : x060588b5c4aa43e1
+    x448b47bfbb011c0b x1193ff19cd581a88 (
+      .clk(clk), .rst_b(rst_b), .x5b74621c47643bf6(x5b74621c47643bf6),
+      .xbb17c88db047d946(xbb17c88db047d946),
+      .x99a0417d4564b7a8(x99a0417d4564b7a8),
+      .xf367ffcace8025cb(xf367ffcace8025cb), .x2f581b11f012b8f9(x2f581b11f012b8f9),
+      .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca), .xcd92d73d9663c32d(xcd92d73d9663c32d),
+      .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+      .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
+      .x3b0884f626d60d77(xf9516f1f7d3f8f7a),
+      .xdea24a9dcf4995ff(x9bdf57398d4aad08),
+      .x461cf36690126388(x781f293ed28bb926),
+      .x28fd586b898678bd(xde248a5a4539acfb),
+      .x05b96fb67b59f034(xf174af5b948a7de2),
+      .x07fa53e44d324a4b(x54096017a1e852ff),
+      .xadb712b1acd54bff(x33a1add1aba46894),
+      .x967f789db1078ac2(x721c7b4efc5b3816),
+      .xb3c7f8f3dd3efd71(x9e292bcf4d221086),
+      .x3e1b5d972f66ef63(xfd3cc55250e8b78a),
+      .xc9595a46bb758887(xe6ab078404872cdc),
+      .xabd263c88a866189(xb80b2ddca37d049e),
+      .xe94e2d784c071f58(x9afa367769f31bab),
+      .x97eee2bb17e0902a(x97eee2bb17e0902a), .x84a3e534a50080d1(x762bc51e04520bde),
+      .xfa257824cfbd54d8(xfa257824cfbd54d8)
+    );
+    assign x66089cc978bcd759 = 1'b0;
+    assign xf57cd445e084f946 = 1'b0;
+    assign xfc5f9c3a037a1129 = 1'b0;
+    assign x7609fb8ba281aadf = 1'b0;
+  end
+endgenerate
 
 endmodule
 
@@ -10825,7 +12225,6 @@ localparam [3:0] x445d9a18754a6310 = 4'd0;
 localparam [3:0] x0b19c11849e3fd02 = 4'd3;
 localparam [3:0] x12c71285ea8854b0 = 4'd4;
 localparam [3:0] xc63ba053cf6544fb = 4'd8;
-localparam [3:0] x1f95b47ade913e0d = 4'd9;
 
 reg [3:0] xdc3bf445609e4b40;
 reg [ADDR_WIDTH-1:0] x708267fb7321f284;
@@ -10850,7 +12249,6 @@ wire x79c389ea7936278c = (x900fa81ce3939531 == x445d9a18754a6310);
 wire xc58da9196fad5e9a = (x900fa81ce3939531 == x0b19c11849e3fd02);
 wire x0b60cb694171b5ee = (x900fa81ce3939531 >= x12c71285ea8854b0) &&
                        (x900fa81ce3939531 <= xc63ba053cf6544fb);
-wire xe958323f4ee9a0ec = (x900fa81ce3939531 == x1f95b47ade913e0d);
 
 assign actu_cmd_ready = 1'b1;
 assign cmpu_cmd_ready = 1'b1;
@@ -10876,7 +12274,7 @@ x96e1f40414de5ff0 #(
   .x3472df29097e3739(1'b1),
   .x68e30639857afb20(1'b0),
   .x03f247e024de0fe3(x03c9e53c628c1435 ? xeee9a674154f5b44 : x708267fb7321f284),
-  .x80a923b41e3137d0(x03c9e53c628c1435 && !x79c389ea7936278c && !xe958323f4ee9a0ec),
+  .x80a923b41e3137d0(x03c9e53c628c1435 && !x79c389ea7936278c),
   .xe56e8e3d38a38904(1'b0),
   .x06e22fc6178c5b8d(x50749d77701afe33),
   .x558efab3d942d8e5(x03c9e53c628c1435 && xc58da9196fad5e9a),
@@ -11587,7 +12985,6 @@ localparam [3:0] xbc585c44b6e0918a = 4'd5;
 localparam [3:0] x2b1c5647bb4ab414 = 4'd6;
 localparam [3:0] x4b980386292ae432 = 4'd7;
 localparam [3:0] xf24cc3016e9c2185 = 4'd8;
-localparam [3:0] x23617bb5630352fa = 4'd9;
 
 reg xb107a1fe33fa4030;
 reg [3:0] xf295233e23064221;
@@ -11653,7 +13050,6 @@ always @* begin
     xc21fa7fa19f11092: x12208a9f9d7fbd7c = x7dcad6afceb4ff1e;
     xf44123f9e4b797a7: x12208a9f9d7fbd7c = xa0933dc1802fe587;
     x04809f5e6a06fa39: x12208a9f9d7fbd7c = (x0a4449b6dabe347f != 0) ? xed86b6759627f7eb : xa40ed55a672be187;
-    x23617bb5630352fa: x12208a9f9d7fbd7c = xa40ed55a672be187;
     x01da5b962138f3bd: begin x12208a9f9d7fbd7c = {15'b0, xe61b0871f973850c}; x12d08aa2549bf773 = 1'b1; end
     xbc585c44b6e0918a: begin x12208a9f9d7fbd7c = {15'b0, xe61b0871f973850c || xcafc4b26bdcb3c92}; x12d08aa2549bf773 = 1'b1; end
     x2b1c5647bb4ab414: begin x12208a9f9d7fbd7c = {15'b0, xcafc4b26bdcb3c92}; x12d08aa2549bf773 = 1'b1; end
@@ -13546,7 +14942,6 @@ module x1bf8829620a3095a #(
   input  wire [7:0]                   x908aa19ab8d7885e,
   input  wire [7:0]                   xab8ff766dd7ba0b2,
   input  wire [3:0]                   x0e2bd18ccc859f22,
-  input  wire                         x47a26014700ff768,
   input  wire [15:0]                  xb5f95e0c3d2dab74,
   input  wire                         x8e0145cd7db1adf5,
   input  wire                         xa360be4355aab627,
@@ -13747,7 +15142,6 @@ module x1bf8829620a3095a #(
     .x908aa19ab8d7885e(x908aa19ab8d7885e),
     .xab8ff766dd7ba0b2(xab8ff766dd7ba0b2),
     .x0e2bd18ccc859f22(x0e2bd18ccc859f22),
-    .x47a26014700ff768(x47a26014700ff768),
     .xb5f95e0c3d2dab74(xb5f95e0c3d2dab74[15:0]),
     .x8e0145cd7db1adf5(x8e0145cd7db1adf5),
     .xa360be4355aab627(xa360be4355aab627),
@@ -15199,26 +16593,23 @@ wire [xc379152efa4a7df0-1:0]     xe27810c74eb9887c;
 wire [xd3200f0a9991e67b-1:0]     x6e8d7b9d0b46aa0a;
 wire [xf33a3d23b7d86cb5-1:0]   x0a7daa9aec08b526;
 wire [xf33a3d23b7d86cb5-1:0]   x9b8612fdea414662;
-wire                          x739f3dd764bb5b0b;
-wire                          x3d3b5853aff0a61e;
-wire [xf33a3d23b7d86cb5-1:0]   xb21caae4e8d5bce1;
-wire [xf33a3d23b7d86cb5-1:0]   x70c901264e99e584;
-wire                          xa12fd7bd98638764;
-wire [x1edacd58b2f9b15e-1:0]    x7601fca674d37867;
-wire [xc379152efa4a7df0-1:0]     x5facbf97e94fdf2f;
-wire [xd3200f0a9991e67b-1:0]     xc3d49f34a84ab4b7;
-wire [xf33a3d23b7d86cb5-1:0]   x5d2a3b091b6d035f;
-wire [xf33a3d23b7d86cb5-1:0]   xe5aece7c555a9556;
-wire                          x1636820ab7ee7737;
-wire                          x6a7ddcfe32b6ab21;
-wire [xf33a3d23b7d86cb5-1:0]   x36e7da4cb13e32bc;
-wire [xf33a3d23b7d86cb5-1:0]   xefd5d606ce08da4f;
-wire                          xe3ef55b7fc107d8b;
-wire [x1edacd58b2f9b15e-1:0]    xa2c851f675bce6dc;
-wire [xc379152efa4a7df0-1:0]     x1fcf06a80fbead03;
-wire [xd3200f0a9991e67b-1:0]     x9db1fac7599ed111;
-wire [xf33a3d23b7d86cb5-1:0]   x4918b410e619db98;
-wire [xf33a3d23b7d86cb5-1:0]   x1a0ec40f957b75aa;
+wire                          x130f66f80f7e4945;
+wire                          x76159f4887c63710;
+wire [xf33a3d23b7d86cb5-1:0]   xec33697a80831d03;
+wire [xf33a3d23b7d86cb5-1:0]   x42a4e5cbac0f7b7d;
+wire                          x4e7710b007688d16;
+wire [x1edacd58b2f9b15e-1:0]    x67c0837d80874529;
+wire [xc379152efa4a7df0-1:0]     x77a97cd77032ac52;
+wire [xd3200f0a9991e67b-1:0]     x78bd70ee7ab49b13;
+wire [xf33a3d23b7d86cb5-1:0]   x14c6540a5201f154;
+wire [xf33a3d23b7d86cb5-1:0]   xac172e7f5f326d5a;
+wire                          xaa2adc6a66ccfab0;
+wire                          xdb320d363ccc8b87;
+wire [ADDR_WIDTH-1:0]         xdb91b6e6832b0d93;
+wire                          xb0999ccf9825a8fd;
+wire                          x5a1c794b615dcdf7;
+wire [xc379152efa4a7df0-1:0]     x1b102d37778565a6;
+reg                           x3191814150cb62a1;
 
 wire [1:0]                    x13ed63102492ee99;
 wire [1:0]                    xeb49595dbb9c8538;
@@ -15226,8 +16617,8 @@ wire [x8f66638444ef19ea-1:0]    x629e814df415fc0e;
 wire [x8e0b9f89d36e7e5f-1:0]    xfd014343469e5d43;
 wire [x16e7232a159e2830-1:0] xbdd60680dd335c05;
 wire [x16e7232a159e2830-1:0] x5216db8ac9d2e8c4;
-wire [x16e7232a159e2830-1:0] xc14bbdc48b9f40bb;
-wire [x16e7232a159e2830-1:0] xb76b91b023efc050;
+wire [x16e7232a159e2830-1:0] x09c573d032f26b3a;
+wire [x16e7232a159e2830-1:0] xe1b4e190ece8dc23;
 wire [4*x16e7232a159e2830-1:0] x5b97ad124637e15b;
 wire [xdc689d8eae5be746*x16e7232a159e2830-1:0] xcfcfb56675b2ce21;
 wire [2:0]                    x7908935e23a351c6;
@@ -15259,17 +16650,17 @@ assign x5216db8ac9d2e8c4[x16e7232a159e2830-1:0] =
      xe27810c74eb9887c[x8f66638444ef19ea-1:0],
      x5378fd60a96cfe92[x1edacd58b2f9b15e-1:0],
      ({2{x20f008138d203337}} & {2{x2c749380b1a5aec3}}), {2{x2c749380b1a5aec3}}};
-assign xb76b91b023efc050[x16e7232a159e2830-1:0] =
+assign x09c573d032f26b3a[x16e7232a159e2830-1:0] =
     {{x8e0b9f89d36e7e5f{1'b0}}, {x8f66638444ef19ea{1'b0}},
-     xa2c851f675bce6dc[x1edacd58b2f9b15e-1:0], 2'b00, {2{x1636820ab7ee7737}}};
-assign xc14bbdc48b9f40bb[x16e7232a159e2830-1:0] =
-    {{x8e0b9f89d36e7e5f{1'b0}}, {x8f66638444ef19ea{1'b0}},
-     x7601fca674d37867[x1edacd58b2f9b15e-1:0], 2'b00, {2{x739f3dd764bb5b0b}}};
+     x67c0837d80874529[x1edacd58b2f9b15e-1:0], 2'b00,
+     {2{x130f66f80f7e4945}}};
+assign xe1b4e190ece8dc23[x16e7232a159e2830-1:0] =
+    {x16e7232a159e2830{1'b0}};
 
 
 
 assign x5b97ad124637e15b[4*x16e7232a159e2830-1:0] =
-    {xc14bbdc48b9f40bb, xb76b91b023efc050,
+    {xe1b4e190ece8dc23, x09c573d032f26b3a,
      x5216db8ac9d2e8c4, xbdd60680dd335c05};
 
 x1b4b418cd221e068 #(
@@ -15352,42 +16743,48 @@ x1e95fb5529aae9a8 #(
                                             +: DATA_WIDTH])
 );
 
-x1e95fb5529aae9a8 #(
-  .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .x50191cc99802a285(2),
-  .xf33a3d23b7d86cb5(xf33a3d23b7d86cb5),
-  .x1edacd58b2f9b15e(x1edacd58b2f9b15e), .x558b43053524a8b0(3'd7), .xca50b1f85c41f767(0)
-) xc43cd9298634bb66 (
-  .clk(clk), .cpurst_b(cpurst_b), .phase(phase),
-  .xd3dc93f2a663c0c5(x67d00d1cef600ab3), .xc661e27b0e40fbff(1'b0), .x525ff688869ab187(x8fd0d327daedc923),
-  .x4435cbe145553070({xc379152efa4a7df0{1'b0}}),
-  .xf9d660f14f531216({xd3200f0a9991e67b{1'b0}}),
-  .x3fca7405bc9b0447(xe0d17d27ae5a5a14), .xbd11fe81da058fa3(x1729c70b70cfa2e1), .xfbd7438120039621(x8076a6acb6fd3c1b),
-  .xd61d90eb6b0e3a37(x739f3dd764bb5b0b), .x7f560042a6bc4136(x3d3b5853aff0a61e),
-  .x5f6f4b66736e4a96(xb21caae4e8d5bce1), .xa95144e53eff6030(x70c901264e99e584),
-  .xc72d74d100d398d1(xa12fd7bd98638764), .x4b66b2705572d83f(x7601fca674d37867),
-  .x66b9daefa71e217a(x5facbf97e94fdf2f), .xf2dcb1e1e6779825(xc3d49f34a84ab4b7),
-  .x8cd6f6eb166fcdb4(x5d2a3b091b6d035f), .xe29970454cda29cc(xe5aece7c555a9556),
-  .xf229922c64067fc3(x7760de720ed694da[3*x8f66638444ef19ea
-                                            +: DATA_WIDTH]),
-  .x385805c04dcf1160(x7760de720ed694da[3*x8f66638444ef19ea+DATA_WIDTH
-                                            +: DATA_WIDTH])
-);
+
+
+
+
+assign xaa2adc6a66ccfab0 = x1f8fc280fe7a8a88;
+assign xdb320d363ccc8b87 = x1f8fc280fe7a8a88 || x67d00d1cef600ab3;
+assign xdb91b6e6832b0d93[ADDR_WIDTH-1:0] =
+    xaa2adc6a66ccfab0 ? xe9de582ef7c1d071[ADDR_WIDTH-1:0]
+                         : x8fd0d327daedc923[ADDR_WIDTH-1:0];
+assign x2e5336384ddf17be = xb0999ccf9825a8fd && xaa2adc6a66ccfab0;
+assign xe0d17d27ae5a5a14 = xb0999ccf9825a8fd && !xaa2adc6a66ccfab0 && x67d00d1cef600ab3;
+assign x03e4fae38317b8e1 = x5a1c794b615dcdf7 && x3191814150cb62a1;
+assign x1729c70b70cfa2e1 = x5a1c794b615dcdf7 && !x3191814150cb62a1;
+assign x712ce91f42aa01e2[xc379152efa4a7df0-1:0] = x1b102d37778565a6[xc379152efa4a7df0-1:0];
+assign x8076a6acb6fd3c1b[xc379152efa4a7df0-1:0] = x1b102d37778565a6[xc379152efa4a7df0-1:0];
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b)
+    x3191814150cb62a1 <= 1'b0;
+  else if (xb0999ccf9825a8fd)
+    x3191814150cb62a1 <= xaa2adc6a66ccfab0;
+end
 
 x1e95fb5529aae9a8 #(
   .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .x50191cc99802a285(2),
   .xf33a3d23b7d86cb5(xf33a3d23b7d86cb5),
   .x1edacd58b2f9b15e(x1edacd58b2f9b15e), .x558b43053524a8b0(3'd5), .xca50b1f85c41f767(0)
-) xd2d4ad6685036461 (
+) x97b99e71456dc0d1 (
   .clk(clk), .cpurst_b(cpurst_b), .phase(phase),
-  .xd3dc93f2a663c0c5(x1f8fc280fe7a8a88), .xc661e27b0e40fbff(1'b0), .x525ff688869ab187(xe9de582ef7c1d071),
+  .xd3dc93f2a663c0c5(xdb320d363ccc8b87), .xc661e27b0e40fbff(1'b0), .x525ff688869ab187(xdb91b6e6832b0d93),
   .x4435cbe145553070({xc379152efa4a7df0{1'b0}}),
   .xf9d660f14f531216({xd3200f0a9991e67b{1'b0}}),
-  .x3fca7405bc9b0447(x2e5336384ddf17be), .xbd11fe81da058fa3(x03e4fae38317b8e1), .xfbd7438120039621(x712ce91f42aa01e2),
-  .xd61d90eb6b0e3a37(x1636820ab7ee7737), .x7f560042a6bc4136(x6a7ddcfe32b6ab21),
-  .x5f6f4b66736e4a96(x36e7da4cb13e32bc), .xa95144e53eff6030(xefd5d606ce08da4f),
-  .xc72d74d100d398d1(xe3ef55b7fc107d8b), .x4b66b2705572d83f(xa2c851f675bce6dc),
-  .x66b9daefa71e217a(x1fcf06a80fbead03), .xf2dcb1e1e6779825(x9db1fac7599ed111),
-  .x8cd6f6eb166fcdb4(x4918b410e619db98), .xe29970454cda29cc(x1a0ec40f957b75aa),
+  .x3fca7405bc9b0447(xb0999ccf9825a8fd), .xbd11fe81da058fa3(x5a1c794b615dcdf7),
+  .xfbd7438120039621(x1b102d37778565a6),
+  .xd61d90eb6b0e3a37(x130f66f80f7e4945), .x7f560042a6bc4136(x76159f4887c63710),
+  .x5f6f4b66736e4a96(xec33697a80831d03), .xa95144e53eff6030(x42a4e5cbac0f7b7d),
+  .xc72d74d100d398d1(x4e7710b007688d16),
+  .x4b66b2705572d83f(x67c0837d80874529),
+  .x66b9daefa71e217a(x77a97cd77032ac52),
+  .xf2dcb1e1e6779825(x78bd70ee7ab49b13),
+  .x8cd6f6eb166fcdb4(x14c6540a5201f154),
+  .xe29970454cda29cc(xac172e7f5f326d5a),
   .xf229922c64067fc3(x7760de720ed694da[2*x8f66638444ef19ea
                                             +: DATA_WIDTH]),
   .x385805c04dcf1160(x7760de720ed694da[2*x8f66638444ef19ea+DATA_WIDTH
@@ -15963,9 +17360,15 @@ reg [31:0]                  x13ead2c743836674;
 reg [31:0]                  x07d33a3998127a24;
 reg [31:0]                  xbb362b2bd16daa0d;
 reg [31:0]                  x38885ef93a4811b6;
-reg [3:0]                   x6c5b5a42818751f9;
+reg [4:0]                   x6c5b5a42818751f9;
 reg [BYTE_WIDTH-1:0]        x1be11be8fe93947b;
 reg [BYTE_WIDTH-1:0]        x459f29b7dfa37c1a;
+reg [3:0]                   xad536eeae8d7ff49;
+reg [DATA_WIDTH-1:0]        x1c170e7e3959e8de;
+reg [DATA_WIDTH-1:0]        x8c713cae1024966a;
+reg [DATA_WIDTH-1:0]        x300e23c2cd378ae5;
+reg [BYTE_WIDTH-1:0]        x67d3b4318b354c45;
+reg                         x8edb92f3f298616f;
 reg [x7ed31fcf0a78d415-1:0]    x4d9d062d939ce786;
 reg [x7ed31fcf0a78d415-1:0]    x266aa6751cb99420;
 reg [x7ed31fcf0a78d415:0]      xd012171b49095b1d;
@@ -16000,6 +17403,16 @@ localparam x5e63f5a2f0b8b74b    = 4'd6;
 localparam xad4d07547e88289b     = 4'd7;
 localparam x1eb76a4ac51e4c55     = 4'd8;
 localparam x82c7b5e0047a057a      = 4'd9;
+localparam xbb90369bdd7fcd47  = 5'd10;
+localparam xa5c29805f3d558d7   = 5'd11;
+localparam xce5592dcffd2d58a  = 5'd12;
+localparam xfac0e42b15beed2b   = 5'd13;
+localparam xd3efcb6e4b27810c   = 5'd14;
+localparam x2d7caf03e3bde042   = 5'd15;
+localparam x9022c395a53d053d = 5'd16;
+localparam x077481bdf817493f   = 5'd17;
+localparam x4418b2b080b69fa1    = 5'd18;
+localparam xa3e0b776581dd2b9    = 5'd19;
 
 assign xba97977c92571b8a[31:0] = xf2d6068abb876836[31:x3d6a1a57bf972fc3]
                          + {{31{1'b0}}, |xf2d6068abb876836[x3d6a1a57bf972fc3-1:0]};
@@ -16063,6 +17476,12 @@ always @(posedge clk or negedge cpurst_b) begin
     x266aa6751cb99420 <= {x7ed31fcf0a78d415{1'b0}};
     xd012171b49095b1d <= {x7ed31fcf0a78d415+1{1'b0}};
     x1022ce81776aa95b <= 3'b0;
+    xad536eeae8d7ff49 <= 4'b0;
+    x1c170e7e3959e8de <= {DATA_WIDTH{1'b0}};
+    x8c713cae1024966a <= {DATA_WIDTH{1'b0}};
+    x300e23c2cd378ae5 <= {DATA_WIDTH{1'b0}};
+    x67d3b4318b354c45 <= {BYTE_WIDTH{1'b0}};
+    x8edb92f3f298616f <= 1'b0;
     for (x8e6e8fd856efba2d = 0; x8e6e8fd856efba2d < x412a5f55a63459bc; x8e6e8fd856efba2d = x8e6e8fd856efba2d + 1) begin
       xc253979efee49a79[x8e6e8fd856efba2d] <= {DATA_WIDTH{1'b0}};
       x7b828f61077d122c[x8e6e8fd856efba2d] <= {BYTE_WIDTH{1'b0}};
@@ -16108,8 +17527,9 @@ always @(posedge clk or negedge cpurst_b) begin
     case (x6c5b5a42818751f9)
       x8c72ad6437b935ea: begin
         if (x22d4589045c4d1a8) begin
-          x28f81586410d2170   <= x38fdc3c09238fba3[x9cc3f416666cb94a-1:0];
+          x28f81586410d2170   <= {x38fdc3c09238fba3[x9cc3f416666cb94a-1:4], 4'b0};
           xfc3f92abe43fe1d1  <= x24be9d341142ed32[xe83987b8df659b8e-1:0];
+          xad536eeae8d7ff49 <= x38fdc3c09238fba3[3:0];
           xc64af22b0a017b1a <= xba97977c92571b8a[31:0];
           x24a53649df82e89f <= xf2d6068abb876836[31:0];
           x46806669ba75968c <= xf2d6068abb876836[31:0];
@@ -16119,6 +17539,7 @@ always @(posedge clk or negedge cpurst_b) begin
           x07d33a3998127a24 <= 32'b0;
           xbb362b2bd16daa0d <= 32'b0;
           x38885ef93a4811b6 <= 32'b0;
+          x8edb92f3f298616f <= xd3d7eb7b3ff963d7;
           x4d9d062d939ce786 <= {x7ed31fcf0a78d415{1'b0}};
           x266aa6751cb99420 <= {x7ed31fcf0a78d415{1'b0}};
           xd012171b49095b1d <= {x7ed31fcf0a78d415+1{1'b0}};
@@ -16129,9 +17550,10 @@ always @(posedge clk or negedge cpurst_b) begin
               xba97977c92571b8a[31:0] > x29ee97bfe41be44a[31:0]
               ? x29ee97bfe41be44a[31:0] : xba97977c92571b8a[31:0];
           end
-          x6c5b5a42818751f9      <= xba97977c92571b8a[31:0] == 32'b0
-                        ? x82c7b5e0047a057a
-                        : (xd3d7eb7b3ff963d7 ? x278987fb89eac946 : xe47c37555348cd79);
+          x6c5b5a42818751f9      <= xba97977c92571b8a[31:0] == 32'b0 ? x82c7b5e0047a057a
+                        : (x38fdc3c09238fba3[3:0] == 4'b0
+                           ? (xd3d7eb7b3ff963d7 ? x278987fb89eac946 : xe47c37555348cd79)
+                           : (xd3d7eb7b3ff963d7 ? x2d7caf03e3bde042 : xbb90369bdd7fcd47));
         end
       end
       xe47c37555348cd79: begin
@@ -16205,6 +17627,115 @@ always @(posedge clk or negedge cpurst_b) begin
           end
         end
       end
+      xbb90369bdd7fcd47: begin
+        if (x439d7b97112e5db9) begin
+          x28f81586410d2170 <= x28f81586410d2170 + x3f1c37cf37ebcdae[x9cc3f416666cb94a-1:0];
+          x6c5b5a42818751f9 <= xa5c29805f3d558d7;
+        end
+      end
+      xa5c29805f3d558d7: begin
+        if (xbb5c9228a29f6175) begin
+          x1c170e7e3959e8de <= x30c4f6544c64b9ee;
+          if (x24a53649df82e89f <= (x3f1c37cf37ebcdae - xad536eeae8d7ff49)) begin
+            x8c713cae1024966a <= {DATA_WIDTH{1'b0}};
+            x6c5b5a42818751f9 <= xd3efcb6e4b27810c;
+          end else begin
+            x6c5b5a42818751f9 <= xce5592dcffd2d58a;
+          end
+        end
+      end
+      xce5592dcffd2d58a: begin
+        if (x439d7b97112e5db9) begin
+          x28f81586410d2170 <= x28f81586410d2170 + x3f1c37cf37ebcdae[x9cc3f416666cb94a-1:0];
+          x6c5b5a42818751f9 <= xfac0e42b15beed2b;
+        end
+      end
+      xfac0e42b15beed2b: begin
+        if (xbb5c9228a29f6175) begin
+          x8c713cae1024966a <= x30c4f6544c64b9ee;
+          x6c5b5a42818751f9 <= xd3efcb6e4b27810c;
+        end
+      end
+      xd3efcb6e4b27810c: begin
+        if (x115f585a9e8b8edc) begin
+          xfc3f92abe43fe1d1 <= xfc3f92abe43fe1d1 + xd844bf59a110aac0[xe83987b8df659b8e-1:0];
+          if (x24a53649df82e89f <= x3f1c37cf37ebcdae) begin
+            x24a53649df82e89f <= 32'b0;
+            x6c5b5a42818751f9 <= x82c7b5e0047a057a;
+          end else begin
+            x24a53649df82e89f <= x24a53649df82e89f - x3f1c37cf37ebcdae;
+            x1c170e7e3959e8de <= x8c713cae1024966a;
+            if ((x24a53649df82e89f - x3f1c37cf37ebcdae) <=
+                (x3f1c37cf37ebcdae-xad536eeae8d7ff49)) begin
+              x8c713cae1024966a <= {DATA_WIDTH{1'b0}};
+              x6c5b5a42818751f9 <= xd3efcb6e4b27810c;
+            end else begin
+              x6c5b5a42818751f9 <= xce5592dcffd2d58a;
+            end
+          end
+        end
+      end
+      x2d7caf03e3bde042: begin
+        if (x115f585a9e8b8edc) begin
+          xfc3f92abe43fe1d1 <= xfc3f92abe43fe1d1 + xd844bf59a110aac0[xe83987b8df659b8e-1:0];
+          x6c5b5a42818751f9 <= x9022c395a53d053d;
+        end
+      end
+      x9022c395a53d053d: begin
+        if (xb589cc3fcebdc121) begin
+          if (x8edb92f3f298616f) begin
+            x300e23c2cd378ae5 <= xc0c3d72c3095360e << (xad536eeae8d7ff49 * 8);
+            x67d3b4318b354c45 <=
+              ({BYTE_WIDTH{1'b1}} >>
+               (x3f1c37cf37ebcdae - (x24a53649df82e89f < (x3f1c37cf37ebcdae-xad536eeae8d7ff49)
+                 ? x24a53649df82e89f : (x3f1c37cf37ebcdae-xad536eeae8d7ff49))))
+              << xad536eeae8d7ff49;
+            x1c170e7e3959e8de <=
+              xc0c3d72c3095360e >> ((x3f1c37cf37ebcdae-xad536eeae8d7ff49) * 8);
+            if (x24a53649df82e89f > (x3f1c37cf37ebcdae-xad536eeae8d7ff49))
+              x24a53649df82e89f <= x24a53649df82e89f - (x3f1c37cf37ebcdae-xad536eeae8d7ff49);
+            else
+              x24a53649df82e89f <= 32'b0;
+            x8edb92f3f298616f <= 1'b0;
+          end else begin
+            x300e23c2cd378ae5 <= x1c170e7e3959e8de |
+                               (xc0c3d72c3095360e << (xad536eeae8d7ff49 * 8));
+            x67d3b4318b354c45 <= x24a53649df82e89f >= x3f1c37cf37ebcdae
+                               ? {BYTE_WIDTH{1'b1}}
+                               : ({BYTE_WIDTH{1'b1}} >>
+                                  (x3f1c37cf37ebcdae-x24a53649df82e89f));
+            x1c170e7e3959e8de <=
+              xc0c3d72c3095360e >> ((x3f1c37cf37ebcdae-xad536eeae8d7ff49) * 8);
+            x24a53649df82e89f <= x24a53649df82e89f > x3f1c37cf37ebcdae
+                          ? x24a53649df82e89f - x3f1c37cf37ebcdae : 32'b0;
+          end
+          x6c5b5a42818751f9 <= x077481bdf817493f;
+        end
+      end
+      x077481bdf817493f: begin
+        if (x50f3467f6ff7c188)
+          x6c5b5a42818751f9 <= x4418b2b080b69fa1;
+      end
+      x4418b2b080b69fa1: begin
+        if (x7f46083eac3f2566)
+          x6c5b5a42818751f9 <= xa3e0b776581dd2b9;
+      end
+      xa3e0b776581dd2b9: begin
+        if (x4ff085d08435de66) begin
+          x28f81586410d2170 <= x28f81586410d2170 + x3f1c37cf37ebcdae[x9cc3f416666cb94a-1:0];
+          if (x24a53649df82e89f == 32'b0) begin
+            x6c5b5a42818751f9 <= x82c7b5e0047a057a;
+          end else if (x24a53649df82e89f <= xad536eeae8d7ff49) begin
+            x300e23c2cd378ae5 <= x1c170e7e3959e8de;
+            x67d3b4318b354c45 <= {BYTE_WIDTH{1'b1}} >>
+                               (x3f1c37cf37ebcdae-x24a53649df82e89f);
+            x24a53649df82e89f <= 32'b0;
+            x6c5b5a42818751f9 <= x077481bdf817493f;
+          end else begin
+            x6c5b5a42818751f9 <= x2d7caf03e3bde042;
+          end
+        end
+      end
       x82c7b5e0047a057a: begin
         x6c5b5a42818751f9 <= x8c72ad6437b935ea;
       end
@@ -16218,28 +17749,40 @@ end
 assign x146a4fec530c3c75 = x6c5b5a42818751f9 != x8c72ad6437b935ea && x6c5b5a42818751f9 != x82c7b5e0047a057a;
 assign x94c0bdfda20bd6b3 = x6c5b5a42818751f9 == x82c7b5e0047a057a;
 
-assign xd282c20178dae3b2 = x6c5b5a42818751f9 == xe47c37555348cd79;
+assign xd282c20178dae3b2 = x6c5b5a42818751f9 == xe47c37555348cd79 || x6c5b5a42818751f9 == xbb90369bdd7fcd47 || x6c5b5a42818751f9 == xce5592dcffd2d58a;
 assign x1411cade019bd2ce[x9cc3f416666cb94a-1:0] = x28f81586410d2170[x9cc3f416666cb94a-1:0];
-assign x278fced24ac3ea15[7:0] = x4fa683857a831d51[7:0] - 8'b1;
-assign x46b969dafb462143 = x6c5b5a42818751f9 == x806e47d01f6f3364 && !x2b6d31d0b9174d6c;
+assign x278fced24ac3ea15[7:0] = (x6c5b5a42818751f9 == xbb90369bdd7fcd47 || x6c5b5a42818751f9 == xce5592dcffd2d58a)
+                        ? 8'b0 : x4fa683857a831d51[7:0] - 8'b1;
+assign x46b969dafb462143 = (x6c5b5a42818751f9 == x806e47d01f6f3364 && !x2b6d31d0b9174d6c)
+                 || x6c5b5a42818751f9 == xa5c29805f3d558d7 || x6c5b5a42818751f9 == xfac0e42b15beed2b;
 
-assign x92af2a1ffa3f574d = x6c5b5a42818751f9 == x5e63f5a2f0b8b74b;
+assign x92af2a1ffa3f574d = x6c5b5a42818751f9 == x5e63f5a2f0b8b74b || x6c5b5a42818751f9 == x077481bdf817493f;
 assign x5a92472c75b7151c[x9cc3f416666cb94a-1:0] = x28f81586410d2170[x9cc3f416666cb94a-1:0];
-assign x37f0a292fdfb8ac8[7:0] = x07d33a3998127a24[7:0] - 8'b1;
-assign xca79b378b60456af = x6c5b5a42818751f9 == xad4d07547e88289b;
-assign xfa1e633aa8fcce63[DATA_WIDTH-1:0] = xc253979efee49a79[x4d9d062d939ce786];
-assign x4fe6a7dd27763e18 = x6c5b5a42818751f9 == xad4d07547e88289b && x13ead2c743836674 == 32'd1;
-assign xeda49df92bea54e4[BYTE_WIDTH-1:0] = x7b828f61077d122c[x4d9d062d939ce786];
-assign x7d723c95366b9ae5 = x6c5b5a42818751f9 == x1eb76a4ac51e4c55;
+assign x37f0a292fdfb8ac8[7:0] = x6c5b5a42818751f9 == x077481bdf817493f ? 8'b0
+                        : x07d33a3998127a24[7:0] - 8'b1;
+assign xca79b378b60456af = x6c5b5a42818751f9 == xad4d07547e88289b || x6c5b5a42818751f9 == x4418b2b080b69fa1;
+assign xfa1e633aa8fcce63[DATA_WIDTH-1:0] = x6c5b5a42818751f9 == x4418b2b080b69fa1
+                                   ? x300e23c2cd378ae5
+                                   : xc253979efee49a79[x4d9d062d939ce786];
+assign x4fe6a7dd27763e18 = x6c5b5a42818751f9 == x4418b2b080b69fa1
+                 || (x6c5b5a42818751f9 == xad4d07547e88289b && x13ead2c743836674 == 32'd1);
+assign xeda49df92bea54e4[BYTE_WIDTH-1:0] = x6c5b5a42818751f9 == x4418b2b080b69fa1
+                                   ? x67d3b4318b354c45
+                                   : x7b828f61077d122c[x4d9d062d939ce786];
+assign x7d723c95366b9ae5 = x6c5b5a42818751f9 == x1eb76a4ac51e4c55 || x6c5b5a42818751f9 == xa3e0b776581dd2b9;
 
 assign xc2aaff81b2ada695 = (x6c5b5a42818751f9 == x806e47d01f6f3364 && !x6020888b128ecc3c)
-                   || x6c5b5a42818751f9 == x278987fb89eac946;
-assign x2cc6695a847a12f1  = x6c5b5a42818751f9 == x806e47d01f6f3364;
+                   || x6c5b5a42818751f9 == x278987fb89eac946 || x6c5b5a42818751f9 == xd3efcb6e4b27810c
+                   || x6c5b5a42818751f9 == x2d7caf03e3bde042;
+assign x2cc6695a847a12f1  = x6c5b5a42818751f9 == x806e47d01f6f3364 || x6c5b5a42818751f9 == xd3efcb6e4b27810c;
 assign x43ef18b14929f560[xe83987b8df659b8e-1:0] = xfc3f92abe43fe1d1[xe83987b8df659b8e-1:0];
 assign x820ff2ad0d4c1ccc[DATA_WIDTH-1:0] =
-       xc253979efee49a79[x4d9d062d939ce786][DATA_WIDTH-1:0];
+       x6c5b5a42818751f9 == xd3efcb6e4b27810c
+       ? ({x8c713cae1024966a, x1c170e7e3959e8de} >> (xad536eeae8d7ff49 * 8))
+       : xc253979efee49a79[x4d9d062d939ce786][DATA_WIDTH-1:0];
 assign xbcf638d53b2d5107[BYTE_WIDTH-1:0] =
-       x7b828f61077d122c[x4d9d062d939ce786][BYTE_WIDTH-1:0];
+       x6c5b5a42818751f9 == xd3efcb6e4b27810c ? xe138d6e8f20e97b4
+                        : x7b828f61077d122c[x4d9d062d939ce786][BYTE_WIDTH-1:0];
 
 assign x64b6a8bc0f2b82fe = x22d4589045c4d1a8 && xba97977c92571b8a[31:0] != 32'b0;
 assign xf451aad735fbaf05[2:0] =
@@ -16504,7 +18047,23 @@ module x441fd2377a83b2d7 #(
 endmodule
 
 
-module x98e56c7acf672e14(
+module x98e56c7acf672e14 #(
+  parameter ADDR_WIDTH = 14,
+  parameter DATA_WIDTH = 64,
+  parameter BYTE_WIDTH = DATA_WIDTH / 8,
+  parameter xc379152efa4a7df0 = 128,
+  parameter xd3200f0a9991e67b = xc379152efa4a7df0 / 8,
+  parameter xb9377408880f7051 = 16,
+  parameter xf33a3d23b7d86cb5 = 4,
+  parameter xcdff5bc72c5f7d62 = 1,
+  parameter xa8662c1e5b398005 = 1,
+  parameter x1edacd58b2f9b15e = 10,
+  parameter [3:0] x9d11686b82bdd21b = 4'd1,
+  parameter [3:0] x5ee8dc16fd3fe2f1 = 4'd2,
+  parameter [3:0] xcddeab4e2bf17c21 = 4'd2,
+  parameter [3:0] xb335f6254f96433c = 4'd3,
+  parameter x7efc7b73a2cede88 = 1
+)(
   clk,
   cpurst_b,
   x50489ecfc82b20c0,
@@ -16555,7 +18114,6 @@ module x98e56c7acf672e14(
   x908aa19ab8d7885e,
   xab8ff766dd7ba0b2,
   x0e2bd18ccc859f22,
-  x47a26014700ff768,
   xb5f95e0c3d2dab74,
   x8e0145cd7db1adf5,
   xa360be4355aab627,
@@ -16647,21 +18205,6 @@ module x98e56c7acf672e14(
   x7d034da4c133ac56
 );
 
-parameter ADDR_WIDTH          = 14;
-parameter DATA_WIDTH          = 64;
-parameter BYTE_WIDTH          = DATA_WIDTH / 8;
-parameter xc379152efa4a7df0      = 128;
-parameter xd3200f0a9991e67b      = xc379152efa4a7df0 / 8;
-parameter xb9377408880f7051            = 16;
-parameter xf33a3d23b7d86cb5    = 4;
-parameter xcdff5bc72c5f7d62         = 1;
-parameter xa8662c1e5b398005 = 1;
-parameter x1edacd58b2f9b15e     = 10;
-parameter [3:0] x9d11686b82bdd21b       = 4'd1;
-parameter [3:0] x5ee8dc16fd3fe2f1 = 4'd2;
-parameter [3:0] xcddeab4e2bf17c21 = 4'd2;
-parameter [3:0] xb335f6254f96433c       = 4'd3;
-
 input                         clk;
 input                         cpurst_b;
 input  [39:0]                 x50489ecfc82b20c0;
@@ -16696,7 +18239,6 @@ input                         x6a9c6af71b51aa5c;
 input [7:0]                   x908aa19ab8d7885e;
 input  [7:0]                  xab8ff766dd7ba0b2;
 input  [3:0]                  x0e2bd18ccc859f22;
-input                         x47a26014700ff768;
 input  [15:0]                 xb5f95e0c3d2dab74;
 input                         x8e0145cd7db1adf5;
 input                         xa360be4355aab627;
@@ -16947,7 +18489,8 @@ x4bbf3983a85b95aa #(
   .xf33a3d23b7d86cb5(xf33a3d23b7d86cb5),
   .x1edacd58b2f9b15e(x1edacd58b2f9b15e),
   .DATA_WIDTH(DATA_WIDTH),
-  .x16a12c273dd15520(16)
+  .x16a12c273dd15520(16),
+  .xfe21ce5abacbbe0f(x7efc7b73a2cede88)
 ) x9d75c9e2ece45244 (
   .clk(clk),
   .cpurst_b(cpurst_b),
@@ -16967,7 +18510,6 @@ x4bbf3983a85b95aa #(
   .cmd_start_mode(x908aa19ab8d7885e),
   .xe7e44a038400ff25(xab8ff766dd7ba0b2),
   .xa89dad0dcccb4973(x0e2bd18ccc859f22),
-  .cmd_sync_req(x47a26014700ff768),
   .cmd_wld_ptr(xb5f95e0c3d2dab74[15:0]),
   .cmd_wld_req(x8e0145cd7db1adf5),
   .cmd_wld_trans_req(xa360be4355aab627),
