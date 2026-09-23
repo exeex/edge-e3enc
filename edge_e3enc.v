@@ -7444,10 +7444,10 @@ wire [127:0] x433aaee9804e1832;
 wire [15:0] x06e53399d6c0a30b [0:7];
 wire [15:0] x4a96c1560ed144ec [0:7];
 wire [15:0] xe484a6677cb59772 [0:7];
-reg [127:0] x56a65f7c04f67fa1, x56144888caa54ee3, x3895c1df4e7d12c5, xcf448da0e308d878, xbc27cab1560121cd, x1f95c439fd3e93dc;
-reg [127:0] x460d3034f1e3079a, x1766b706cc459b91, x054556762a106986, x823ee73d1cfe1a7d, xb59aab3595da3055, xb6077fe787b138be;
+reg [127:0] x56a65f7c04f67fa1, x56144888caa54ee3, x3895c1df4e7d12c5, xcf448da0e308d878, xbc27cab1560121cd, x1f95c439fd3e93dc, xa0ea2ee7c1265abe;
+reg [127:0] x460d3034f1e3079a, x1766b706cc459b91, x054556762a106986, x823ee73d1cfe1a7d, xb59aab3595da3055, xb6077fe787b138be, x800dc477d9826694;
 reg xf094d33f7bec2ed6, xcb534eb82b7880f7, x396c37099dff8db4;
-reg xad899cab8eabad07, x705f5d7443476407, x0a72388a1d2e4e92;
+reg xad899cab8eabad07, x705f5d7443476407, x0a72388a1d2e4e92, x2466ac8de8c319c1;
 reg [127:0] xcf6adeae6d5bbbe6, xfaf27092cae54a7e;
 reg [127:0] x6851af4a90449354;
 reg x80c917ca5b9e92c2;
@@ -7475,9 +7475,9 @@ xb7458a59f9a81240 xe3a9ecb945dbf534 (
 
 x47f7634d48bf3396 xda3e5c31243d926f (
   .clk(clk), .rst_b(rst_b),
-  .in_valid(x5b3e7b14daf75a37 && x0a72388a1d2e4e92
+  .in_valid(x5b3e7b14daf75a37 && x2466ac8de8c319c1
             && (!xbb17c88db047d946 || x99a0417d4564b7a8)),
-  .x49743b4a10f0d49a(x5db11e735e4aab64), .x31438a0d41d7666c(xb6077fe787b138be),
+  .x49743b4a10f0d49a(x5db11e735e4aab64), .x31438a0d41d7666c(x800dc477d9826694),
   .out_valid(x2f5d7edfd512452c), .xc823f10afd6c5dda(x433aaee9804e1832)
 );
 
@@ -7487,7 +7487,7 @@ generate
     edge_psum x02594033c71f8e28 (
       .a_raw(x5db11e735e4aab64[xa46b6eeedc7c49c3*16 +: 16]),
       .b_raw(xbb17c88db047d946 ? x2f581b11f012b8f9[xa46b6eeedc7c49c3*16 +: 16]
-                              : x1f95c439fd3e93dc[xa46b6eeedc7c49c3*16 +: 16]),
+                              : xa0ea2ee7c1265abe[xa46b6eeedc7c49c3*16 +: 16]),
       .y(x06e53399d6c0a30b[xa46b6eeedc7c49c3])
     );
     assign xe484a6677cb59772[xa46b6eeedc7c49c3] = rsum_enable_i
@@ -7503,24 +7503,25 @@ endgenerate
 
 always @(posedge clk or negedge rst_b) begin
   if (!rst_b) begin
-    x56a65f7c04f67fa1<=0; x56144888caa54ee3<=0; x3895c1df4e7d12c5<=0; xcf448da0e308d878<=0; xbc27cab1560121cd<=0; x1f95c439fd3e93dc<=0;
-    x460d3034f1e3079a<=0; x1766b706cc459b91<=0; x054556762a106986<=0; x823ee73d1cfe1a7d<=0; xb59aab3595da3055<=0; xb6077fe787b138be<=0;
+    x56a65f7c04f67fa1<=0; x56144888caa54ee3<=0; x3895c1df4e7d12c5<=0; xcf448da0e308d878<=0; xbc27cab1560121cd<=0; x1f95c439fd3e93dc<=0; xa0ea2ee7c1265abe<=0;
+    x460d3034f1e3079a<=0; x1766b706cc459b91<=0; x054556762a106986<=0; x823ee73d1cfe1a7d<=0; xb59aab3595da3055<=0; xb6077fe787b138be<=0; x800dc477d9826694<=0;
     xf094d33f7bec2ed6<=0; xcb534eb82b7880f7<=0; x396c37099dff8db4<=0;
-    xad899cab8eabad07<=0; x705f5d7443476407<=0; x0a72388a1d2e4e92<=0;
+    xad899cab8eabad07<=0; x705f5d7443476407<=0; x0a72388a1d2e4e92<=0; x2466ac8de8c319c1<=0;
     xcf6adeae6d5bbbe6<=0; xfaf27092cae54a7e<=0;
     x6851af4a90449354<=0; x80c917ca5b9e92c2<=0;
   end else begin
     x56a65f7c04f67fa1<=x2f581b11f012b8f9; x56144888caa54ee3<=x56a65f7c04f67fa1; x3895c1df4e7d12c5<=x56144888caa54ee3;
-    xcf448da0e308d878<=x3895c1df4e7d12c5; xbc27cab1560121cd<=xcf448da0e308d878; x1f95c439fd3e93dc<=xbc27cab1560121cd;
+    xcf448da0e308d878<=x3895c1df4e7d12c5; xbc27cab1560121cd<=xcf448da0e308d878; x1f95c439fd3e93dc<=xbc27cab1560121cd; xa0ea2ee7c1265abe<=x1f95c439fd3e93dc;
     x460d3034f1e3079a<=xcd92d73d9663c32d; x1766b706cc459b91<=x460d3034f1e3079a; x054556762a106986<=x1766b706cc459b91;
-    x823ee73d1cfe1a7d<=x054556762a106986; xb59aab3595da3055<=x823ee73d1cfe1a7d; xb6077fe787b138be<=xb59aab3595da3055;
+    x823ee73d1cfe1a7d<=x054556762a106986; xb59aab3595da3055<=x823ee73d1cfe1a7d; xb6077fe787b138be<=xb59aab3595da3055; x800dc477d9826694<=xb6077fe787b138be;
     xf094d33f7bec2ed6<=x9b4c0137fe1b0cca; xcb534eb82b7880f7<=xf094d33f7bec2ed6;
     x396c37099dff8db4<=xcb534eb82b7880f7; xad899cab8eabad07<=x396c37099dff8db4;
     x705f5d7443476407<=xad899cab8eabad07; x0a72388a1d2e4e92<=x705f5d7443476407;
-    xcf6adeae6d5bbbe6<=xbb17c88db047d946 ? x2f581b11f012b8f9 : x1f95c439fd3e93dc;
+    x2466ac8de8c319c1<=x0a72388a1d2e4e92;
+    xcf6adeae6d5bbbe6<=xbb17c88db047d946 ? x2f581b11f012b8f9 : xa0ea2ee7c1265abe;
     xfaf27092cae54a7e<=xcf6adeae6d5bbbe6;
 
-    x80c917ca5b9e92c2 <= (x5b3e7b14daf75a37 && !x0a72388a1d2e4e92
+    x80c917ca5b9e92c2 <= (x5b3e7b14daf75a37 && !x2466ac8de8c319c1
                        && (!xbb17c88db047d946 || x99a0417d4564b7a8))
                       || x2f5d7edfd512452c;
     if (x2f5d7edfd512452c)
