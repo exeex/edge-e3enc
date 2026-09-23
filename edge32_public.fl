@@ -1,8 +1,3 @@
-src/edge-32/rtl/muldiv/edge_mul32_booth_code_33.v
-src/edge-32/rtl/muldiv/edge_mul32_booth_compressor.v
-src/edge-32/rtl/muldiv/edge_add16_carry_select8.v
-src/edge-32/rtl/muldiv/edge_add64_carry_select16.v
-src/edge-32/rtl/muldiv/edge_mul32_booth_lane.v
 src/edge-32/rtl/edge_32_div_nonnegative.v
 src/edge-32/rtl/edge_32_muldiv_asap7.v
 src/edge-asic/rtl/control/edge_asic_accel_owner.v
