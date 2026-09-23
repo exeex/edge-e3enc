@@ -3877,6 +3877,10 @@ reg [xa5186945865807e5:0] xc05c5abb77ef257a;
 reg [6:0] xde7febce56c986e0;
 reg x1ca664a04538f02e;
 reg [xf33a3d23b7d86cb5-1:0] xfab2ed6206faf0d8;
+
+
+reg x8b3959d9e62b5686;
+reg [x26926d642d594097-1:0] xde6864d1a1f89f3b;
 reg xd2415bde1229601c;
 reg x9081a9a36cf4852d;
 reg [127:0] xcd9aee9b49c38b38;
@@ -3951,6 +3955,8 @@ wire [x16a12c273dd15520-1:0] xe233540541df263f;
 wire xbe93b10864d336ae;
 wire xb462c0929300c907;
 wire xbe9f180e75eace85;
+wire x3b449f9d3c4f6fd6;
+wire [x26926d642d594097-1:0] x30f495058b325d76;
 wire xb779b648848aaa82;
 wire [x26926d642d594097-1:0] x92c0bdecfe9e42c2;
 wire x9be107c658cf41ab;
@@ -4258,6 +4264,17 @@ assign x84dc5b78a38fd712 = x3d32ab200cadc25a && !x4370f119ad0abcaa && !x93547b85
                       && (x638fc3ea0d9d49f3 == 0) && (x359b2eebd1543ae9 == 0)
                       && !x7c0adedc1431c7ad && !x9be107c658cf41ab;
 
+
+
+
+
+assign xb779b648848aaa82 = xdd92ead078da52d2
+                           ? x8b3959d9e62b5686
+                           : x3b449f9d3c4f6fd6;
+assign x92c0bdecfe9e42c2 = xdd92ead078da52d2
+                          ? xde6864d1a1f89f3b
+                          : x30f495058b325d76;
+
 assign xf565663e123e0d90 = !x3d32ab200cadc25a && xdd7689623f764c8b;
 assign x4888de3273106aaf = x5e9760892503d5c1;
 assign x96d00ba65fc28a02 = xb1ad2b837fb620af[xf33a3d23b7d86cb5-1:0];
@@ -4375,7 +4392,8 @@ x549d52f6f7bd36cf #(.xfe21ce5abacbbe0f(xfe21ce5abacbbe0f)) x363a478f7f72db52 (
   .xb80b2ddca37d049e(x1c9ac1dfa8561123),
   .x9afa367769f31bab(x16fb349973b9958a),
   .x97eee2bb17e0902a(xb462c0929300c907),
-  .x762bc51e04520bde(xb779b648848aaa82), .xfa257824cfbd54d8(x92c0bdecfe9e42c2)
+  .x762bc51e04520bde(x3b449f9d3c4f6fd6),
+  .xfa257824cfbd54d8(x30f495058b325d76)
 );
 
 always @(posedge clk or negedge cpurst_b) begin
@@ -4421,6 +4439,8 @@ always @(posedge clk or negedge cpurst_b) begin
     xde7febce56c986e0 <= 7'b0;
     x1ca664a04538f02e <= 1'b0;
     xfab2ed6206faf0d8 <= 0;
+    x8b3959d9e62b5686 <= 1'b0;
+    xde6864d1a1f89f3b <= 0;
     xd2415bde1229601c <= 1'b0;
     x9081a9a36cf4852d <= 1'b0;
     xcd9aee9b49c38b38 <= 0;
@@ -4449,6 +4469,14 @@ always @(posedge clk or negedge cpurst_b) begin
     x1ca664a04538f02e <= !x3d32ab200cadc25a && xdd7689623f764c8b && !x5e9760892503d5c1;
     if (xdd7689623f764c8b && !x3d32ab200cadc25a && !x5e9760892503d5c1)
       xfab2ed6206faf0d8 <= xb1ad2b837fb620af[xf33a3d23b7d86cb5-1:0];
+
+    if (xdd92ead078da52d2) begin
+      x8b3959d9e62b5686 <= x3b449f9d3c4f6fd6;
+      if (x3b449f9d3c4f6fd6)
+        xde6864d1a1f89f3b <= x30f495058b325d76;
+    end else begin
+      x8b3959d9e62b5686 <= 1'b0;
+    end
 
     if (x9be107c658cf41ab) begin
       x3d32ab200cadc25a <= 1'b1;
