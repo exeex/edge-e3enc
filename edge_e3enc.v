@@ -3927,6 +3927,8 @@ wire xfb58b29743b6266f;
 wire [143:0] xae6d553da75508bf;
 wire x1ca8c7f9e5f3a662;
 wire x765583900c189fa4;
+wire x326f149e6dde3966;
+wire [143:0] x0fe55b606bb0942b;
 wire [ADDR_WIDTH-1:0] x1846e3f33813e065;
 wire [x26926d642d594097-1:0] xad645960da94ede3;
 wire x419f90ec2ff0547c;
@@ -4185,7 +4187,14 @@ assign x4196c319ecdcbd84 = x45bf1b6682ad028c
                      && x30b1d68b8b487aca);
 assign xadd9a3069907daa1 = x24c58b0d0eb7318e
                         && !(x4196c319ecdcbd84 && xa4271ff8b1b590af);
-assign x1ca8c7f9e5f3a662 = xfb58b29743b6266f
+
+
+
+
+assign x326f149e6dde3966 = xb779b648848aaa82;
+assign x0fe55b606bb0942b = {x59a9be3397597417[x187a90f325df13ae],
+                                    x92c0bdecfe9e42c2};
+assign x1ca8c7f9e5f3a662 = x326f149e6dde3966
                              && ((xc05c5abb77ef257a < x9a030c6820d9221b)
                                  || x765583900c189fa4);
 assign x765583900c189fa4 = xadd9a3069907daa1;
@@ -4237,8 +4246,7 @@ assign x36ee27bf73c5063c = x92ce8040a71ddffa ? {x26926d642d594097{1'b0}}
                          : x271ae545302ef8eb;
 
 assign x7c0adedc1431c7ad = xb779b648848aaa82;
-assign xc6df1490cbfdcaea = xb779b648848aaa82
-                            && x5304792fb1a96c9a[x187a90f325df13ae];
+assign xc6df1490cbfdcaea = 1'b0;
 
 
 assign x53062e86aa9477ab =
@@ -4581,7 +4589,7 @@ always @(posedge clk or negedge cpurst_b) begin
     endcase
 
     if (x1ca8c7f9e5f3a662) begin
-      xb7b8cee9346cfa03[xbee41f5c8fe83369] <= xae6d553da75508bf;
+      xb7b8cee9346cfa03[xbee41f5c8fe83369] <= x0fe55b606bb0942b;
       xbee41f5c8fe83369 <= xbee41f5c8fe83369 + 1'b1;
     end
     if (x765583900c189fa4)
@@ -4599,9 +4607,9 @@ always @(posedge clk or negedge cpurst_b) begin
     endcase
 
 `ifndef SYNTHESIS
-    if (xfb58b29743b6266f && !x1ca8c7f9e5f3a662) begin
-      $display("tensor output skew FIFO overflow addr=%h phase=%h count=%0d",
-               xae6d553da75508bf[143:128], xf1a0a65469e31261,
+    if (x326f149e6dde3966 && !x1ca8c7f9e5f3a662) begin
+      $display("tensor output FIFO overflow addr=%h phase=%h count=%0d",
+               x0fe55b606bb0942b[143:128], xf1a0a65469e31261,
                xc05c5abb77ef257a);
       $finish;
     end
