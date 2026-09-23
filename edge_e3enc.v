@@ -3753,6 +3753,8 @@ localparam xbbc32945a1087af9 = 4;
 localparam x482e02de9c3c465d = 2;
 localparam xa694097f64b1c9a3 = 16;
 localparam x5ec87b3b98737296 = 4;
+localparam x9a030c6820d9221b = 8;
+localparam xa5186945865807e5 = 3;
 
 input clk;
 input cpurst_b;
@@ -3868,6 +3870,10 @@ reg [x5ec87b3b98737296-1:0] x9f4303aefee70a6e;
 reg [x5ec87b3b98737296:0] x638fc3ea0d9d49f3;
 reg [x5ec87b3b98737296:0] x3ea91e0e4ef13a2f;
 reg [3:0] xf58462d4f925716b;
+reg [143:0] xb7b8cee9346cfa03 [0:x9a030c6820d9221b-1];
+reg [xa5186945865807e5-1:0] x841a57f6dcc8f614;
+reg [xa5186945865807e5-1:0] xbee41f5c8fe83369;
+reg [xa5186945865807e5:0] xc05c5abb77ef257a;
 reg [6:0] xde7febce56c986e0;
 reg x1ca664a04538f02e;
 reg [xf33a3d23b7d86cb5-1:0] xfab2ed6206faf0d8;
@@ -3913,6 +3919,10 @@ wire x4767d331185d6efe;
 wire [143:0] xa7a6393cbcd83e9b;
 wire xa942108030f28473;
 wire [143:0] x537d268d73981e8d;
+wire xfb58b29743b6266f;
+wire [143:0] xae6d553da75508bf;
+wire x1ca8c7f9e5f3a662;
+wire x765583900c189fa4;
 wire [ADDR_WIDTH-1:0] x1846e3f33813e065;
 wire [x26926d642d594097-1:0] xad645960da94ede3;
 wire x419f90ec2ff0547c;
@@ -3958,6 +3968,7 @@ wire [3:0] x34a051e403477675;
 
 integer x9c6645c641de38e1;
 integer x67e7c7c1b7a217f0;
+integer x5cecdf54be4285e9;
 integer x20f582a0d9a580e3;
 integer x570d8b43b464cece;
 
@@ -4137,6 +4148,8 @@ assign x56587d2189214df4 = xc44f16c7bfdac630 ? x3c0135ce2cf5e0ac
                                         : x16d017cd59b09164;
 assign x92b53b29f195d206 = x57ea2f8995df8196(xe4bb91b1552f5da2);
 assign x93547b857a0a5442 = xf58462d4f925716b != 0;
+assign xa942108030f28473 = xc05c5abb77ef257a != 0;
+assign x537d268d73981e8d = xb7b8cee9346cfa03[x841a57f6dcc8f614];
 assign x1846e3f33813e065 = x537d268d73981e8d[143:128];
 assign xad645960da94ede3 = x537d268d73981e8d[127:0];
 assign x984fdefb8b06a83e = xa942108030f28473 ? x57ea2f8995df8196(x1846e3f33813e065)
@@ -4166,6 +4179,11 @@ assign x4196c319ecdcbd84 = x45bf1b6682ad028c
                      && x30b1d68b8b487aca);
 assign xadd9a3069907daa1 = x24c58b0d0eb7318e
                         && !(x4196c319ecdcbd84 && xa4271ff8b1b590af);
+assign x1ca8c7f9e5f3a662 = xfb58b29743b6266f
+                             && ((xc05c5abb77ef257a < x9a030c6820d9221b)
+                                 || x765583900c189fa4);
+assign x765583900c189fa4 = xadd9a3069907daa1;
+assign x150c982dd98139b2 = x765583900c189fa4;
 assign x99e39b80e2175191 = x1a34daf2ac8a1045
                      && !(x4196c319ecdcbd84 && x30b1d68b8b487aca)
                      && !(xadd9a3069907daa1 && xecc336361f13ff56);
@@ -4213,7 +4231,6 @@ assign x36ee27bf73c5063c = x92ce8040a71ddffa ? {x26926d642d594097{1'b0}}
                          : x271ae545302ef8eb;
 
 assign x7c0adedc1431c7ad = xb779b648848aaa82;
-assign x150c982dd98139b2 = xa942108030f28473;
 assign xc6df1490cbfdcaea = xb779b648848aaa82
                             && x5304792fb1a96c9a[x187a90f325df13ae];
 
@@ -4291,8 +4308,8 @@ x73d0ef879570107f #(
   .xe1de56073016263b(x12dfb73f2ee6f5c5),
   .in_valid(x4767d331185d6efe),
   .x3f22fde32fd1761a(xa7a6393cbcd83e9b),
-  .out_valid(xa942108030f28473),
-  .xbbb89dbd37e3dc6d(x537d268d73981e8d)
+  .out_valid(xfb58b29743b6266f),
+  .xbbb89dbd37e3dc6d(xae6d553da75508bf)
 );
 
 x2aa9137698f914da #(
@@ -4395,6 +4412,12 @@ always @(posedge clk or negedge cpurst_b) begin
     x638fc3ea0d9d49f3 <= 0;
     x3ea91e0e4ef13a2f <= 0;
     xf58462d4f925716b <= 0;
+    x841a57f6dcc8f614 <= 0;
+    xbee41f5c8fe83369 <= 0;
+    xc05c5abb77ef257a <= 0;
+    for (x5cecdf54be4285e9 = 0; x5cecdf54be4285e9 < x9a030c6820d9221b;
+         x5cecdf54be4285e9 = x5cecdf54be4285e9 + 1)
+      xb7b8cee9346cfa03[x5cecdf54be4285e9] <= 0;
     xde7febce56c986e0 <= 7'b0;
     x1ca664a04538f02e <= 1'b0;
     xfab2ed6206faf0d8 <= 0;
@@ -4524,6 +4547,18 @@ always @(posedge clk or negedge cpurst_b) begin
       default: begin end
     endcase
 
+    if (x1ca8c7f9e5f3a662) begin
+      xb7b8cee9346cfa03[xbee41f5c8fe83369] <= xae6d553da75508bf;
+      xbee41f5c8fe83369 <= xbee41f5c8fe83369 + 1'b1;
+    end
+    if (x765583900c189fa4)
+      x841a57f6dcc8f614 <= x841a57f6dcc8f614 + 1'b1;
+    case ({x1ca8c7f9e5f3a662, x765583900c189fa4})
+      2'b10: xc05c5abb77ef257a <= xc05c5abb77ef257a + 1'b1;
+      2'b01: xc05c5abb77ef257a <= xc05c5abb77ef257a - 1'b1;
+      default: begin end
+    endcase
+
     case ({x7c0adedc1431c7ad, x150c982dd98139b2})
       2'b10: xf58462d4f925716b <= xf58462d4f925716b + 1'b1;
       2'b01: xf58462d4f925716b <= xf58462d4f925716b - 1'b1;
@@ -4531,10 +4566,10 @@ always @(posedge clk or negedge cpurst_b) begin
     endcase
 
 `ifndef SYNTHESIS
-    if (xa942108030f28473 && !xadd9a3069907daa1) begin
-      $display("tensor output skew write miss addr=%h phase=%h owned=%b read_conflict=%b",
-               x1846e3f33813e065, xf1a0a65469e31261, xb3fe3acba3846b67,
-               x4196c319ecdcbd84 && xa4271ff8b1b590af);
+    if (xfb58b29743b6266f && !x1ca8c7f9e5f3a662) begin
+      $display("tensor output skew FIFO overflow addr=%h phase=%h count=%0d",
+               xae6d553da75508bf[143:128], xf1a0a65469e31261,
+               xc05c5abb77ef257a);
       $finish;
     end
     if (xc6df1490cbfdcaea && (xf58462d4f925716b != 0)) begin
