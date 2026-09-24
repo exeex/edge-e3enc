@@ -4020,6 +4020,10 @@ wire xe55c321734ae9b24;
 wire x821f52a3bba490e3;
 wire x45bf1b6682ad028c;
 wire x1a34daf2ac8a1045;
+wire xa07fa4ca3cdda77a;
+reg x069c4c273163a807;
+integer xe5c43b8c3f498e92;
+integer x756d4b4b260030ad;
 wire x24c58b0d0eb7318e;
 wire x4196c319ecdcbd84;
 wire x99e39b80e2175191;
@@ -4264,8 +4268,9 @@ assign x1f299cc7de4a88a6 = !xc44f16c7bfdac630
                         && !x2bdb84f9db8e51b6;
 assign xcf882e00ac8d1da9 = xc44f16c7bfdac630 ? x27287abc0452505d
                                         : x46aed09ebe7252ec;
-assign xe4bb91b1552f5da2 = x8299f90bada1a94f
-                     + {x9557b843186c4c12[ADDR_WIDTH-2:0], 1'b0};
+assign xe4bb91b1552f5da2 = x9be107c658cf41ab ? x6ed526ae4184fee3
+                     : x8299f90bada1a94f
+                       + {x9557b843186c4c12[ADDR_WIDTH-2:0], 1'b0};
 assign x56587d2189214df4 = xc44f16c7bfdac630 ? x3c0135ce2cf5e0ac
                                         : x16d017cd59b09164;
 assign x92b53b29f195d206 = x57ea2f8995df8196(xe4bb91b1552f5da2);
@@ -4289,10 +4294,36 @@ assign x821f52a3bba490e3 = xecc336361f13ff56;
 assign x45bf1b6682ad028c = x4370f119ad0abcaa
                      && (xc44f16c7bfdac630 || x1f299cc7de4a88a6)
                      && xf4e6122bc95724f7;
-assign x1a34daf2ac8a1045 = x4370f119ad0abcaa && x030e571b55ffdc93
-                     && (x10b43088cfb290c3
-                         || (xd00a2a5515950a03 >= {1'b0, x44510986d4275310}))
-                     && (x9557b843186c4c12 < xe233540541df263f)
+
+
+always @* begin
+  x069c4c273163a807 = 1'b0;
+  for (xe5c43b8c3f498e92 = 0; xe5c43b8c3f498e92 < xa694097f64b1c9a3;
+       xe5c43b8c3f498e92 = xe5c43b8c3f498e92 + 1)
+    if (xe5c43b8c3f498e92 < x638fc3ea0d9d49f3
+        && x59a9be3397597417[(x187a90f325df13ae + xe5c43b8c3f498e92)
+                          & (xa694097f64b1c9a3-1)] == x6ed526ae4184fee3)
+      x069c4c273163a807 = 1'b1;
+  for (x756d4b4b260030ad = 0; x756d4b4b260030ad < x9a030c6820d9221b;
+       x756d4b4b260030ad = x756d4b4b260030ad + 1)
+    if (x756d4b4b260030ad < xc05c5abb77ef257a
+        && xb7b8cee9346cfa03[(x841a57f6dcc8f614 + x756d4b4b260030ad)
+                         & (x9a030c6820d9221b-1)][143:128] == x6ed526ae4184fee3)
+      x069c4c273163a807 = 1'b1;
+end
+
+
+
+assign xa07fa4ca3cdda77a = x9be107c658cf41ab
+                          && (x7ebb4d3f8798d466 != 0)
+                          && !x7d88bd85a9438b1f[1] && !x7d88bd85a9438b1f[2]
+                          && !x7d88bd85a9438b1f[4]
+                          && !x069c4c273163a807;
+assign x1a34daf2ac8a1045 = ((x4370f119ad0abcaa && x030e571b55ffdc93
+                       && (x10b43088cfb290c3
+                           || (xd00a2a5515950a03 >= {1'b0, x44510986d4275310}))
+                       && (x9557b843186c4c12 < xe233540541df263f))
+                       || xa07fa4ca3cdda77a)
                      && x4eb4b05c91fbf1f9;
 assign x24c58b0d0eb7318e = x3d32ab200cadc25a && xa942108030f28473 && xb3fe3acba3846b67;
 assign x4196c319ecdcbd84 = x45bf1b6682ad028c
@@ -4615,12 +4646,12 @@ always @(posedge clk or negedge cpurst_b) begin
       xb1c59c65c4194017 <= x5acf3cdb4c97744a
                           ? xa8e4f55ac008740c : 0;
       x618522951b3ad8c0 <= 0;
-      x9557b843186c4c12 <= 0;
+      x9557b843186c4c12 <= x99e39b80e2175191
+                         ? {{x16a12c273dd15520-1{1'b0}}, 1'b1} : 0;
       xfed70d7b097d123b <= x2361e4ca94fb6668;
       x8299f90bada1a94f <= x6ed526ae4184fee3;
       x6feaa69e9e3e5e77 <= x6f8eba07449aa14e;
       x2c29384227c39824 <= 1'b0;
-      x59ff1e5f30404201 <= 1'b0;
       xa8e4f55ac008740c <= 0;
       xd2415bde1229601c <= x7d88bd85a9438b1f[0] && !x7d88bd85a9438b1f[4];
       x9081a9a36cf4852d <= x7d88bd85a9438b1f[3] && !x7d88bd85a9438b1f[4];
@@ -4659,7 +4690,8 @@ always @(posedge clk or negedge cpurst_b) begin
       x10b43088cfb290c3 <= 1'b1;
       xba2d6ca4cdb4b6de <= xe4bb91b1552f5da2[xf33a3d23b7d86cb5-1:0];
       x57ea40d8cb9ab469 <= xde5d5f68d794bf39(xe4bb91b1552f5da2);
-      x9557b843186c4c12 <= x9557b843186c4c12 + 1'b1;
+      if (!x9be107c658cf41ab)
+        x9557b843186c4c12 <= x9557b843186c4c12 + 1'b1;
     end
 
     if (x59ff1e5f30404201 && xd9f52b15600c583c) begin
