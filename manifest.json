@@ -1,23 +1,25 @@
 {
-  "format": 1,
+  "format": 2,
   "top": "edge_core_edge32_top",
   "soc_core_module": "edge_core_edge32_top",
-  "private_rtl_inputs": 41,
+  "private_rtl_inputs": 70,
   "private_sram_inputs": 4,
-  "public_rtl_inputs": 76,
+  "public_rtl_inputs": 42,
   "public_sram_inputs": 5,
-  "semantic_symbols": 2770,
-  "obfuscated_symbols": 2349,
-  "public_symbols": 1715,
-  "source_warning_count": 625,
-  "mixed_warning_count": 625,
-  "soc_warning_count": 625,
+  "semantic_symbols": 5433,
+  "obfuscated_symbols": 5056,
+  "public_symbols": 1263,
+  "source_warning_count": 620,
+  "mixed_warning_count": 620,
+  "soc_warning_count": 620,
   "salt_sha256": "38ee42f41e1b2025d2658fac6a7a0c0cdc46bed166cd5ea7c4c342342a55da35",
   "public_roots": [
-    "src/edge-32",
+    "src/edge-32"
+  ],
+  "private_roots": [
+    "src/edge-e3",
     "src/edge-asic"
   ],
-  "private_root": "src/edge-e3",
   "product_name": "edge-e3",
   "artifact_stem": "edge_e3enc",
   "namespace": "edge-e3-obfuscate"

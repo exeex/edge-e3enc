@@ -212,12 +212,126 @@ module x781447dc8ea689ec #(
 endmodule
 
 
+`timescale 1ns/1ps
+module xeb75deeef82fb336 (
+  input  wire        clk,
+  input  wire        reset_n,
+  input  wire        x74c0d78af745a25a,
+  output wire        x1eae06400be9ae01,
+  input  wire [63:0] x9de335eb005dcb34,
+  input  wire [63:0] x22ba05321e93915c,
+  output wire        cmd_valid,
+  input  wire        cmd_ready,
+  output wire [63:0] x2b006793f4ba7037,
+  output wire        cmd_capture_valid,
+  output wire [63:0] cmd_capture_value,
+  input  wire        x4d26a56e6173b27c,
+  input  wire        x2c22d1b8912de3c6,
+  input  wire [63:0] x50f1034748e881f3,
+  output reg         x6788c74469d1d8fe,
+  output reg         x0f37dd3cd17e48f6,
+  output reg  [63:0] x26f114d64a2ebc83
+);
+  wire x0b96d5a463b43c5a = cmd_valid && cmd_ready;
+
+  assign cmd_valid = x74c0d78af745a25a && !x6788c74469d1d8fe;
+  assign x1eae06400be9ae01 = cmd_ready && !x6788c74469d1d8fe;
+  assign x2b006793f4ba7037 = x9de335eb005dcb34;
+  assign cmd_capture_valid = 1'b1;
+  assign cmd_capture_value = x22ba05321e93915c;
+
+  always @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+      x6788c74469d1d8fe <= 1'b0;
+      x0f37dd3cd17e48f6 <= 1'b0;
+      x26f114d64a2ebc83 <= 64'b0;
+    end else begin
+      x6788c74469d1d8fe <= x0b96d5a463b43c5a;
+      if (x0b96d5a463b43c5a) begin
+        x0f37dd3cd17e48f6 <= x4d26a56e6173b27c;
+        x26f114d64a2ebc83 <= x2c22d1b8912de3c6 ? x50f1034748e881f3 : 64'b0;
+      end
+    end
+  end
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+module x66939c34c3eade24 (
+  input  wire clk,
+  input  wire reset_n,
+  input  wire cmd_valid,
+  output wire cmd_ready,
+  input  wire xbd41812be67b954d,
+  input  wire x6dda42e516aa3484,
+  output wire x854cd3a17f137f35,
+  output wire asic_power_enable,
+  input  wire asic_power_ready,
+  output wire asic_ready
+);
+  reg xb7e2de824e07de3a,x5aa5817097f38f5d;
+  reg xc3d3bb513ad95f3e,xa08fdca116580206,x7696888c2ac81357,x879c11d5b0ea0231;
+
+  assign cmd_ready=!xa08fdca116580206&&!x879c11d5b0ea0231;
+  assign x854cd3a17f137f35=x879c11d5b0ea0231;
+  assign asic_power_enable=xc3d3bb513ad95f3e;
+  assign asic_ready=x5aa5817097f38f5d;
+
+  always @(posedge clk or negedge reset_n) begin
+    if(!reset_n) begin
+      xb7e2de824e07de3a<=1'b0;
+      x5aa5817097f38f5d<=1'b0;
+      xc3d3bb513ad95f3e<=1'b0;
+      xa08fdca116580206<=1'b0;
+      x7696888c2ac81357<=1'b0;
+      x879c11d5b0ea0231<=1'b0;
+    end else begin
+      xb7e2de824e07de3a<=asic_power_ready;
+      x5aa5817097f38f5d<=xb7e2de824e07de3a;
+      x879c11d5b0ea0231<=1'b0;
+
+      if(cmd_valid&&cmd_ready) begin
+        x7696888c2ac81357<=xbd41812be67b954d;
+        if(xbd41812be67b954d) begin
+          xc3d3bb513ad95f3e<=1'b1;
+          if(x5aa5817097f38f5d) x879c11d5b0ea0231<=1'b1;
+          else xa08fdca116580206<=1'b1;
+        end else if(!xc3d3bb513ad95f3e&&!x5aa5817097f38f5d) begin
+          x879c11d5b0ea0231<=1'b1;
+        end else begin
+          xa08fdca116580206<=1'b1;
+        end
+      end
+
+      if(xa08fdca116580206) begin
+        if(x7696888c2ac81357) begin
+          if(x5aa5817097f38f5d) begin
+            xa08fdca116580206<=1'b0;
+            x879c11d5b0ea0231<=1'b1;
+          end
+        end else begin
+          if(xc3d3bb513ad95f3e&&x6dda42e516aa3484)
+            xc3d3bb513ad95f3e<=1'b0;
+          if(!xc3d3bb513ad95f3e&&!x5aa5817097f38f5d) begin
+            xa08fdca116580206<=1'b0;
+            x879c11d5b0ea0231<=1'b1;
+          end
+        end
+      end
+    end
+  end
+endmodule
+
+
 module xea9a93b12a75edfe (
   input wire clk,input wire reset_n,
   input wire [39:0] mem_region_base,input wire [39:0] mem_region_mask,
-  input wire mem_region_enable,input wire req_valid,output wire req_ready,
-  input wire [31:0] req_inst,input wire [63:0] req_capture_value,
-  output wire resp_valid,output wire resp_error,output wire [63:0] resp_value,
+  input wire mem_region_enable,input wire x74c0d78af745a25a,output wire x1eae06400be9ae01,
+  input wire [31:0] x9de335eb005dcb34,input wire [63:0] x22ba05321e93915c,
+  output wire x6788c74469d1d8fe,output wire x0f37dd3cd17e48f6,output wire [63:0] x26f114d64a2ebc83,
   input wire dma_start_ready,input wire dma_start_circular_ready,
   input wire dma_sync_done,
   input wire tensor_cmd_ready,input wire tensor_start_ready,
@@ -268,21 +382,21 @@ module xea9a93b12a75edfe (
   output wire cmpu_cmd_sync_req
 );
   wire cmd_valid,cmd_ready,cmd_capture_valid,decode_illegal,result_valid;
-  wire [63:0] cmd_inst,cmd_capture_value,result_value;
-  wire [63:0] xb8567af2ac4950c0 = {32'b0, req_inst};
-  edge_asic_accel_owner x566220eb1b59dd1c(
-    .clk(clk),.reset_n(reset_n),.req_valid(req_valid),.req_ready(req_ready),
-    .req_inst(xb8567af2ac4950c0),.req_capture_value(req_capture_value),.cmd_valid(cmd_valid),
-    .cmd_ready(cmd_ready),.cmd_inst(cmd_inst),.cmd_capture_valid(cmd_capture_valid),
-    .cmd_capture_value(cmd_capture_value),.cmd_decode_illegal(decode_illegal),
-    .cmd_result_valid(result_valid),.cmd_result_value(result_value),
-    .resp_valid(resp_valid),.resp_error(resp_error),.resp_value(resp_value));
+  wire [63:0] x2b006793f4ba7037,cmd_capture_value,result_value;
+  wire [63:0] xb8567af2ac4950c0 = {32'b0, x9de335eb005dcb34};
+  xeb75deeef82fb336 x566220eb1b59dd1c(
+    .clk(clk),.reset_n(reset_n),.x74c0d78af745a25a(x74c0d78af745a25a),.x1eae06400be9ae01(x1eae06400be9ae01),
+    .x9de335eb005dcb34(xb8567af2ac4950c0),.x22ba05321e93915c(x22ba05321e93915c),.cmd_valid(cmd_valid),
+    .cmd_ready(cmd_ready),.x2b006793f4ba7037(x2b006793f4ba7037),.cmd_capture_valid(cmd_capture_valid),
+    .cmd_capture_value(cmd_capture_value),.x4d26a56e6173b27c(decode_illegal),
+    .x2c22d1b8912de3c6(result_valid),.x50f1034748e881f3(result_value),
+    .x6788c74469d1d8fe(x6788c74469d1d8fe),.x0f37dd3cd17e48f6(x0f37dd3cd17e48f6),.x26f114d64a2ebc83(x26f114d64a2ebc83));
   /* verilator lint_off PINMISSING */
   edge_accel_pipe #(.COMPACT_CMD_INPUT(1)) xf964865cb4fb616d(
     .forever_cpuclk(clk),.cpurst_b(reset_n),.mem_region_base(mem_region_base),
     .mem_region_mask(mem_region_mask),.mem_region_enable(mem_region_enable),
-    .cmd_valid(cmd_valid),.cmd_opcode8({1'b1,cmd_inst[31:25]}),
-    .cmd_imm8({cmd_inst[24:20],cmd_inst[14:12]}),.cmd_inst64(64'b0),
+    .cmd_valid(cmd_valid),.cmd_opcode8({1'b1,x2b006793f4ba7037[31:25]}),
+    .cmd_imm8({x2b006793f4ba7037[24:20],x2b006793f4ba7037[14:12]}),.cmd_inst64(64'b0),
     .cmd_seq_id(8'b0),.cmd_epoch(4'b0),.cmd_capture_valid(cmd_capture_valid),
     .cmd_capture_value(cmd_capture_value),.dma_start_ready(dma_start_ready),
     .dma_start_circular_ready(dma_start_circular_ready),.dma_sync_done(dma_sync_done),
@@ -348,9 +462,9 @@ module xb397b39547a7541e #(
 )(
   input wire forever_cpuclk,input wire cpurst_b,
   input wire [AXI_ADDR_WIDTH-1:0] mem_region_base,input wire [AXI_ADDR_WIDTH-1:0] mem_region_mask,
-  input wire mem_region_enable,input wire req_valid,output wire req_ready,
-  input wire [31:0] req_inst,input wire [63:0] req_capture_value,
-  output wire resp_valid,output wire resp_error,output wire [63:0] resp_value,
+  input wire mem_region_enable,input wire x74c0d78af745a25a,output wire x1eae06400be9ae01,
+  input wire [31:0] x9de335eb005dcb34,input wire [63:0] x22ba05321e93915c,
+  output wire x6788c74469d1d8fe,output wire x0f37dd3cd17e48f6,output wire [63:0] x26f114d64a2ebc83,
   input wire [DTCM_ADDR_WIDTH-1:0] x0e5a4e5909945f64,
   input wire xa19e6d071ff22e5a,input wire x3582c14df66f2c5f,
   input wire [63:0] x0653869c426add10,input wire [7:0] x55630933c4e2398f,
@@ -375,25 +489,25 @@ module xb397b39547a7541e #(
   output wire xc9d74c07d5496fe5
 );
   localparam [6:0] x0578f1d03bdd116e=7'h09;
-  wire [6:0] x1364d32da2571c9d=req_inst[31:25];
-  wire xcb7d089a58f18416=(req_inst[6:0]==7'h3f)&&(x1364d32da2571c9d==x0578f1d03bdd116e);
-  wire x4be47df7aafde482=req_inst[12];
+  wire [6:0] x1364d32da2571c9d=x9de335eb005dcb34[31:25];
+  wire xcb7d089a58f18416=(x9de335eb005dcb34[6:0]==7'h3f)&&(x1364d32da2571c9d==x0578f1d03bdd116e);
+  wire x4be47df7aafde482=x9de335eb005dcb34[12];
   wire xf625fb4733874da0,xb85186d3ac068d7f,x5fa94c2ab2980a8f;
   wire [63:0] x6fee63c4577a6d14;
   wire x1131588e62518039,x1ed9fbc4c8770d2e,asic_ready;
-  wire all_accel_idle=!tensor_busy&&!actu_busy&&!cmpu_busy&&!x146a4fec530c3c75;
+  wire x6dda42e516aa3484=!tensor_busy&&!actu_busy&&!cmpu_busy&&!x146a4fec530c3c75;
   assign xc9d74c07d5496fe5=asic_ready;
-  assign req_ready=xcb7d089a58f18416?x1131588e62518039:
+  assign x1eae06400be9ae01=xcb7d089a58f18416?x1131588e62518039:
                    (asic_ready&&xf625fb4733874da0);
-  assign resp_valid=x1ed9fbc4c8770d2e||xb85186d3ac068d7f;
-  assign resp_error=x1ed9fbc4c8770d2e?1'b0:x5fa94c2ab2980a8f;
-  assign resp_value=x1ed9fbc4c8770d2e?64'b0:x6fee63c4577a6d14;
+  assign x6788c74469d1d8fe=x1ed9fbc4c8770d2e||xb85186d3ac068d7f;
+  assign x0f37dd3cd17e48f6=x1ed9fbc4c8770d2e?1'b0:x5fa94c2ab2980a8f;
+  assign x26f114d64a2ebc83=x1ed9fbc4c8770d2e?64'b0:x6fee63c4577a6d14;
 
-  edge_asic_power_ctrl xb5951bff7307205e(
+  x66939c34c3eade24 xb5951bff7307205e(
     .clk(forever_cpuclk),.reset_n(cpurst_b),
-    .cmd_valid(req_valid&&xcb7d089a58f18416),.cmd_ready(x1131588e62518039),
-    .cmd_power_on(x4be47df7aafde482),.all_accel_idle(all_accel_idle),
-    .cmd_resp_valid(x1ed9fbc4c8770d2e),.asic_power_enable(xe6d6b2411ddfd5ec),
+    .cmd_valid(x74c0d78af745a25a&&xcb7d089a58f18416),.cmd_ready(x1131588e62518039),
+    .xbd41812be67b954d(x4be47df7aafde482),.x6dda42e516aa3484(x6dda42e516aa3484),
+    .x854cd3a17f137f35(x1ed9fbc4c8770d2e),.asic_power_enable(xe6d6b2411ddfd5ec),
     .asic_power_ready(xf7ca5154181e0d1d),.asic_ready(asic_ready));
   wire [3:0] x54cdede8c42d1ae4,x037e49339c1ca5a4;
   wire x514066028f08fc2a,x059ec12031447922,x50dd0f631e4673bf;
@@ -444,7 +558,7 @@ module xb397b39547a7541e #(
   wire [15:0] xd295b6098abb3b77;
   wire x92883ee9b6249820,x061b31851cbc5468,x602e9f658ee0a705;
   wire [7:0] x189d2ad35fcf695b; wire [3:0] x63e00bbdff855562;
-  wire [4:0] xe0612209e186717b; wire cmpu_result_update;
+  wire [4:0] xe0612209e186717b; wire xd3f9dbb53dd08b63;
   wire xe1479181ae378b69,xc741cb8afdee49ee,xa98993e5edb54ae7;
   wire [7:0] xb6a05cf7434e064a,xd9e1fd27e553d209;
   wire [7:0] xde4e194cc36237d7,xcb294b623c354586;
@@ -468,10 +582,10 @@ module xb397b39547a7541e #(
   xea9a93b12a75edfe x206cddee460d7e59(
     .clk(forever_cpuclk),.reset_n(cpurst_b),.mem_region_base(mem_region_base),
     .mem_region_mask(mem_region_mask),.mem_region_enable(mem_region_enable),
-    .req_valid(req_valid&&!xcb7d089a58f18416&&asic_ready),
-    .req_ready(xf625fb4733874da0),.req_inst(req_inst),
-    .req_capture_value(req_capture_value),.resp_valid(xb85186d3ac068d7f),
-    .resp_error(x5fa94c2ab2980a8f),.resp_value(x6fee63c4577a6d14),.dma_start_ready(dma_start_ready),
+    .x74c0d78af745a25a(x74c0d78af745a25a&&!xcb7d089a58f18416&&asic_ready),
+    .x1eae06400be9ae01(xf625fb4733874da0),.x9de335eb005dcb34(x9de335eb005dcb34),
+    .x22ba05321e93915c(x22ba05321e93915c),.x6788c74469d1d8fe(xb85186d3ac068d7f),
+    .x0f37dd3cd17e48f6(x5fa94c2ab2980a8f),.x26f114d64a2ebc83(x6fee63c4577a6d14),.dma_start_ready(dma_start_ready),
     .dma_start_circular_ready(dma_start_circular_ready),
     .dma_sync_done(dma_sync_done),.tensor_cmd_ready(tensor_cmd_ready),
     .tensor_start_ready(x0827d96c800a6d86),.tensor_wld_cmd_ready(tensor_wld_cmd_ready),
@@ -895,9 +1009,9 @@ module xec563d799211ec67 #(
   wire xa9c8e9ffdc3c683e = x335f010991f4dee1 && xe78e6598f169f142;
   wire xa288dea09aba8865 = x90ba97a511b1006b && x1eedaea3b92222c7;
 
-  
-  
-  
+
+
+
   assign x2e1b46859f316636 = (x1a37a4355a35e0bf == xfffa97008ec3e2ea) && !x0e19a5c8364f3827;
   assign x9e25b126ac0afb65 = (x1a37a4355a35e0bf == xfffa97008ec3e2ea) && x5850c0b5abc5caa7;
 
@@ -1985,7 +2099,7 @@ wire [2:0]                    xd75508d5624505bc;
 wire [2:0]                    xed00b394ad2e7194;
 wire [2:0]                    xf0d7460cd5dbcf9e;
 wire [7:0]                    x2fae0bb1036099b0;
-wire [xb9377408880f7051-1:0]           in_mask;
+wire [xb9377408880f7051-1:0]           x0a4449b6dabe347f;
 wire [xb9377408880f7051-1:0]           xf0cee2755a1fbea3;
 wire [xb9377408880f7051-1:0]           x9f686db2281703dd;
 wire [xb9377408880f7051-1:0]           x2eac385d0f18c3b5;
@@ -2408,7 +2522,7 @@ assign xccd7d866185f25e9[ADDR_WIDTH-1:0] =
 
 assign xf0cee2755a1fbea3[xb9377408880f7051-1:0] =
        xbe5535a95d7e80f2(x66a053de21adcb74[ADDR_WIDTH-1:0]);
-assign in_mask[xb9377408880f7051-1:0] =
+assign x0a4449b6dabe347f[xb9377408880f7051-1:0] =
        xbe5535a95d7e80f2(x581607ec8e2a0165[ADDR_WIDTH-1:0]);
 assign x9f686db2281703dd[xb9377408880f7051-1:0] =
        xbe5535a95d7e80f2(xffc4a3723c6188e9[ADDR_WIDTH-1:0]);
@@ -2416,7 +2530,7 @@ assign x2eac385d0f18c3b5[xb9377408880f7051-1:0] =
        xbe5535a95d7e80f2(xccd7d866185f25e9[ADDR_WIDTH-1:0]);
 assign xb9ff6db0f3c2fef9[xb9377408880f7051-1:0] =
        xf0cee2755a1fbea3[xb9377408880f7051-1:0]
-     | in_mask[xb9377408880f7051-1:0]
+     | x0a4449b6dabe347f[xb9377408880f7051-1:0]
      | x9f686db2281703dd[xb9377408880f7051-1:0]
      | x2eac385d0f18c3b5[xb9377408880f7051-1:0];
 
@@ -2628,7 +2742,7 @@ assign xbe4a605c75ae2957[2:0] = x49a2fa3b2a1ec5a4[3:1];
 assign x7fbeb47db7e9eedf[xb9377408880f7051-1:0] =
        xd2ed7a5f917bc662 ? xf0cee2755a1fbea3[xb9377408880f7051-1:0] : {xb9377408880f7051{1'b0}};
 assign x9a47ac1840fb048d[xb9377408880f7051-1:0] =
-       xd2ed7a5f917bc662 ? in_mask[xb9377408880f7051-1:0] : {xb9377408880f7051{1'b0}};
+       xd2ed7a5f917bc662 ? x0a4449b6dabe347f[xb9377408880f7051-1:0] : {xb9377408880f7051{1'b0}};
 assign xcf957e78202a8f0e[xb9377408880f7051-1:0] =
        xd2ed7a5f917bc662 ? x2eac385d0f18c3b5[xb9377408880f7051-1:0] : {xb9377408880f7051{1'b0}};
 
@@ -2746,7 +2860,7 @@ xfb8948c55080fb96 x981085af563020f0 (
   .clk                    (clk),
   .rst_b                  (cpurst_b),
   .x22d4589045c4d1a8                  (x309956bf234eefe0),
-  .start_ready            (x39f3bba914a09dec),
+  .xc9a019b1e19d2207            (x39f3bba914a09dec),
   .x5eac9d32b5d97872        (x4c1e97e40d44eb09),
   .x32ad82e3ac20bda9        (x87d6e392841abe41),
   .busy                   (xe253ec88b7454e4c),
@@ -2774,9 +2888,9 @@ x448b47bfbb011c0b x363a478f7f72db52 (
   .xf367ffcace8025cb        (xc9a80ea95bbcd05b[127:0]),
   .x9b4c0137fe1b0cca      (1'b0),
   .xcd92d73d9663c32d        (128'b0),
-  .rsum_enable_i       (1'b0),
-  .rsum_first_i        (1'b0),
-  .rsum_last_i         (1'b0),
+  .x837075243a1a83a4       (1'b0),
+  .xbe13730a7094392c        (1'b0),
+  .x054b2cf4b3fcbf32         (1'b0),
   .x3b0884f626d60d77(xe32fb0341f527759),
   .xfa257824cfbd54d8       (x7a81bfac534c66f4[127:0]),
   .x84a3e534a50080d1        (x3b449f9d3c4f6fd6),
@@ -3533,9 +3647,9 @@ always @(posedge clk or negedge x6b8c52b19f1c8e90) begin
   end
 end
 
-genvar lane;
+genvar xbcd8297dae5b6c10;
 generate
-  for (lane = 0; lane < x5b8c04ef70adc09b; lane = lane + 1) begin : x0b807c110b198bb7
+  for (xbcd8297dae5b6c10 = 0; xbcd8297dae5b6c10 < x5b8c04ef70adc09b; xbcd8297dae5b6c10 = xbcd8297dae5b6c10 + 1) begin : x0b807c110b198bb7
     xedc34abe62505900 #(
       .xa3115823b733f308(xa3115823b733f308),
       .xde061463879f024d(xde061463879f024d),
@@ -3546,9 +3660,9 @@ generate
       .x6b8c52b19f1c8e90   (x6b8c52b19f1c8e90),
       .x21c5106242855721(xcf4c3d439100312e),
       .in_valid (in_valid),
-      .x3f22fde32fd1761a  (x3f22fde32fd1761a[(lane*xa3115823b733f308) +: xa3115823b733f308]),
-      .out_valid(x4c68dbff0fe2358c[lane]),
-      .xbbb89dbd37e3dc6d (xbbb89dbd37e3dc6d[(lane*xa3115823b733f308) +: xa3115823b733f308])
+      .x3f22fde32fd1761a  (x3f22fde32fd1761a[(xbcd8297dae5b6c10*xa3115823b733f308) +: xa3115823b733f308]),
+      .out_valid(x4c68dbff0fe2358c[xbcd8297dae5b6c10]),
+      .xbbb89dbd37e3dc6d (xbbb89dbd37e3dc6d[(xbcd8297dae5b6c10*xa3115823b733f308) +: xa3115823b733f308])
     );
   end
 endgenerate
@@ -3631,9 +3745,9 @@ assign xb30a5044beed5bc9 = x52aa2d7d6e96e1d3 ? xb6e6b6d8ebb2a6d4 : xc47dc650ee0f
 assign x6fcae2f0eabfbed4 = x52aa2d7d6e96e1d3 ? x90202faa85d71e21 : x383e42882b03fed1;
 assign xf39cd5cd18c3c8d1 = x52aa2d7d6e96e1d3 ? xc47dc650ee0f3110 : xb6e6b6d8ebb2a6d4;
 
-genvar lane;
+genvar xbcd8297dae5b6c10;
 generate
-  for (lane = 0; lane < x5b8c04ef70adc09b; lane = lane + 1) begin : x0b807c110b198bb7
+  for (xbcd8297dae5b6c10 = 0; xbcd8297dae5b6c10 < x5b8c04ef70adc09b; xbcd8297dae5b6c10 = xbcd8297dae5b6c10 + 1) begin : x0b807c110b198bb7
     x9348f69efa257135 #(
       .xa3115823b733f308(xa3115823b733f308),
       .xde061463879f024d(xde061463879f024d),
@@ -3643,11 +3757,11 @@ generate
       .x5c539c26b1e5dd17(xfdf280898d019304),
       .xbe24d58d0aaf9c2a(x5519b1d4ccb27020),
       .x841295f39bca6684(xbc2dd6d3df613c0e),
-      .write_data(x761a6b63912ab211[(lane*xa3115823b733f308) +: xa3115823b733f308]),
+      .write_data(x761a6b63912ab211[(xbcd8297dae5b6c10*xa3115823b733f308) +: xa3115823b733f308]),
       .x15c262729782d251(x52aa2d7d6e96e1d3),
       .xf923cd75d271a5fc(xf923cd75d271a5fc),
       .x047bf51960380321(
-          x047bf51960380321[(lane*xa3115823b733f308) +: xa3115823b733f308])
+          x047bf51960380321[(xbcd8297dae5b6c10*xa3115823b733f308) +: xa3115823b733f308])
     );
   end
 endgenerate
@@ -3712,7 +3826,7 @@ endmodule
 
 module x2a5091ad5e6ef946(
   clk, cpurst_b, x22d4589045c4d1a8, x2361e4ca94fb6668, x6ed526ae4184fee3, x6f8eba07449aa14e,
-  x7ebb4d3f8798d466, start_mode, x14763d99de7c1f5a,
+  x7ebb4d3f8798d466, x7d88bd85a9438b1f, x14763d99de7c1f5a,
   x1c6e4a06ede759fa, xdfb0c5b9a35fe08b, xf178fe13ba72192a,
   x51f7833b3f150823, xdea24a9dcf4995ff, x461cf36690126388,
   x28fd586b898678bd, x05b96fb67b59f034, x07fa53e44d324a4b,
@@ -3763,7 +3877,7 @@ input [ADDR_WIDTH-1:0] x2361e4ca94fb6668;
 input [ADDR_WIDTH-1:0] x6ed526ae4184fee3;
 input [ADDR_WIDTH-1:0] x6f8eba07449aa14e;
 input [x16a12c273dd15520-1:0] x7ebb4d3f8798d466;
-input [7:0] start_mode;
+input [7:0] x7d88bd85a9438b1f;
 input [127:0] x14763d99de7c1f5a;
 input x1c6e4a06ede759fa;
 input [127:0] xdfb0c5b9a35fe08b;
@@ -4028,17 +4142,17 @@ endfunction
 function [3:0] x820d2769ecea0c0d;
   input [2:0] x03356714cb65b7f3;
   input [2:0] xd6e4b583938dd61d;
-  integer d;
+  integer xa8eb10820846e831;
   reg xcd994bec8a703508;
   reg [2:0] xac311c485e96cfeb;
 begin
   x820d2769ecea0c0d = 4'd0;
   xcd994bec8a703508 = 1'b0;
-  for (d = 0; d <= 6; d = d + 1) begin
-    xac311c485e96cfeb = xd6e4b583938dd61d - d[2:0];
+  for (xa8eb10820846e831 = 0; xa8eb10820846e831 <= 6; xa8eb10820846e831 = xa8eb10820846e831 + 1) begin
+    xac311c485e96cfeb = xd6e4b583938dd61d - xa8eb10820846e831[2:0];
     if (!xcd994bec8a703508 && xac311c485e96cfeb[0] == x03356714cb65b7f3[0]
         && xac311c485e96cfeb != x03356714cb65b7f3) begin
-      x820d2769ecea0c0d = d[3:0];
+      x820d2769ecea0c0d = xa8eb10820846e831[3:0];
       xcd994bec8a703508 = 1'b1;
     end
   end
@@ -4267,10 +4381,10 @@ assign x2bdb84f9db8e51b6 = x4370f119ad0abcaa
                          && !x2c29384227c39824
                          && !x59ff1e5f30404201
                          && (x0ab073f17cbe75b2 == {xbbc32945a1087af9{1'b0}})
-                         
-                         
-                         
-                         
+
+
+
+
                          && !x93547b857a0a5442
                          && (!xdd92ead078da52d2 || xb779b648848aaa82);
 assign x84dc5b78a38fd712 = x3d32ab200cadc25a && !x4370f119ad0abcaa && !x93547b857a0a5442
@@ -4377,10 +4491,10 @@ x549d52f6f7bd36cf #(.xfe21ce5abacbbe0f(xfe21ce5abacbbe0f)) x363a478f7f72db52 (
   .xf367ffcace8025cb(x7bc9dfb088d3dc44), .x2f581b11f012b8f9(x36ee27bf73c5063c),
   .x9b4c0137fe1b0cca(xd2415bde1229601c),
   .xcd92d73d9663c32d(x9081a9a36cf4852d ? xdfb0c5b9a35fe08b : xcd9aee9b49c38b38),
-  .rsum_enable_i(xdd92ead078da52d2),
-  .rsum_first_i(xdd92ead078da52d2
+  .x837075243a1a83a4(xdd92ead078da52d2),
+  .xbe13730a7094392c(xdd92ead078da52d2
                 && (x618522951b3ad8c0 == {x16a12c273dd15520{1'b0}})),
-  .rsum_last_i(xdd92ead078da52d2
+  .x054b2cf4b3fcbf32(xdd92ead078da52d2
                && (x618522951b3ad8c0 + {{x16a12c273dd15520-1{1'b0}}, 1'b1}
                    == xbf703d1ef8972e45)),
   .xf9516f1f7d3f8f7a(x51f7833b3f150823),
@@ -4510,13 +4624,13 @@ always @(posedge clk or negedge cpurst_b) begin
       x2c29384227c39824 <= 1'b0;
       x59ff1e5f30404201 <= 1'b0;
       xa8e4f55ac008740c <= 0;
-      xd2415bde1229601c <= start_mode[0] && !start_mode[4];
-      x9081a9a36cf4852d <= start_mode[3] && !start_mode[4];
+      xd2415bde1229601c <= x7d88bd85a9438b1f[0] && !x7d88bd85a9438b1f[4];
+      x9081a9a36cf4852d <= x7d88bd85a9438b1f[3] && !x7d88bd85a9438b1f[4];
       xcd9aee9b49c38b38 <= x14763d99de7c1f5a;
-      xd9f52b15600c583c <= start_mode[1] && !start_mode[2]
-                       && !start_mode[4];
-      x92ce8040a71ddffa <= start_mode[2] || start_mode[4];
-      xdd92ead078da52d2 <= start_mode[4];
+      xd9f52b15600c583c <= x7d88bd85a9438b1f[1] && !x7d88bd85a9438b1f[2]
+                       && !x7d88bd85a9438b1f[4];
+      x92ce8040a71ddffa <= x7d88bd85a9438b1f[2] || x7d88bd85a9438b1f[4];
+      xdd92ead078da52d2 <= x7d88bd85a9438b1f[4];
       x94480c155fc14d81 <= 1'b0;
     end else if (x030e571b55ffdc93) begin
       xd00a2a5515950a03 <= xd00a2a5515950a03 + 5'd1;
@@ -5234,7 +5348,7 @@ x2a5091ad5e6ef946 #(
   .x6ed526ae4184fee3(x1d2d9fbbd7562ac2[ADDR_WIDTH-1:0]),
   .x6f8eba07449aa14e(x3435daf696e9fe5a[ADDR_WIDTH-1:0]),
   .x7ebb4d3f8798d466(x11151cf21a638b5b[x16a12c273dd15520-1:0]),
-  .start_mode(x898c352fdaf8a580[7:0]),
+  .x7d88bd85a9438b1f(x898c352fdaf8a580[7:0]),
   .x14763d99de7c1f5a(x9d4b6ec252d941a4[127:0]),
   .x1c6e4a06ede759fa(xae09001646c72eb6 != 0),
   .xdfb0c5b9a35fe08b(x07231f4bc616b1e6[x6aeef3f1ca76f057]),
@@ -5324,7 +5438,7 @@ generate
       .DATA_WIDTH(DATA_WIDTH), .x26926d642d594097(x26926d642d594097)
     ) x981085af563020f0 (
       .clk(clk), .rst_b(cpurst_b), .x22d4589045c4d1a8(x6a116a63f79930f1),
-      .start_ready(x39f3bba914a09dec),
+      .xc9a019b1e19d2207(x39f3bba914a09dec),
       .x5eac9d32b5d97872(x4c1e97e40d44eb09),
       .x32ad82e3ac20bda9(x87d6e392841abe41), .busy(),
       .x4e124931f57ab5eb(xae8102415ed64c3a), .x7a65abcd3086d5ed(xa94daec3dd5547de),
@@ -5521,8 +5635,8 @@ always @(posedge clk or negedge cpurst_b) begin
                                {{ADDR_WIDTH-2{1'b0}}, 2'b10};
       xf721c8c81180febf <= xf721c8c81180febf + 1'b1;
     end else if (xe3bcf85693def302) begin
-      
-      
+
+
       x96c953c9eb8950e8 <= x2d3e65d55e514849;
       x35bc48720c15dc39 <= 1'b1;
     end else if (cmd_sld_req && tensor_sld_cmd_ready) begin
@@ -5627,8 +5741,8 @@ always @(posedge clk or negedge cpurst_b) begin
     end
 
     if (x24b5fde0d0be4383)
-      
-      
+
+
       x9a06056c11ece9e6 <= 1'b1;
 
     if (xe51bdfa12847b347)
@@ -6082,7 +6196,7 @@ module xfb8948c55080fb96(
   clk,
   rst_b,
   x22d4589045c4d1a8,
-  start_ready,
+  xc9a019b1e19d2207,
   x5eac9d32b5d97872,
   x32ad82e3ac20bda9,
   busy,
@@ -6114,7 +6228,7 @@ input  [2:0]           xb4e6daa5b1e4aed6;
 input  [x26926d642d594097-1:0] x9cea447ad0fd5162;
 input                  x461cf36690126388;
 input                  x05b96fb67b59f034;
-output                 start_ready;
+output                 xc9a019b1e19d2207;
 output                 busy;
 output                 x4e124931f57ab5eb;
 output                 x7d7df3bb4d704104;
@@ -6138,10 +6252,10 @@ wire                   x1bf8f99ec15f8645;
 wire                   x12d118afbe28ad79;
 wire                   xedb40505c9134305;
 
-assign start_ready = (!x3d32ab200cadc25a || x1bf8f99ec15f8645)
+assign xc9a019b1e19d2207 = (!x3d32ab200cadc25a || x1bf8f99ec15f8645)
                    && !x37905ba2f6ae31b6
                    && x461cf36690126388;
-assign x9be107c658cf41ab = x22d4589045c4d1a8 && start_ready;
+assign x9be107c658cf41ab = x22d4589045c4d1a8 && xc9a019b1e19d2207;
 assign busy = x3d32ab200cadc25a;
 assign x4e124931f57ab5eb = x1bf8f99ec15f8645;
 assign x12d118afbe28ad79 = x37905ba2f6ae31b6;
@@ -6198,58 +6312,1404 @@ endmodule
 
 
 
-module xdd6da3b7de2c52f6 #(
-  parameter EXTERNAL_WEIGHT_EXP = 0
+// FPGA selection changes synthesis mapping only; arithmetic and latency stay
+// identical for Verilator, FPGA synthesis, and ASIC implementation.
+module xa9d89789d936dba4 #(
+  parameter x9733919257902aea = 0
+)(
+  input  [7:0]  xcb564aa5148b32b8,
+  input  [7:0]  x78e0747dfffc963c,
+  output [15:0] x1d01b50ef20d8e3e
+);
+localparam x45f3e1ef5992ecd8 = x9733919257902aea
+`ifdef EDGE_FPGA_DSP_MUL
+  || 1
+`endif
+  ;
+generate
+  if (x45f3e1ef5992ecd8) begin : x98f763aafb384254
+    (* xd177257250a5815a = "yes" *) wire [15:0] x6f20861fafb737be =
+      xcb564aa5148b32b8 * x78e0747dfffc963c;
+    assign x1d01b50ef20d8e3e = x6f20861fafb737be;
+  end else begin : x7b019edfc06e72a9
+    assign x1d01b50ef20d8e3e = xcb564aa5148b32b8 * x78e0747dfffc963c;
+  end
+endgenerate
+endmodule
+
+
+
+
+
+
+module x7a6c85bb9cc141b6 #(
+  parameter x50191cc99802a285 = 8
+)(
+  input  [x50191cc99802a285*8-1:0] x7f07483fcf06e2f0,
+  input  [x50191cc99802a285*8-1:0] x8b6c4ad76311c65a,
+  input  [x50191cc99802a285-1:0]   x5eeacb4660262cb2,
+  input  [x50191cc99802a285-1:0]   xe66a64952b90b828,
+  input                  xfaff2eac01931c69,
+  output [x50191cc99802a285*10-1:0] x7b2ad06dd24ca3d5,
+  output [x50191cc99802a285-1:0] x969a3febdc80b768
+);
+genvar xf2a40f313791cc8a;
+generate
+  for (xf2a40f313791cc8a = 0; xf2a40f313791cc8a < x50191cc99802a285; xf2a40f313791cc8a = xf2a40f313791cc8a + 1) begin
+    : x752a8f15dbe59421
+    wire [7:0] x4dde374ee9f174d0 = x7f07483fcf06e2f0[xf2a40f313791cc8a*8 +: 8];
+    wire [7:0] xe81820356496ee27 = x8b6c4ad76311c65a[xf2a40f313791cc8a*8 +: 8];
+    wire signed [9:0] xbb34ac9925169db3 = xfaff2eac01931c69
+      ? ($signed({2'b0,(x4dde374ee9f174d0==0)?8'd1:x4dde374ee9f174d0})
+         + $signed({2'b0,(xe81820356496ee27==0)?8'd1:xe81820356496ee27}) - 10'sd134)
+      : $signed({2'b0,x4dde374ee9f174d0});
+    assign x7b2ad06dd24ca3d5[xf2a40f313791cc8a*10 +: 10] = xbb34ac9925169db3;
+    assign x969a3febdc80b768[xf2a40f313791cc8a]
+      = x5eeacb4660262cb2[xf2a40f313791cc8a] && xe66a64952b90b828[xf2a40f313791cc8a];
+  end
+endgenerate
+endmodule
+
+
+
+module x0b87e4731a3ea882 #(
+  parameter x50191cc99802a285 = 8
+)(
+  input  [x50191cc99802a285*10-1:0] x21111a029393b7ae,
+  input  [x50191cc99802a285-1:0]    xaeb403a9538a69fe,
+  output signed [9:0]   x199de6c823dfa038
+);
+wire [10:0] candidate [0:x50191cc99802a285-1];
+wire [10:0] xdde75c0502c597b8 [0:7];
+wire [10:0] x0970002785ff18c6 [0:3];
+wire [10:0] x3ca464e728b2369c [0:1];
+wire [10:0] x092ed6acca286aad;
+
+function [10:0] xec05cf519c519483;
+  input [10:0] a;
+  input [10:0] b;
+  begin
+    if (!a[10]) xec05cf519c519483 = b;
+    else if (!b[10]) xec05cf519c519483 = a;
+    else if ($signed(a[9:0]) >= $signed(b[9:0])) xec05cf519c519483 = a;
+    else xec05cf519c519483 = b;
+  end
+endfunction
+
+genvar x7ed5ee9c4ed1df5e;
+generate
+  for (x7ed5ee9c4ed1df5e = 0; x7ed5ee9c4ed1df5e < x50191cc99802a285; x7ed5ee9c4ed1df5e = x7ed5ee9c4ed1df5e + 1) begin
+    : x75ad0d09d7acb99c
+    assign candidate[x7ed5ee9c4ed1df5e]
+      = {xaeb403a9538a69fe[x7ed5ee9c4ed1df5e],
+         x21111a029393b7ae[x7ed5ee9c4ed1df5e*10 +: 10]};
+  end
+  if (x50191cc99802a285 == 16) begin : x0e3f6aa6ecd53187
+    for (x7ed5ee9c4ed1df5e = 0; x7ed5ee9c4ed1df5e < 8; x7ed5ee9c4ed1df5e = x7ed5ee9c4ed1df5e + 1)
+      assign xdde75c0502c597b8[x7ed5ee9c4ed1df5e]
+        = xec05cf519c519483(candidate[x7ed5ee9c4ed1df5e*2],candidate[x7ed5ee9c4ed1df5e*2+1]);
+    for (x7ed5ee9c4ed1df5e = 0; x7ed5ee9c4ed1df5e < 4; x7ed5ee9c4ed1df5e = x7ed5ee9c4ed1df5e + 1)
+      assign x0970002785ff18c6[x7ed5ee9c4ed1df5e]
+        = xec05cf519c519483(xdde75c0502c597b8[x7ed5ee9c4ed1df5e*2],xdde75c0502c597b8[x7ed5ee9c4ed1df5e*2+1]);
+    assign x3ca464e728b2369c[0] = xec05cf519c519483(x0970002785ff18c6[0],x0970002785ff18c6[1]);
+    assign x3ca464e728b2369c[1] = xec05cf519c519483(x0970002785ff18c6[2],x0970002785ff18c6[3]);
+    assign x092ed6acca286aad = xec05cf519c519483(x3ca464e728b2369c[0],x3ca464e728b2369c[1]);
+  end else begin : x9af7963f84987b80
+    for (x7ed5ee9c4ed1df5e = 0; x7ed5ee9c4ed1df5e < 4; x7ed5ee9c4ed1df5e = x7ed5ee9c4ed1df5e + 1)
+      assign xdde75c0502c597b8[x7ed5ee9c4ed1df5e]
+        = xec05cf519c519483(candidate[x7ed5ee9c4ed1df5e*2],candidate[x7ed5ee9c4ed1df5e*2+1]);
+    assign x0970002785ff18c6[0] = xec05cf519c519483(xdde75c0502c597b8[0],xdde75c0502c597b8[1]);
+    assign x0970002785ff18c6[1] = xec05cf519c519483(xdde75c0502c597b8[2],xdde75c0502c597b8[3]);
+    assign x092ed6acca286aad = xec05cf519c519483(x0970002785ff18c6[0],x0970002785ff18c6[1]);
+  end
+endgenerate
+assign x199de6c823dfa038 = x092ed6acca286aad[10] ? $signed(x092ed6acca286aad[9:0]) : 10'sd0;
+endmodule
+
+
+
+
+module x019e04135151084e #(parameter x50191cc99802a285 = 16)(
+  input clk, rst_b,
+  input [x50191cc99802a285*8-1:0] x7f07483fcf06e2f0, x8b6c4ad76311c65a,
+  input [x50191cc99802a285-1:0] x5eeacb4660262cb2, xe66a64952b90b828,
+  input xfaff2eac01931c69,
+  output signed [9:0] x849c2ae4e278bbda,
+  output [x50191cc99802a285*11-1:0] xf70fdee67b1b2099
+);
+
+
+function [9:0] x1059495915dc234f;
+  input [9:0] a,b,xef6b44fa8f9b5a0a,xa8eb10820846e831;
+  reg xe7f810600d16472a,xad02a3d853ae9f76,x9d9b5e361f646311,x971e696a4ae51400,x1790da7c7e263112,x6933cf9e05f11ce9;
+  reg x629e50deceae3bef,xca383bf129633368,x111f635275f07b5e,x2cb02eb99a69ba76;
+  begin
+    xe7f810600d16472a=(a>=b); xad02a3d853ae9f76=(a>=xef6b44fa8f9b5a0a); x9d9b5e361f646311=(a>=xa8eb10820846e831);
+    x971e696a4ae51400=(b>=xef6b44fa8f9b5a0a); x1790da7c7e263112=(b>=xa8eb10820846e831); x6933cf9e05f11ce9=(xef6b44fa8f9b5a0a>=xa8eb10820846e831);
+    x629e50deceae3bef=xe7f810600d16472a && xad02a3d853ae9f76 && x9d9b5e361f646311;
+    xca383bf129633368=!xe7f810600d16472a && x971e696a4ae51400 && x1790da7c7e263112;
+    x111f635275f07b5e=!xad02a3d853ae9f76 && !x971e696a4ae51400 && x6933cf9e05f11ce9;
+    x2cb02eb99a69ba76=!x9d9b5e361f646311 && !x1790da7c7e263112 && !x6933cf9e05f11ce9;
+    x1059495915dc234f=({10{x629e50deceae3bef}} & a) | ({10{xca383bf129633368}} & b)
+                | ({10{x111f635275f07b5e}} & xef6b44fa8f9b5a0a) | ({10{x2cb02eb99a69ba76}} & xa8eb10820846e831);
+  end
+endfunction
+localparam x960c3f7ea570fc2c = x50191cc99802a285/4;
+reg [8:0] x432bbcd5bcba5726 [0:x50191cc99802a285-1];
+reg x515f2836676cf2fe [0:x50191cc99802a285-1];
+reg [8:0] x754bed3988662c13 [0:x50191cc99802a285-1];
+reg [9:0] x1f6f6973495f1417 [0:x960c3f7ea570fc2c-1];
+wire [9:0] x2dd8e7fc1b1d02c4 [1:2*x960c3f7ea570fc2c-1];
+wire [8:0] xdd60621190c1f869 = x2dd8e7fc1b1d02c4[1][9] ? x2dd8e7fc1b1d02c4[1][8:0] : 9'd134;
+genvar xba8a65c1b7160147;
+generate
+  for(xba8a65c1b7160147=0;xba8a65c1b7160147<x50191cc99802a285;xba8a65c1b7160147=xba8a65c1b7160147+1) begin : x752a8f15dbe59421
+    wire [7:0] x338311301e5d5a17=x7f07483fcf06e2f0[xba8a65c1b7160147*8+:8];
+    wire [7:0] xbcafbd139ac86fc4=x8b6c4ad76311c65a[xba8a65c1b7160147*8+:8];
+    wire [8:0] x4333e268d708a195 = xfaff2eac01931c69
+      ? {1'b0,(x338311301e5d5a17==0 ? 8'd1 : x338311301e5d5a17)} + {1'b0,(xbcafbd139ac86fc4==0 ? 8'd1 : xbcafbd139ac86fc4)}
+      : {1'b0,x338311301e5d5a17} + 9'd134;
+    always @(posedge clk) begin
+      x432bbcd5bcba5726[xba8a65c1b7160147] <= x4333e268d708a195;
+      x515f2836676cf2fe[xba8a65c1b7160147] <= x5eeacb4660262cb2[xba8a65c1b7160147] && xe66a64952b90b828[xba8a65c1b7160147];
+      x754bed3988662c13[xba8a65c1b7160147] <= x432bbcd5bcba5726[xba8a65c1b7160147];
+    end
+    assign xf70fdee67b1b2099[xba8a65c1b7160147*11+:11] = $signed({2'b0,xdd60621190c1f869}) - $signed({2'b0,x754bed3988662c13[xba8a65c1b7160147]});
+  end
+  for(xba8a65c1b7160147=0;xba8a65c1b7160147<x960c3f7ea570fc2c;xba8a65c1b7160147=xba8a65c1b7160147+1) begin : x11558686d7e302ad
+    wire [9:0] a={x515f2836676cf2fe[4*xba8a65c1b7160147],x432bbcd5bcba5726[4*xba8a65c1b7160147]};
+    wire [9:0] b={x515f2836676cf2fe[4*xba8a65c1b7160147+1],x432bbcd5bcba5726[4*xba8a65c1b7160147+1]};
+    wire [9:0] xef6b44fa8f9b5a0a={x515f2836676cf2fe[4*xba8a65c1b7160147+2],x432bbcd5bcba5726[4*xba8a65c1b7160147+2]};
+    wire [9:0] xa8eb10820846e831={x515f2836676cf2fe[4*xba8a65c1b7160147+3],x432bbcd5bcba5726[4*xba8a65c1b7160147+3]};
+    always @(posedge clk) x1f6f6973495f1417[xba8a65c1b7160147] <= x1059495915dc234f(a,b,xef6b44fa8f9b5a0a,xa8eb10820846e831);
+    assign x2dd8e7fc1b1d02c4[x960c3f7ea570fc2c+xba8a65c1b7160147]=x1f6f6973495f1417[xba8a65c1b7160147];
+  end
+  if(x960c3f7ea570fc2c==4) begin : xc177626a1060c2b7
+    assign x2dd8e7fc1b1d02c4[1]=x1059495915dc234f(x1f6f6973495f1417[0],x1f6f6973495f1417[1],
+      x1f6f6973495f1417[2],x1f6f6973495f1417[3]);
+  end else begin : x85e58261eb52ec20
+    for(xba8a65c1b7160147=1;xba8a65c1b7160147<x960c3f7ea570fc2c;xba8a65c1b7160147=xba8a65c1b7160147+1) begin : x71171c66c6ceb791
+      assign x2dd8e7fc1b1d02c4[xba8a65c1b7160147]=(x2dd8e7fc1b1d02c4[2*xba8a65c1b7160147]>=x2dd8e7fc1b1d02c4[2*xba8a65c1b7160147+1])?x2dd8e7fc1b1d02c4[2*xba8a65c1b7160147]:x2dd8e7fc1b1d02c4[2*xba8a65c1b7160147+1];
+    end
+  end
+endgenerate
+assign x849c2ae4e278bbda = $signed({1'b0,xdd60621190c1f869}) - 10'sd134;
+endmodule
+
+
+
+module x7a14414441147d57 #(
+  parameter x9733919257902aea = 0
+)(
+  input  [15:0] xf666ccae6a68f763,
+  input  [7:0]  xeafc9a8374067af7,
+  input  [15:0] x50174f13f3ed77d7,
+  input         xfaff2eac01931c69,
+  output [15:0] x1d01b50ef20d8e3e,
+  output        xe1eb1a19fc2712d7
+);
+wire [7:0] xc1305154720c8441 = (xf666ccae6a68f763[14:7] == 0)
+  ? {1'b0, xf666ccae6a68f763[6:0]} : {1'b1, xf666ccae6a68f763[6:0]};
+wire [7:0] x8258585fbb95608b = xeafc9a8374067af7[7]
+  ? (~xeafc9a8374067af7 + 8'b1) : xeafc9a8374067af7;
+wire [7:0] xed17b9fdfde10bb2 = (x50174f13f3ed77d7[14:7] == 0)
+  ? {1'b0, x50174f13f3ed77d7[6:0]} : {1'b1, x50174f13f3ed77d7[6:0]};
+wire [7:0] xbe8600f1d4befad9 = xfaff2eac01931c69
+                               ? xed17b9fdfde10bb2 : x8258585fbb95608b;
+xa9d89789d936dba4 #(.x9733919257902aea(x9733919257902aea)) x33b00faa2c81b08f (
+  .xcb564aa5148b32b8(xc1305154720c8441),
+  .x78e0747dfffc963c(xbe8600f1d4befad9),
+  .x1d01b50ef20d8e3e(x1d01b50ef20d8e3e)
+);
+assign xe1eb1a19fc2712d7 = xf666ccae6a68f763[15]
+              ^ (xfaff2eac01931c69 ? x50174f13f3ed77d7[15]
+                                     : xeafc9a8374067af7[7]);
+endmodule
+
+
+
+module x148ef1bba6fdeea0 #(
+  parameter xd76680053ed9ceef = 0,
+  parameter x8da6fe7f962f9481 = 0
+)(
+  input  [15:0] xfc4aa788e2b64696,
+  input  signed [10:0] x85cf68a7b9725ae4,
+  output reg [17:0] xcd35ca8fab0bef46,
+  output reg [2:0]  x71f566c7f71d85b6,
+  output reg        x5df55078e78def41,
+  output reg        x4d375066eb0df087,
+  output reg        xf308a643b72c21af
+);
+reg [17:0] x9b1cde4c94a7d66a;
+always @* begin
+  x9b1cde4c94a7d66a = {2'b0, xfc4aa788e2b64696} << xd76680053ed9ceef;
+  x71f566c7f71d85b6 = x85cf68a7b9725ae4[2:0];
+  xf308a643b72c21af = x8da6fe7f962f9481 ? x85cf68a7b9725ae4[5]
+    : (x85cf68a7b9725ae4 >= (17 + xd76680053ed9ceef));
+  case (x85cf68a7b9725ae4[4:3])
+    2'd0: begin
+      xcd35ca8fab0bef46 = x9b1cde4c94a7d66a;
+      x5df55078e78def41 = 1'b0;
+      x4d375066eb0df087 = 1'b0;
+    end
+    2'd1: begin
+      xcd35ca8fab0bef46 = x9b1cde4c94a7d66a >> 8;
+      x5df55078e78def41 = x9b1cde4c94a7d66a[7];
+      x4d375066eb0df087 = |x9b1cde4c94a7d66a[6:0];
+    end
+    2'd2: begin
+      xcd35ca8fab0bef46 = x9b1cde4c94a7d66a >> 16;
+      x5df55078e78def41 = x9b1cde4c94a7d66a[15];
+      x4d375066eb0df087 = |x9b1cde4c94a7d66a[14:0];
+    end
+    default: begin
+      xcd35ca8fab0bef46 = 18'b0;
+      x5df55078e78def41 = 1'b0;
+      x4d375066eb0df087 = |x9b1cde4c94a7d66a;
+    end
+  endcase
+end
+endmodule
+
+
+
+module xf3f017c8502fa834(
+  input  [17:0] x526bcdd963fea9ef,
+  input  [2:0]  xc7fb820f77d66caa,
+  input         x4e84f23707a6e573,
+  input         xe3421d5976298b34,
+  input         x1454c3a039e654a7,
+  input         x818ce4526240cace,
+  output signed [20:0] x88e57b7def654ab1
+);
+reg [17:0] x5842f8d75c38fba6;
+reg guard_bit;
+reg sticky_bit;
+reg [17:0] xda0ec48dc24f6094;
+reg signed [20:0] xcbdeb6d3238573a5;
+always @* begin
+  x5842f8d75c38fba6 = x526bcdd963fea9ef;
+  guard_bit = x4e84f23707a6e573;
+  sticky_bit = xe3421d5976298b34;
+  case (xc7fb820f77d66caa)
+    3'd0: x5842f8d75c38fba6 = x526bcdd963fea9ef;
+    3'd1: begin x5842f8d75c38fba6=x526bcdd963fea9ef>>1; guard_bit=x526bcdd963fea9ef[0];
+      sticky_bit=x4e84f23707a6e573|xe3421d5976298b34; end
+    3'd2: begin x5842f8d75c38fba6=x526bcdd963fea9ef>>2; guard_bit=x526bcdd963fea9ef[1];
+      sticky_bit=x526bcdd963fea9ef[0]|x4e84f23707a6e573|xe3421d5976298b34; end
+    3'd3: begin x5842f8d75c38fba6=x526bcdd963fea9ef>>3; guard_bit=x526bcdd963fea9ef[2];
+      sticky_bit=(|x526bcdd963fea9ef[1:0])|x4e84f23707a6e573|xe3421d5976298b34; end
+    3'd4: begin x5842f8d75c38fba6=x526bcdd963fea9ef>>4; guard_bit=x526bcdd963fea9ef[3];
+      sticky_bit=(|x526bcdd963fea9ef[2:0])|x4e84f23707a6e573|xe3421d5976298b34; end
+    3'd5: begin x5842f8d75c38fba6=x526bcdd963fea9ef>>5; guard_bit=x526bcdd963fea9ef[4];
+      sticky_bit=(|x526bcdd963fea9ef[3:0])|x4e84f23707a6e573|xe3421d5976298b34; end
+    3'd6: begin x5842f8d75c38fba6=x526bcdd963fea9ef>>6; guard_bit=x526bcdd963fea9ef[5];
+      sticky_bit=(|x526bcdd963fea9ef[4:0])|x4e84f23707a6e573|xe3421d5976298b34; end
+    default: begin x5842f8d75c38fba6=x526bcdd963fea9ef>>7; guard_bit=x526bcdd963fea9ef[6];
+      sticky_bit=(|x526bcdd963fea9ef[5:0])|x4e84f23707a6e573|xe3421d5976298b34; end
+  endcase
+  xda0ec48dc24f6094 = x1454c3a039e654a7 ? 18'b0
+    : x5842f8d75c38fba6 + (guard_bit && (sticky_bit || x5842f8d75c38fba6[0]));
+  xcbdeb6d3238573a5 = $signed({3'b0, xda0ec48dc24f6094});
+  if (x818ce4526240cace) xcbdeb6d3238573a5 = -xcbdeb6d3238573a5;
+end
+assign x88e57b7def654ab1 = xcbdeb6d3238573a5;
+endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module x1ce3738b20bd88b8 #(
+  parameter xc9595d53c366caab = 0,
+  parameter xb40eb0ec71729b91 = 0,
+  parameter x9733919257902aea = 0,
+  localparam x50191cc99802a285 = 8,
+  parameter x4624b390d122831e = 24,
+  parameter xd76680053ed9ceef = 0,
+  parameter x5bc72103b66bdf94 = 0,
+  parameter x565ab13ea6abdc6b = 0,
+  parameter xc9821f28b7e924d1 = 0,
+
+  parameter xfd53aaff53147a48 = 0,
+
+  parameter x0b25bfaf93fcea89 = 0
 )(
   clk,
   rst_b,
   in_valid,
-  bf16_vec_i,
-  int8_vec_i,
-  weight_bf16_mode_i,
-  bf16_weight_vec_i,
-  weight_exp_vec_i,
-  rsum_enable_i,
-  rsum_first_i,
-  rsum_last_i,
+  xac232893b3823c96,
+  x52357374f505f442,
+  xfaff2eac01931c69,
+  xd0f8509a03d0375c,
+  x897f1cb6fa7ceb8b,
+  x095711446a3f8133,
+  xd96b5c3e7e6ce6bf,
+  x837075243a1a83a4,
+  xbe13730a7094392c,
+  x054b2cf4b3fcbf32,
   out_valid,
-  bf16_o
+  xd6bdc9f261eb0815,
+  x3476e0e6c813dfd1,
+  x3095f4fbacedd0ad,
+  x826bd7946e0b1e7d,
+  x43e8d1b171c7f1d2
 );
 
 input          clk;
 input          rst_b;
 input          in_valid;
-input  [127:0] bf16_vec_i;
-input  [63:0]  int8_vec_i;
-input          weight_bf16_mode_i;
-input  [127:0] bf16_weight_vec_i;
-input  [63:0]  weight_exp_vec_i;
-input          rsum_enable_i;
-input          rsum_first_i;
-input          rsum_last_i;
+input  [x50191cc99802a285*16-1:0] xac232893b3823c96;
+input  [x50191cc99802a285*8-1:0]  x52357374f505f442;
+input          xfaff2eac01931c69;
+input  [x50191cc99802a285*16-1:0] xd0f8509a03d0375c;
+input  [x50191cc99802a285*8-1:0]  x897f1cb6fa7ceb8b;
+input  [x50191cc99802a285*16-1:0] x095711446a3f8133;
+input  [x50191cc99802a285-1:0]    xd96b5c3e7e6ce6bf;
+input          x837075243a1a83a4;
+input          xbe13730a7094392c;
+input          x054b2cf4b3fcbf32;
 output         out_valid;
-output [15:0]  bf16_o;
+output [31:0]  xd6bdc9f261eb0815;
+output [15:0]  x3476e0e6c813dfd1;
+output         x3095f4fbacedd0ad;
+output signed [x4624b390d122831e-1:0] x826bd7946e0b1e7d;
+output signed [9:0]  x43e8d1b171c7f1d2;
+
+reg         xb83b057dec9ce0fc;
+reg         xe3cc31266596f16f;
+reg         x4560f37b51cc7240;
+reg         x98c9ab0a07123aaf;
+reg         xf4c4d5a58ec5d556;
+reg         xefdae0773df66012;
+reg         xfc6cae8528239950;
+reg [15:0]  xbc16678ecd64b71f [0:x50191cc99802a285-1];
+reg [7:0]   x0852001503d56433 [0:x50191cc99802a285-1];
+reg [15:0]  xcf1bc48dd76053b8 [0:x50191cc99802a285-1];
+
+
+reg x33979e9fb97f287b [0:x50191cc99802a285-1];
+reg x3698c9b81b00d88e [0:x50191cc99802a285-1];
+wire [15:0] x51b2d1c9011cddfe [0:x50191cc99802a285-1];
+wire [15:0] xa5068bc1857dee86 [0:x50191cc99802a285-1];
+reg [7:0]   xc15dd3ee495ed690 [0:x50191cc99802a285-1];
+reg [15:0]  x740ddf1a3552a5cf [0:x50191cc99802a285-1];
+reg         x57247a98a17322ad [0:x50191cc99802a285-1];
+reg         xd6e02f73c6baf175;
+reg [15:0]  x37c24e77cc8b65e6 [0:x50191cc99802a285-1];
+reg         xa63faf7c70caee7e [0:x50191cc99802a285-1];
+reg signed [9:0] x7ec077dea9a66815 [0:x50191cc99802a285-1];
+reg         x7802f45f8a82f983 [0:x50191cc99802a285-1];
+reg [15:0]  x3df49498f7d6ae52 [0:x50191cc99802a285-1];
+reg         xe2016b69b22251f5 [0:x50191cc99802a285-1];
+reg signed [9:0] x3137796dfed7b98b [0:x50191cc99802a285-1];
+reg signed [9:0] x7a116235c97cc2e2;
+
+
+reg [5:0] xd225d3569a825d19 [0:x50191cc99802a285-1];
+wire [x50191cc99802a285*11-1:0] x50f93db4e8c44a77;
+wire [15:0] x091f8a1a1e424209 [0:x50191cc99802a285-1];
+wire x00a94d782e145e40 [0:x50191cc99802a285-1];
+reg [17:0]  x48096b0d97edea0c [0:x50191cc99802a285-1];
+reg [2:0]   x4eb9d618f3d0637c [0:x50191cc99802a285-1];
+reg         x1e4b6577f11cab2e [0:x50191cc99802a285-1];
+reg         xcbec24508418ddbb [0:x50191cc99802a285-1];
+reg         x0626c20f4c63c00e [0:x50191cc99802a285-1];
+reg         xb6b00d2727ad7b49 [0:x50191cc99802a285-1];
+reg signed [9:0] xdc81459adba80a27;
+reg signed [18:0] xb4e9352a33f20607 [0:x50191cc99802a285-1];
+reg signed [9:0] xb993bde54a4bca55;
+reg signed [x4624b390d122831e-1:0] x4a853b8fb93581e1;
+reg signed [9:0] x42e80800043e642b;
+reg [15:0]  x2b27a61219d89f76;
+reg [31:0]  x619817f1aa47c9d9;
+reg         xe0ed5288ebb76f55;
+reg         xa47454407a4ee676;
+reg         xf1eeb975abccc94e;
+reg         x67d97bfff75a05ec;
+reg         x935e74ac072d93a0;
+reg         x62e41d259c4b2011;
+reg         x9a1a47a2f0685469;
+reg         xb49c043cd7e02e5b;
+reg         xe982b863e4087c30;
+reg         x63e7f47c1b701651;
+reg         x4f8bc2cfb5c99b39;
+reg         x65709f22b42c54ec;
+reg         x8ea6224229b861ee;
+reg         xe69a85466846e5c3;
+reg         x8672637c033bd182;
+reg         x49a65ffb0a48ef17;
+reg         x4b6f25385c8d3e3c;
+reg         xbf9f3f6965d98160;
+reg         x3e1414dab8f2b577;
+reg         x7f53ee327e52d400;
+reg         x05c5373d85a7f1b8;
+reg [31:0]  xc831b5443f2f0a14;
+reg         xf3e314435f09360b;
+reg [31:0]  x6190702755db1710;
+reg [15:0]  xd5627c9dfd7455c2;
+
+integer x5ce21f903fc5ffc6;
+wire signed [9:0] x63d600c6937b82c4;
+wire [x50191cc99802a285*10-1:0] x4d66ae87667c3abb;
+wire [x50191cc99802a285-1:0] x37f19bc258744c8d;
+wire [x50191cc99802a285*10-1:0] x01daf1cf97735b59;
+wire [x50191cc99802a285-1:0] xbd1af0b124f7460a;
+wire [x50191cc99802a285*8-1:0] x6988e773b0cf2b12, x0b83d76c24016c1b;
+wire [x50191cc99802a285-1:0] x0f9340f24ac05774, xf5945ed48f7f4ca2;
+wire [x50191cc99802a285*8-1:0] x95e36a20eaac93b9;
+wire [x50191cc99802a285*8-1:0] x25f9046fe6119417;
+wire [x50191cc99802a285-1:0] xfa9b60f2c92f76f4;
+wire [x50191cc99802a285-1:0] x5ac6e3888ccb5b8d;
+wire [15:0] x67790d9c073adaed [0:x50191cc99802a285-1];
+wire x34881be36516f090 [0:x50191cc99802a285-1];
+wire signed [10:0] xdd523a90665e2031 [0:x50191cc99802a285-1];
+wire [17:0] x82a95c33987375c6 [0:x50191cc99802a285-1];
+wire [2:0] xcdeca1d1f7f1c403 [0:x50191cc99802a285-1];
+wire xa9594b8c6d011d6e [0:x50191cc99802a285-1];
+wire x6c45df7600094caf [0:x50191cc99802a285-1];
+wire x143846460d612102 [0:x50191cc99802a285-1];
+wire signed [20:0] xf8543eb8152ff2e9 [0:x50191cc99802a285-1];
+
+wire [31:0] x4b82802325e17600;
+wire [31:0] x40b3575b27c5cc1c;
+wire [31:0] xb17644126c364e46;
+wire signed [x4624b390d122831e-1:0] x6ea1e06ee324978f;
+wire x05e3a8dd8f678aec;
+wire signed [9:0] x9c4d71a29f14a295;
+wire x97e6ac51ef5d44d3, x49cd27b2c835f1a4, x35575548012e713a;
+wire signed [x4624b390d122831e-1:0] x3ca85f40501d2e6b [0:x50191cc99802a285-1];
+
+genvar x1448145d5daafc32;
+generate
+  for (x1448145d5daafc32 = 0; x1448145d5daafc32 < x50191cc99802a285; x1448145d5daafc32 = x1448145d5daafc32 + 1) begin : xde15db8e4284c195
+    assign x3ca85f40501d2e6b[x1448145d5daafc32] =
+      {{(x4624b390d122831e-19){xb4e9352a33f20607[x1448145d5daafc32][18]}}, xb4e9352a33f20607[x1448145d5daafc32]};
+
+    assign x01daf1cf97735b59[x1448145d5daafc32*10 +: 10] = x7ec077dea9a66815[x1448145d5daafc32];
+    assign xbd1af0b124f7460a[x1448145d5daafc32] = x7802f45f8a82f983[x1448145d5daafc32];
+
+    assign x95e36a20eaac93b9[x1448145d5daafc32*8 +: 8]
+      = xbc16678ecd64b71f[x1448145d5daafc32][14:7];
+    assign x25f9046fe6119417[x1448145d5daafc32*8 +: 8]
+      = x565ab13ea6abdc6b ? xc15dd3ee495ed690[x1448145d5daafc32]
+                            : xcf1bc48dd76053b8[x1448145d5daafc32][14:7];
+    assign x51b2d1c9011cddfe[x1448145d5daafc32] = x5bc72103b66bdf94
+      ? xac232893b3823c96[x1448145d5daafc32*16 +: 16]
+      : x600a54d267a064e4(xac232893b3823c96[x1448145d5daafc32*16 +: 16]);
+    assign xa5068bc1857dee86[x1448145d5daafc32] = x5bc72103b66bdf94
+      ? xd0f8509a03d0375c[x1448145d5daafc32*16 +: 16]
+      : x600a54d267a064e4(xd0f8509a03d0375c[x1448145d5daafc32*16 +: 16]);
+    assign x6988e773b0cf2b12[x1448145d5daafc32*8+:8] = x51b2d1c9011cddfe[x1448145d5daafc32][14:7];
+    assign x0b83d76c24016c1b[x1448145d5daafc32*8+:8] = x565ab13ea6abdc6b
+      ? x897f1cb6fa7ceb8b[x1448145d5daafc32*8+:8] : xa5068bc1857dee86[x1448145d5daafc32][14:7];
+    assign x0f9340f24ac05774[x1448145d5daafc32] = |x51b2d1c9011cddfe[x1448145d5daafc32][14:0];
+    assign xf5945ed48f7f4ca2[x1448145d5daafc32] = xfaff2eac01931c69
+      ? (|xa5068bc1857dee86[x1448145d5daafc32][14:0]) : (|x52357374f505f442[x1448145d5daafc32*8+:8]);
+    assign xfa9b60f2c92f76f4[x1448145d5daafc32]
+      = xc9821f28b7e924d1 ? x33979e9fb97f287b[x1448145d5daafc32]
+                          : (xbc16678ecd64b71f[x1448145d5daafc32][14:0] != 15'b0);
+    assign x5ac6e3888ccb5b8d[x1448145d5daafc32]
+      = xc9821f28b7e924d1 ? x3698c9b81b00d88e[x1448145d5daafc32]
+        : (xd6e02f73c6baf175
+           ? (xcf1bc48dd76053b8[x1448145d5daafc32][14:0] != 15'b0)
+           : (x0852001503d56433[x1448145d5daafc32] != 8'b0));
+
+    if (xc9821f28b7e924d1) begin : xa80c2ca0a9d7bfd1
+      assign x67790d9c073adaed[x1448145d5daafc32] = xfd53aaff53147a48
+        ? x095711446a3f8133[x1448145d5daafc32*16 +: 16]
+        : x740ddf1a3552a5cf[x1448145d5daafc32];
+      assign x34881be36516f090[x1448145d5daafc32] = xfd53aaff53147a48
+        ? xd96b5c3e7e6ce6bf[x1448145d5daafc32]
+        : x57247a98a17322ad[x1448145d5daafc32];
+    end else begin : x5e2ca70c600fbc58
+      x7a14414441147d57 #(.x9733919257902aea(x9733919257902aea)) xc12bc312b8fde897 (
+        .xf666ccae6a68f763(xbc16678ecd64b71f[x1448145d5daafc32]),
+        .xeafc9a8374067af7(x0852001503d56433[x1448145d5daafc32]),
+        .x50174f13f3ed77d7(xcf1bc48dd76053b8[x1448145d5daafc32]),
+        .xfaff2eac01931c69(xd6e02f73c6baf175),
+        .x1d01b50ef20d8e3e(x67790d9c073adaed[x1448145d5daafc32]),
+        .xe1eb1a19fc2712d7(x34881be36516f090[x1448145d5daafc32])
+      );
+    end
+
+    if (x0b25bfaf93fcea89) begin : x286ca2d52322f9dc
+      if (xc9821f28b7e924d1) begin : x82370d3df525edff
+
+        assign x091f8a1a1e424209[x1448145d5daafc32] = x095711446a3f8133[x1448145d5daafc32*16+:16];
+        assign x00a94d782e145e40[x1448145d5daafc32] = xd96b5c3e7e6ce6bf[x1448145d5daafc32];
+      end else begin : xc9a3709165c0ca01
+        reg [7:0] x8d0bd30dec91f688, xfebce82727d81177;
+        reg x3f4ac1e3e01bce56;
+        wire [7:0] x467ba296bde26d6b = x0852001503d56433[x1448145d5daafc32][7]
+          ? -x0852001503d56433[x1448145d5daafc32] : x0852001503d56433[x1448145d5daafc32];
+        always @(posedge clk) begin
+          x8d0bd30dec91f688 <= {(xbc16678ecd64b71f[x1448145d5daafc32][14:7]!=0),xbc16678ecd64b71f[x1448145d5daafc32][6:0]};
+          xfebce82727d81177 <= xd6e02f73c6baf175
+            ? {(xcf1bc48dd76053b8[x1448145d5daafc32][14:7]!=0),xcf1bc48dd76053b8[x1448145d5daafc32][6:0]} : x467ba296bde26d6b;
+          x3f4ac1e3e01bce56 <= xbc16678ecd64b71f[x1448145d5daafc32][15] ^ (xd6e02f73c6baf175
+            ? xcf1bc48dd76053b8[x1448145d5daafc32][15] : x0852001503d56433[x1448145d5daafc32][7]);
+        end
+        xa9d89789d936dba4 #(.x9733919257902aea(x9733919257902aea)) xce46f8e3eee49a4e (
+          .xcb564aa5148b32b8(x8d0bd30dec91f688),.x78e0747dfffc963c(xfebce82727d81177),
+          .x1d01b50ef20d8e3e(x091f8a1a1e424209[x1448145d5daafc32]));
+        assign x00a94d782e145e40[x1448145d5daafc32] = x3f4ac1e3e01bce56;
+      end
+    end else begin : xaf5454297e310ce4
+      assign x091f8a1a1e424209[x1448145d5daafc32] = 16'b0;
+      assign x00a94d782e145e40[x1448145d5daafc32] = 1'b0;
+    end
+    assign xdd523a90665e2031[x1448145d5daafc32] = x0b25bfaf93fcea89
+      ? $signed({5'b0,xd225d3569a825d19[x1448145d5daafc32]})
+      : ($signed(x7a116235c97cc2e2) - $signed(x3137796dfed7b98b[x1448145d5daafc32]));
+    x148ef1bba6fdeea0 #(
+      .xd76680053ed9ceef(xd76680053ed9ceef), .x8da6fe7f962f9481(x0b25bfaf93fcea89)
+    ) x75433f010b3da175 (
+      .xfc4aa788e2b64696(x3df49498f7d6ae52[x1448145d5daafc32]),
+      .x85cf68a7b9725ae4(xdd523a90665e2031[x1448145d5daafc32]),
+      .xcd35ca8fab0bef46(x82a95c33987375c6[x1448145d5daafc32]),
+      .x71f566c7f71d85b6(xcdeca1d1f7f1c403[x1448145d5daafc32]),
+      .x5df55078e78def41(xa9594b8c6d011d6e[x1448145d5daafc32]),
+      .x4d375066eb0df087(x6c45df7600094caf[x1448145d5daafc32]),
+      .xf308a643b72c21af(x143846460d612102[x1448145d5daafc32])
+    );
+
+    xf3f017c8502fa834 x105af3d635db442a (
+      .x526bcdd963fea9ef(x48096b0d97edea0c[x1448145d5daafc32]),
+      .xc7fb820f77d66caa(x4eb9d618f3d0637c[x1448145d5daafc32]),
+      .x4e84f23707a6e573(x1e4b6577f11cab2e[x1448145d5daafc32]),
+      .xe3421d5976298b34(xcbec24508418ddbb[x1448145d5daafc32]),
+      .x1454c3a039e654a7(x0626c20f4c63c00e[x1448145d5daafc32]),
+      .x818ce4526240cace(xb6b00d2727ad7b49[x1448145d5daafc32]),
+      .x88e57b7def654ab1(xf8543eb8152ff2e9[x1448145d5daafc32])
+    );
+  end
+endgenerate
+
+x7a6c85bb9cc141b6 #(.x50191cc99802a285(x50191cc99802a285)) xd6820d214c5992bf (
+  .x7f07483fcf06e2f0(x95e36a20eaac93b9),
+  .x8b6c4ad76311c65a(x25f9046fe6119417),
+  .x5eeacb4660262cb2(xfa9b60f2c92f76f4),
+  .xe66a64952b90b828(x5ac6e3888ccb5b8d),
+  .xfaff2eac01931c69(xd6e02f73c6baf175),
+  .x7b2ad06dd24ca3d5(x4d66ae87667c3abb),
+  .x969a3febdc80b768(x37f19bc258744c8d)
+);
+
+generate
+  if (x0b25bfaf93fcea89) begin : xc855cf107ab35994
+    x019e04135151084e #(.x50191cc99802a285(x50191cc99802a285)) x0cc6c9e66a0b5a01 (
+      .clk(clk),.rst_b(rst_b),
+      .x7f07483fcf06e2f0(x6988e773b0cf2b12),.x8b6c4ad76311c65a(x0b83d76c24016c1b),
+      .x5eeacb4660262cb2(x0f9340f24ac05774),
+      .xe66a64952b90b828(xf5945ed48f7f4ca2),.xfaff2eac01931c69(xfaff2eac01931c69),
+      .x849c2ae4e278bbda(x63d600c6937b82c4),.xf70fdee67b1b2099(x50f93db4e8c44a77));
+  end else begin : x4da9e167db8b4f73
+    x0b87e4731a3ea882 #(.x50191cc99802a285(x50191cc99802a285)) xdf44b7c44c76b40c (
+      .x21111a029393b7ae(x01daf1cf97735b59),.xaeb403a9538a69fe(xbd1af0b124f7460a),
+      .x199de6c823dfa038(x63d600c6937b82c4));
+    assign x50f93db4e8c44a77 = 0;
+  end
+endgenerate
+
+generate
+  begin : x51f622b538a347ee
+    assign x05e3a8dd8f678aec = xf4c4d5a58ec5d556;
+    assign x9c4d71a29f14a295 = xb993bde54a4bca55;
+    assign x97e6ac51ef5d44d3 = x935e74ac072d93a0;
+    assign x49cd27b2c835f1a4 = x65709f22b42c54ec;
+    assign x35575548012e713a = x3e1414dab8f2b577;
+  if (xb40eb0ec71729b91) begin : x47193669cdd0d6c9
+    (* xd177257250a5815a = "simd" *) wire signed [23:0] xdb787542c98d1fce =
+      x3ca85f40501d2e6b[0] + x3ca85f40501d2e6b[1];
+    (* xd177257250a5815a = "simd" *) wire signed [23:0] x3633217ec49407c2 =
+      x3ca85f40501d2e6b[2] + x3ca85f40501d2e6b[3];
+    (* xd177257250a5815a = "simd" *) wire signed [23:0] x3dadd98d33d4f89e =
+      x3ca85f40501d2e6b[4] + x3ca85f40501d2e6b[5];
+    (* xd177257250a5815a = "simd" *) wire signed [23:0] x9db28d9a795dd7b9 =
+      x3ca85f40501d2e6b[6] + x3ca85f40501d2e6b[7];
+    (* xd177257250a5815a = "simd" *) wire signed [23:0] xf6fab2d7bc26fcdd = xdb787542c98d1fce + x3633217ec49407c2;
+    (* xd177257250a5815a = "simd" *) wire signed [23:0] xa0f4eb2d83092962 = x3dadd98d33d4f89e + x9db28d9a795dd7b9;
+    (* xd177257250a5815a = "simd" *) wire signed [23:0] x82f8197d8fc2c627 = xf6fab2d7bc26fcdd + xa0f4eb2d83092962;
+    assign x6ea1e06ee324978f = x82f8197d8fc2c627;
+  end else begin : xa2f78ef0cd928db1
+    assign x6ea1e06ee324978f = x3ca85f40501d2e6b[0] + x3ca85f40501d2e6b[1]
+                       + x3ca85f40501d2e6b[2] + x3ca85f40501d2e6b[3]
+                       + x3ca85f40501d2e6b[4] + x3ca85f40501d2e6b[5]
+                       + x3ca85f40501d2e6b[6] + x3ca85f40501d2e6b[7];
+  end
+  end
+endgenerate
+
+assign out_valid = xc9595d53c366caab ? 1'b0
+  : (xf3e314435f09360b || (xfc6cae8528239950 && !x9a1a47a2f0685469));
+assign xd6bdc9f261eb0815 = xc9595d53c366caab ? 32'b0
+  : (xf3e314435f09360b ? x6190702755db1710 : x619817f1aa47c9d9);
+assign x3476e0e6c813dfd1 = xc9595d53c366caab ? 16'b0
+  : (xf3e314435f09360b ? xd5627c9dfd7455c2 : x2b27a61219d89f76);
+assign x3095f4fbacedd0ad = xefdae0773df66012;
+assign x826bd7946e0b1e7d = x4a853b8fb93581e1;
+assign x43e8d1b171c7f1d2 = x42e80800043e642b - xd76680053ed9ceef;
+assign x4b82802325e17600 = xe69a85466846e5c3 ? 32'b0 : xc831b5443f2f0a14;
+assign x40b3575b27c5cc1c = x3ccdb2a8c2c573aa(
+    xade2c408f5563e1e(x4b82802325e17600, x619817f1aa47c9d9));
+assign xb17644126c364e46 = x93dd1075bbebbfec(x40b3575b27c5cc1c);
+
+function [31:0] x93dd1075bbebbfec;
+  input [31:0] x760ad1ee4be538ea;
+  reg [15:0] xda0ec48dc24f6094;
+  begin
+    if ((x760ad1ee4be538ea[30:23] == 8'hff) && (x760ad1ee4be538ea[22:0] != 23'b0)) begin
+      xda0ec48dc24f6094 = 16'h7fc0;
+    end else begin
+      xda0ec48dc24f6094 = x760ad1ee4be538ea[31:16]
+              + {15'b0, (x760ad1ee4be538ea[15] && (|x760ad1ee4be538ea[14:0] || x760ad1ee4be538ea[16]))};
+      if ((xda0ec48dc24f6094 == 16'h0000) && x760ad1ee4be538ea[31])
+        xda0ec48dc24f6094 = 16'h8000;
+    end
+    x93dd1075bbebbfec = {xda0ec48dc24f6094, 16'h0000};
+  end
+endfunction
+
+function [31:0] x3ccdb2a8c2c573aa;
+  input [31:0] x760ad1ee4be538ea;
+  reg [31:0] x296ead6e71de74cf;
+  begin
+    if ((x760ad1ee4be538ea[30:23] == 8'hff) && (x760ad1ee4be538ea[22:0] != 23'b0)) begin
+      x3ccdb2a8c2c573aa = 32'h7fc0_0000;
+    end else begin
+      x296ead6e71de74cf = 32'h0000_01ff + {31'b0, x760ad1ee4be538ea[10]};
+      x3ccdb2a8c2c573aa = (x760ad1ee4be538ea + x296ead6e71de74cf) & 32'hffff_fc00;
+    end
+  end
+endfunction
+
+function [26:0] x5354eedff1e677cc;
+  input [26:0] value;
+  input integer shift;
+  reg xf58581e8080d0596;
+  begin
+    if (shift <= 0) begin
+      x5354eedff1e677cc = value;
+    end else if (shift >= 27) begin
+      x5354eedff1e677cc = {|value, 26'b0};
+    end else begin
+      xf58581e8080d0596 = |(value & ((27'b1 << shift) - 27'b1));
+      x5354eedff1e677cc = (value >> shift) | {26'b0, xf58581e8080d0596};
+    end
+  end
+endfunction
+
+function [31:0] xf54261c40a041cfc;
+  input        sign;
+  input signed [11:0] x8ee376ea1aabbd51;
+  input [26:0] sig_grs;
+  reg [23:0] x321a68ef42d8d6fa;
+  reg guard_bit;
+  reg x4dc43cdd53b07a55;
+  reg sticky_bit;
+  reg xa11a02805b980edc;
+  reg [24:0] xda0ec48dc24f6094;
+  reg signed [11:0] xa9ef46587a83c799;
+  reg signed [12:0] x61f4656bf7705d92;
+  begin
+    if (sig_grs == 27'b0 || x8ee376ea1aabbd51 < -12'sd126) begin
+      xf54261c40a041cfc = {sign, 31'b0};
+    end else begin
+      x321a68ef42d8d6fa = sig_grs[26:3];
+      guard_bit = sig_grs[2];
+      x4dc43cdd53b07a55 = sig_grs[1];
+      sticky_bit = sig_grs[0];
+      xa11a02805b980edc = guard_bit && (x4dc43cdd53b07a55 || sticky_bit || x321a68ef42d8d6fa[0]);
+      xda0ec48dc24f6094 = {1'b0, x321a68ef42d8d6fa} + {24'b0, xa11a02805b980edc};
+      xa9ef46587a83c799 = x8ee376ea1aabbd51 + {11'b0, xda0ec48dc24f6094[24]};
+      x61f4656bf7705d92 = xa9ef46587a83c799 + 13'sd127;
+      if (x61f4656bf7705d92 >= 13'sd255)
+        xf54261c40a041cfc = {sign, 8'hfe, 23'h7fffff};
+      else if (x61f4656bf7705d92 <= 13'sd0)
+        xf54261c40a041cfc = {sign, 31'b0};
+      else
+        xf54261c40a041cfc = {sign, x61f4656bf7705d92[7:0],
+                              xda0ec48dc24f6094[24] ? xda0ec48dc24f6094[23:1]
+                                          : xda0ec48dc24f6094[22:0]};
+    end
+  end
+endfunction
+
+function [31:0] xade2c408f5563e1e;
+  input [31:0] xfda2dc6c2e75da1b;
+  input [31:0] x1a9c1647ec67ae42;
+  reg        x4ab466b68bfc8904;
+  reg        x3ccbc414d24714d0;
+  reg [7:0]  xe7c0aac4eacf31f5;
+  reg [7:0]  x61750e5c0fe92be9;
+  reg [23:0] xe1507c59d0a897d6;
+  reg [23:0] x73549de00248908d;
+  reg signed [11:0] x2b8b534817d17586;
+  reg signed [11:0] xca972297841704f8;
+  reg        x94e79052cdc041d1;
+  reg        x37a6c5e40e1486a3;
+  reg signed [11:0] x5961b0ec735ae29f;
+  reg [26:0] xcc648cd0b22740d4;
+  reg [26:0] xbb4f47e7677e03fa;
+  reg [27:0] xdf0387fb0d652c2f;
+  reg [26:0] x7dd9c32faf28ead0;
+  integer shift_amt;
+  integer xaa8c6e9524712ad6;
+  begin
+    x4ab466b68bfc8904 = xfda2dc6c2e75da1b[31];
+    x3ccbc414d24714d0 = x1a9c1647ec67ae42[31];
+    xe7c0aac4eacf31f5 = xfda2dc6c2e75da1b[30:23];
+    x61750e5c0fe92be9 = x1a9c1647ec67ae42[30:23];
+    xe1507c59d0a897d6 = (xe7c0aac4eacf31f5 == 8'b0) ? {1'b0, xfda2dc6c2e75da1b[22:0]}
+                                  : {1'b1, xfda2dc6c2e75da1b[22:0]};
+    x73549de00248908d = (x61750e5c0fe92be9 == 8'b0) ? {1'b0, x1a9c1647ec67ae42[22:0]}
+                                  : {1'b1, x1a9c1647ec67ae42[22:0]};
+    x2b8b534817d17586 = (xe7c0aac4eacf31f5 == 8'b0) ? -12'sd126
+                                  : ({4'b0, xe7c0aac4eacf31f5} - 12'sd127);
+    xca972297841704f8 = (x61750e5c0fe92be9 == 8'b0) ? -12'sd126
+                                  : ({4'b0, x61750e5c0fe92be9} - 12'sd127);
+
+    if (xfda2dc6c2e75da1b[30:0] == 31'b0) begin
+      xade2c408f5563e1e = x1a9c1647ec67ae42;
+    end else if (x1a9c1647ec67ae42[30:0] == 31'b0) begin
+      xade2c408f5563e1e = xfda2dc6c2e75da1b;
+    end else if (xe7c0aac4eacf31f5 == 8'hff || x61750e5c0fe92be9 == 8'hff) begin
+      xade2c408f5563e1e = 32'h7fc0_0000;
+    end else begin
+      if ((xca972297841704f8 > x2b8b534817d17586) || ((xca972297841704f8 == x2b8b534817d17586) && (x73549de00248908d > xe1507c59d0a897d6))) begin
+        x94e79052cdc041d1 = x3ccbc414d24714d0;
+        x37a6c5e40e1486a3 = x4ab466b68bfc8904;
+        x5961b0ec735ae29f = xca972297841704f8;
+        xcc648cd0b22740d4 = {x73549de00248908d, 3'b0};
+        shift_amt = $signed({{20{xca972297841704f8[11]}}, xca972297841704f8})
+                  - $signed({{20{x2b8b534817d17586[11]}}, x2b8b534817d17586});
+        xbb4f47e7677e03fa = x5354eedff1e677cc({xe1507c59d0a897d6, 3'b0}, shift_amt);
+      end else begin
+        x94e79052cdc041d1 = x4ab466b68bfc8904;
+        x37a6c5e40e1486a3 = x3ccbc414d24714d0;
+        x5961b0ec735ae29f = x2b8b534817d17586;
+        xcc648cd0b22740d4 = {xe1507c59d0a897d6, 3'b0};
+        shift_amt = $signed({{20{x2b8b534817d17586[11]}}, x2b8b534817d17586})
+                  - $signed({{20{xca972297841704f8[11]}}, xca972297841704f8});
+        xbb4f47e7677e03fa = x5354eedff1e677cc({x73549de00248908d, 3'b0}, shift_amt);
+      end
+
+      if (x94e79052cdc041d1 == x37a6c5e40e1486a3) begin
+        xdf0387fb0d652c2f = {1'b0, xcc648cd0b22740d4} + {1'b0, xbb4f47e7677e03fa};
+        if (xdf0387fb0d652c2f[27]) begin
+          x7dd9c32faf28ead0 = {xdf0387fb0d652c2f[27:2], |xdf0387fb0d652c2f[1:0]};
+          x5961b0ec735ae29f = x5961b0ec735ae29f + 12'sd1;
+        end else begin
+          x7dd9c32faf28ead0 = xdf0387fb0d652c2f[26:0];
+        end
+        xade2c408f5563e1e = xf54261c40a041cfc(x94e79052cdc041d1, x5961b0ec735ae29f, x7dd9c32faf28ead0);
+      end else if (xcc648cd0b22740d4 == xbb4f47e7677e03fa) begin
+        xade2c408f5563e1e = 32'b0;
+      end else begin
+        x7dd9c32faf28ead0 = xcc648cd0b22740d4 - xbb4f47e7677e03fa;
+        for (xaa8c6e9524712ad6 = 0; xaa8c6e9524712ad6 < 24;
+             xaa8c6e9524712ad6 = xaa8c6e9524712ad6 + 1) begin
+          if (!x7dd9c32faf28ead0[26] && (x5961b0ec735ae29f > -12'sd126)) begin
+            x7dd9c32faf28ead0 = x7dd9c32faf28ead0 << 1;
+            x5961b0ec735ae29f = x5961b0ec735ae29f - 12'sd1;
+          end
+        end
+        xade2c408f5563e1e = xf54261c40a041cfc(x94e79052cdc041d1, x5961b0ec735ae29f, x7dd9c32faf28ead0);
+      end
+    end
+  end
+endfunction
+
+function [15:0] x600a54d267a064e4;
+  input [15:0] value;
+  begin
+    if ((value[14:7] == 8'hff) && (value[6:0] != 7'b0))
+      x600a54d267a064e4 = 16'h0000;
+    else if ((value[14:0] == 15'h7f80))
+      x600a54d267a064e4 = value[15] ? 16'hff7f : 16'h7f7f;
+    else
+      x600a54d267a064e4 = value;
+  end
+endfunction
+
+function [17:0] x896195cb9e9b99fb;
+  input [17:0] value;
+  input [2:0] amount;
+  input xe8e68417ac3d22a4;
+  input x7b623725dcc83668;
+  input xa09f6e6354ef3c2c;
+  reg [17:0] x5842f8d75c38fba6;
+  reg guard_bit;
+  reg sticky_bit;
+  begin
+    x5842f8d75c38fba6 = value;
+    guard_bit = xe8e68417ac3d22a4;
+    sticky_bit = x7b623725dcc83668;
+    case (amount)
+      3'd0: begin
+        x5842f8d75c38fba6 = value;
+      end
+      3'd1: begin
+        x5842f8d75c38fba6 = value >> 1;
+        guard_bit = value[0];
+        sticky_bit = xe8e68417ac3d22a4 | x7b623725dcc83668;
+      end
+      3'd2: begin
+        x5842f8d75c38fba6 = value >> 2;
+        guard_bit = value[1];
+        sticky_bit = value[0] | xe8e68417ac3d22a4 | x7b623725dcc83668;
+      end
+      3'd3: begin
+        x5842f8d75c38fba6 = value >> 3;
+        guard_bit = value[2];
+        sticky_bit = (|value[1:0]) | xe8e68417ac3d22a4 | x7b623725dcc83668;
+      end
+      3'd4: begin
+        x5842f8d75c38fba6 = value >> 4;
+        guard_bit = value[3];
+        sticky_bit = (|value[2:0]) | xe8e68417ac3d22a4 | x7b623725dcc83668;
+      end
+      3'd5: begin
+        x5842f8d75c38fba6 = value >> 5;
+        guard_bit = value[4];
+        sticky_bit = (|value[3:0]) | xe8e68417ac3d22a4 | x7b623725dcc83668;
+      end
+      3'd6: begin
+        x5842f8d75c38fba6 = value >> 6;
+        guard_bit = value[5];
+        sticky_bit = (|value[4:0]) | xe8e68417ac3d22a4 | x7b623725dcc83668;
+      end
+      3'd7: begin
+        x5842f8d75c38fba6 = value >> 7;
+        guard_bit = value[6];
+        sticky_bit = (|value[5:0]) | xe8e68417ac3d22a4 | x7b623725dcc83668;
+      end
+    endcase
+    x896195cb9e9b99fb = xa09f6e6354ef3c2c
+                    ? 18'b0
+                    : x5842f8d75c38fba6
+                      + (guard_bit && (sticky_bit || x5842f8d75c38fba6[0]));
+  end
+endfunction
+
+function signed [20:0] x1352c86bde1e9bfd;
+  input [17:0] value;
+  input [2:0] amount;
+  input xe8e68417ac3d22a4;
+  input x7b623725dcc83668;
+  input xa09f6e6354ef3c2c;
+  input sign;
+  reg [17:0] xf38dfe5cc6dbea9c;
+  reg signed [20:0] xcbdeb6d3238573a5;
+  begin
+    xf38dfe5cc6dbea9c = x896195cb9e9b99fb(value, amount, xe8e68417ac3d22a4,
+                              x7b623725dcc83668, xa09f6e6354ef3c2c);
+    xcbdeb6d3238573a5 = {3'b0, xf38dfe5cc6dbea9c};
+    if (sign)
+      xcbdeb6d3238573a5 = -xcbdeb6d3238573a5;
+    x1352c86bde1e9bfd = xcbdeb6d3238573a5;
+  end
+endfunction
+
+function [31:0] x6607e492108d913f;
+  input [31:0] value;
+  input integer amount;
+  reg [31:0] x5842f8d75c38fba6;
+  reg [31:0] x815fa4f5aa221cf2;
+  reg [31:0] x8fc315f0545a6f1f;
+  reg [31:0] xb17866ed5c241c8e;
+  begin
+    if (amount <= 0) begin
+      x6607e492108d913f = value;
+    end else if (amount >= 31) begin
+      x6607e492108d913f = 32'b0;
+    end else begin
+      x5842f8d75c38fba6 = value >> amount;
+      xb17866ed5c241c8e = (32'h1 << amount) - 32'h1;
+      x815fa4f5aa221cf2 = value & xb17866ed5c241c8e;
+      x8fc315f0545a6f1f = 32'h1 << (amount - 1);
+      x6607e492108d913f = x5842f8d75c38fba6
+                 + ((x815fa4f5aa221cf2 > x8fc315f0545a6f1f)
+                    || ((x815fa4f5aa221cf2 == x8fc315f0545a6f1f) && x5842f8d75c38fba6[0]));
+    end
+  end
+endfunction
+
+function [4:0] xcd10bdd50018d3c9;
+  input [23:0] value;
+  integer xbc690d784b5b2acf;
+  begin
+    xcd10bdd50018d3c9 = 5'b0;
+    for (xbc690d784b5b2acf = 0; xbc690d784b5b2acf < 24; xbc690d784b5b2acf = xbc690d784b5b2acf + 1) begin
+      if (value[xbc690d784b5b2acf])
+        xcd10bdd50018d3c9 = xbc690d784b5b2acf[4:0];
+    end
+  end
+endfunction
+
+function [15:0] x3b867db3d5508c0a;
+  input signed [23:0] sum;
+  input signed [9:0] xd54fdfbb2cfa6bf5;
+  reg sign;
+  reg [23:0] x643ae0ca8596eaca;
+  reg [4:0] xcdc038a6dbc005b9;
+  reg [31:0] xda0ec48dc24f6094;
+  reg [8:0] sig;
+  reg [8:0] xd7e9cf0a55e60feb;
+  integer x70c2f12861ef8468;
+  integer shift;
+  begin
+    if (sum == 24'sd0) begin
+      x3b867db3d5508c0a = 16'h0000;
+    end else begin
+      sign = sum[23];
+      x643ae0ca8596eaca = sign ? -sum : sum;
+      xcdc038a6dbc005b9 = xcd10bdd50018d3c9(x643ae0ca8596eaca);
+      x70c2f12861ef8468 = $signed({{22{xd54fdfbb2cfa6bf5[9]}}, xd54fdfbb2cfa6bf5})
+                + $signed({27'b0, xcdc038a6dbc005b9}) - 32'sd7;
+
+      if (x70c2f12861ef8468 >= 255) begin
+        x3b867db3d5508c0a = sign ? 16'hff7f : 16'h7f7f;
+      end else if (x70c2f12861ef8468 <= 0) begin
+        shift = xd54fdfbb2cfa6bf5 + 6;
+        if (shift >= 0)
+          xda0ec48dc24f6094 = {8'b0, x643ae0ca8596eaca} << shift;
+        else
+          xda0ec48dc24f6094 = x6607e492108d913f({8'b0, x643ae0ca8596eaca}, -shift);
+        xd7e9cf0a55e60feb = xda0ec48dc24f6094[8:0];
+        if (xd7e9cf0a55e60feb >= 9'd128)
+          x3b867db3d5508c0a = {sign, 8'h01, 7'h00};
+        else
+          x3b867db3d5508c0a = {sign, 8'h00, xd7e9cf0a55e60feb[6:0]};
+      end else begin
+        if (xcdc038a6dbc005b9 > 7)
+          xda0ec48dc24f6094 = x6607e492108d913f({8'b0, x643ae0ca8596eaca}, xcdc038a6dbc005b9 - 7);
+        else
+          xda0ec48dc24f6094 = {8'b0, x643ae0ca8596eaca} << (7 - xcdc038a6dbc005b9);
+
+        sig = xda0ec48dc24f6094[8:0];
+        if (sig >= 9'd256) begin
+          sig = {1'b0, sig[8:1]};
+          x70c2f12861ef8468 = x70c2f12861ef8468 + 1;
+        end
+
+        if (x70c2f12861ef8468 >= 255)
+          x3b867db3d5508c0a = sign ? 16'hff7f : 16'h7f7f;
+        else
+          x3b867db3d5508c0a = {sign, x70c2f12861ef8468[7:0], sig[6:0]};
+      end
+    end
+end
+endfunction
+
+
+
+
+function [31:0] x2184f31da79cf02e;
+  input signed [23:0] sum;
+  input signed [9:0] xd54fdfbb2cfa6bf5;
+  reg sign;
+  reg [23:0] x643ae0ca8596eaca;
+  reg [4:0] xcdc038a6dbc005b9;
+  reg [47:0] xa77a1acdf183f83b;
+  reg [47:0] subnormal;
+  integer x70c2f12861ef8468;
+  integer shift;
+  begin
+    if (sum == 24'sd0) begin
+      x2184f31da79cf02e = 32'b0;
+    end else begin
+      sign = sum[23];
+      x643ae0ca8596eaca = sign ? -sum : sum;
+      xcdc038a6dbc005b9 = xcd10bdd50018d3c9(x643ae0ca8596eaca);
+      x70c2f12861ef8468 = $signed({{22{xd54fdfbb2cfa6bf5[9]}}, xd54fdfbb2cfa6bf5})
+                + $signed({27'b0, xcdc038a6dbc005b9}) - 32'sd7;
+
+      if (x70c2f12861ef8468 >= 255) begin
+        x2184f31da79cf02e = {sign, 8'hfe, 23'h7fffff};
+      end else if (x70c2f12861ef8468 <= 0) begin
+
+
+        shift = $signed({{22{xd54fdfbb2cfa6bf5[9]}}, xd54fdfbb2cfa6bf5}) + 32'sd22;
+        if (shift >= 0)
+          subnormal = {24'b0, x643ae0ca8596eaca} << shift;
+        else
+          subnormal = {16'b0, x6607e492108d913f({8'b0, x643ae0ca8596eaca}, -shift)};
+        if (subnormal >= (48'b1 << 23))
+          x2184f31da79cf02e = {sign, 8'h01, 23'b0};
+        else
+          x2184f31da79cf02e = {sign, 8'h00, subnormal[22:0]};
+      end else begin
+        xa77a1acdf183f83b = {24'b0, x643ae0ca8596eaca} << (23 - xcdc038a6dbc005b9);
+        x2184f31da79cf02e = {sign, x70c2f12861ef8468[7:0],
+                                 xa77a1acdf183f83b[22:0]};
+      end
+    end
+  end
+endfunction
+
+
+
+integer x876e642705162736;
+always @(posedge clk) begin
+  for (x876e642705162736 = 0; x876e642705162736 < x50191cc99802a285; x876e642705162736 = x876e642705162736 + 1) begin
+    x3df49498f7d6ae52[x876e642705162736] <= x0b25bfaf93fcea89 ? x091f8a1a1e424209[x876e642705162736] : x37c24e77cc8b65e6[x876e642705162736];
+    xe2016b69b22251f5[x876e642705162736] <= x0b25bfaf93fcea89 ? x00a94d782e145e40[x876e642705162736] : xa63faf7c70caee7e[x876e642705162736];
+  end
+end
+
+always @(posedge clk or negedge rst_b) begin
+  if (!rst_b) begin
+    xb83b057dec9ce0fc <= 1'b0;
+    xe3cc31266596f16f <= 1'b0;
+    x4560f37b51cc7240 <= 1'b0;
+    x98c9ab0a07123aaf <= 1'b0;
+    xf4c4d5a58ec5d556 <= 1'b0;
+    xefdae0773df66012 <= 1'b0;
+    xfc6cae8528239950 <= 1'b0;
+    xe0ed5288ebb76f55 <= 1'b0;
+    xa47454407a4ee676 <= 1'b0;
+    xf1eeb975abccc94e <= 1'b0;
+    x67d97bfff75a05ec <= 1'b0;
+    x935e74ac072d93a0 <= 1'b0;
+    x62e41d259c4b2011 <= 1'b0;
+    x9a1a47a2f0685469 <= 1'b0;
+    xb49c043cd7e02e5b <= 1'b0;
+    xe982b863e4087c30 <= 1'b0;
+    x63e7f47c1b701651 <= 1'b0;
+    x4f8bc2cfb5c99b39 <= 1'b0;
+    x65709f22b42c54ec <= 1'b0;
+    x8ea6224229b861ee <= 1'b0;
+    xe69a85466846e5c3 <= 1'b0;
+    x8672637c033bd182 <= 1'b0;
+    x49a65ffb0a48ef17 <= 1'b0;
+    x4b6f25385c8d3e3c <= 1'b0;
+    xbf9f3f6965d98160 <= 1'b0;
+    x3e1414dab8f2b577 <= 1'b0;
+    x7f53ee327e52d400 <= 1'b0;
+    x05c5373d85a7f1b8 <= 1'b0;
+    xc831b5443f2f0a14 <= 32'b0;
+    xf3e314435f09360b <= 1'b0;
+    x6190702755db1710 <= 32'b0;
+    xd5627c9dfd7455c2 <= 16'b0;
+  end else begin
+    xb83b057dec9ce0fc <= in_valid;
+    xe3cc31266596f16f <= xb83b057dec9ce0fc;
+    x4560f37b51cc7240 <= xe3cc31266596f16f;
+    x98c9ab0a07123aaf <= x4560f37b51cc7240;
+    xf4c4d5a58ec5d556 <= x98c9ab0a07123aaf;
+    xefdae0773df66012 <= x05e3a8dd8f678aec;
+    xfc6cae8528239950 <= xefdae0773df66012;
+    xe0ed5288ebb76f55 <= x837075243a1a83a4;
+    xa47454407a4ee676 <= xe0ed5288ebb76f55;
+    xf1eeb975abccc94e <= xa47454407a4ee676;
+    x67d97bfff75a05ec <= xf1eeb975abccc94e;
+    x935e74ac072d93a0 <= x67d97bfff75a05ec;
+    x62e41d259c4b2011 <= x97e6ac51ef5d44d3;
+    x9a1a47a2f0685469 <= x62e41d259c4b2011;
+    xb49c043cd7e02e5b <= xbe13730a7094392c;
+    xe982b863e4087c30 <= xb49c043cd7e02e5b;
+    x63e7f47c1b701651 <= xe982b863e4087c30;
+    x4f8bc2cfb5c99b39 <= x63e7f47c1b701651;
+    x65709f22b42c54ec <= x4f8bc2cfb5c99b39;
+    x8ea6224229b861ee <= x49cd27b2c835f1a4;
+    xe69a85466846e5c3 <= x8ea6224229b861ee;
+    x8672637c033bd182 <= x054b2cf4b3fcbf32;
+    x49a65ffb0a48ef17 <= x8672637c033bd182;
+    x4b6f25385c8d3e3c <= x49a65ffb0a48ef17;
+    xbf9f3f6965d98160 <= x4b6f25385c8d3e3c;
+    x3e1414dab8f2b577 <= xbf9f3f6965d98160;
+    x7f53ee327e52d400 <= x35575548012e713a;
+    x05c5373d85a7f1b8 <= x7f53ee327e52d400;
+
+    xf3e314435f09360b <= 1'b0;
+    if (xfc6cae8528239950 && x9a1a47a2f0685469) begin
+      xc831b5443f2f0a14 <= x40b3575b27c5cc1c;
+      if (x05c5373d85a7f1b8) begin
+        x6190702755db1710 <= x40b3575b27c5cc1c;
+        xd5627c9dfd7455c2 <= xb17644126c364e46[31:16];
+        xf3e314435f09360b <= 1'b1;
+      end
+    end
+
+
+  end
+end
+
+
+always @(posedge clk) begin
+    for (x5ce21f903fc5ffc6 = 0; x5ce21f903fc5ffc6 < x50191cc99802a285; x5ce21f903fc5ffc6 = x5ce21f903fc5ffc6 + 1) begin
+      xbc16678ecd64b71f[x5ce21f903fc5ffc6] <= x51b2d1c9011cddfe[x5ce21f903fc5ffc6];
+      x0852001503d56433[x5ce21f903fc5ffc6] <= x52357374f505f442[x5ce21f903fc5ffc6*8 +: 8];
+      xcf1bc48dd76053b8[x5ce21f903fc5ffc6] <= xa5068bc1857dee86[x5ce21f903fc5ffc6];
+      x33979e9fb97f287b[x5ce21f903fc5ffc6] <= |x51b2d1c9011cddfe[x5ce21f903fc5ffc6][14:0];
+      x3698c9b81b00d88e[x5ce21f903fc5ffc6] <= xfaff2eac01931c69
+        ? (|xa5068bc1857dee86[x5ce21f903fc5ffc6][14:0]) : (|x52357374f505f442[x5ce21f903fc5ffc6*8 +: 8]);
+      xc15dd3ee495ed690[x5ce21f903fc5ffc6] <= x897f1cb6fa7ceb8b[x5ce21f903fc5ffc6*8 +: 8];
+      x740ddf1a3552a5cf[x5ce21f903fc5ffc6] <= x095711446a3f8133[x5ce21f903fc5ffc6*16 +: 16];
+      x57247a98a17322ad[x5ce21f903fc5ffc6] <= xd96b5c3e7e6ce6bf[x5ce21f903fc5ffc6];
+    end
+    xd6e02f73c6baf175 <= xfaff2eac01931c69;
+
+    for (x5ce21f903fc5ffc6 = 0; x5ce21f903fc5ffc6 < x50191cc99802a285; x5ce21f903fc5ffc6 = x5ce21f903fc5ffc6 + 1) begin
+      x37c24e77cc8b65e6[x5ce21f903fc5ffc6] <= x67790d9c073adaed[x5ce21f903fc5ffc6];
+      xa63faf7c70caee7e[x5ce21f903fc5ffc6] <= x34881be36516f090[x5ce21f903fc5ffc6];
+      x7ec077dea9a66815[x5ce21f903fc5ffc6] <= x4d66ae87667c3abb[x5ce21f903fc5ffc6*10 +: 10];
+      x7802f45f8a82f983[x5ce21f903fc5ffc6] <= x37f19bc258744c8d[x5ce21f903fc5ffc6];
+    end
+
+    x7a116235c97cc2e2 <= x63d600c6937b82c4;
+    for (x5ce21f903fc5ffc6 = 0; x5ce21f903fc5ffc6 < x50191cc99802a285; x5ce21f903fc5ffc6 = x5ce21f903fc5ffc6 + 1) begin
+      xd225d3569a825d19[x5ce21f903fc5ffc6] <= {($signed(x50f93db4e8c44a77[x5ce21f903fc5ffc6*11+:11]) >= (17 + xd76680053ed9ceef)),
+                      x50f93db4e8c44a77[x5ce21f903fc5ffc6*11+:5]};
+      x3137796dfed7b98b[x5ce21f903fc5ffc6] <= x7ec077dea9a66815[x5ce21f903fc5ffc6];
+    end
+
+    xdc81459adba80a27 <= x7a116235c97cc2e2;
+    for (x5ce21f903fc5ffc6 = 0; x5ce21f903fc5ffc6 < x50191cc99802a285; x5ce21f903fc5ffc6 = x5ce21f903fc5ffc6 + 1) begin
+      x4eb9d618f3d0637c[x5ce21f903fc5ffc6] <= xcdeca1d1f7f1c403[x5ce21f903fc5ffc6];
+      x0626c20f4c63c00e[x5ce21f903fc5ffc6] <= x143846460d612102[x5ce21f903fc5ffc6];
+      xb6b00d2727ad7b49[x5ce21f903fc5ffc6] <= xe2016b69b22251f5[x5ce21f903fc5ffc6];
+      x48096b0d97edea0c[x5ce21f903fc5ffc6] <= x82a95c33987375c6[x5ce21f903fc5ffc6];
+      x1e4b6577f11cab2e[x5ce21f903fc5ffc6] <= xa9594b8c6d011d6e[x5ce21f903fc5ffc6];
+      xcbec24508418ddbb[x5ce21f903fc5ffc6] <= x6c45df7600094caf[x5ce21f903fc5ffc6];
+    end
+
+    xb993bde54a4bca55 <= xdc81459adba80a27;
+    for (x5ce21f903fc5ffc6 = 0; x5ce21f903fc5ffc6 < x50191cc99802a285; x5ce21f903fc5ffc6 = x5ce21f903fc5ffc6 + 1) begin
+      xb4e9352a33f20607[x5ce21f903fc5ffc6] <= xf8543eb8152ff2e9[x5ce21f903fc5ffc6][18:0];
+    end
+
+    x42e80800043e642b <= x9c4d71a29f14a295;
+    x4a853b8fb93581e1 <= x6ea1e06ee324978f;
+
+    x2b27a61219d89f76 <= x3b867db3d5508c0a(x4a853b8fb93581e1, x42e80800043e642b);
+    x619817f1aa47c9d9 <= x3ccdb2a8c2c573aa(
+        x2184f31da79cf02e(x4a853b8fb93581e1, x42e80800043e642b));
+end
+
+endmodule
+
+
+
+module xdd6da3b7de2c52f6 #(
+  parameter x565ab13ea6abdc6b = 0
+)(
+  clk,
+  rst_b,
+  in_valid,
+  xac232893b3823c96,
+  x52357374f505f442,
+  xfaff2eac01931c69,
+  xd0f8509a03d0375c,
+  x897f1cb6fa7ceb8b,
+  x837075243a1a83a4,
+  xbe13730a7094392c,
+  x054b2cf4b3fcbf32,
+  out_valid,
+  x3476e0e6c813dfd1
+);
+
+input          clk;
+input          rst_b;
+input          in_valid;
+input  [127:0] xac232893b3823c96;
+input  [63:0]  x52357374f505f442;
+input          xfaff2eac01931c69;
+input  [127:0] xd0f8509a03d0375c;
+input  [63:0]  x897f1cb6fa7ceb8b;
+input          x837075243a1a83a4;
+input          xbe13730a7094392c;
+input          x054b2cf4b3fcbf32;
+output         out_valid;
+output [15:0]  x3476e0e6c813dfd1;
 
 wire [31:0] xd33c6bdfab510d67;
 
-edge_dot_kernel #(.EXTERNAL_WEIGHT_EXP(EXTERNAL_WEIGHT_EXP)) x78e7ef89ee9712d8 (
+x1ce3738b20bd88b8 #(.x565ab13ea6abdc6b(x565ab13ea6abdc6b)) x78e7ef89ee9712d8 (
   .clk                 (clk),
   .rst_b               (rst_b),
   .in_valid            (in_valid),
-  .bf16_vec_i          (bf16_vec_i),
-  .int8_vec_i          (int8_vec_i),
-  .weight_bf16_mode_i  (weight_bf16_mode_i),
-  .bf16_weight_vec_i   (bf16_weight_vec_i),
-  .weight_exp_vec_i    (weight_exp_vec_i),
-  .external_product_vec_i(128'b0),
-  .external_product_sign_i(8'b0),
-  .rsum_enable_i       (rsum_enable_i),
-  .rsum_first_i        (rsum_first_i),
-  .rsum_last_i         (rsum_last_i),
+  .xac232893b3823c96          (xac232893b3823c96),
+  .x52357374f505f442          (x52357374f505f442),
+  .xfaff2eac01931c69  (xfaff2eac01931c69),
+  .xd0f8509a03d0375c   (xd0f8509a03d0375c),
+  .x897f1cb6fa7ceb8b    (x897f1cb6fa7ceb8b),
+  .x095711446a3f8133(128'b0),
+  .xd96b5c3e7e6ce6bf(8'b0),
+  .x837075243a1a83a4       (x837075243a1a83a4),
+  .xbe13730a7094392c        (xbe13730a7094392c),
+  .x054b2cf4b3fcbf32         (x054b2cf4b3fcbf32),
   .out_valid           (out_valid),
-  .bf22_o              (xd33c6bdfab510d67),
-  .bf16_o              (bf16_o)
+  .xd6bdc9f261eb0815              (xd33c6bdfab510d67),
+  .x3476e0e6c813dfd1              (x3476e0e6c813dfd1)
 );
+
+endmodule
+
+
+module x80814579ee53d600(
+  x77ee3ac0fb73f112,
+  xaea6dd42a5a1f189,
+  x12c2dedc988093f3
+);
+
+input  [15:0] x77ee3ac0fb73f112;
+input  [15:0] xaea6dd42a5a1f189;
+output [15:0] x12c2dedc988093f3;
+
+assign x12c2dedc988093f3[15:0] = x330fa8f295a9fd66(x77ee3ac0fb73f112[15:0], xaea6dd42a5a1f189[15:0]);
+
+function [15:0] x600a54d267a064e4;
+  input [15:0] value;
+  begin
+    if ((value[14:7] == 8'hff) && (value[6:0] != 7'b0))
+      x600a54d267a064e4 = 16'h0000;
+    else if ((value[14:0] == 15'h7f80))
+      x600a54d267a064e4 = value[15] ? 16'hff7f : 16'h7f7f;
+    else
+      x600a54d267a064e4 = value;
+  end
+endfunction
+
+function [15:0] xe8cd13849cd66372;
+  input [15:0] value;
+  input [7:0]  amount;
+  reg [15:0] x5842f8d75c38fba6;
+  reg [15:0] x815fa4f5aa221cf2;
+  reg [15:0] x8fc315f0545a6f1f;
+  reg [15:0] xb17866ed5c241c8e;
+  begin
+    if (amount == 8'b0) begin
+      xe8cd13849cd66372 = value;
+    end else if (amount >= 8'd15) begin
+      xe8cd13849cd66372 = 16'b0;
+    end else begin
+      x5842f8d75c38fba6 = value >> amount;
+      xb17866ed5c241c8e = (16'h1 << amount) - 16'h1;
+      x815fa4f5aa221cf2 = value & xb17866ed5c241c8e;
+      x8fc315f0545a6f1f = 16'h1 << (amount - 1'b1);
+      xe8cd13849cd66372 = x5842f8d75c38fba6
+                   + ((x815fa4f5aa221cf2 > x8fc315f0545a6f1f)
+                      || ((x815fa4f5aa221cf2 == x8fc315f0545a6f1f) && x5842f8d75c38fba6[0]));
+    end
+  end
+endfunction
+
+function [3:0] xa475202fdd9aee63;
+  input [10:0] value;
+  integer xbc690d784b5b2acf;
+  begin
+    xa475202fdd9aee63 = 4'b0;
+    for (xbc690d784b5b2acf = 0; xbc690d784b5b2acf < 11; xbc690d784b5b2acf = xbc690d784b5b2acf + 1) begin
+      if (value[xbc690d784b5b2acf])
+        xa475202fdd9aee63 = xbc690d784b5b2acf[3:0];
+    end
+  end
+endfunction
+
+function [15:0] x22b58ef4912a1664;
+  input signed [10:0] sum;
+  input [7:0] x80806b8d977a8f2e;
+  reg sign;
+  reg [10:0] x643ae0ca8596eaca;
+  reg [3:0]  xcdc038a6dbc005b9;
+  reg [15:0] xda0ec48dc24f6094;
+  reg [8:0]  sig;
+  reg [8:0]  xd7e9cf0a55e60feb;
+  integer x70c2f12861ef8468;
+  integer shift;
+  begin
+    if (sum == 11'sd0) begin
+      x22b58ef4912a1664 = 16'h0000;
+    end else begin
+      sign = sum[10];
+      x643ae0ca8596eaca = sign ? -sum : sum;
+      xcdc038a6dbc005b9 = xa475202fdd9aee63(x643ae0ca8596eaca);
+      x70c2f12861ef8468 = {24'b0, x80806b8d977a8f2e} + xcdc038a6dbc005b9 - 7;
+
+      if (x70c2f12861ef8468 >= 255) begin
+        x22b58ef4912a1664 = sign ? 16'hff7f : 16'h7f7f;
+      end else if (x70c2f12861ef8468 <= 0) begin
+        shift = {24'b0, x80806b8d977a8f2e} - 1;
+        if (shift >= 0)
+          xda0ec48dc24f6094 = {5'b0, x643ae0ca8596eaca} << shift;
+        else
+          xda0ec48dc24f6094 = xe8cd13849cd66372({5'b0, x643ae0ca8596eaca}, -shift);
+        xd7e9cf0a55e60feb = xda0ec48dc24f6094[8:0];
+        if (xd7e9cf0a55e60feb >= 9'd128)
+          x22b58ef4912a1664 = {sign, 8'h01, 7'h00};
+        else
+          x22b58ef4912a1664 = {sign, 8'h00, xd7e9cf0a55e60feb[6:0]};
+      end else begin
+        shift = xcdc038a6dbc005b9 - 7;
+        if (shift >= 0)
+          xda0ec48dc24f6094 = xe8cd13849cd66372({5'b0, x643ae0ca8596eaca}, shift);
+        else
+          xda0ec48dc24f6094 = {5'b0, x643ae0ca8596eaca} << (-shift);
+
+        sig = xda0ec48dc24f6094[8:0];
+        if (sig >= 9'd256) begin
+          sig = {1'b0, sig[8:1]};
+          x70c2f12861ef8468 = x70c2f12861ef8468 + 1;
+        end
+
+        if (x70c2f12861ef8468 >= 255)
+          x22b58ef4912a1664 = sign ? 16'hff7f : 16'h7f7f;
+        else
+          x22b58ef4912a1664 = {sign, x70c2f12861ef8468[7:0], sig[6:0]};
+      end
+    end
+  end
+endfunction
+
+function [15:0] x330fa8f295a9fd66;
+  input [15:0] xd3c556822236c6e9;
+  input [15:0] x9834ef476a12b840;
+  reg [15:0] a;
+  reg [15:0] b;
+  reg [7:0]  x2b8b534817d17586;
+  reg [7:0]  xca972297841704f8;
+  reg [7:0]  xd7743e49f6f1beeb;
+  reg [7:0]  xe1507c59d0a897d6;
+  reg [7:0]  x73549de00248908d;
+  reg [15:0] x18bc19f4cb3fc0df;
+  reg [15:0] xf678240f1528483b;
+  reg signed [10:0] xbb700e777ecb0da4;
+  reg signed [10:0] x11705eb45111aebb;
+  reg signed [10:0] x8787a7d398fd7220;
+  begin
+    a = x600a54d267a064e4(xd3c556822236c6e9);
+    b = x600a54d267a064e4(x9834ef476a12b840);
+    x2b8b534817d17586 = a[14:7];
+    xca972297841704f8 = b[14:7];
+    xd7743e49f6f1beeb = (x2b8b534817d17586 >= xca972297841704f8) ? x2b8b534817d17586 : xca972297841704f8;
+    xe1507c59d0a897d6 = (x2b8b534817d17586 == 8'b0) ? {1'b0, a[6:0]} : {1'b1, a[6:0]};
+    x73549de00248908d = (xca972297841704f8 == 8'b0) ? {1'b0, b[6:0]} : {1'b1, b[6:0]};
+    x18bc19f4cb3fc0df = xe8cd13849cd66372({8'b0, xe1507c59d0a897d6}, xd7743e49f6f1beeb - x2b8b534817d17586);
+    xf678240f1528483b = xe8cd13849cd66372({8'b0, x73549de00248908d}, xd7743e49f6f1beeb - xca972297841704f8);
+    xbb700e777ecb0da4 = {3'b0, x18bc19f4cb3fc0df[7:0]};
+    x11705eb45111aebb = {3'b0, xf678240f1528483b[7:0]};
+    if (a[15])
+      xbb700e777ecb0da4 = -xbb700e777ecb0da4;
+    if (b[15])
+      x11705eb45111aebb = -x11705eb45111aebb;
+    x8787a7d398fd7220 = xbb700e777ecb0da4 + x11705eb45111aebb;
+    x330fa8f295a9fd66 = x22b58ef4912a1664(x8787a7d398fd7220, xd7743e49f6f1beeb);
+  end
+endfunction
 
 endmodule
 
@@ -6288,7 +7748,7 @@ reg         xa63faf7c70caee7e [0:7];
 reg         x33c8095823905468 [0:7];
 reg signed [9:0] x7ec077dea9a66815 [0:7];
 
-integer lane;
+integer xbcd8297dae5b6c10;
 reg [7:0] xd28454f6a4fea7c5;
 reg [7:0] x1381c8081b1bd048;
 
@@ -6384,7 +7844,7 @@ function [15:0] x0a07a5794e7e62df;
   input [15:0] product;
   input signed [9:0] xbb34ac9925169db3;
   input sign;
-  input force_zero;
+  input xa09f6e6354ef3c2c;
   reg [3:0] xcdc038a6dbc005b9;
   reg signed [9:0] x70c2f12861ef8468;
   reg signed [9:0] x500cecfc041a71e4;
@@ -6394,18 +7854,18 @@ function [15:0] x0a07a5794e7e62df;
   reg [4:0] x018de0d51f922d76;
   begin
     xcdc038a6dbc005b9 = x467b8d37fb3d7ab6(product);
-    
-    
+
+
     x70c2f12861ef8468 = xbb34ac9925169db3 + $signed({6'b0, xcdc038a6dbc005b9}) - 10'sd7;
-    
-    
+
+
     x500cecfc041a71e4 = xbb34ac9925169db3 - 10'sd1;
     xb07cb84b7bf86e62 = 16'b0;
     x08e50636d63598ed = 16'b0;
     x8981ac00f20fb54a = 9'b0;
     x018de0d51f922d76 = 5'b0;
 
-    if (force_zero || product == 16'b0) begin
+    if (xa09f6e6354ef3c2c || product == 16'b0) begin
       x0a07a5794e7e62df = 16'h0000;
     end else if (x70c2f12861ef8468 >= 10'sd255) begin
       x0a07a5794e7e62df = sign ? 16'hff7f : 16'h7f7f;
@@ -6464,39 +7924,39 @@ always @(posedge clk or negedge rst_b) begin
   if (!rst_b) begin
     xb83b057dec9ce0fc <= 1'b0;
     xe3cc31266596f16f <= 1'b0;
-    for (lane = 0; lane < 8; lane = lane + 1) begin
-      x2edf9dc67e8bde54[lane] <= 16'b0;
-      x4ea229fa0f2719a3[lane] <= 16'b0;
-      x398cd41c5445ff2f[lane] <= 16'b0;
-      xa63faf7c70caee7e[lane] <= 1'b0;
-      x33c8095823905468[lane] <= 1'b1;
-      x7ec077dea9a66815[lane] <= 10'sd0;
+    for (xbcd8297dae5b6c10 = 0; xbcd8297dae5b6c10 < 8; xbcd8297dae5b6c10 = xbcd8297dae5b6c10 + 1) begin
+      x2edf9dc67e8bde54[xbcd8297dae5b6c10] <= 16'b0;
+      x4ea229fa0f2719a3[xbcd8297dae5b6c10] <= 16'b0;
+      x398cd41c5445ff2f[xbcd8297dae5b6c10] <= 16'b0;
+      xa63faf7c70caee7e[xbcd8297dae5b6c10] <= 1'b0;
+      x33c8095823905468[xbcd8297dae5b6c10] <= 1'b1;
+      x7ec077dea9a66815[xbcd8297dae5b6c10] <= 10'sd0;
     end
   end else begin
     xb83b057dec9ce0fc <= in_valid;
     xe3cc31266596f16f <= xb83b057dec9ce0fc;
     if (in_valid) begin
-      for (lane = 0; lane < 8; lane = lane + 1) begin
-        x2edf9dc67e8bde54[lane] <= x600a54d267a064e4(x49743b4a10f0d49a[lane*16 +: 16]);
-        x4ea229fa0f2719a3[lane] <= x600a54d267a064e4(x31438a0d41d7666c[lane*16 +: 16]);
+      for (xbcd8297dae5b6c10 = 0; xbcd8297dae5b6c10 < 8; xbcd8297dae5b6c10 = xbcd8297dae5b6c10 + 1) begin
+        x2edf9dc67e8bde54[xbcd8297dae5b6c10] <= x600a54d267a064e4(x49743b4a10f0d49a[xbcd8297dae5b6c10*16 +: 16]);
+        x4ea229fa0f2719a3[xbcd8297dae5b6c10] <= x600a54d267a064e4(x31438a0d41d7666c[xbcd8297dae5b6c10*16 +: 16]);
       end
     end
     if (xb83b057dec9ce0fc) begin
-      for (lane = 0; lane < 8; lane = lane + 1) begin
-      xd28454f6a4fea7c5 = (x2edf9dc67e8bde54[lane][14:7] == 8'b0)
-                 ? {1'b0, x2edf9dc67e8bde54[lane][6:0]}
-                 : {1'b1, x2edf9dc67e8bde54[lane][6:0]};
-      x1381c8081b1bd048 = (x4ea229fa0f2719a3[lane][14:7] == 8'b0)
-                 ? {1'b0, x4ea229fa0f2719a3[lane][6:0]}
-                 : {1'b1, x4ea229fa0f2719a3[lane][6:0]};
-      x398cd41c5445ff2f[lane] <= xd28454f6a4fea7c5 * x1381c8081b1bd048;
-      xa63faf7c70caee7e[lane] <= x2edf9dc67e8bde54[lane][15] ^ x4ea229fa0f2719a3[lane][15];
-      x33c8095823905468[lane] <= (x2edf9dc67e8bde54[lane][14:0] == 15'b0)
-                    || (x4ea229fa0f2719a3[lane][14:0] == 15'b0);
-      x7ec077dea9a66815[lane] <= $signed({2'b0, (x2edf9dc67e8bde54[lane][14:7] == 0)
-                                      ? 8'd1 : x2edf9dc67e8bde54[lane][14:7]})
-                    + $signed({2'b0, (x4ea229fa0f2719a3[lane][14:7] == 0)
-                                      ? 8'd1 : x4ea229fa0f2719a3[lane][14:7]})
+      for (xbcd8297dae5b6c10 = 0; xbcd8297dae5b6c10 < 8; xbcd8297dae5b6c10 = xbcd8297dae5b6c10 + 1) begin
+      xd28454f6a4fea7c5 = (x2edf9dc67e8bde54[xbcd8297dae5b6c10][14:7] == 8'b0)
+                 ? {1'b0, x2edf9dc67e8bde54[xbcd8297dae5b6c10][6:0]}
+                 : {1'b1, x2edf9dc67e8bde54[xbcd8297dae5b6c10][6:0]};
+      x1381c8081b1bd048 = (x4ea229fa0f2719a3[xbcd8297dae5b6c10][14:7] == 8'b0)
+                 ? {1'b0, x4ea229fa0f2719a3[xbcd8297dae5b6c10][6:0]}
+                 : {1'b1, x4ea229fa0f2719a3[xbcd8297dae5b6c10][6:0]};
+      x398cd41c5445ff2f[xbcd8297dae5b6c10] <= xd28454f6a4fea7c5 * x1381c8081b1bd048;
+      xa63faf7c70caee7e[xbcd8297dae5b6c10] <= x2edf9dc67e8bde54[xbcd8297dae5b6c10][15] ^ x4ea229fa0f2719a3[xbcd8297dae5b6c10][15];
+      x33c8095823905468[xbcd8297dae5b6c10] <= (x2edf9dc67e8bde54[xbcd8297dae5b6c10][14:0] == 15'b0)
+                    || (x4ea229fa0f2719a3[xbcd8297dae5b6c10][14:0] == 15'b0);
+      x7ec077dea9a66815[xbcd8297dae5b6c10] <= $signed({2'b0, (x2edf9dc67e8bde54[xbcd8297dae5b6c10][14:7] == 0)
+                                      ? 8'd1 : x2edf9dc67e8bde54[xbcd8297dae5b6c10][14:7]})
+                    + $signed({2'b0, (x4ea229fa0f2719a3[xbcd8297dae5b6c10][14:7] == 0)
+                                      ? 8'd1 : x4ea229fa0f2719a3[xbcd8297dae5b6c10][14:7]})
                     - 10'sd134;
       end
     end
@@ -6529,9 +7989,9 @@ module x448b47bfbb011c0b(
   x2f581b11f012b8f9,
   x9b4c0137fe1b0cca,
   xcd92d73d9663c32d,
-  rsum_enable_i,
-  rsum_first_i,
-  rsum_last_i,
+  x837075243a1a83a4,
+  xbe13730a7094392c,
+  x054b2cf4b3fcbf32,
   x3b0884f626d60d77,
   xdea24a9dcf4995ff,
   x461cf36690126388,
@@ -6559,9 +8019,9 @@ input  [127:0] xf367ffcace8025cb;
 input  [127:0] x2f581b11f012b8f9;
 input          x9b4c0137fe1b0cca;
 input  [127:0] xcd92d73d9663c32d;
-input          rsum_enable_i;
-input          rsum_first_i;
-input          rsum_last_i;
+input          x837075243a1a83a4;
+input          xbe13730a7094392c;
+input          x054b2cf4b3fcbf32;
 input          x3b0884f626d60d77;
 input          xdea24a9dcf4995ff;
 output         x461cf36690126388;
@@ -6641,7 +8101,7 @@ wire         x51cf80839e90f0a5;
 wire         x51f7833b3f150823;
 wire [2:0]   x7ff8177ceda27d6a;
 
-genvar lane;
+genvar xbcd8297dae5b6c10;
 integer x1f4a472a1775e06d;
 
 assign x461cf36690126388 = !x907bf5c8058cb0e8 &&
@@ -6754,43 +8214,43 @@ function [127:0] xf9e359a2c9bb1a53;
 endfunction
 
 generate
-  for (lane = 0; lane < 8; lane = lane + 1) begin : x0b7daa37c0dd2dbe
-    assign xce1a4fcac22fc164[lane][127:0] = xf9e359a2c9bb1a53(
-           xc8205a99ebe9be35 ? x724150c1b2aa5c66[lane][71:0]
-                               : x5dab0836fb882d89[lane][71:0]);
-    assign xc3f61a13a4fcbc4c[lane][63:0] =
-           xc8205a99ebe9be35 ? x1fac1203f9893010[lane][63:0]
-                               : x8fd330bead891738[lane][63:0];
-    assign x46e0fea96b257e50[lane][15:0] = xbb17c88db047d946
-                                      ? x2f581b11f012b8f9[lane*16 +: 16]
-                                      : xa0ea2ee7c1265abe[lane*16 +: 16];
+  for (xbcd8297dae5b6c10 = 0; xbcd8297dae5b6c10 < 8; xbcd8297dae5b6c10 = xbcd8297dae5b6c10 + 1) begin : x0b7daa37c0dd2dbe
+    assign xce1a4fcac22fc164[xbcd8297dae5b6c10][127:0] = xf9e359a2c9bb1a53(
+           xc8205a99ebe9be35 ? x724150c1b2aa5c66[xbcd8297dae5b6c10][71:0]
+                               : x5dab0836fb882d89[xbcd8297dae5b6c10][71:0]);
+    assign xc3f61a13a4fcbc4c[xbcd8297dae5b6c10][63:0] =
+           xc8205a99ebe9be35 ? x1fac1203f9893010[xbcd8297dae5b6c10][63:0]
+                               : x8fd330bead891738[xbcd8297dae5b6c10][63:0];
+    assign x46e0fea96b257e50[xbcd8297dae5b6c10][15:0] = xbb17c88db047d946
+                                      ? x2f581b11f012b8f9[xbcd8297dae5b6c10*16 +: 16]
+                                      : xa0ea2ee7c1265abe[xbcd8297dae5b6c10*16 +: 16];
 
-    xdd6da3b7de2c52f6 #(.EXTERNAL_WEIGHT_EXP(1)) x94a4fb6d2b861f9e (
+    xdd6da3b7de2c52f6 #(.x565ab13ea6abdc6b(1)) x94a4fb6d2b861f9e (
       .clk        (clk),
       .rst_b      (rst_b),
       .in_valid   (x5b74621c47643bf6),
-      .bf16_vec_i (xf367ffcace8025cb[127:0]),
-      .int8_vec_i (64'b0),
-      .weight_bf16_mode_i(1'b1),
-      .bf16_weight_vec_i(xce1a4fcac22fc164[lane][127:0]),
-      .weight_exp_vec_i(xc3f61a13a4fcbc4c[lane][63:0]),
-      .rsum_enable_i(rsum_enable_i),
-      .rsum_first_i(rsum_first_i),
-      .rsum_last_i(rsum_last_i),
-      .out_valid  (x5b3e7b14daf75a37[lane]),
-      .bf16_o     (x5db11e735e4aab64[lane][15:0])
+      .xac232893b3823c96 (xf367ffcace8025cb[127:0]),
+      .x52357374f505f442 (64'b0),
+      .xfaff2eac01931c69(1'b1),
+      .xd0f8509a03d0375c(xce1a4fcac22fc164[xbcd8297dae5b6c10][127:0]),
+      .x897f1cb6fa7ceb8b(xc3f61a13a4fcbc4c[xbcd8297dae5b6c10][63:0]),
+      .x837075243a1a83a4(x837075243a1a83a4),
+      .xbe13730a7094392c(xbe13730a7094392c),
+      .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
+      .out_valid  (x5b3e7b14daf75a37[xbcd8297dae5b6c10]),
+      .x3476e0e6c813dfd1     (x5db11e735e4aab64[xbcd8297dae5b6c10][15:0])
     );
 
-    edge_psum x33c4126bf6ff919b (
-      .a_raw(x5db11e735e4aab64[lane][15:0]),
-      .b_raw(x46e0fea96b257e50[lane][15:0]),
-      .y    (x91fd3aef382b1944[lane][15:0])
+    x80814579ee53d600 x33c4126bf6ff919b (
+      .x77ee3ac0fb73f112(x5db11e735e4aab64[xbcd8297dae5b6c10][15:0]),
+      .xaea6dd42a5a1f189(x46e0fea96b257e50[xbcd8297dae5b6c10][15:0]),
+      .x12c2dedc988093f3    (x91fd3aef382b1944[xbcd8297dae5b6c10][15:0])
     );
 
-    edge_psum x74e4f80f4bd7076e (
-      .a_raw(x433aaee9804e1832[lane*16 +: 16]),
-      .b_raw(xfaf27092cae54a7e[lane*16 +: 16]),
-      .y    (x4a96c1560ed144ec[lane][15:0])
+    x80814579ee53d600 x74e4f80f4bd7076e (
+      .x77ee3ac0fb73f112(x433aaee9804e1832[xbcd8297dae5b6c10*16 +: 16]),
+      .xaea6dd42a5a1f189(xfaf27092cae54a7e[xbcd8297dae5b6c10*16 +: 16]),
+      .x12c2dedc988093f3    (x4a96c1560ed144ec[xbcd8297dae5b6c10][15:0])
     );
   end
 endgenerate
@@ -6972,14 +8432,14 @@ always @(posedge clk or negedge rst_b) begin
       x5a173af687f3e404[111:96]  <= x4a96c1560ed144ec[6][15:0];
       x5a173af687f3e404[127:112] <= x4a96c1560ed144ec[7][15:0];
     end else begin
-      x5a173af687f3e404[15:0]    <= rsum_enable_i ? x5db11e735e4aab64[0] : x91fd3aef382b1944[0];
-      x5a173af687f3e404[31:16]   <= rsum_enable_i ? x5db11e735e4aab64[1] : x91fd3aef382b1944[1];
-      x5a173af687f3e404[47:32]   <= rsum_enable_i ? x5db11e735e4aab64[2] : x91fd3aef382b1944[2];
-      x5a173af687f3e404[63:48]   <= rsum_enable_i ? x5db11e735e4aab64[3] : x91fd3aef382b1944[3];
-      x5a173af687f3e404[79:64]   <= rsum_enable_i ? x5db11e735e4aab64[4] : x91fd3aef382b1944[4];
-      x5a173af687f3e404[95:80]   <= rsum_enable_i ? x5db11e735e4aab64[5] : x91fd3aef382b1944[5];
-      x5a173af687f3e404[111:96]  <= rsum_enable_i ? x5db11e735e4aab64[6] : x91fd3aef382b1944[6];
-      x5a173af687f3e404[127:112] <= rsum_enable_i ? x5db11e735e4aab64[7] : x91fd3aef382b1944[7];
+      x5a173af687f3e404[15:0]    <= x837075243a1a83a4 ? x5db11e735e4aab64[0] : x91fd3aef382b1944[0];
+      x5a173af687f3e404[31:16]   <= x837075243a1a83a4 ? x5db11e735e4aab64[1] : x91fd3aef382b1944[1];
+      x5a173af687f3e404[47:32]   <= x837075243a1a83a4 ? x5db11e735e4aab64[2] : x91fd3aef382b1944[2];
+      x5a173af687f3e404[63:48]   <= x837075243a1a83a4 ? x5db11e735e4aab64[3] : x91fd3aef382b1944[3];
+      x5a173af687f3e404[79:64]   <= x837075243a1a83a4 ? x5db11e735e4aab64[4] : x91fd3aef382b1944[4];
+      x5a173af687f3e404[95:80]   <= x837075243a1a83a4 ? x5db11e735e4aab64[5] : x91fd3aef382b1944[5];
+      x5a173af687f3e404[111:96]  <= x837075243a1a83a4 ? x5db11e735e4aab64[6] : x91fd3aef382b1944[6];
+      x5a173af687f3e404[127:112] <= x837075243a1a83a4 ? x5db11e735e4aab64[7] : x91fd3aef382b1944[7];
     end
   end
 end
@@ -7026,9 +8486,9 @@ wire x7cdef0935a5735fd = xb488efce181b34c5 && xde64a8bd1625131d;
 integer x4acc3e72cc7a3020;
 
 function [3:0] xf7ac2879118bcf4f;
-  input [2:0] mode;
+  input [2:0] x45b61ec9431591ff;
   begin
-    case (mode)
+    case (x45b61ec9431591ff)
       x592e7f946b04f0e4,x66159e6290330079: xf7ac2879118bcf4f=4'd8;
       x31eedd6fb28626ae, x07735dd6551c4b00:  xf7ac2879118bcf4f=4'd4;
       default:            xf7ac2879118bcf4f=4'd2;
@@ -7037,14 +8497,14 @@ function [3:0] xf7ac2879118bcf4f;
 endfunction
 
 function [31:0] xc0622a50344ea679;
-  input [2:0] mode;
+  input [2:0] x45b61ec9431591ff;
   input [2:0] xc87f2d979b2612cf;
   input [127:0] x2784bf62f4372ea6;
   input [127:0] xc5b857dafa336985;
   integer x57a0b6947d430fa3;
   begin
     xc0622a50344ea679=0;
-    case (mode)
+    case (x45b61ec9431591ff)
       x66159e6290330079:
         xc0622a50344ea679={xc5b857dafa336985[xc87f2d979b2612cf*16 +: 16],x2784bf62f4372ea6[xc87f2d979b2612cf*16 +: 16]};
       x07735dd6551c4b00: begin
@@ -7281,7 +8741,7 @@ module x5fb7bf8846611649(
   x8509d7c32c3e7bbb, xa7b146ea698b58e6, xc8b18a629638e891,
   x385c6fc183663e07, x6d3808166ec9fa40,
   x9e292bcf4d221086, xd86a1331cb1a160b,
-  in_valid, xf367ffcace8025cb, rsum_enable_i, rsum_first_i, rsum_last_i,
+  in_valid, xf367ffcace8025cb, x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
   out_valid, x450ee4c94aaa36d9
 );
 
@@ -7296,7 +8756,7 @@ input          x9e292bcf4d221086;
 input          xd86a1331cb1a160b;
 input          in_valid;
 input  [127:0] xf367ffcace8025cb;
-input          rsum_enable_i, rsum_first_i, rsum_last_i;
+input          x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
 output         out_valid;
 output [15:0]  x450ee4c94aaa36d9;
 
@@ -7312,15 +8772,15 @@ x92f172aaf7978569 xe6f80d26a16c04a4 (
   .x29cabcd77e109ba9(xca8c28ffa4a7693a)
 );
 
-edge_dot_kernel x78e7ef89ee9712d8 (
+x1ce3738b20bd88b8 x78e7ef89ee9712d8 (
   .clk(clk), .rst_b(rst_b), .in_valid(in_valid),
-  .bf16_vec_i(xf367ffcace8025cb), .int8_vec_i(64'b0),
-  .weight_bf16_mode_i(1'b1), .bf16_weight_vec_i(xca8c28ffa4a7693a),
-  .weight_exp_vec_i(64'b0),
-  .external_product_vec_i(128'b0), .external_product_sign_i(8'b0),
-  .rsum_enable_i(rsum_enable_i), .rsum_first_i(rsum_first_i),
-  .rsum_last_i(rsum_last_i),
-  .out_valid(out_valid), .bf22_o(xd33c6bdfab510d67), .bf16_o(x450ee4c94aaa36d9)
+  .xac232893b3823c96(xf367ffcace8025cb), .x52357374f505f442(64'b0),
+  .xfaff2eac01931c69(1'b1), .xd0f8509a03d0375c(xca8c28ffa4a7693a),
+  .x897f1cb6fa7ceb8b(64'b0),
+  .x095711446a3f8133(128'b0), .xd96b5c3e7e6ce6bf(8'b0),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
+  .out_valid(out_valid), .xd6bdc9f261eb0815(xd33c6bdfab510d67), .x3476e0e6c813dfd1(x450ee4c94aaa36d9)
 );
 
 endmodule
@@ -7333,7 +8793,7 @@ module xb7458a59f9a81240(
   xa7b146ea698b58e6, x385c6fc183663e07,
   x5f5747fd81750fdb, xc8b18a629638e891, x6d3808166ec9fa40,
   x9e292bcf4d221086, xd86a1331cb1a160b,
-  in_valid, xf367ffcace8025cb, rsum_enable_i, rsum_first_i, rsum_last_i,
+  in_valid, xf367ffcace8025cb, x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
   out_valid, xfa257824cfbd54d8
 );
 
@@ -7350,7 +8810,7 @@ input          x9e292bcf4d221086;
 input          xd86a1331cb1a160b;
 input          in_valid;
 input  [127:0] xf367ffcace8025cb;
-input          rsum_enable_i, rsum_first_i, rsum_last_i;
+input          x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
 output         out_valid;
 output [127:0] xfa257824cfbd54d8;
 
@@ -7396,8 +8856,8 @@ generate
       .x9e292bcf4d221086(x9e292bcf4d221086),
       .xd86a1331cb1a160b(xd86a1331cb1a160b),
       .in_valid(in_valid), .xf367ffcace8025cb(xf367ffcace8025cb),
-      .rsum_enable_i(rsum_enable_i), .rsum_first_i(rsum_first_i),
-      .rsum_last_i(rsum_last_i),
+      .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+      .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
       .out_valid(x5b3e7b14daf75a37[x82ceb4aaafcd4dac]),
       .x450ee4c94aaa36d9(xfa257824cfbd54d8[x82ceb4aaafcd4dac*16 +: 16])
     );
@@ -7416,7 +8876,7 @@ module x64167339fea729a8(
   x9e292bcf4d221086, xd86a1331cb1a160b,
   in_valid, xbb17c88db047d946, x99a0417d4564b7a8,
   xf367ffcace8025cb, x2f581b11f012b8f9, x9b4c0137fe1b0cca, xcd92d73d9663c32d,
-  rsum_enable_i, rsum_first_i, rsum_last_i,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
   x97eee2bb17e0902a, out_valid, xfa257824cfbd54d8
 );
 
@@ -7432,7 +8892,7 @@ input xbb17c88db047d946, x99a0417d4564b7a8;
 input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
 input x9b4c0137fe1b0cca;
 input [127:0] xcd92d73d9663c32d;
-input rsum_enable_i, rsum_first_i, rsum_last_i;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
 output out_valid;
 output x97eee2bb17e0902a;
 output [127:0] xfa257824cfbd54d8;
@@ -7468,8 +8928,8 @@ xb7458a59f9a81240 xe3a9ecb945dbf534 (
   .x9e292bcf4d221086(x9e292bcf4d221086),
   .xd86a1331cb1a160b(xd86a1331cb1a160b),
   .in_valid(in_valid), .xf367ffcace8025cb(xf367ffcace8025cb),
-  .rsum_enable_i(rsum_enable_i), .rsum_first_i(rsum_first_i),
-  .rsum_last_i(rsum_last_i),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
   .out_valid(x5b3e7b14daf75a37), .xfa257824cfbd54d8(x5db11e735e4aab64)
 );
 
@@ -7484,19 +8944,19 @@ x47f7634d48bf3396 xda3e5c31243d926f (
 generate
   genvar xa46b6eeedc7c49c3;
   for (xa46b6eeedc7c49c3=0; xa46b6eeedc7c49c3<8; xa46b6eeedc7c49c3=xa46b6eeedc7c49c3+1) begin : x908476d6f5677f88
-    edge_psum x02594033c71f8e28 (
-      .a_raw(x5db11e735e4aab64[xa46b6eeedc7c49c3*16 +: 16]),
-      .b_raw(xbb17c88db047d946 ? x2f581b11f012b8f9[xa46b6eeedc7c49c3*16 +: 16]
+    x80814579ee53d600 x02594033c71f8e28 (
+      .x77ee3ac0fb73f112(x5db11e735e4aab64[xa46b6eeedc7c49c3*16 +: 16]),
+      .xaea6dd42a5a1f189(xbb17c88db047d946 ? x2f581b11f012b8f9[xa46b6eeedc7c49c3*16 +: 16]
                               : xa0ea2ee7c1265abe[xa46b6eeedc7c49c3*16 +: 16]),
-      .y(x06e53399d6c0a30b[xa46b6eeedc7c49c3])
+      .x12c2dedc988093f3(x06e53399d6c0a30b[xa46b6eeedc7c49c3])
     );
-    assign xe484a6677cb59772[xa46b6eeedc7c49c3] = rsum_enable_i
+    assign xe484a6677cb59772[xa46b6eeedc7c49c3] = x837075243a1a83a4
                                            ? x5db11e735e4aab64[xa46b6eeedc7c49c3*16 +: 16]
                                            : x06e53399d6c0a30b[xa46b6eeedc7c49c3];
-    edge_psum x71e2fea71249de74 (
-      .a_raw(x433aaee9804e1832[xa46b6eeedc7c49c3*16 +: 16]),
-      .b_raw(xfaf27092cae54a7e[xa46b6eeedc7c49c3*16 +: 16]),
-      .y(x4a96c1560ed144ec[xa46b6eeedc7c49c3])
+    x80814579ee53d600 x71e2fea71249de74 (
+      .x77ee3ac0fb73f112(x433aaee9804e1832[xa46b6eeedc7c49c3*16 +: 16]),
+      .xaea6dd42a5a1f189(xfaf27092cae54a7e[xa46b6eeedc7c49c3*16 +: 16]),
+      .x12c2dedc988093f3(x4a96c1560ed144ec[xa46b6eeedc7c49c3])
     );
   end
 endgenerate
@@ -7550,7 +9010,7 @@ module x5c08c699e8996710(
   x78c01d4063ab1498, xf367ffcace8025cb, x2f581b11f012b8f9,
   xbb17c88db047d946, x99a0417d4564b7a8,
   x9b4c0137fe1b0cca, xcd92d73d9663c32d,
-  rsum_enable_i, rsum_first_i, rsum_last_i,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
   x97eee2bb17e0902a, x762bc51e04520bde, xfa257824cfbd54d8
 );
 
@@ -7570,7 +9030,7 @@ input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
 input xbb17c88db047d946, x99a0417d4564b7a8;
 input x9b4c0137fe1b0cca;
 input [127:0] xcd92d73d9663c32d;
-input rsum_enable_i, rsum_first_i, rsum_last_i;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
 output x97eee2bb17e0902a;
 output x762bc51e04520bde;
 output [127:0] xfa257824cfbd54d8;
@@ -7611,8 +9071,8 @@ x64167339fea729a8 x1193ff19cd581a88 (
   .x99a0417d4564b7a8(x99a0417d4564b7a8),
   .x2f581b11f012b8f9(x2f581b11f012b8f9),
   .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca), .xcd92d73d9663c32d(xcd92d73d9663c32d),
-  .rsum_enable_i(rsum_enable_i), .rsum_first_i(rsum_first_i),
-  .rsum_last_i(rsum_last_i), .x97eee2bb17e0902a(x97eee2bb17e0902a),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32), .x97eee2bb17e0902a(x97eee2bb17e0902a),
   .out_valid(x762bc51e04520bde), .xfa257824cfbd54d8(xfa257824cfbd54d8)
 );
 
@@ -7639,7 +9099,7 @@ module x1233009e52e6cf38(
   x78c01d4063ab1498, xf367ffcace8025cb, x2f581b11f012b8f9,
   xbb17c88db047d946, x99a0417d4564b7a8,
   x9b4c0137fe1b0cca, xcd92d73d9663c32d,
-  rsum_enable_i, rsum_first_i, rsum_last_i,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
   x97eee2bb17e0902a, x762bc51e04520bde, xfa257824cfbd54d8
 );
 
@@ -7661,7 +9121,7 @@ input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
 input xbb17c88db047d946, x99a0417d4564b7a8;
 input x9b4c0137fe1b0cca;
 input [127:0] xcd92d73d9663c32d;
-input rsum_enable_i, rsum_first_i, rsum_last_i;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
 output x97eee2bb17e0902a;
 output x762bc51e04520bde;
 output [127:0] xfa257824cfbd54d8;
@@ -7699,8 +9159,8 @@ x5c08c699e8996710 x5908cd39e288badb (
   .x2f581b11f012b8f9(x2f581b11f012b8f9), .xbb17c88db047d946(xbb17c88db047d946),
   .x99a0417d4564b7a8(x99a0417d4564b7a8), .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca),
   .xcd92d73d9663c32d(xcd92d73d9663c32d),
-  .rsum_enable_i(rsum_enable_i), .rsum_first_i(rsum_first_i),
-  .rsum_last_i(rsum_last_i), .x97eee2bb17e0902a(x97eee2bb17e0902a),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32), .x97eee2bb17e0902a(x97eee2bb17e0902a),
   .x762bc51e04520bde(x762bc51e04520bde), .xfa257824cfbd54d8(xfa257824cfbd54d8)
 );
 
@@ -7733,20 +9193,20 @@ endmodule
 
 module x8ded35e5c9f9d880(
   clk, rst_b,
-  x22d4589045c4d1a8, start_ready, x5eac9d32b5d97872, x32ad82e3ac20bda9,
+  x22d4589045c4d1a8, xc9a019b1e19d2207, x5eac9d32b5d97872, x32ad82e3ac20bda9,
   busy, x4e124931f57ab5eb,
   x7a65abcd3086d5ed, xdabc31bc87c9547c, xb4e6daa5b1e4aed6, x9cea447ad0fd5162,
   xb3c7f8f3dd3efd71, x3e1b5d972f66ef63,
   xabd263c88a866189, xe94e2d784c071f58,
   x5b74621c47643bf6, xbb17c88db047d946, x99a0417d4564b7a8,
   xf367ffcace8025cb, x2f581b11f012b8f9,
-  x9b4c0137fe1b0cca, xcd92d73d9663c32d, rsum_enable_i, rsum_first_i, rsum_last_i,
+  x9b4c0137fe1b0cca, xcd92d73d9663c32d, x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
   x97eee2bb17e0902a, x84a3e534a50080d1, xfa257824cfbd54d8
 );
 
 input clk, rst_b;
 input x22d4589045c4d1a8, x5eac9d32b5d97872, x32ad82e3ac20bda9;
-output start_ready, busy, x4e124931f57ab5eb;
+output xc9a019b1e19d2207, busy, x4e124931f57ab5eb;
 input x7a65abcd3086d5ed;
 output xdabc31bc87c9547c;
 input [2:0] xb4e6daa5b1e4aed6;
@@ -7759,7 +9219,7 @@ input xbb17c88db047d946, x99a0417d4564b7a8;
 input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
 input x9b4c0137fe1b0cca;
 input [127:0] xcd92d73d9663c32d;
-input rsum_enable_i, rsum_first_i, rsum_last_i;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
 output x97eee2bb17e0902a;
 output x84a3e534a50080d1;
 output [127:0] xfa257824cfbd54d8;
@@ -7773,11 +9233,11 @@ wire [1:0] x5265689d67f7b180 = x5eac9d32b5d97872 ? x96c0b0d7cbf7108a : x9b555e0a
 
 wire xf2973dd0e83ebbc0 = &{1'b0, xb4e6daa5b1e4aed6};
 
-assign busy = !start_ready;
+assign busy = !xc9a019b1e19d2207;
 
 x1233009e52e6cf38 x077b2bedfc5a382f (
   .clk(clk), .rst_b(rst_b),
-  .x71a1fb7853990a36(x22d4589045c4d1a8), .x4b3d2ecb21a25f8b(start_ready),
+  .x71a1fb7853990a36(x22d4589045c4d1a8), .x4b3d2ecb21a25f8b(xc9a019b1e19d2207),
   .x51163ebe9466d386(x5265689d67f7b180), .x3cf1f13f7a6b8b3b(x32ad82e3ac20bda9),
   .x881caa172f64e5b4(x7a65abcd3086d5ed), .x7a526d189e8a6b13(xdabc31bc87c9547c),
   .x569cb5d6b8dd52c3(x9cea447ad0fd5162), .x32ea36ba190b0901(1'b1),
@@ -7790,8 +9250,8 @@ x1233009e52e6cf38 x077b2bedfc5a382f (
   .x2f581b11f012b8f9(x2f581b11f012b8f9), .xbb17c88db047d946(xbb17c88db047d946),
   .x99a0417d4564b7a8(x99a0417d4564b7a8), .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca),
   .xcd92d73d9663c32d(xcd92d73d9663c32d),
-  .rsum_enable_i(rsum_enable_i), .rsum_first_i(rsum_first_i),
-  .rsum_last_i(rsum_last_i), .x97eee2bb17e0902a(x97eee2bb17e0902a),
+  .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+  .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32), .x97eee2bb17e0902a(x97eee2bb17e0902a),
   .x762bc51e04520bde(x84a3e534a50080d1), .xfa257824cfbd54d8(xfa257824cfbd54d8)
 );
 
@@ -7805,7 +9265,7 @@ module x549d52f6f7bd36cf #(
   clk, rst_b,
   x5b74621c47643bf6, xbb17c88db047d946, x99a0417d4564b7a8,
   xf367ffcace8025cb, x2f581b11f012b8f9, x9b4c0137fe1b0cca, xcd92d73d9663c32d,
-  rsum_enable_i, rsum_first_i, rsum_last_i,
+  x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32,
   xf9516f1f7d3f8f7a, x9bdf57398d4aad08,
   x781f293ed28bb926, xde248a5a4539acfb, xf174af5b948a7de2,
   x54096017a1e852ff, x33a1add1aba46894, x721c7b4efc5b3816,
@@ -7823,7 +9283,7 @@ input x5b74621c47643bf6, xbb17c88db047d946, x99a0417d4564b7a8;
 input [127:0] xf367ffcace8025cb, x2f581b11f012b8f9;
 input x9b4c0137fe1b0cca;
 input [127:0] xcd92d73d9663c32d;
-input rsum_enable_i, rsum_first_i, rsum_last_i;
+input x837075243a1a83a4, xbe13730a7094392c, x054b2cf4b3fcbf32;
 input xf9516f1f7d3f8f7a, x9bdf57398d4aad08, xde248a5a4539acfb;
 output x781f293ed28bb926, xf174af5b948a7de2;
 input [1:0] x54096017a1e852ff;
@@ -7846,7 +9306,7 @@ generate
     wire x05f744cd2056e160, x0cfb9989ad76c739;
     x8ded35e5c9f9d880 x1193ff19cd581a88 (
       .clk(clk), .rst_b(rst_b),
-      .x22d4589045c4d1a8(x9c56e6d443b61f6f), .start_ready(x66089cc978bcd759),
+      .x22d4589045c4d1a8(x9c56e6d443b61f6f), .xc9a019b1e19d2207(x66089cc978bcd759),
       .x5eac9d32b5d97872(x31de3ceb121de4f6),
       .x32ad82e3ac20bda9(xdbf3bc8c6154163b),
       .busy(xf57cd445e084f946), .x4e124931f57ab5eb(xfc5f9c3a037a1129),
@@ -7859,8 +9319,8 @@ generate
       .x5b74621c47643bf6(x5b74621c47643bf6), .xbb17c88db047d946(xbb17c88db047d946),
       .x99a0417d4564b7a8(x99a0417d4564b7a8), .xf367ffcace8025cb(xf367ffcace8025cb),
       .x2f581b11f012b8f9(x2f581b11f012b8f9), .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca),
-      .xcd92d73d9663c32d(xcd92d73d9663c32d), .rsum_enable_i(rsum_enable_i),
-      .rsum_first_i(rsum_first_i), .rsum_last_i(rsum_last_i),
+      .xcd92d73d9663c32d(xcd92d73d9663c32d), .x837075243a1a83a4(x837075243a1a83a4),
+      .xbe13730a7094392c(xbe13730a7094392c), .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
       .x97eee2bb17e0902a(x97eee2bb17e0902a), .x84a3e534a50080d1(x762bc51e04520bde),
       .xfa257824cfbd54d8(xfa257824cfbd54d8)
     );
@@ -7876,8 +9336,8 @@ generate
       .x99a0417d4564b7a8(x99a0417d4564b7a8),
       .xf367ffcace8025cb(xf367ffcace8025cb), .x2f581b11f012b8f9(x2f581b11f012b8f9),
       .x9b4c0137fe1b0cca(x9b4c0137fe1b0cca), .xcd92d73d9663c32d(xcd92d73d9663c32d),
-      .rsum_enable_i(rsum_enable_i), .rsum_first_i(rsum_first_i),
-      .rsum_last_i(rsum_last_i),
+      .x837075243a1a83a4(x837075243a1a83a4), .xbe13730a7094392c(xbe13730a7094392c),
+      .x054b2cf4b3fcbf32(x054b2cf4b3fcbf32),
       .x3b0884f626d60d77(xf9516f1f7d3f8f7a),
       .xdea24a9dcf4995ff(x9bdf57398d4aad08),
       .x461cf36690126388(x781f293ed28bb926),
@@ -7900,6 +9360,4922 @@ generate
     assign x7609fb8ba281aadf = 1'b0;
   end
 endgenerate
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x96e1f40414de5ff0 #(
+  parameter ADDR_WIDTH = 16,
+  parameter x0b65b4c43e908ab0 = 27
+) (
+  input wire clk, input wire cpurst_b,
+  input wire x600d537ebec80419, output wire xc9a019b1e19d2207,
+  input wire x03c9e53c628c1435, input wire [3:0] x7d88bd85a9438b1f,
+  input wire x3472df29097e3739, input wire x68e30639857afb20, input wire [ADDR_WIDTH-1:0] x03f247e024de0fe3,
+  input wire x80a923b41e3137d0, input wire xe56e8e3d38a38904, input wire [ADDR_WIDTH-1:0] x06e22fc6178c5b8d,
+  input wire x558efab3d942d8e5, input wire x8a85d21b88eae8b1, input wire [ADDR_WIDTH-1:0] x5f683d6d42161d24,
+  input wire xbbba0ec6e8380daf, input wire x7cc60cef1752cb6a, input wire [ADDR_WIDTH-1:0] x916d7ac9ca48a07b,
+  input wire [15:0] xc0690de712ba6124,
+  output wire busy, output wire x4ac881d658f5fd96,
+  output wire x5f3cc0def5502ace, input wire x4fe09624591c7f4b,
+  output wire [ADDR_WIDTH-1:0] x7ab8fd55211427d6,
+  input wire x93db181369f80dae, input wire [127:0] xfa30783cb1636705,
+  output wire x5b333385bf17516a,
+  output wire xd5e0a2df2798db0a, output wire x7311d4dd183bed0f, input wire xc50a7a2c9e2c40aa,
+  output wire [ADDR_WIDTH-1:0] xec1a2d76f44d7fbc,
+  output wire [127:0] x51896265f00d5ad3, output wire [15:0] xe9a52f489c6c6ba6,
+  input wire [31:0] x235f1a9165b36b62,
+  output wire [31:0] actu_last_sum_bits,
+  output reg xd3f9dbb53dd08b63,
+  output reg [15:0] cmpu_max_value,
+  output reg [15:0] cmpu_argmax_idx,
+  output reg [15:0] cmpu_min_value,
+  output reg [15:0] cmpu_argmin_idx
+);
+
+wire x07d6173fe7bef73b, x2d34b418d29d0517, xe73a9af215dd2d88;
+wire [3:0] x750eae0650ff634d;
+wire x0a35f5a63766160c, x25dbaaa5ab24f8d4, xd3259328c68f614d;
+wire [15:0] x527fc92a9a979768, xc0b79a9a09445692, x2901d112f061224b, xeea505b2c3a0fec2;
+wire x6394438b5c0268e3, xd27150d30b90d9e3, xee8eae69be6bdbc3;
+wire [15:0] x0cc1f11add004306;
+wire xf543fc23510250b3, x0f53af67e1702907;
+wire [15:0] x0bdbcc461d4b12ce, x28331f459ebbe9da, x8a652f167100b19e, xecd7cc7feeb20b71;
+wire xca40287423e98a07, cmpu_start_ready;
+wire [3:0] xf3c7481361be949f;
+wire xaf18f4dcdf376fdd, x0ca582e9aac92269, x28b290208ccdab98;
+wire [15:0] x6b85b95b8015ea72, x80dd786aade94efa, x7fdeacabe5737dfc;
+wire [7:0] xf42e57cb1fe7129d;
+wire x2f14e0a0953e767e, xb8ebdd3202059633, x3d462783a919c630;
+wire [15:0] xf3a3d6149b14b247;
+wire xd909863e8d962c7d, x470cf24da191ab27;
+wire [15:0] xdc88c14394bac68f, x5a5afa5b1e53b088;
+wire [15:0] x91f359d48eff8178, x3465f0461cea0ec4;
+wire xc90a87e9acba056d, x57a29ae39a3f0070, x9bc52b72a544307c;
+wire xebf2ad95862f0398;
+wire [2:0] x6c76ce9e795af470, xeec1c47b7ce20759;
+wire [15:0] x1b6a0f18213f8a27, xc7c565e84cb61633;
+wire x7558b1995e0bcbff;
+wire x470bfa1d25f28b02;
+wire [31:0] xfb61a1da9ab89eda;
+reg [31:0] xd610afe227291b46;
+reg [31:0] xd2af8d5d5983c8bc;
+wire xfefa8b37cdd02726 = x07d6173fe7bef73b && x2d34b418d29d0517 && !xe73a9af215dd2d88;
+wire [31:0] x18239204d49951fc = (x750eae0650ff634d == 4'd7) ?
+                                           xd610afe227291b46 : xd2af8d5d5983c8bc;
+wire xa8238d7b0c136cf3 = xe73a9af215dd2d88 || (x750eae0650ff634d != 4'd5) || x470bfa1d25f28b02;
+assign actu_last_sum_bits = xd610afe227291b46;
+
+
+xeb335a57e30f2041 #(.ADDR_WIDTH(ADDR_WIDTH),.xcbcceb65103ff427(8)) x7e0bb6041b6a503e (
+ .clk(clk),.cpurst_b(cpurst_b),.x600d537ebec80419(x600d537ebec80419),.xc9a019b1e19d2207(xc9a019b1e19d2207),
+ .x03c9e53c628c1435(x03c9e53c628c1435),.x7d88bd85a9438b1f(x7d88bd85a9438b1f),
+ .x3472df29097e3739(x3472df29097e3739),.x68e30639857afb20(x68e30639857afb20),.x03f247e024de0fe3(x03f247e024de0fe3),
+ .x80a923b41e3137d0(x80a923b41e3137d0),.xe56e8e3d38a38904(xe56e8e3d38a38904),.x06e22fc6178c5b8d(x06e22fc6178c5b8d),
+ .x558efab3d942d8e5(x558efab3d942d8e5),.x8a85d21b88eae8b1(x8a85d21b88eae8b1),.x5f683d6d42161d24(x5f683d6d42161d24),
+ .xbbba0ec6e8380daf(xbbba0ec6e8380daf),.x7cc60cef1752cb6a(x7cc60cef1752cb6a),.x916d7ac9ca48a07b(x916d7ac9ca48a07b),
+ .xc0690de712ba6124(xc0690de712ba6124),.busy(busy),.x4ac881d658f5fd96(x4ac881d658f5fd96),
+ .x5f3cc0def5502ace(x5f3cc0def5502ace),.x4fe09624591c7f4b(x4fe09624591c7f4b),.x7ab8fd55211427d6(x7ab8fd55211427d6),
+ .x93db181369f80dae(x93db181369f80dae),.xfa30783cb1636705(xfa30783cb1636705),
+ .x5b333385bf17516a(x5b333385bf17516a),
+  .xd5e0a2df2798db0a(xd5e0a2df2798db0a),.x7311d4dd183bed0f(x7311d4dd183bed0f),.xc50a7a2c9e2c40aa(xc50a7a2c9e2c40aa),.xec1a2d76f44d7fbc(xec1a2d76f44d7fbc),
+ .x51896265f00d5ad3(x51896265f00d5ad3),.xe9a52f489c6c6ba6(xe9a52f489c6c6ba6),
+ .x07d6173fe7bef73b(x07d6173fe7bef73b),.x2d34b418d29d0517(x2d34b418d29d0517),
+ .xe73a9af215dd2d88(xe73a9af215dd2d88),.x750eae0650ff634d(x750eae0650ff634d),.x0a35f5a63766160c(x0a35f5a63766160c),
+ .x25dbaaa5ab24f8d4(x25dbaaa5ab24f8d4),.x527fc92a9a979768(x527fc92a9a979768),.xc0b79a9a09445692(xc0b79a9a09445692),
+ .x2901d112f061224b(x2901d112f061224b),.xeea505b2c3a0fec2(xeea505b2c3a0fec2),.xd3259328c68f614d(xd3259328c68f614d),
+ .x6394438b5c0268e3(x6394438b5c0268e3),.xd27150d30b90d9e3(xd27150d30b90d9e3),
+ .x0cc1f11add004306(x0cc1f11add004306),.xee8eae69be6bdbc3(xee8eae69be6bdbc3),
+ .xa8238d7b0c136cf3(xa8238d7b0c136cf3),
+ .xf543fc23510250b3(xf543fc23510250b3),.x0f53af67e1702907(x0f53af67e1702907));
+
+x9a9f625f206419a8 #(.x0b65b4c43e908ab0(x0b65b4c43e908ab0)) xabc8fbc05366327f (
+ .clk(clk),.cpurst_b(cpurst_b),.x0388d55a56606df3(x07d6173fe7bef73b),
+ .x34598f75358c922f(x2d34b418d29d0517),.xff51cf82c3630ca2(xe73a9af215dd2d88),.x12f131f237013735(x750eae0650ff634d),
+ .xaf6d28e2c1827c1f(x0a35f5a63766160c),.x3c477fd82fdb9b95(x25dbaaa5ab24f8d4),.xf3136de0c3e18476(x527fc92a9a979768),
+ .xaa00165f29bfe251(xc0b79a9a09445692),.x636f97681983d4eb(x2901d112f061224b),.x581abf1e3a5be56f(xeea505b2c3a0fec2),.xf216264a18141690(xd3259328c68f614d),
+ .xb05bbc15adb34e07(x6394438b5c0268e3),.x37068f6d113c124f(x0cc1f11add004306),.x526cbd7d9a583cf7(xee8eae69be6bdbc3),
+ .xa16d059b69b86863(xf543fc23510250b3),.x63f4335a43a4288a(x0f53af67e1702907),
+ .x3395e730e1268dbc(x0bdbcc461d4b12ce),.xe3f6048603d2af04(x28331f459ebbe9da),
+ .x1eb329990206f9da(x8a652f167100b19e),.x4ee15e4044da8f77(xecd7cc7feeb20b71),
+ .x97aa8a107fd55d0a(xc90a87e9acba056d),.x768ff0dd0b5681a7(x57a29ae39a3f0070),
+ .x0ca1a0775cdcf991(x6c76ce9e795af470),.x407ad39dd60635fa(x1b6a0f18213f8a27),
+ .x5a08dcd853baffd0(xebf2ad95862f0398),
+ .x452ba594efb875a5(x9bc52b72a544307c),.x723d652d7339ff2b(xc7c565e84cb61633),
+ .xca40287423e98a07(xca40287423e98a07),.cmpu_start_ready(cmpu_start_ready),
+ .xf3c7481361be949f(xf3c7481361be949f),.xaf18f4dcdf376fdd(xaf18f4dcdf376fdd),
+ .x0ca582e9aac92269(x0ca582e9aac92269),.x8562e7546c1c8ed0(x6b85b95b8015ea72),.xd1e838143857e5bb(x80dd786aade94efa),
+ .x1dc2ff6f58b0380a(xf42e57cb1fe7129d),.x6022e374a096a3f2(x7fdeacabe5737dfc),.x28b290208ccdab98(x28b290208ccdab98),
+ .x2f14e0a0953e767e(x2f14e0a0953e767e),.xf3a3d6149b14b247(xf3a3d6149b14b247),
+ .xb8ebdd3202059633(xb8ebdd3202059633),.x19a792fcae32b161(xd909863e8d962c7d),
+ .x04aafa260d7760d8(x470cf24da191ab27),.x15cb0bc0837043df(xdc88c14394bac68f),
+ .xdaf182d756a6e23b(x5a5afa5b1e53b088),.xff7f6f373a2dc298(x91f359d48eff8178),
+ .x1b7db232caae4ef7(x3465f0461cea0ec4));
+
+xa62cd7b77ebce879 x304386b88bc3bac6 (
+ .clk(clk),.cpurst_b(cpurst_b),.x600d537ebec80419(xca40287423e98a07),
+ .xc9a019b1e19d2207(cmpu_start_ready),.x7d88bd85a9438b1f(xf3c7481361be949f),
+ .in_valid(xaf18f4dcdf376fdd),.x201e7b9037621dc5(x0ca582e9aac92269),.xa40ed55a672be187(x6b85b95b8015ea72),
+ .xed86b6759627f7eb(x80dd786aade94efa),.x0a4449b6dabe347f(xf42e57cb1fe7129d),.x8f46332c7d48b7c6(x7fdeacabe5737dfc),.x07f4d31d26e6e521(x28b290208ccdab98),
+ .out_valid(x2f14e0a0953e767e),.out_value(xf3a3d6149b14b247),
+ .xeee5e7dee75040ce(x3d462783a919c630),.x752427999027db57(xb8ebdd3202059633),
+ .result_valid(xd909863e8d962c7d),.x15b3678be446b037(x470cf24da191ab27),
+ .x2800ff57da46d276(xdc88c14394bac68f),.x4041438f39283558(x5a5afa5b1e53b088),
+ .xd4650ff6d588a26b(x91f359d48eff8178),.x387cb618d9b3a75d(x3465f0461cea0ec4));
+
+xe828a59fba970427 #(.x05508f94d79d71e8(x0b65b4c43e908ab0)) x369c75f6cce2dc50 (
+ .clk(clk),.cpurst_b(cpurst_b),.in_valid(xc90a87e9acba056d),
+ .x07f4d31d26e6e521(xebf2ad95862f0398),
+ .x201e7b9037621dc5(x57a29ae39a3f0070),.x0c014b55b70e6cbb(x6c76ce9e795af470),.xef81f16c4cdf7fc8(x1b6a0f18213f8a27),
+ .xcbdbbedc2b1fe017(x18239204d49951fc),
+ .xe0c0433c6ac703cd(xfefa8b37cdd02726 && (x750eae0650ff634d == 4'd5)),
+ .out_valid(x9bc52b72a544307c),.x2b8f65f39bf1e0be(xeec1c47b7ce20759),
+ .x1ca1a8e89c1b635d(xc7c565e84cb61633),.x3b740bbeff83b5da(x7558b1995e0bcbff),
+ .xe70f7bd65e2c651b(x470bfa1d25f28b02),
+ .xc35eec8a64890ae2(xfb61a1da9ab89eda));
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xd3f9dbb53dd08b63 <= 1'b0;
+    cmpu_max_value <= 16'b0; cmpu_argmax_idx <= 16'b0;
+    cmpu_min_value <= 16'b0; cmpu_argmin_idx <= 16'b0;
+    xd610afe227291b46 <= 32'b0;
+    xd2af8d5d5983c8bc <= 32'b0;
+  end else begin
+    xd3f9dbb53dd08b63 <= xf543fc23510250b3 && x0f53af67e1702907;
+    if (xf543fc23510250b3 && x0f53af67e1702907) begin
+      cmpu_max_value <= x0bdbcc461d4b12ce; cmpu_argmax_idx <= x28331f459ebbe9da;
+      cmpu_min_value <= x8a652f167100b19e; cmpu_argmin_idx <= xecd7cc7feeb20b71;
+    end
+    if (x7558b1995e0bcbff)
+      xd610afe227291b46 <= xfb61a1da9ab89eda;
+    if (xfefa8b37cdd02726)
+      xd2af8d5d5983c8bc <= x235f1a9165b36b62;
+  end
+end
+
+wire x93415370431352c3 = xd27150d30b90d9e3;
+wire x4a62b18ccb8cdbf1 = x3d462783a919c630;
+wire [2:0] xfdccd05accc4fa94 = xeec1c47b7ce20759;
+endmodule
+
+
+`timescale 1ns/1ps
+
+module xe6fc70430181fea9 #(
+  parameter ADDR_WIDTH = 16,
+  parameter x8f3637f1946efe22 = 27
+) (
+  input  wire                  clk,
+  input  wire                  cpurst_b,
+
+  input  wire [3:0]            actu_cmd_setcsr_dtype,
+  input  wire [3:0]            actu_cmd_setcsr_mode,
+  input  wire                  actu_cmd_setcsr_req,
+  input  wire [ADDR_WIDTH-1:0] actu_cmd_setin_ptr,
+  input  wire                  actu_cmd_setin_req,
+  input  wire [ADDR_WIDTH-1:0] actu_cmd_setout_ptr,
+  input  wire                  actu_cmd_setout_req,
+  input  wire                  actu_cmd_setn_req,
+  input  wire [15:0]           actu_cmd_setn_value,
+  input  wire                  actu_cmd_setscalar_req,
+  input  wire [63:0]           actu_cmd_setscalar_value,
+  input  wire                  actu_cmd_start_req,
+  input  wire                  actu_cmd_sync_req,
+  output wire                  actu_cmd_ready,
+  output wire                  actu_start_ready,
+  output wire                  actu_sync_stall,
+  output wire                  actu_busy,
+  output wire                  xc9e195fca232987e,
+
+  input  wire [3:0]            cmpu_cmd_setcsr_mode,
+  input  wire                  cmpu_cmd_setcsr_req,
+  input  wire [ADDR_WIDTH-1:0] cmpu_cmd_setlhs_ptr,
+  input  wire                  cmpu_cmd_setlhs_req,
+  input  wire [ADDR_WIDTH-1:0] cmpu_cmd_setrhs_ptr,
+  input  wire                  cmpu_cmd_setrhs_req,
+  input  wire [ADDR_WIDTH-1:0] cmpu_cmd_setmask_ptr,
+  input  wire                  cmpu_cmd_setmask_req,
+  input  wire [ADDR_WIDTH-1:0] cmpu_cmd_setout_ptr,
+  input  wire                  cmpu_cmd_setout_req,
+  input  wire                  cmpu_cmd_setn_req,
+  input  wire [15:0]           cmpu_cmd_setn_value,
+  input  wire                  cmpu_cmd_start_req,
+  input  wire                  cmpu_cmd_sync_req,
+  output wire                  cmpu_cmd_ready,
+  output wire                  cmpu_start_ready,
+  output wire                  cmpu_sync_stall,
+  output wire                  cmpu_busy,
+  output wire                  x0f4f7eca2d02943c,
+  output wire                  xd3f9dbb53dd08b63,
+  output wire [15:0]           cmpu_max_value,
+  output wire [15:0]           cmpu_argmax_idx,
+  output wire [15:0]           cmpu_min_value,
+  output wire [15:0]           cmpu_argmin_idx,
+
+  output wire                  x5f3cc0def5502ace,
+  input  wire                  x4fe09624591c7f4b,
+  output wire [ADDR_WIDTH-1:0] x7ab8fd55211427d6,
+  input  wire                  x93db181369f80dae,
+  input  wire [127:0]          xfa30783cb1636705,
+  output wire                  x5b333385bf17516a,
+  output wire xd5e0a2df2798db0a, output wire x7311d4dd183bed0f,
+  input  wire                  xc50a7a2c9e2c40aa,
+  output wire [ADDR_WIDTH-1:0] xec1a2d76f44d7fbc,
+  output wire [127:0]          x51896265f00d5ad3,
+  output wire [15:0]           xe9a52f489c6c6ba6,
+  output wire [31:0]           actu_last_sum_bits
+);
+
+localparam [3:0] x445d9a18754a6310 = 4'd0;
+localparam [3:0] x0b19c11849e3fd02 = 4'd3;
+localparam [3:0] x12c71285ea8854b0 = 4'd4;
+localparam [3:0] xc63ba053cf6544fb = 4'd8;
+
+reg [3:0] xdc3bf445609e4b40;
+reg [ADDR_WIDTH-1:0] x708267fb7321f284;
+reg [ADDR_WIDTH-1:0] x307d5cd64cd6055d;
+reg [15:0] x4f3ff47575c1684f;
+reg [31:0] xd1867c6db2a23eb4;
+reg [3:0] x900fa81ce3939531;
+reg [ADDR_WIDTH-1:0] xeee9a674154f5b44;
+reg [ADDR_WIDTH-1:0] x50749d77701afe33;
+reg [ADDR_WIDTH-1:0] x9c34e210baae03c4;
+reg [ADDR_WIDTH-1:0] x384caadaa472fe01;
+reg [15:0] x5fee641433a6329d;
+reg x6462eff7a79a530f;
+
+wire x600d537ebec80419 = actu_cmd_start_req || cmpu_cmd_start_req;
+wire x03c9e53c628c1435 = cmpu_cmd_start_req;
+wire xc9a019b1e19d2207;
+wire x9d3163e545050535;
+wire x7ef4b4460975d265;
+wire x02edd066f8aa3281 = x600d537ebec80419 && xc9a019b1e19d2207;
+wire x79c389ea7936278c = (x900fa81ce3939531 == x445d9a18754a6310);
+wire xc58da9196fad5e9a = (x900fa81ce3939531 == x0b19c11849e3fd02);
+wire x0b60cb694171b5ee = (x900fa81ce3939531 >= x12c71285ea8854b0) &&
+                       (x900fa81ce3939531 <= xc63ba053cf6544fb);
+
+assign actu_cmd_ready = 1'b1;
+assign cmpu_cmd_ready = 1'b1;
+assign actu_start_ready = xc9a019b1e19d2207 && !cmpu_cmd_start_req;
+assign cmpu_start_ready = xc9a019b1e19d2207;
+assign actu_sync_stall = x9d3163e545050535;
+assign cmpu_sync_stall = x9d3163e545050535;
+assign actu_busy = x9d3163e545050535;
+assign cmpu_busy = x9d3163e545050535;
+assign xc9e195fca232987e = x7ef4b4460975d265 && !x6462eff7a79a530f;
+assign x0f4f7eca2d02943c = x7ef4b4460975d265 && x6462eff7a79a530f;
+
+x96e1f40414de5ff0 #(
+  .ADDR_WIDTH(ADDR_WIDTH),
+  .x0b65b4c43e908ab0(x8f3637f1946efe22)
+) x1420b0546e60425f (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .x600d537ebec80419(x600d537ebec80419),
+  .xc9a019b1e19d2207(xc9a019b1e19d2207),
+  .x03c9e53c628c1435(x03c9e53c628c1435),
+  .x7d88bd85a9438b1f(x03c9e53c628c1435 ? x900fa81ce3939531 : xdc3bf445609e4b40),
+  .x3472df29097e3739(1'b1),
+  .x68e30639857afb20(1'b0),
+  .x03f247e024de0fe3(x03c9e53c628c1435 ? xeee9a674154f5b44 : x708267fb7321f284),
+  .x80a923b41e3137d0(x03c9e53c628c1435 && !x79c389ea7936278c),
+  .xe56e8e3d38a38904(1'b0),
+  .x06e22fc6178c5b8d(x50749d77701afe33),
+  .x558efab3d942d8e5(x03c9e53c628c1435 && xc58da9196fad5e9a),
+  .x8a85d21b88eae8b1(1'b1),
+  .x5f683d6d42161d24(x9c34e210baae03c4),
+  .xbbba0ec6e8380daf(x03c9e53c628c1435 ? !x79c389ea7936278c : 1'b1),
+  .x7cc60cef1752cb6a(x03c9e53c628c1435 && x0b60cb694171b5ee),
+  .x916d7ac9ca48a07b(x03c9e53c628c1435 ? x384caadaa472fe01 : x307d5cd64cd6055d),
+  .xc0690de712ba6124(x03c9e53c628c1435 ? x5fee641433a6329d : x4f3ff47575c1684f),
+  .busy(x9d3163e545050535),
+  .x4ac881d658f5fd96(x7ef4b4460975d265),
+  .x5f3cc0def5502ace(x5f3cc0def5502ace),
+  .x4fe09624591c7f4b(x4fe09624591c7f4b),
+  .x7ab8fd55211427d6(x7ab8fd55211427d6),
+  .x93db181369f80dae(x93db181369f80dae),
+  .xfa30783cb1636705(xfa30783cb1636705),
+  .x5b333385bf17516a(x5b333385bf17516a),
+  .xd5e0a2df2798db0a(xd5e0a2df2798db0a),.x7311d4dd183bed0f(x7311d4dd183bed0f),
+  .xc50a7a2c9e2c40aa(xc50a7a2c9e2c40aa),
+  .xec1a2d76f44d7fbc(xec1a2d76f44d7fbc),
+  .x51896265f00d5ad3(x51896265f00d5ad3),
+  .xe9a52f489c6c6ba6(xe9a52f489c6c6ba6),
+  .x235f1a9165b36b62(xd1867c6db2a23eb4),
+  .actu_last_sum_bits(actu_last_sum_bits),
+  .xd3f9dbb53dd08b63(xd3f9dbb53dd08b63),
+  .cmpu_max_value(cmpu_max_value),
+  .cmpu_argmax_idx(cmpu_argmax_idx),
+  .cmpu_min_value(cmpu_min_value),
+  .cmpu_argmin_idx(cmpu_argmin_idx)
+);
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xdc3bf445609e4b40 <= 4'b0;
+    x708267fb7321f284 <= {ADDR_WIDTH{1'b0}};
+    x307d5cd64cd6055d <= {ADDR_WIDTH{1'b0}};
+    x4f3ff47575c1684f <= 16'b0;
+    xd1867c6db2a23eb4 <= 32'b0;
+    x900fa81ce3939531 <= 4'b0;
+    xeee9a674154f5b44 <= {ADDR_WIDTH{1'b0}};
+    x50749d77701afe33 <= {ADDR_WIDTH{1'b0}};
+    x9c34e210baae03c4 <= {ADDR_WIDTH{1'b0}};
+    x384caadaa472fe01 <= {ADDR_WIDTH{1'b0}};
+    x5fee641433a6329d <= 16'b0;
+    x6462eff7a79a530f <= 1'b0;
+  end else begin
+    if (actu_cmd_setcsr_req)
+      xdc3bf445609e4b40 <= actu_cmd_setcsr_mode;
+    if (actu_cmd_setin_req)
+      x708267fb7321f284 <= actu_cmd_setin_ptr;
+    if (actu_cmd_setout_req)
+      x307d5cd64cd6055d <= actu_cmd_setout_ptr;
+    if (actu_cmd_setn_req)
+      x4f3ff47575c1684f <= actu_cmd_setn_value;
+    if (actu_cmd_setscalar_req)
+      xd1867c6db2a23eb4 <= actu_cmd_setscalar_value[31:0];
+    if (cmpu_cmd_setcsr_req)
+      x900fa81ce3939531 <= cmpu_cmd_setcsr_mode;
+    if (cmpu_cmd_setlhs_req)
+      xeee9a674154f5b44 <= cmpu_cmd_setlhs_ptr;
+    if (cmpu_cmd_setrhs_req)
+      x50749d77701afe33 <= cmpu_cmd_setrhs_ptr;
+    if (cmpu_cmd_setmask_req)
+      x9c34e210baae03c4 <= cmpu_cmd_setmask_ptr;
+    if (cmpu_cmd_setout_req)
+      x384caadaa472fe01 <= cmpu_cmd_setout_ptr;
+    if (cmpu_cmd_setn_req)
+      x5fee641433a6329d <= cmpu_cmd_setn_value;
+    if (x02edd066f8aa3281)
+      x6462eff7a79a530f <= x03c9e53c628c1435;
+  end
+end
+
+wire x8dec1a950baa73ca = |actu_cmd_setcsr_dtype;
+wire xbd6fbcf2db0ea644 = actu_cmd_sync_req;
+wire xf85b036bf7949331 = cmpu_cmd_sync_req;
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module xeb335a57e30f2041 #(
+  parameter ADDR_WIDTH = 16,
+  parameter x412a5f55a63459bc = 32,
+  parameter xae6e38e3bcb66f35 = 5,
+  parameter xd77ab9d08abe6edc = 128,
+  parameter xcbcceb65103ff427 = 2
+) (
+  input wire clk,
+  input wire cpurst_b,
+  input wire x600d537ebec80419,
+  output wire xc9a019b1e19d2207,
+  input wire x03c9e53c628c1435,
+  input wire [3:0] x7d88bd85a9438b1f,
+  input wire x3472df29097e3739,
+  input wire x68e30639857afb20,
+  input wire [ADDR_WIDTH-1:0] x03f247e024de0fe3,
+  input wire x80a923b41e3137d0,
+  input wire xe56e8e3d38a38904,
+  input wire [ADDR_WIDTH-1:0] x06e22fc6178c5b8d,
+  input wire x558efab3d942d8e5,
+  input wire x8a85d21b88eae8b1,
+  input wire [ADDR_WIDTH-1:0] x5f683d6d42161d24,
+  input wire xbbba0ec6e8380daf,
+  input wire x7cc60cef1752cb6a,
+  input wire [ADDR_WIDTH-1:0] x916d7ac9ca48a07b,
+  input wire [15:0] xc0690de712ba6124,
+  output wire busy,
+  output wire x4ac881d658f5fd96,
+
+  output wire x5f3cc0def5502ace,
+  input wire x4fe09624591c7f4b,
+  output wire [ADDR_WIDTH-1:0] x7ab8fd55211427d6,
+  input wire x93db181369f80dae,
+  input wire [xd77ab9d08abe6edc-1:0] xfa30783cb1636705,
+  output wire x5b333385bf17516a,
+  output wire xd5e0a2df2798db0a, output wire x7311d4dd183bed0f,
+  input wire xc50a7a2c9e2c40aa,
+  output wire [ADDR_WIDTH-1:0] xec1a2d76f44d7fbc,
+  output wire [xd77ab9d08abe6edc-1:0] x51896265f00d5ad3,
+  output wire [(xd77ab9d08abe6edc/8)-1:0] xe9a52f489c6c6ba6,
+
+  output wire x07d6173fe7bef73b,
+  input wire x2d34b418d29d0517,
+  output wire xe73a9af215dd2d88,
+  output wire [3:0] x750eae0650ff634d,
+  output wire x0a35f5a63766160c,
+  input wire x25dbaaa5ab24f8d4,
+  output wire [15:0] x527fc92a9a979768,
+  output wire [15:0] xc0b79a9a09445692,
+  output wire [15:0] x2901d112f061224b,
+  output wire [15:0] xeea505b2c3a0fec2,
+  output wire xd3259328c68f614d,
+  input wire x6394438b5c0268e3,
+  output wire xd27150d30b90d9e3,
+  input wire [15:0] x0cc1f11add004306,
+  input wire xee8eae69be6bdbc3,
+  input wire xa8238d7b0c136cf3,
+  input wire xf543fc23510250b3,
+  output wire x0f53af67e1702907
+);
+
+localparam xfffa97008ec3e2ea = 2'd0;
+localparam x0cbccad7c4de7a77 = 2'd1;
+localparam x54ee064ac5a00102 = 2'd2;
+localparam x3f1c37cf37ebcdae = xd77ab9d08abe6edc / 8;
+localparam x53fe99ec6498d812 = $clog2(xcbcceb65103ff427);
+localparam xa7aecf71c09458ee = 8;
+
+localparam x6ccfb4a22b83fc52 = 8;
+localparam x98815e423df141f3 = 4;
+function integer x8b328785896e71a4;
+ input integer x1c0e3dc946e221a1;
+ begin x8b328785896e71a4=(x1c0e3dc946e221a1==0)?x6ccfb4a22b83fc52:x98815e423df141f3;end
+endfunction
+function integer xc0d83f9ec0c352bb;
+ input integer x1c0e3dc946e221a1;
+ begin xc0d83f9ec0c352bb=(x1c0e3dc946e221a1==0)?0:x6ccfb4a22b83fc52+(x1c0e3dc946e221a1-1)*x98815e423df141f3;end
+endfunction
+
+reg [1:0] x1a37a4355a35e0bf;
+reg xc1574ec1f03711d1;
+reg [3:0] xf295233e23064221;
+reg [2:0] x5d688293cf8b5780;
+reg [2:0] x5a0b48c06641e99f;
+reg x9a74def6247b2e89;
+reg xd0d4ae8f1a98e09e;
+reg [ADDR_WIDTH-1:0] x0ad543d7b23b6a3a [0:2];
+reg [ADDR_WIDTH-1:0] x119abc98abaa5a2a;
+reg [15:0] x1fc55a90ef20a587;
+reg [15:0] x464c97a27935319f [0:2];
+reg [15:0] x1dffe7eb9a561142;
+reg [15:0] x49c0a3219672c789;
+
+
+
+reg [xd77ab9d08abe6edc-1:0] x3613586b42697172 [0:15];
+reg [4:0] x956b1e5c49de3067 [0:15];
+reg [2:0] x0a6e419d6cd8ecd5 [0:2], x31b976997bb28f41 [0:2];
+reg [3:0] xc450c8d51717f06a [0:2], x8e87291a1484d9d6 [0:2];
+reg [3:0] xcfc42fe2f97351eb [0:2];
+wire [15:0] x08196e4c97de1760 [0:2];
+wire xa7397cc88345384c [0:2];
+wire x7ca96a3c5ee12588 [0:2];
+reg [1:0] x945269c2457cbcea [0:xa7aecf71c09458ee-1];
+reg [4:0] x4b75e502bbf7969d [0:xa7aecf71c09458ee-1];
+reg [2:0] xbb7796c8b8b6cfd0, x37083bf35f3c4649;
+reg [3:0] x2050daf22bd49ecb;
+wire [1:0] x8d8a5fb864845e4f = x945269c2457cbcea[xbb7796c8b8b6cfd0];
+wire [4:0] x280568b48046ea25 = x4b75e502bbf7969d[xbb7796c8b8b6cfd0];
+reg [1:0] xc2f596f21ac5aedf;
+
+
+reg [xd77ab9d08abe6edc-1:0] x9ca29e85205aaa6f;
+reg [4:0] x9529c4fd394bbae6;
+reg x3bdcd08670f89d73;
+reg [xd77ab9d08abe6edc-1:0] x72e3fb5058b4b93c [0:xcbcceb65103ff427-1];
+reg [4:0] x41bc74d596002384 [0:xcbcceb65103ff427-1];
+reg [x53fe99ec6498d812-1:0] x9ce90a160ad5cb9f;
+reg [x53fe99ec6498d812-1:0] xa5db111c92c0e502;
+reg [x53fe99ec6498d812:0] x29133fc73ea97aec;
+reg x1c20549bd6fb566a;
+
+wire x02edd066f8aa3281 = x600d537ebec80419 && xc9a019b1e19d2207;
+wire x3533b8aa129018f8 = x07d6173fe7bef73b && x2d34b418d29d0517;
+wire x71ed875f6291ec0b = x0a35f5a63766160c && x25dbaaa5ab24f8d4;
+wire xd343b2ec0dcdb005 = x6394438b5c0268e3 && xd27150d30b90d9e3;
+wire x2b2c950677d5f3eb = x5b333385bf17516a && xc50a7a2c9e2c40aa;
+wire x85669980432135b1 = x93db181369f80dae && (x2050daf22bd49ecb != 0);
+wire xce7a2d397d980478 = x5f3cc0def5502ace && x4fe09624591c7f4b;
+wire [4:0] xa711de8344e17b26 = xd0d4ae8f1a98e09e ? 5'd16 : 5'd8;
+wire [4:0] x7f4537fad3a8736f = x9529c4fd394bbae6 + 5'd1;
+wire xe79f52633f122d96 = (x7f4537fad3a8736f == xa711de8344e17b26) || xee8eae69be6bdbc3;
+wire x0653626f04255118 = xd343b2ec0dcdb005 && xe79f52633f122d96;
+wire x8612e60e4de6c591 = (x29133fc73ea97aec != 2'd0);
+wire xe8208c455b2d50df = x0653626f04255118 && !x8612e60e4de6c591 && !x3bdcd08670f89d73;
+wire x4a5850aee959cd41 = x2b2c950677d5f3eb && x8612e60e4de6c591;
+wire xdea3483a889e84f9 = x2b2c950677d5f3eb && !x8612e60e4de6c591 && x3bdcd08670f89d73;
+wire xcd0637e89eacea17 = x2b2c950677d5f3eb && !x8612e60e4de6c591 && !x3bdcd08670f89d73;
+wire xc8eb754c92d93536 = (x29133fc73ea97aec < xcbcceb65103ff427) || x4a5850aee959cd41;
+wire [15:0] x58525a47aaad5d87 = x1dffe7eb9a561142 + 16'd1;
+wire [16:0] x964bd68443f8932a = {1'b0, x1dffe7eb9a561142} -
+                               {1'b0, x49c0a3219672c789};
+
+
+wire [16:0] x611385b866ad6e46 = (xcbcceb65103ff427+1) * (xd0d4ae8f1a98e09e ? 16 : 8);
+wire x38d597293aed248c = !x9a74def6247b2e89 ||
+                                 (x964bd68443f8932a < x611385b866ad6e46);
+
+reg [2:0] x94e221ac3d06117e;
+reg [1:0] xa48af002edd42acc;
+reg [4:0] x8c560dff107cb486;
+reg [ADDR_WIDTH-1:0] x857078de753100b7;
+reg [xd77ab9d08abe6edc-1:0] x66e1297392ee6148;
+integer s;
+
+function [4:0] xe09866e5fe8b7f95;
+  input [15:0] xab1130cf26f91263;
+  input x92f2da3c6558a9d5;
+  reg [4:0] x86320a22e3d94d89;
+  begin
+    x86320a22e3d94d89 = x92f2da3c6558a9d5 ? 5'd16 : 5'd8;
+    xe09866e5fe8b7f95 = (xab1130cf26f91263 < {11'b0, x86320a22e3d94d89}) ? xab1130cf26f91263[4:0] : x86320a22e3d94d89;
+  end
+endfunction
+
+function [x3f1c37cf37ebcdae-1:0] x2881e561634ef344;
+  input [4:0] x56e1c09e8d406f78;
+  input x92f2da3c6558a9d5;
+  begin
+    if (x92f2da3c6558a9d5) begin
+      case (x56e1c09e8d406f78)
+        5'd1: x2881e561634ef344 = 16'h0001;
+        5'd2: x2881e561634ef344 = 16'h0003;
+        5'd3: x2881e561634ef344 = 16'h0007;
+        5'd4: x2881e561634ef344 = 16'h000f;
+        5'd5: x2881e561634ef344 = 16'h001f;
+        5'd6: x2881e561634ef344 = 16'h003f;
+        5'd7: x2881e561634ef344 = 16'h007f;
+        5'd8: x2881e561634ef344 = 16'h00ff;
+        5'd9: x2881e561634ef344 = 16'h01ff;
+        5'd10: x2881e561634ef344 = 16'h03ff;
+        5'd11: x2881e561634ef344 = 16'h07ff;
+        5'd12: x2881e561634ef344 = 16'h0fff;
+        5'd13: x2881e561634ef344 = 16'h1fff;
+        5'd14: x2881e561634ef344 = 16'h3fff;
+        5'd15: x2881e561634ef344 = 16'h7fff;
+        default: x2881e561634ef344 = 16'hffff;
+      endcase
+    end else begin
+      case (x56e1c09e8d406f78)
+        5'd1: x2881e561634ef344 = 16'h0003;
+        5'd2: x2881e561634ef344 = 16'h000f;
+        5'd3: x2881e561634ef344 = 16'h003f;
+        5'd4: x2881e561634ef344 = 16'h00ff;
+        5'd5: x2881e561634ef344 = 16'h03ff;
+        5'd6: x2881e561634ef344 = 16'h0fff;
+        5'd7: x2881e561634ef344 = 16'h3fff;
+        default: x2881e561634ef344 = 16'hffff;
+      endcase
+    end
+  end
+endfunction
+
+function [15:0] xd95b9cba2d582a19;
+  input [xd77ab9d08abe6edc-1:0] xefdac012fc4fe506;
+  input x92f2da3c6558a9d5;
+  input [3:0] xbcd8297dae5b6c10;
+  begin
+    if (x92f2da3c6558a9d5) begin
+      case (xbcd8297dae5b6c10)
+        4'd0: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[7:0]};
+        4'd1: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[15:8]};
+        4'd2: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[23:16]};
+        4'd3: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[31:24]};
+        4'd4: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[39:32]};
+        4'd5: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[47:40]};
+        4'd6: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[55:48]};
+        4'd7: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[63:56]};
+        4'd8: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[71:64]};
+        4'd9: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[79:72]};
+        4'd10: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[87:80]};
+        4'd11: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[95:88]};
+        4'd12: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[103:96]};
+        4'd13: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[111:104]};
+        4'd14: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[119:112]};
+        default: xd95b9cba2d582a19 = {8'b0, xefdac012fc4fe506[127:120]};
+      endcase
+    end else begin
+      case (xbcd8297dae5b6c10[2:0])
+        3'd0: xd95b9cba2d582a19 = xefdac012fc4fe506[15:0];
+        3'd1: xd95b9cba2d582a19 = xefdac012fc4fe506[31:16];
+        3'd2: xd95b9cba2d582a19 = xefdac012fc4fe506[47:32];
+        3'd3: xd95b9cba2d582a19 = xefdac012fc4fe506[63:48];
+        3'd4: xd95b9cba2d582a19 = xefdac012fc4fe506[79:64];
+        3'd5: xd95b9cba2d582a19 = xefdac012fc4fe506[95:80];
+        3'd6: xd95b9cba2d582a19 = xefdac012fc4fe506[111:96];
+        default: xd95b9cba2d582a19 = xefdac012fc4fe506[127:112];
+      endcase
+    end
+  end
+endfunction
+
+genvar xcf9b5c545e633591;
+generate for(xcf9b5c545e633591=0;xcf9b5c545e633591<3;xcf9b5c545e633591=xcf9b5c545e633591+1) begin: x4cbb0f6893e9b460
+ wire [4:0] slot = xc0d83f9ec0c352bb(xcf9b5c545e633591) + x0a6e419d6cd8ecd5[xcf9b5c545e633591];
+ assign xa7397cc88345384c[xcf9b5c545e633591] = (xc450c8d51717f06a[xcf9b5c545e633591] != 0);
+ assign x08196e4c97de1760[xcf9b5c545e633591] = xa7397cc88345384c[xcf9b5c545e633591] && x5d688293cf8b5780[xcf9b5c545e633591] ?
+   xd95b9cba2d582a19(x3613586b42697172[slot],x5a0b48c06641e99f[xcf9b5c545e633591],xcfc42fe2f97351eb[xcf9b5c545e633591]) : 16'b0;
+ assign x7ca96a3c5ee12588[xcf9b5c545e633591] = x71ed875f6291ec0b && x5d688293cf8b5780[xcf9b5c545e633591] &&
+                    ({1'b0,xcfc42fe2f97351eb[xcf9b5c545e633591]}+5'd1 == x956b1e5c49de3067[slot]);
+end endgenerate
+
+assign xc9a019b1e19d2207 = (x1a37a4355a35e0bf == xfffa97008ec3e2ea);
+assign busy = (x1a37a4355a35e0bf != xfffa97008ec3e2ea);
+assign x4ac881d658f5fd96 = x1c20549bd6fb566a;
+assign x07d6173fe7bef73b = (x1a37a4355a35e0bf == x0cbccad7c4de7a77);
+assign xe73a9af215dd2d88 = xc1574ec1f03711d1;
+assign x750eae0650ff634d = xf295233e23064221;
+assign x0a35f5a63766160c = (x1a37a4355a35e0bf == x54ee064ac5a00102) &&
+                       (!x5d688293cf8b5780[0] || xa7397cc88345384c[0]) &&
+                       (!x5d688293cf8b5780[1] || xa7397cc88345384c[1]) &&
+                       (!x5d688293cf8b5780[2] || xa7397cc88345384c[2]) &&
+                       (x1dffe7eb9a561142 < x1fc55a90ef20a587) && x38d597293aed248c;
+assign x527fc92a9a979768 = x08196e4c97de1760[0];
+assign xc0b79a9a09445692 = x08196e4c97de1760[1];
+assign x2901d112f061224b = x08196e4c97de1760[2];
+assign xeea505b2c3a0fec2 = x1dffe7eb9a561142;
+assign xd3259328c68f614d = (x1dffe7eb9a561142 == (x1fc55a90ef20a587 - 16'd1));
+
+always @* begin
+  for (s = 0; s < 3; s = s + 1) begin
+    x94e221ac3d06117e[s] = (x1a37a4355a35e0bf == x54ee064ac5a00102) && x5d688293cf8b5780[s] &&
+                     (x464c97a27935319f[s] < x1fc55a90ef20a587) &&
+                     (x8e87291a1484d9d6[s] < x8b328785896e71a4(s)) &&
+
+
+
+                     (x0ad543d7b23b6a3a[s][1] || x8e87291a1484d9d6[s] <= x8b328785896e71a4(s)-2 ||
+                      (x1fc55a90ef20a587-x464c97a27935319f[s] <= (x5a0b48c06641e99f[s] ? 16 : 8)));
+  end
+  xa48af002edd42acc = xc2f596f21ac5aedf;
+  case (xc2f596f21ac5aedf)
+    2'd0: begin
+      if (x94e221ac3d06117e[0]) xa48af002edd42acc = 2'd0;
+      else if (x94e221ac3d06117e[1]) xa48af002edd42acc = 2'd1;
+      else xa48af002edd42acc = 2'd2;
+    end
+    2'd1: begin
+      if (x94e221ac3d06117e[1]) xa48af002edd42acc = 2'd1;
+      else if (x94e221ac3d06117e[2]) xa48af002edd42acc = 2'd2;
+      else xa48af002edd42acc = 2'd0;
+    end
+    default: begin
+      if (x94e221ac3d06117e[2]) xa48af002edd42acc = 2'd2;
+      else if (x94e221ac3d06117e[0]) xa48af002edd42acc = 2'd0;
+      else xa48af002edd42acc = 2'd1;
+    end
+  endcase
+  x8c560dff107cb486 = xe09866e5fe8b7f95(x1fc55a90ef20a587 - x464c97a27935319f[xa48af002edd42acc],
+                             x5a0b48c06641e99f[xa48af002edd42acc]);
+  x857078de753100b7 = x0ad543d7b23b6a3a[xa48af002edd42acc];
+end
+
+wire x1b5e14844df15d20 = |x94e221ac3d06117e;
+
+assign x5f3cc0def5502ace = x1b5e14844df15d20 && ((x2050daf22bd49ecb < xa7aecf71c09458ee) || x85669980432135b1);
+assign x7ab8fd55211427d6 = x857078de753100b7;
+
+always @* begin
+  x66e1297392ee6148 = x9ca29e85205aaa6f;
+  if (!x3bdcd08670f89d73) begin
+    if (xd0d4ae8f1a98e09e)
+      x66e1297392ee6148[x9529c4fd394bbae6*8 +: 8] = x0cc1f11add004306[7:0];
+    else
+      x66e1297392ee6148[x9529c4fd394bbae6*16 +: 16] = x0cc1f11add004306;
+  end
+end
+
+assign xd27150d30b90d9e3 = (x1a37a4355a35e0bf == x54ee064ac5a00102) && x9a74def6247b2e89 &&
+                        !x3bdcd08670f89d73;
+assign x0f53af67e1702907 = (x1a37a4355a35e0bf == x54ee064ac5a00102) && !x9a74def6247b2e89 &&
+                           (x1dffe7eb9a561142 == x1fc55a90ef20a587);
+assign xd5e0a2df2798db0a = (x29133fc73ea97aec>=2) ||
+  ((x29133fc73ea97aec==1) && x3bdcd08670f89d73);
+assign x7311d4dd183bed0f = ({1'b0,x49c0a3219672c789} +
+  (x8612e60e4de6c591 ? x41bc74d596002384[x9ce90a160ad5cb9f] :
+   x3bdcd08670f89d73 ? x9529c4fd394bbae6 : x7f4537fad3a8736f)) == {1'b0,x1fc55a90ef20a587};
+assign x5b333385bf17516a = x8612e60e4de6c591 || x3bdcd08670f89d73 || xe8208c455b2d50df;
+assign xec1a2d76f44d7fbc = x119abc98abaa5a2a;
+assign x51896265f00d5ad3 = x8612e60e4de6c591 ? x72e3fb5058b4b93c[x9ce90a160ad5cb9f] :
+                       x3bdcd08670f89d73 ? x9ca29e85205aaa6f : x66e1297392ee6148;
+assign xe9a52f489c6c6ba6 = x2881e561634ef344(x8612e60e4de6c591 ?
+                                   x41bc74d596002384[x9ce90a160ad5cb9f] :
+                                   x3bdcd08670f89d73 ? x9529c4fd394bbae6 : x7f4537fad3a8736f,
+                                   xd0d4ae8f1a98e09e);
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    x1a37a4355a35e0bf <= xfffa97008ec3e2ea;
+    xc1574ec1f03711d1 <= 1'b0;
+    xf295233e23064221 <= 4'b0;
+    x5d688293cf8b5780 <= 3'b0;
+    x5a0b48c06641e99f <= 3'b0;
+    x9a74def6247b2e89 <= 1'b0;
+    xd0d4ae8f1a98e09e <= 1'b0;
+    x119abc98abaa5a2a <= {ADDR_WIDTH{1'b0}};
+    x1fc55a90ef20a587 <= 16'b0;
+    x1dffe7eb9a561142 <= 16'b0;
+    x49c0a3219672c789 <= 16'b0;
+    xbb7796c8b8b6cfd0 <= 0; x37083bf35f3c4649 <= 0; x2050daf22bd49ecb <= 0;
+    xc2f596f21ac5aedf <= 2'b0;
+    x9ca29e85205aaa6f <= {xd77ab9d08abe6edc{1'b0}};
+    x9529c4fd394bbae6 <= 5'b0;
+    x3bdcd08670f89d73 <= 1'b0;
+    x9ce90a160ad5cb9f <= 1'b0;
+    xa5db111c92c0e502 <= 1'b0;
+    x29133fc73ea97aec <= 2'b0;
+    x1c20549bd6fb566a <= 1'b0;
+    for (s = 0; s < 3; s = s + 1) begin
+      x0ad543d7b23b6a3a[s] <= {ADDR_WIDTH{1'b0}};
+      x464c97a27935319f[s] <= 16'b0;
+      x0a6e419d6cd8ecd5[s] <= 0; x31b976997bb28f41[s] <= 0;
+      xc450c8d51717f06a[s] <= 0; x8e87291a1484d9d6[s] <= 0; xcfc42fe2f97351eb[s] <= 0;
+    end
+  end else begin
+    x1c20549bd6fb566a <= 1'b0;
+    if (x02edd066f8aa3281) begin
+      xc1574ec1f03711d1 <= x03c9e53c628c1435;
+      xf295233e23064221 <= x7d88bd85a9438b1f;
+      x5d688293cf8b5780 <= {x558efab3d942d8e5, x80a923b41e3137d0, x3472df29097e3739};
+      x5a0b48c06641e99f <= {x8a85d21b88eae8b1, xe56e8e3d38a38904, x68e30639857afb20};
+      x9a74def6247b2e89 <= xbbba0ec6e8380daf;
+      xd0d4ae8f1a98e09e <= x7cc60cef1752cb6a;
+      x0ad543d7b23b6a3a[0] <= {x03f247e024de0fe3[ADDR_WIDTH-1:1], 1'b0};
+      x0ad543d7b23b6a3a[1] <= {x06e22fc6178c5b8d[ADDR_WIDTH-1:1], 1'b0};
+      x0ad543d7b23b6a3a[2] <= {x5f683d6d42161d24[ADDR_WIDTH-1:1], 1'b0};
+      x119abc98abaa5a2a <= {x916d7ac9ca48a07b[ADDR_WIDTH-1:1], 1'b0};
+      x1fc55a90ef20a587 <= xc0690de712ba6124;
+      x1dffe7eb9a561142 <= 16'b0;
+      x49c0a3219672c789 <= 16'b0;
+      xbb7796c8b8b6cfd0 <= 0; x37083bf35f3c4649 <= 0; x2050daf22bd49ecb <= 0;
+      xc2f596f21ac5aedf <= 2'b0;
+      x9ca29e85205aaa6f <= {xd77ab9d08abe6edc{1'b0}};
+      x9529c4fd394bbae6 <= 5'b0;
+      x3bdcd08670f89d73 <= 1'b0;
+      x9ce90a160ad5cb9f <= 1'b0;
+      xa5db111c92c0e502 <= 1'b0;
+      x29133fc73ea97aec <= 2'b0;
+      for (s = 0; s < 3; s = s + 1) begin
+        x464c97a27935319f[s] <= 16'b0;
+        x0a6e419d6cd8ecd5[s] <= 0; x31b976997bb28f41[s] <= 0;
+        xc450c8d51717f06a[s] <= 0; x8e87291a1484d9d6[s] <= 0; xcfc42fe2f97351eb[s] <= 0;
+      end
+      if (xc0690de712ba6124 == 0) begin
+        x1a37a4355a35e0bf <= xfffa97008ec3e2ea;
+        x1c20549bd6fb566a <= 1'b1;
+      end else begin
+        x1a37a4355a35e0bf <= x0cbccad7c4de7a77;
+      end
+    end else begin
+      if (x3533b8aa129018f8)
+        x1a37a4355a35e0bf <= x54ee064ac5a00102;
+
+      if (x71ed875f6291ec0b) x1dffe7eb9a561142 <= x58525a47aaad5d87;
+      for (s=0;s<3;s=s+1) begin
+        if (x71ed875f6291ec0b && x5d688293cf8b5780[s]) begin
+          if (x7ca96a3c5ee12588[s]) begin xcfc42fe2f97351eb[s]<=0; x0a6e419d6cd8ecd5[s]<=(x0a6e419d6cd8ecd5[s]==x8b328785896e71a4(s)-1)?0:x0a6e419d6cd8ecd5[s]+1'b1; end
+          else xcfc42fe2f97351eb[s]<=xcfc42fe2f97351eb[s]+1'b1;
+        end
+        if (x85669980432135b1 && x8d8a5fb864845e4f==s) begin
+          x3613586b42697172[xc0d83f9ec0c352bb(s)+x31b976997bb28f41[s]] <= xfa30783cb1636705;
+          x956b1e5c49de3067[xc0d83f9ec0c352bb(s)+x31b976997bb28f41[s]] <= x280568b48046ea25;
+          x31b976997bb28f41[s] <= (x31b976997bb28f41[s]==x8b328785896e71a4(s)-1)?0:x31b976997bb28f41[s]+1'b1;
+        end
+        case ({x85669980432135b1 && x8d8a5fb864845e4f==s,x7ca96a3c5ee12588[s]})
+          2'b10: xc450c8d51717f06a[s]<=xc450c8d51717f06a[s]+1'b1;
+          2'b01: xc450c8d51717f06a[s]<=xc450c8d51717f06a[s]-1'b1;
+          default: ;
+        endcase
+        case ({xce7a2d397d980478 && xa48af002edd42acc==s,x7ca96a3c5ee12588[s]})
+          2'b10: x8e87291a1484d9d6[s]<=x8e87291a1484d9d6[s]+1'b1;
+          2'b01: x8e87291a1484d9d6[s]<=x8e87291a1484d9d6[s]-1'b1;
+          default: ;
+        endcase
+      end
+      if (xce7a2d397d980478) begin
+        x945269c2457cbcea[x37083bf35f3c4649] <= xa48af002edd42acc;
+        x4b75e502bbf7969d[x37083bf35f3c4649] <= x8c560dff107cb486;
+        x37083bf35f3c4649 <= x37083bf35f3c4649+1'b1;
+        x464c97a27935319f[xa48af002edd42acc] <= x464c97a27935319f[xa48af002edd42acc]+{11'b0,x8c560dff107cb486};
+        x0ad543d7b23b6a3a[xa48af002edd42acc] <= x0ad543d7b23b6a3a[xa48af002edd42acc]+2;
+        xc2f596f21ac5aedf <= (xa48af002edd42acc==2) ? 0 : xa48af002edd42acc+1'b1;
+      end
+      if (x85669980432135b1) xbb7796c8b8b6cfd0 <= xbb7796c8b8b6cfd0+1'b1;
+      case ({xce7a2d397d980478,x85669980432135b1})
+        2'b10: x2050daf22bd49ecb<=x2050daf22bd49ecb+1'b1;
+        2'b01: x2050daf22bd49ecb<=x2050daf22bd49ecb-1'b1;
+        default: ;
+      endcase
+
+      if (xd343b2ec0dcdb005) begin
+        if (x0653626f04255118) begin
+          if (xcd0637e89eacea17) begin
+            x9ca29e85205aaa6f <= {xd77ab9d08abe6edc{1'b0}};
+            x9529c4fd394bbae6 <= 5'b0;
+            x3bdcd08670f89d73 <= 1'b0;
+          end else if (xc8eb754c92d93536) begin
+            x72e3fb5058b4b93c[xa5db111c92c0e502] <= x66e1297392ee6148;
+            x41bc74d596002384[xa5db111c92c0e502] <= x7f4537fad3a8736f;
+            xa5db111c92c0e502 <= xa5db111c92c0e502 + 1'b1;
+            x9ca29e85205aaa6f <= {xd77ab9d08abe6edc{1'b0}};
+            x9529c4fd394bbae6 <= 5'b0;
+            x3bdcd08670f89d73 <= 1'b0;
+          end else begin
+
+
+            x9ca29e85205aaa6f <= x66e1297392ee6148;
+            x9529c4fd394bbae6 <= x7f4537fad3a8736f;
+            x3bdcd08670f89d73 <= 1'b1;
+          end
+        end else begin
+          x9ca29e85205aaa6f <= x66e1297392ee6148;
+          x9529c4fd394bbae6 <= x7f4537fad3a8736f;
+          x3bdcd08670f89d73 <= 1'b0;
+        end
+      end else if (xdea3483a889e84f9) begin
+        x9ca29e85205aaa6f <= {xd77ab9d08abe6edc{1'b0}};
+        x9529c4fd394bbae6 <= 5'b0;
+        x3bdcd08670f89d73 <= 1'b0;
+      end
+      if (x2b2c950677d5f3eb) begin
+        x49c0a3219672c789 <= x49c0a3219672c789 +
+                          {11'b0, x8612e60e4de6c591 ?
+                                   x41bc74d596002384[x9ce90a160ad5cb9f] :
+                                   x3bdcd08670f89d73 ? x9529c4fd394bbae6 : x7f4537fad3a8736f};
+        if (x8612e60e4de6c591)
+          x9ce90a160ad5cb9f <= x9ce90a160ad5cb9f + 1'b1;
+        x119abc98abaa5a2a <= x119abc98abaa5a2a + {{ADDR_WIDTH-2{1'b0}}, 2'd2};
+      end
+      case ({x0653626f04255118 && !xcd0637e89eacea17 && xc8eb754c92d93536,
+             x4a5850aee959cd41})
+        2'b10: x29133fc73ea97aec <= x29133fc73ea97aec + 2'd1;
+        2'b01: x29133fc73ea97aec <= x29133fc73ea97aec - 2'd1;
+        default: x29133fc73ea97aec <= x29133fc73ea97aec;
+      endcase
+
+      if (!x9a74def6247b2e89 && xf543fc23510250b3 && x0f53af67e1702907) begin
+        x1a37a4355a35e0bf <= xfffa97008ec3e2ea;
+        x1c20549bd6fb566a <= 1'b1;
+      end else if (x9a74def6247b2e89 && (x1dffe7eb9a561142 == x1fc55a90ef20a587) &&
+                   (x49c0a3219672c789 == x1fc55a90ef20a587) &&
+                   (x29133fc73ea97aec == 2'd0) &&
+                   (x9529c4fd394bbae6 == 0) && xa8238d7b0c136cf3) begin
+        x1a37a4355a35e0bf <= xfffa97008ec3e2ea;
+        x1c20549bd6fb566a <= 1'b1;
+      end
+    end
+  end
+end
+
+wire x5016ed496e1f6de6 = (x412a5f55a63459bc == 0) || (xae6e38e3bcb66f35 == 0);
+
+`ifndef SYNTHESIS
+initial if(xcbcceb65103ff427<2 || (xcbcceb65103ff427 & (xcbcceb65103ff427-1))!=0)
+  $fatal(1,"WR_FIFO_DEPTH must be a power of two >=2");
+integer x0fea0879d16e3178;
+always @(posedge clk) if(cpurst_b) begin
+  if(x93db181369f80dae && x2050daf22bd49ecb==0) $fatal(1,"unowned DTCM response");
+  if(x2050daf22bd49ecb>xa7aecf71c09458ee) $fatal(1,"read tag overflow");
+  for(x0fea0879d16e3178=0;x0fea0879d16e3178<3;x0fea0879d16e3178=x0fea0879d16e3178+1)
+    if(xc450c8d51717f06a[x0fea0879d16e3178]>x8e87291a1484d9d6[x0fea0879d16e3178] || x8e87291a1484d9d6[x0fea0879d16e3178]>x8b328785896e71a4(x0fea0879d16e3178))
+      $fatal(1,"source credit overflow");
+end
+`endif
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x9a9f625f206419a8 #(
+  parameter x0b65b4c43e908ab0 = 27
+) (
+  input wire clk,
+  input wire cpurst_b,
+  input wire x0388d55a56606df3,
+  output wire x34598f75358c922f,
+  input wire xff51cf82c3630ca2,
+  input wire [3:0] x12f131f237013735,
+  input wire xaf6d28e2c1827c1f,
+  output wire x3c477fd82fdb9b95,
+  input wire [15:0] xf3136de0c3e18476,
+  input wire [15:0] xaa00165f29bfe251,
+  input wire [15:0] x636f97681983d4eb,
+  input wire [15:0] x581abf1e3a5be56f,
+  input wire xf216264a18141690,
+  output wire xb05bbc15adb34e07,
+  output wire [15:0] x37068f6d113c124f,
+  output wire x526cbd7d9a583cf7,
+  output wire xa16d059b69b86863,
+  input wire x63f4335a43a4288a,
+  output wire [15:0] x3395e730e1268dbc,
+  output wire [15:0] xe3f6048603d2af04,
+  output wire [15:0] x1eb329990206f9da,
+  output wire [15:0] x4ee15e4044da8f77,
+
+  output wire x97aa8a107fd55d0a,
+  input wire x768ff0dd0b5681a7,
+  output wire [2:0] x0ca1a0775cdcf991,
+  output wire [15:0] x407ad39dd60635fa,
+  output wire x5a08dcd853baffd0,
+  input wire x452ba594efb875a5,
+  input wire [15:0] x723d652d7339ff2b,
+
+  output wire xca40287423e98a07,
+  input wire cmpu_start_ready,
+  output wire [3:0] xf3c7481361be949f,
+  output wire xaf18f4dcdf376fdd,
+  input wire x0ca582e9aac92269,
+  output wire [15:0] x8562e7546c1c8ed0,
+  output wire [15:0] xd1e838143857e5bb,
+  output wire [7:0] x1dc2ff6f58b0380a,
+  output wire [15:0] x6022e374a096a3f2,
+  output wire x28b290208ccdab98,
+  input wire x2f14e0a0953e767e,
+  input wire [15:0] xf3a3d6149b14b247,
+  input wire xb8ebdd3202059633,
+  input wire x19a792fcae32b161,
+  output wire x04aafa260d7760d8,
+  input wire [15:0] x15cb0bc0837043df,
+  input wire [15:0] xdaf182d756a6e23b,
+  input wire [15:0] xff7f6f373a2dc298,
+  input wire [15:0] x1b7db232caae4ef7
+);
+
+localparam xe979a9e4cd36ad42 = 1'b0;
+localparam xaa9945b9beae458c = 1'b1;
+reg [x0b65b4c43e908ab0-1:0] xf16d8601e7eb9a3b;
+integer x4308fe0f742b6658;
+
+assign x34598f75358c922f = (xff51cf82c3630ca2 == xaa9945b9beae458c) ? cmpu_start_ready : 1'b1;
+assign x3c477fd82fdb9b95 = (xff51cf82c3630ca2 == xaa9945b9beae458c) ? x0ca582e9aac92269 : x768ff0dd0b5681a7;
+
+assign x97aa8a107fd55d0a = xaf6d28e2c1827c1f && (xff51cf82c3630ca2 == xe979a9e4cd36ad42);
+assign x0ca1a0775cdcf991 = x12f131f237013735[2:0];
+assign x407ad39dd60635fa = xf3136de0c3e18476;
+assign x5a08dcd853baffd0 = xf216264a18141690;
+
+assign xca40287423e98a07 = x0388d55a56606df3 && (xff51cf82c3630ca2 == xaa9945b9beae458c);
+assign xf3c7481361be949f = x12f131f237013735;
+assign xaf18f4dcdf376fdd = xaf6d28e2c1827c1f && (xff51cf82c3630ca2 == xaa9945b9beae458c);
+assign x8562e7546c1c8ed0 = xf3136de0c3e18476;
+assign xd1e838143857e5bb = xaa00165f29bfe251;
+assign x1dc2ff6f58b0380a = x636f97681983d4eb[7:0];
+assign x6022e374a096a3f2 = x581abf1e3a5be56f;
+assign x28b290208ccdab98 = xf216264a18141690;
+
+assign xb05bbc15adb34e07 = (xff51cf82c3630ca2 == xaa9945b9beae458c) ? x2f14e0a0953e767e : x452ba594efb875a5;
+assign x37068f6d113c124f = (xff51cf82c3630ca2 == xaa9945b9beae458c) ? xf3a3d6149b14b247 : x723d652d7339ff2b;
+assign x526cbd7d9a583cf7 = (xff51cf82c3630ca2 == xaa9945b9beae458c) ? xb8ebdd3202059633 :
+                                                    xf16d8601e7eb9a3b[x0b65b4c43e908ab0-1];
+assign xa16d059b69b86863 = (xff51cf82c3630ca2 == xaa9945b9beae458c) && x19a792fcae32b161;
+assign x04aafa260d7760d8 = (xff51cf82c3630ca2 == xaa9945b9beae458c) && x63f4335a43a4288a;
+assign x3395e730e1268dbc = x15cb0bc0837043df;
+assign xe3f6048603d2af04 = xdaf182d756a6e23b;
+assign x1eb329990206f9da = xff7f6f373a2dc298;
+assign x4ee15e4044da8f77 = x1b7db232caae4ef7;
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xf16d8601e7eb9a3b <= {x0b65b4c43e908ab0{1'b0}};
+  end else begin
+    xf16d8601e7eb9a3b[0] <= x97aa8a107fd55d0a && x768ff0dd0b5681a7 && xf216264a18141690;
+    for (x4308fe0f742b6658 = 1; x4308fe0f742b6658 < x0b65b4c43e908ab0; x4308fe0f742b6658 = x4308fe0f742b6658 + 1)
+      xf16d8601e7eb9a3b[x4308fe0f742b6658] <= xf16d8601e7eb9a3b[x4308fe0f742b6658-1];
+  end
+end
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module xa62cd7b77ebce879 (
+  input wire clk,
+  input wire cpurst_b,
+  input wire x600d537ebec80419,
+  output wire xc9a019b1e19d2207,
+  input wire [3:0] x7d88bd85a9438b1f,
+  input wire in_valid,
+  output wire x201e7b9037621dc5,
+  input wire [15:0] xa40ed55a672be187,
+  input wire [15:0] xed86b6759627f7eb,
+  input wire [7:0] x0a4449b6dabe347f,
+  input wire [15:0] x8f46332c7d48b7c6,
+  input wire x07f4d31d26e6e521,
+  output wire out_valid,
+  output wire [15:0] out_value,
+  output wire xeee5e7dee75040ce,
+  output wire x752427999027db57,
+  output wire result_valid,
+  input wire x15b3678be446b037,
+  output wire [15:0] x2800ff57da46d276,
+  output wire [15:0] x4041438f39283558,
+  output wire [15:0] xd4650ff6d588a26b,
+  output wire [15:0] x387cb618d9b3a75d
+);
+
+localparam [3:0] x084d9e9ca8d6472d = 4'd0;
+localparam [3:0] xc21fa7fa19f11092 = 4'd1;
+localparam [3:0] xf44123f9e4b797a7 = 4'd2;
+localparam [3:0] x04809f5e6a06fa39 = 4'd3;
+localparam [3:0] x01da5b962138f3bd = 4'd4;
+localparam [3:0] xbc585c44b6e0918a = 4'd5;
+localparam [3:0] x2b1c5647bb4ab414 = 4'd6;
+localparam [3:0] x4b980386292ae432 = 4'd7;
+localparam [3:0] xf24cc3016e9c2185 = 4'd8;
+
+reg xb107a1fe33fa4030;
+reg [3:0] xf295233e23064221;
+reg x51bd693e75317440;
+reg [15:0] xe71eb8e2aa87aef9;
+reg x38feb5ac47b5bf6a;
+reg x892315fe309d070a;
+reg x1cbe8aba515c22d1;
+reg [15:0] x5d651bae09da1295;
+reg [15:0] x4dabf5f6814c3a7d;
+reg [15:0] x83feea4f694843a7;
+reg [15:0] xcbe960c4cea09cdf;
+reg xb42722eecacc726a;
+reg x3b74016bf80b0730;
+reg [15:0] x083c104081c4b8d7;
+reg [15:0] x10a4161187ff4ece;
+reg [15:0] x9e41c85856f5c6f8;
+reg [15:0] x47e0379a2f8ce487;
+reg [15:0] x62c47b824ddc412e;
+reg [15:0] x49eb0e1285afbdc4;
+
+wire x0d4c661729820875 = (xf295233e23064221 == x084d9e9ca8d6472d);
+wire x02edd066f8aa3281 = x600d537ebec80419 && xc9a019b1e19d2207;
+wire xdcc9bf7632cac50e = in_valid && x201e7b9037621dc5;
+assign xc9a019b1e19d2207 = !xb107a1fe33fa4030 && !x1cbe8aba515c22d1;
+assign x201e7b9037621dc5 = xb107a1fe33fa4030;
+
+wire [15:0] xc4a6a9ca7e7a4767 = x0d4c661729820875 ? x9e41c85856f5c6f8 :
+                         (xf295233e23064221 == x04809f5e6a06fa39 ? 16'b0 : xa40ed55a672be187);
+wire [15:0] x1bf8cfbfd023f2a3 = x0d4c661729820875 ? xa40ed55a672be187 :
+                         (xf295233e23064221 == x04809f5e6a06fa39 ? 16'b0 : xed86b6759627f7eb);
+wire x28104bdb466b31fb, xcf7116623592a737, x2eac83395d032992;
+wire xae818567fa31e420, xcafc4b26bdcb3c92, xe61b0871f973850c;
+xe1e147bdcdc41396 x053d31957b136c68 (
+  .a(xc4a6a9ca7e7a4767), .b(x1bf8cfbfd023f2a3), .x9ea8fdc4a9d524ab(x28104bdb466b31fb), .x0877a439d28be9c6(xcf7116623592a737),
+  .x8c7957888b7eb20a(x2eac83395d032992), .x0b38ff2c08588710(xae818567fa31e420), .x0368b15a9a38479e(xcafc4b26bdcb3c92), .xff399757159809a8(xe61b0871f973850c)
+);
+
+wire [15:0] x9185914639e67092 = x0d4c661729820875 ? xa40ed55a672be187 : 16'b0;
+wire [15:0] x14f89d5844ff72a2 = x0d4c661729820875 ? x62c47b824ddc412e : 16'b0;
+wire x48b7cae91c9a24ba, x2c7bb489f67d7ca6, xf6ad4f01e2476abe;
+wire x0c4010bd4c1e8ada, xf681ee80eb408219, x9a9d2a75f2590542;
+xe1e147bdcdc41396 x766389c16c559a6e (
+  .a(x9185914639e67092), .b(x14f89d5844ff72a2), .x9ea8fdc4a9d524ab(x48b7cae91c9a24ba), .x0877a439d28be9c6(x2c7bb489f67d7ca6),
+  .x8c7957888b7eb20a(xf6ad4f01e2476abe), .x0b38ff2c08588710(x0c4010bd4c1e8ada), .x0368b15a9a38479e(xf681ee80eb408219), .xff399757159809a8(x9a9d2a75f2590542)
+);
+
+wire xf9107029b484190b = x28104bdb466b31fb;
+wire xeea8ae5fa1f3318b = xcf7116623592a737;
+wire [15:0] x7dcad6afceb4ff1e = xf9107029b484190b ? (xeea8ae5fa1f3318b ? xa40ed55a672be187 : xed86b6759627f7eb) :
+                         xeea8ae5fa1f3318b ? xa40ed55a672be187 :
+                         xe61b0871f973850c ? xed86b6759627f7eb : xa40ed55a672be187;
+wire [15:0] xa0933dc1802fe587 = xf9107029b484190b ? (xeea8ae5fa1f3318b ? xa40ed55a672be187 : xed86b6759627f7eb) :
+                         xeea8ae5fa1f3318b ? xa40ed55a672be187 :
+                         xae818567fa31e420 ? xed86b6759627f7eb : xa40ed55a672be187;
+
+reg [15:0] x12208a9f9d7fbd7c;
+reg x12d08aa2549bf773;
+always @* begin
+  x12208a9f9d7fbd7c = 16'b0;
+  x12d08aa2549bf773 = 1'b0;
+  case (xf295233e23064221)
+    xc21fa7fa19f11092: x12208a9f9d7fbd7c = x7dcad6afceb4ff1e;
+    xf44123f9e4b797a7: x12208a9f9d7fbd7c = xa0933dc1802fe587;
+    x04809f5e6a06fa39: x12208a9f9d7fbd7c = (x0a4449b6dabe347f != 0) ? xed86b6759627f7eb : xa40ed55a672be187;
+    x01da5b962138f3bd: begin x12208a9f9d7fbd7c = {15'b0, xe61b0871f973850c}; x12d08aa2549bf773 = 1'b1; end
+    xbc585c44b6e0918a: begin x12208a9f9d7fbd7c = {15'b0, xe61b0871f973850c || xcafc4b26bdcb3c92}; x12d08aa2549bf773 = 1'b1; end
+    x2b1c5647bb4ab414: begin x12208a9f9d7fbd7c = {15'b0, xcafc4b26bdcb3c92}; x12d08aa2549bf773 = 1'b1; end
+    x4b980386292ae432: begin x12208a9f9d7fbd7c = {15'b0, xae818567fa31e420 || xcafc4b26bdcb3c92}; x12d08aa2549bf773 = 1'b1; end
+    xf24cc3016e9c2185: begin x12208a9f9d7fbd7c = {15'b0, x2eac83395d032992 || !xcafc4b26bdcb3c92}; x12d08aa2549bf773 = 1'b1; end
+    default: begin end
+  endcase
+end
+
+wire x79687dbc837b116b = !x48b7cae91c9a24ba;
+wire x85855a79206d7aff = x79687dbc837b116b && !x3b74016bf80b0730;
+wire x8bbcd4b1647cb55a = x79687dbc837b116b && x3b74016bf80b0730 && xae818567fa31e420;
+wire x53d3df2eab517fa6 = x79687dbc837b116b && x3b74016bf80b0730 && x0c4010bd4c1e8ada;
+wire x602ac96ff9bc3056 = x3b74016bf80b0730 || x79687dbc837b116b;
+wire [15:0] x8f50dde78cbf0e8b = x85855a79206d7aff ? xa40ed55a672be187 :
+                                  (x8bbcd4b1647cb55a ? xa40ed55a672be187 : x9e41c85856f5c6f8);
+wire [15:0] x3acc7dc6ba5448b7 = x85855a79206d7aff ? x8f46332c7d48b7c6 :
+                                   (x8bbcd4b1647cb55a ? x8f46332c7d48b7c6 : x47e0379a2f8ce487);
+wire [15:0] xc142a395baeb381a = x85855a79206d7aff ? xa40ed55a672be187 :
+                                  (x53d3df2eab517fa6 ? xa40ed55a672be187 : x62c47b824ddc412e);
+wire [15:0] x6f139d8a1f572722 = x85855a79206d7aff ? x8f46332c7d48b7c6 :
+                                   (x53d3df2eab517fa6 ? x8f46332c7d48b7c6 : x49eb0e1285afbdc4);
+
+assign out_valid = x51bd693e75317440;
+assign out_value = xe71eb8e2aa87aef9;
+assign xeee5e7dee75040ce = x38feb5ac47b5bf6a;
+assign x752427999027db57 = x892315fe309d070a;
+assign result_valid = x1cbe8aba515c22d1;
+assign x2800ff57da46d276 = x5d651bae09da1295;
+assign x4041438f39283558 = x4dabf5f6814c3a7d;
+assign xd4650ff6d588a26b = x83feea4f694843a7;
+assign x387cb618d9b3a75d = xcbe960c4cea09cdf;
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xb107a1fe33fa4030 <= 1'b0;
+    xf295233e23064221 <= 4'b0;
+    x51bd693e75317440 <= 1'b0;
+    xe71eb8e2aa87aef9 <= 16'b0;
+    x38feb5ac47b5bf6a <= 1'b0;
+    x892315fe309d070a <= 1'b0;
+    x1cbe8aba515c22d1 <= 1'b0;
+    x5d651bae09da1295 <= 16'b0;
+    x4dabf5f6814c3a7d <= 16'b0;
+    x83feea4f694843a7 <= 16'b0;
+    xcbe960c4cea09cdf <= 16'b0;
+    xb42722eecacc726a <= 1'b0;
+    x3b74016bf80b0730 <= 1'b0;
+    x083c104081c4b8d7 <= 16'b0;
+    x10a4161187ff4ece <= 16'b0;
+    x9e41c85856f5c6f8 <= 16'b0;
+    x47e0379a2f8ce487 <= 16'b0;
+    x62c47b824ddc412e <= 16'b0;
+    x49eb0e1285afbdc4 <= 16'b0;
+  end else begin
+    x51bd693e75317440 <= 1'b0;
+    if (x1cbe8aba515c22d1 && x15b3678be446b037)
+      x1cbe8aba515c22d1 <= 1'b0;
+    if (x02edd066f8aa3281) begin
+      xb107a1fe33fa4030 <= 1'b1;
+      xf295233e23064221 <= x7d88bd85a9438b1f;
+      xb42722eecacc726a <= 1'b0;
+      x3b74016bf80b0730 <= 1'b0;
+    end
+    if (xdcc9bf7632cac50e) begin
+      if (x0d4c661729820875) begin
+        if (!xb42722eecacc726a) begin
+          xb42722eecacc726a <= 1'b1;
+          x083c104081c4b8d7 <= xa40ed55a672be187;
+          x10a4161187ff4ece <= x8f46332c7d48b7c6;
+        end
+        x3b74016bf80b0730 <= x602ac96ff9bc3056;
+        x9e41c85856f5c6f8 <= x8f50dde78cbf0e8b;
+        x47e0379a2f8ce487 <= x3acc7dc6ba5448b7;
+        x62c47b824ddc412e <= xc142a395baeb381a;
+        x49eb0e1285afbdc4 <= x6f139d8a1f572722;
+        if (x07f4d31d26e6e521) begin
+          xb107a1fe33fa4030 <= 1'b0;
+          x1cbe8aba515c22d1 <= 1'b1;
+          if (x602ac96ff9bc3056) begin
+            x5d651bae09da1295 <= x8f50dde78cbf0e8b;
+            x4dabf5f6814c3a7d <= x3acc7dc6ba5448b7;
+            x83feea4f694843a7 <= xc142a395baeb381a;
+            xcbe960c4cea09cdf <= x6f139d8a1f572722;
+          end else begin
+            x5d651bae09da1295 <= xb42722eecacc726a ? x083c104081c4b8d7 : xa40ed55a672be187;
+            x4dabf5f6814c3a7d <= xb42722eecacc726a ? x10a4161187ff4ece : x8f46332c7d48b7c6;
+            x83feea4f694843a7 <= xb42722eecacc726a ? x083c104081c4b8d7 : xa40ed55a672be187;
+            xcbe960c4cea09cdf <= xb42722eecacc726a ? x10a4161187ff4ece : x8f46332c7d48b7c6;
+          end
+        end
+      end else begin
+        x51bd693e75317440 <= 1'b1;
+        xe71eb8e2aa87aef9 <= x12208a9f9d7fbd7c;
+        x38feb5ac47b5bf6a <= x12d08aa2549bf773;
+        x892315fe309d070a <= x07f4d31d26e6e521;
+        if (x07f4d31d26e6e521)
+          xb107a1fe33fa4030 <= 1'b0;
+      end
+    end
+  end
+end
+
+wire x4afe9f2dfb7a4dc6 = x2c7bb489f67d7ca6;
+wire x464f178ead9fc23d = xf6ad4f01e2476abe;
+wire x3b49349320c09bfd = xf681ee80eb408219;
+wire xe6438e66d3fdeb89 = x9a9d2a75f2590542;
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module xe1e147bdcdc41396 (
+  input  wire [15:0] a,
+  input  wire [15:0] b,
+  output wire        x9ea8fdc4a9d524ab,
+  output wire        x0877a439d28be9c6,
+  output wire        x8c7957888b7eb20a,
+  output wire        x0b38ff2c08588710,
+  output wire        x0368b15a9a38479e,
+  output wire        xff399757159809a8
+);
+
+wire x4650137c2075efa8 = (a[14:0] == 15'b0);
+wire xb062378271a05b6d = (b[14:0] == 15'b0);
+wire xf76acb8ac2783dc9 = (a == b) || (x4650137c2075efa8 && xb062378271a05b6d);
+reg x0de1e4af0034398a;
+
+assign x9ea8fdc4a9d524ab = (a[14:7] == 8'hff) && (a[6:0] != 7'b0);
+assign x0877a439d28be9c6 = (b[14:7] == 8'hff) && (b[6:0] != 7'b0);
+assign x8c7957888b7eb20a = x9ea8fdc4a9d524ab || x0877a439d28be9c6;
+assign x0368b15a9a38479e = !x8c7957888b7eb20a && xf76acb8ac2783dc9;
+assign x0b38ff2c08588710 = !x8c7957888b7eb20a && !xf76acb8ac2783dc9 && x0de1e4af0034398a;
+assign xff399757159809a8 = !x8c7957888b7eb20a && !xf76acb8ac2783dc9 && !x0de1e4af0034398a;
+
+always @* begin
+  if (a[15] != b[15])
+    x0de1e4af0034398a = a[15];
+  else if (a[15])
+    x0de1e4af0034398a = (a > b);
+  else
+    x0de1e4af0034398a = (a < b);
+end
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module xe828a59fba970427 #(
+  parameter x05508f94d79d71e8 = 27
+) (
+  input wire clk,
+  input wire cpurst_b,
+  input wire in_valid,
+  input wire x07f4d31d26e6e521,
+  output wire x201e7b9037621dc5,
+  input wire [2:0] x0c014b55b70e6cbb,
+  input wire [15:0] xef81f16c4cdf7fc8,
+  input wire [31:0] xcbdbbedc2b1fe017,
+  input wire xe0c0433c6ac703cd,
+  output wire out_valid,
+  output wire [2:0] x2b8f65f39bf1e0be,
+  output wire [15:0] x1ca1a8e89c1b635d,
+  output wire x3b740bbeff83b5da,
+  output wire xe70f7bd65e2c651b,
+  output wire [31:0] xc35eec8a64890ae2
+);
+
+wire [31:0] x5c7212161dc28963;
+
+x88b09434aa6a5416 #(.x05508f94d79d71e8(x05508f94d79d71e8)) x10f2f2cf1c5f6eda (
+  .forever_cpuclk(clk),
+  .cpurst_b(cpurst_b),
+  .in_valid(in_valid),
+  .x07f4d31d26e6e521(x07f4d31d26e6e521),
+  .x201e7b9037621dc5(x201e7b9037621dc5),
+  .x0c014b55b70e6cbb(x0c014b55b70e6cbb),
+  .x0c791aa5ae44c3a1({xef81f16c4cdf7fc8, 16'b0}),
+  .x721f25bc8e18991b(xcbdbbedc2b1fe017),
+  .xe0c0433c6ac703cd(xe0c0433c6ac703cd),
+  .out_valid(out_valid),
+  .x2b8f65f39bf1e0be(x2b8f65f39bf1e0be),
+  .out_value(x5c7212161dc28963),
+  .x3b740bbeff83b5da(x3b740bbeff83b5da),
+  .xe70f7bd65e2c651b(xe70f7bd65e2c651b),
+  .x552b4bba01a61e3c(xc35eec8a64890ae2)
+);
+
+assign x1ca1a8e89c1b635d = x5c7212161dc28963[31:16];
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x88b09434aa6a5416 #(
+  parameter x05508f94d79d71e8 = 27,
+  parameter xe5e03e1976b2ce57 = 1
+) (
+  input  wire        forever_cpuclk,
+  input  wire        cpurst_b,
+
+  input  wire        in_valid,
+  input  wire        x07f4d31d26e6e521,
+  output wire        x201e7b9037621dc5,
+  input  wire [2:0]  x0c014b55b70e6cbb,
+  input  wire [31:0] x0c791aa5ae44c3a1,
+  input  wire [31:0] x721f25bc8e18991b,
+  input  wire        xe0c0433c6ac703cd,
+
+  output wire        out_valid,
+  output wire [2:0]  x2b8f65f39bf1e0be,
+  output wire [31:0] out_value,
+  output wire        x3b740bbeff83b5da,
+  output wire        xe70f7bd65e2c651b,
+  output wire [31:0] x552b4bba01a61e3c
+);
+
+localparam [2:0] x85449cebc7be13be = 3'd0;
+localparam [2:0] x8892e084101a34a0 = 3'd1;
+localparam [2:0] xd1bc141d07804dc3  = 3'd2;
+localparam [2:0] x877c93a774151140     = 3'd3;
+localparam [2:0] x543f03db44e09832     = 3'd4;
+localparam [2:0] x8aaca36627d8e8d2  = 3'd5;
+localparam [2:0] xe3ffb037d7836c0d    = 3'd6;
+localparam [2:0] xce6afa13dc64854d = 3'd7;
+localparam integer xce047f57ee1ece91 = 7;
+localparam integer x039e53da36387cb1 = 7;
+localparam integer xb3c379090b4441a1 = 6;
+localparam integer x2ab6657c7372b477 = 1;
+localparam integer x943981d474e048b8 = xce047f57ee1ece91 + 4;
+localparam integer xd0f517ffd8516f95 = x05508f94d79d71e8 - xce047f57ee1ece91 - x039e53da36387cb1 -
+                                 xb3c379090b4441a1 -
+                                 x2ab6657c7372b477;
+
+wire   xce5d9cc713cb3d15;
+wire        x4988d121aff19eed;
+wire [21:0] xc7ae35aee464714c;
+wire        x945d48a2a042573f;
+wire        x4b87fa34411fcb73;
+wire [2:0]  x0c23790edf7a9985;
+wire [18:0] x6d17f3c5eb935bc6;
+wire [21:0] x97f43f3f1d49ed08;
+wire [21:0] xec63dd48805a8424;
+wire        x1b0130829f40110a;
+wire [2:0] x587549ac4fd51f49, x003565cdb43786ca, x2bdebb145a66507d;
+wire [2:0] x35dda25ab915fb08, x3c9c0fd6ad449f45, xe42af451c9414059;
+wire [21:0] xcddb653bb4a4d504,xa7ccb60d8fe7aa92,x69cc5ed3b272f5ba;
+wire        xee6468cc1ab4f3d5;
+wire        x3d2ac6b01ff17e91;
+wire [2:0]  xbd0f426f0bd2c291;
+wire [18:0] x0aefbe4343640f43;
+wire [21:0] x370b8748fdc03eb0;
+wire        x6198a17f9a9cc778;
+wire [2:0]  x800d489dbd81985e;
+wire [31:0] x898e988d97735625;
+wire        xc2fd2574e8043c29;
+wire        xd0e765178470f8d8;
+wire [31:0] xe13d7450bdf2b5d1;
+
+`ifndef SYNTHESIS
+initial if (x05508f94d79d71e8 < 27) $fatal(1,"ACTU PIPE_STAGES must be at least 27");
+`endif
+assign x201e7b9037621dc5 = cpurst_b;
+assign xce5d9cc713cb3d15 = in_valid && x201e7b9037621dc5;
+assign out_valid = x6198a17f9a9cc778;
+assign x2b8f65f39bf1e0be = x800d489dbd81985e;
+assign out_value = x898e988d97735625;
+assign x3b740bbeff83b5da = xc2fd2574e8043c29;
+assign xe70f7bd65e2c651b = xd0e765178470f8d8;
+assign x552b4bba01a61e3c = xe5e03e1976b2ce57 && x32b5f06cfdaf1e83 ? 32'h7fc00000 :
+                           xe5e03e1976b2ce57 && x8a3892188cd37f20 ? 32'h7f800000 : xe13d7450bdf2b5d1;
+
+
+
+wire [2:0] xae716553557d823f;
+wire xae68dbf5a4166df2;
+reg [xce047f57ee1ece91-1:0] x47183d8c515f2b3f;
+reg [2:0] xc5d7e283ac0fcc60 [0:x943981d474e048b8-1];
+integer x4ec358f6ed0ba8a0;
+x3e94c3f7c9e39aa5 x9ec3fd69c3f0315e(x0c014b55b70e6cbb,x0c791aa5ae44c3a1[31:16],x721f25bc8e18991b,xae716553557d823f,xae68dbf5a4166df2);
+always @(posedge forever_cpuclk) begin
+  x47183d8c515f2b3f<={x47183d8c515f2b3f[xce047f57ee1ece91-2:0],xae68dbf5a4166df2};
+  xc5d7e283ac0fcc60[0]<=xae716553557d823f;
+  for(x4ec358f6ed0ba8a0=1;x4ec358f6ed0ba8a0<x943981d474e048b8;x4ec358f6ed0ba8a0=x4ec358f6ed0ba8a0+1)
+    xc5d7e283ac0fcc60[x4ec358f6ed0ba8a0]<=xc5d7e283ac0fcc60[x4ec358f6ed0ba8a0-1];
+end
+
+
+
+
+wire [3:0] x2b4e80472b3f1184;
+reg [3:0] x97dc26249b8241af[0:x039e53da36387cb1+1];
+integer x6db7d81a80a867b9;
+always @(posedge forever_cpuclk)begin
+
+ x97dc26249b8241af[0]<=xc5d7e283ac0fcc60[x943981d474e048b8-1]!=0 ?
+   {1'b0,xc5d7e283ac0fcc60[x943981d474e048b8-1]} : x2b4e80472b3f1184;
+ for(x6db7d81a80a867b9=1;x6db7d81a80a867b9<x039e53da36387cb1+2;x6db7d81a80a867b9=x6db7d81a80a867b9+1)
+  x97dc26249b8241af[x6db7d81a80a867b9]<=x97dc26249b8241af[x6db7d81a80a867b9-1];
+end
+wire [3:0] x42c1d27ac1047004=x97dc26249b8241af[x039e53da36387cb1+1];
+wire [3:0] xdee2d04d581d1c5c=x42c1d27ac1047004;
+reg x32b5f06cfdaf1e83,x8a3892188cd37f20;
+always @(posedge forever_cpuclk or negedge cpurst_b) begin
+ if(!cpurst_b)begin x32b5f06cfdaf1e83<=0;x8a3892188cd37f20<=0;end
+ else if(xee6468cc1ab4f3d5)begin x32b5f06cfdaf1e83<=0;x8a3892188cd37f20<=0;end
+ else if(x4988d121aff19eed && xbd0f426f0bd2c291==3'd5)begin
+  x32b5f06cfdaf1e83<=x32b5f06cfdaf1e83 || x42c1d27ac1047004==3'd7;
+  x8a3892188cd37f20<=x8a3892188cd37f20 || x42c1d27ac1047004==3'd5 ||
+           (x42c1d27ac1047004==0 && x35dda25ab915fb08==3'd4);
+ end
+end
+wire [21:0] x1e363385e180d4b6;
+
+
+wire x3abc6678b66c0803=(x35dda25ab915fb08==3'd0)||(x35dda25ab915fb08==3'd2);
+wire [21:0] xaf69b60859d20f56=x35dda25ab915fb08==3'd3 ? 22'h1fbe1a :
+                       x3abc6678b66c0803 ? x370b8748fdc03eb0 : 22'b0;
+wire [21:0] x42186846b1fd9eb3=(xe5e03e1976b2ce57 && x42c1d27ac1047004!=0 && x42c1d27ac1047004!=4'd10) ? 22'b0 : xaf69b60859d20f56;
+xf3dfe651e39dceb7 x6c363b5408305d1a(
+ .clk(forever_cpuclk),.cpurst_b(cpurst_b),.x7373467841c567de(xee6468cc1ab4f3d5),
+ .x3eddf5e3b67886fb(x4988d121aff19eed && xbd0f426f0bd2c291==3'd5),.xc5616d1568de599d(x3d2ac6b01ff17e91),
+ .x05c9e39241edd196(x42186846b1fd9eb3),.x87135bafee9bbf7e(xc2fd2574e8043c29),
+ .x2091c57624fe8afe(xd0e765178470f8d8),.x1b56e1f33ca284c9(x1e363385e180d4b6));
+assign xe13d7450bdf2b5d1={x1e363385e180d4b6,10'b0};
+
+wire x898b42e824e43393, x3e0bf7f0095e9deb, x2821f4b39e3822d7, xd9c969b7694481b1, x79a5ee9fc45a48b8, x8583998c21cbc0a0;
+wire [2:0] xfa67ca0a0918f7f2;
+wire [15:0] x0e42761324c89322;
+wire [21:0] x68972d667cbaca01;
+wire signed [9:0] xfe2ebdb53df9d78e;
+wire [14:0] x3c225f8ce1b0216f;
+xbd1afeeb690de696 #(.xb67230d00e81e5fa(1)) x9b16129b3bebf71d (
+  .clk(forever_cpuclk),.cpurst_b(cpurst_b),.in_valid(xce5d9cc713cb3d15),
+  .x07f4d31d26e6e521(x07f4d31d26e6e521),.x1ad1631690d2c849(xe0c0433c6ac703cd),.x0c014b55b70e6cbb(x0c014b55b70e6cbb),
+  .xfe7ab404f5df7209(x0c791aa5ae44c3a1[31:16]),.xcbdbbedc2b1fe017(x721f25bc8e18991b),
+  .out_valid(x898b42e824e43393),.x752427999027db57(x3e0bf7f0095e9deb),.x5e15bafefc6897b8(x2821f4b39e3822d7),
+  .x2b8f65f39bf1e0be(xfa67ca0a0918f7f2),.x4b9e3fbe0c56b6e2(x0e42761324c89322),.x75b9dcdb9fff8c36(x68972d667cbaca01),
+  .x8581e1c4ed64d3cb(x8583998c21cbc0a0),.xdfdd68cfd7ae5882(x79a5ee9fc45a48b8),.xfef20c0badacfc02(xd9c969b7694481b1),.x5d1d03d0888e8f8b(xfe2ebdb53df9d78e),.x7da19ed0b4176b4b(),.x6d8d004e68174851(),.x8aee5aedd9f54fdc(),
+  .x9d2efa32e2b2d343(),.x1dde0c49a7c90648(x3c225f8ce1b0216f)
+);
+
+x9431b661e2ea13e6 #(.x9f2c614f57341b7f(xe5e03e1976b2ce57),.x1ac63268f823b2d1(1),.x87ed749abdd93a27(xe5e03e1976b2ce57),.x9b08cc09b91ff46a(xe5e03e1976b2ce57),.xb67230d00e81e5fa(1)) xe9ccd974bbf66bd0 (
+  .clk(forever_cpuclk),
+  .cpurst_b(cpurst_b),
+  .in_valid(x898b42e824e43393),
+  .x07f4d31d26e6e521(x3e0bf7f0095e9deb),
+  .x0c014b55b70e6cbb(xfa67ca0a0918f7f2),
+  .xfe7ab404f5df7209(x0e42761324c89322),
+  .x4befd6b816980811(x47183d8c515f2b3f[xce047f57ee1ece91-1]),
+  .xcdcf23f6ade64f3f(x68972d667cbaca01),
+  .x1ad1631690d2c849(x2821f4b39e3822d7),
+  .xcfeb7539e189fea9(x2b4e80472b3f1184),.x5c6b3811fdb4a607(x8583998c21cbc0a0),.xfd96c179dd1a90fc(x79a5ee9fc45a48b8),.x2113707f5633ba1d(xd9c969b7694481b1),.xd18730b1909718db(xfe2ebdb53df9d78e),.x0a40683585c667f9(15'b0),.xead3fd0f9038a7a7(21'b0),.x8e7a8b5e6e3be18c(x3c225f8ce1b0216f),
+  .out_valid(x945d48a2a042573f),
+  .x752427999027db57(x4b87fa34411fcb73),
+  .x2b8f65f39bf1e0be(x0c23790edf7a9985),
+  .xa8ed38d9b97a5c69(x6d17f3c5eb935bc6),
+  .x5e15bafefc6897b8(x1b0130829f40110a),
+  .x70538dfd2ad186bb(x97f43f3f1d49ed08),
+  .xab0a74e2907f005c(xec63dd48805a8424),
+  .x6b2ee21d8c6d75a9(x587549ac4fd51f49),.x53eda471f2ffb116(x003565cdb43786ca),
+  .xa0e5b95bd0d25e60(x2bdebb145a66507d)
+);
+
+xdf4e96d2519dddfd #(.x9f2c614f57341b7f(xe5e03e1976b2ce57),.x5b18f1dc0139f341(x039e53da36387cb1)) x13ebf9f9757fb6b4 (
+  .clk(forever_cpuclk),
+  .cpurst_b(cpurst_b),
+  .in_valid(x945d48a2a042573f),
+  .x07f4d31d26e6e521(x4b87fa34411fcb73),
+  .x0c014b55b70e6cbb(x0c23790edf7a9985),
+  .x9a515dc3044eb94d(x6d17f3c5eb935bc6),
+  .x1619fdfa4e0137c7(x97f43f3f1d49ed08),
+  .xc04a046831baefd0(xec63dd48805a8424),
+  .xd1131cec2bf1a082(x587549ac4fd51f49),.x8e115d7509d968f7(x003565cdb43786ca),
+  .xcb94278d0de9b7fd(x2bdebb145a66507d),
+  .x1ad1631690d2c849(x1b0130829f40110a),
+  .out_valid(x4988d121aff19eed),
+  .x752427999027db57(x3d2ac6b01ff17e91),
+  .x2b8f65f39bf1e0be(xbd0f426f0bd2c291),
+  .xa8ed38d9b97a5c69(x0aefbe4343640f43),
+  .x70538dfd2ad186bb(x370b8748fdc03eb0),
+  .x7aff7fa07e990cea(xc7ae35aee464714c),
+  .xecf1d4f336147a39(xcddb653bb4a4d504),.x329929ff8f6310d0(xa7ccb60d8fe7aa92),.xda03233819fd133a(x69cc5ed3b272f5ba),
+  .x14a0a942776226f0(xe42af451c9414059),
+  .x6b2ee21d8c6d75a9(x35dda25ab915fb08),.xa0e5b95bd0d25e60(x3c9c0fd6ad449f45),
+  .x5e15bafefc6897b8(xee6468cc1ab4f3d5)
+);
+
+xcee1a8b144f4826e #(.xe5e03e1976b2ce57(xe5e03e1976b2ce57),.x9f2c614f57341b7f(xe5e03e1976b2ce57),.x015938ff1d552e97(1),.x24da24fd67a8f0da(1),.xd0f517ffd8516f95(xd0f517ffd8516f95)) xa520428385221871 (
+  .clk(forever_cpuclk),
+  .cpurst_b(cpurst_b),
+  .in_valid(x4988d121aff19eed),
+  .x07f4d31d26e6e521(x3d2ac6b01ff17e91),
+  .x0c014b55b70e6cbb(xbd0f426f0bd2c291),
+  .x9a515dc3044eb94d(x0aefbe4343640f43),
+  .x1619fdfa4e0137c7(x370b8748fdc03eb0),
+  .xb1e06a5aa2d530ae(xc7ae35aee464714c),
+  .xd1131cec2bf1a082(x35dda25ab915fb08),
+  .xcb94278d0de9b7fd(x3c9c0fd6ad449f45),
+  .x92a5dd60c179f70a(xe42af451c9414059),
+  .x3ca01ec9648aadfb(xcddb653bb4a4d504),.xaa7ee61f7698910b(xa7ccb60d8fe7aa92),.xcd37e2098d3a7379(x69cc5ed3b272f5ba),
+  .xf29e24021503fa48(xdee2d04d581d1c5c),
+  .x1ad1631690d2c849(xee6468cc1ab4f3d5),
+  .out_valid(x6198a17f9a9cc778),
+  .x2b8f65f39bf1e0be(x800d489dbd81985e),
+  .out_value(x898e988d97735625),
+  .x3b740bbeff83b5da(),
+  .xe70f7bd65e2c651b(),
+  .x552b4bba01a61e3c()
+);
+
+endmodule
+
+
+module x3e94c3f7c9e39aa5(
+ input wire [2:0] x45b61ec9431591ff,input wire [15:0] x5d61f0adbc0647ce,input wire [31:0] x599fde14a3166223,
+ output reg [2:0] x88339dd4dd11e92c, output wire xcc3d11ae0d4b96d1);
+assign xcc3d11ae0d4b96d1=(x5d61f0adbc0647ce[14:0]==0);
+wire [21:0] s=x45b61ec9431591ff==7 ? x599fde14a3166223[31:10] : {x599fde14a3166223[31:16],6'b0};
+wire xbf8d44cd34c49600=(&x5d61f0adbc0647ce[14:7]) && (|x5d61f0adbc0647ce[6:0]);
+wire x299e4736228ca704=(&x5d61f0adbc0647ce[14:7]) && !(|x5d61f0adbc0647ce[6:0]);
+wire x7e80560df22f790a=(&s[20:13]) && (|s[12:0]);
+wire xc46d2a45ac0346db=(&s[20:13]) && !(|s[12:0]);
+wire xc67499bbe59351e1=x45b61ec9431591ff==5 || x45b61ec9431591ff==7 || (x45b61ec9431591ff==6 && !x5d61f0adbc0647ce[15]);
+always @* begin
+ x88339dd4dd11e92c=0;
+ if(xbf8d44cd34c49600 || (xc67499bbe59351e1 && x7e80560df22f790a)) x88339dd4dd11e92c=7;
+ else case(x45b61ec9431591ff)
+  0:if(x299e4736228ca704)x88339dd4dd11e92c=x5d61f0adbc0647ce[15]?3'd1:3'd5;
+  1:if(x299e4736228ca704 || xcc3d11ae0d4b96d1)x88339dd4dd11e92c=1;
+  2:if(x299e4736228ca704)x88339dd4dd11e92c=x5d61f0adbc0647ce[15]?3'd1:3'd3;
+  3:if(x299e4736228ca704)x88339dd4dd11e92c=x5d61f0adbc0647ce[15]?3'd2:3'd5;
+  4:if(x299e4736228ca704)x88339dd4dd11e92c=x5d61f0adbc0647ce[15]?3'd4:3'd3;
+  5:begin
+   if(x299e4736228ca704 && xc46d2a45ac0346db && x5d61f0adbc0647ce[15]==s[21])x88339dd4dd11e92c=7;
+   else if(x299e4736228ca704)x88339dd4dd11e92c=x5d61f0adbc0647ce[15]?3'd1:3'd5;
+   else if(xc46d2a45ac0346db)x88339dd4dd11e92c=s[21]?3'd5:3'd1;
+  end
+  6:begin
+   if(x5d61f0adbc0647ce[15])x88339dd4dd11e92c=1;
+   else if(xc46d2a45ac0346db && s[21])x88339dd4dd11e92c=7;
+   else if(x299e4736228ca704 || xc46d2a45ac0346db || (xcc3d11ae0d4b96d1 && s[20:0]==0))x88339dd4dd11e92c=1;
+  end
+  7:begin
+   if(x299e4736228ca704 && xc46d2a45ac0346db)x88339dd4dd11e92c=7;
+   else if(xc46d2a45ac0346db || s[20:0]==0)x88339dd4dd11e92c=x5d61f0adbc0647ce[15]?3'd2:3'd1;
+   else if(x299e4736228ca704)x88339dd4dd11e92c=(x5d61f0adbc0647ce[15]^s[21])?3'd6:3'd5;
+  end
+ endcase
+end
+endmodule
+
+
+`timescale 1ns/1ps
+
+module xd4412f7215dadade (
+  input  wire [11:0] xa7a9a3908bf4ba86,
+  output wire [28:0] xdb9b943ec93b35fc,
+  output wire [14:0] xab0e494b085e6a16
+);
+
+
+
+wire [14:0] x7fee71f60a975d12;
+wire [5:0] x60cb86f2e3c54c57;
+wire [20:0] x9806bf1a0e080db2;
+wire [29:0] x0e023b9ae5ebc92b;
+wire [29:0] xcff6076e1de544a8;
+
+x396e575bef21cd49 xbc880ee6cfb00424(xa7a9a3908bf4ba86,x7fee71f60a975d12,x60cb86f2e3c54c57);
+
+
+assign x9806bf1a0e080db2 = x7fee71f60a975d12 * x60cb86f2e3c54c57;
+assign x0e023b9ae5ebc92b = {1'b0, x7fee71f60a975d12, 14'b0} +
+                               {9'b0, x9806bf1a0e080db2};
+assign xdb9b943ec93b35fc = x0e023b9ae5ebc92b[28:0];
+assign xcff6076e1de544a8 = x0e023b9ae5ebc92b + 30'h0000_2000;
+assign xab0e494b085e6a16 = xcff6076e1de544a8[28:14];
+
+endmodule
+
+module x396e575bef21cd49(input [11:0] xa7a9a3908bf4ba86,output [14:0] x7fee71f60a975d12,output [5:0] x60cb86f2e3c54c57);
+reg [14:0] xd782fd925aaeccbb [0:255];
+reg [14:0] x29fb9c085ade335b [0:15];
+assign x7fee71f60a975d12=xd782fd925aaeccbb[xa7a9a3908bf4ba86[11:4]];
+assign x60cb86f2e3c54c57=x29fb9c085ade335b[xa7a9a3908bf4ba86[3:0]][5:0];
+initial begin
+  xd782fd925aaeccbb[  0] = 15'h4000;
+  xd782fd925aaeccbb[  1] = 15'h402c;
+  xd782fd925aaeccbb[  2] = 15'h4059;
+  xd782fd925aaeccbb[  3] = 15'h4086;
+  xd782fd925aaeccbb[  4] = 15'h40b2;
+  xd782fd925aaeccbb[  5] = 15'h40df;
+  xd782fd925aaeccbb[  6] = 15'h410c;
+  xd782fd925aaeccbb[  7] = 15'h4139;
+  xd782fd925aaeccbb[  8] = 15'h4167;
+  xd782fd925aaeccbb[  9] = 15'h4194;
+  xd782fd925aaeccbb[ 10] = 15'h41c2;
+  xd782fd925aaeccbb[ 11] = 15'h41ef;
+  xd782fd925aaeccbb[ 12] = 15'h421d;
+  xd782fd925aaeccbb[ 13] = 15'h424b;
+  xd782fd925aaeccbb[ 14] = 15'h4279;
+  xd782fd925aaeccbb[ 15] = 15'h42a7;
+  xd782fd925aaeccbb[ 16] = 15'h42d5;
+  xd782fd925aaeccbb[ 17] = 15'h4304;
+  xd782fd925aaeccbb[ 18] = 15'h4332;
+  xd782fd925aaeccbb[ 19] = 15'h4361;
+  xd782fd925aaeccbb[ 20] = 15'h4390;
+  xd782fd925aaeccbb[ 21] = 15'h43bf;
+  xd782fd925aaeccbb[ 22] = 15'h43ee;
+  xd782fd925aaeccbb[ 23] = 15'h441d;
+  xd782fd925aaeccbb[ 24] = 15'h444c;
+  xd782fd925aaeccbb[ 25] = 15'h447b;
+  xd782fd925aaeccbb[ 26] = 15'h44ab;
+  xd782fd925aaeccbb[ 27] = 15'h44db;
+  xd782fd925aaeccbb[ 28] = 15'h450a;
+  xd782fd925aaeccbb[ 29] = 15'h453a;
+  xd782fd925aaeccbb[ 30] = 15'h456a;
+  xd782fd925aaeccbb[ 31] = 15'h459b;
+  xd782fd925aaeccbb[ 32] = 15'h45cb;
+  xd782fd925aaeccbb[ 33] = 15'h45fb;
+  xd782fd925aaeccbb[ 34] = 15'h462c;
+  xd782fd925aaeccbb[ 35] = 15'h465d;
+  xd782fd925aaeccbb[ 36] = 15'h468d;
+  xd782fd925aaeccbb[ 37] = 15'h46be;
+  xd782fd925aaeccbb[ 38] = 15'h46f0;
+  xd782fd925aaeccbb[ 39] = 15'h4721;
+  xd782fd925aaeccbb[ 40] = 15'h4752;
+  xd782fd925aaeccbb[ 41] = 15'h4784;
+  xd782fd925aaeccbb[ 42] = 15'h47b5;
+  xd782fd925aaeccbb[ 43] = 15'h47e7;
+  xd782fd925aaeccbb[ 44] = 15'h4819;
+  xd782fd925aaeccbb[ 45] = 15'h484b;
+  xd782fd925aaeccbb[ 46] = 15'h487d;
+  xd782fd925aaeccbb[ 47] = 15'h48af;
+  xd782fd925aaeccbb[ 48] = 15'h48e2;
+  xd782fd925aaeccbb[ 49] = 15'h4914;
+  xd782fd925aaeccbb[ 50] = 15'h4947;
+  xd782fd925aaeccbb[ 51] = 15'h497a;
+  xd782fd925aaeccbb[ 52] = 15'h49ad;
+  xd782fd925aaeccbb[ 53] = 15'h49e0;
+  xd782fd925aaeccbb[ 54] = 15'h4a13;
+  xd782fd925aaeccbb[ 55] = 15'h4a47;
+  xd782fd925aaeccbb[ 56] = 15'h4a7a;
+  xd782fd925aaeccbb[ 57] = 15'h4aae;
+  xd782fd925aaeccbb[ 58] = 15'h4ae2;
+  xd782fd925aaeccbb[ 59] = 15'h4b16;
+  xd782fd925aaeccbb[ 60] = 15'h4b4a;
+  xd782fd925aaeccbb[ 61] = 15'h4b7e;
+  xd782fd925aaeccbb[ 62] = 15'h4bb3;
+  xd782fd925aaeccbb[ 63] = 15'h4be7;
+  xd782fd925aaeccbb[ 64] = 15'h4c1c;
+  xd782fd925aaeccbb[ 65] = 15'h4c51;
+  xd782fd925aaeccbb[ 66] = 15'h4c86;
+  xd782fd925aaeccbb[ 67] = 15'h4cbb;
+  xd782fd925aaeccbb[ 68] = 15'h4cf0;
+  xd782fd925aaeccbb[ 69] = 15'h4d26;
+  xd782fd925aaeccbb[ 70] = 15'h4d5b;
+  xd782fd925aaeccbb[ 71] = 15'h4d91;
+  xd782fd925aaeccbb[ 72] = 15'h4dc7;
+  xd782fd925aaeccbb[ 73] = 15'h4dfd;
+  xd782fd925aaeccbb[ 74] = 15'h4e33;
+  xd782fd925aaeccbb[ 75] = 15'h4e69;
+  xd782fd925aaeccbb[ 76] = 15'h4e9f;
+  xd782fd925aaeccbb[ 77] = 15'h4ed6;
+  xd782fd925aaeccbb[ 78] = 15'h4f0d;
+  xd782fd925aaeccbb[ 79] = 15'h4f44;
+  xd782fd925aaeccbb[ 80] = 15'h4f7b;
+  xd782fd925aaeccbb[ 81] = 15'h4fb2;
+  xd782fd925aaeccbb[ 82] = 15'h4fe9;
+  xd782fd925aaeccbb[ 83] = 15'h5021;
+  xd782fd925aaeccbb[ 84] = 15'h5058;
+  xd782fd925aaeccbb[ 85] = 15'h5090;
+  xd782fd925aaeccbb[ 86] = 15'h50c8;
+  xd782fd925aaeccbb[ 87] = 15'h5100;
+  xd782fd925aaeccbb[ 88] = 15'h5138;
+  xd782fd925aaeccbb[ 89] = 15'h5171;
+  xd782fd925aaeccbb[ 90] = 15'h51a9;
+  xd782fd925aaeccbb[ 91] = 15'h51e2;
+  xd782fd925aaeccbb[ 92] = 15'h521b;
+  xd782fd925aaeccbb[ 93] = 15'h5254;
+  xd782fd925aaeccbb[ 94] = 15'h528d;
+  xd782fd925aaeccbb[ 95] = 15'h52c6;
+  xd782fd925aaeccbb[ 96] = 15'h52ff;
+  xd782fd925aaeccbb[ 97] = 15'h5339;
+  xd782fd925aaeccbb[ 98] = 15'h5373;
+  xd782fd925aaeccbb[ 99] = 15'h53ad;
+  xd782fd925aaeccbb[100] = 15'h53e7;
+  xd782fd925aaeccbb[101] = 15'h5421;
+  xd782fd925aaeccbb[102] = 15'h545b;
+  xd782fd925aaeccbb[103] = 15'h5496;
+  xd782fd925aaeccbb[104] = 15'h54d1;
+  xd782fd925aaeccbb[105] = 15'h550c;
+  xd782fd925aaeccbb[106] = 15'h5547;
+  xd782fd925aaeccbb[107] = 15'h5582;
+  xd782fd925aaeccbb[108] = 15'h55bd;
+  xd782fd925aaeccbb[109] = 15'h55f9;
+  xd782fd925aaeccbb[110] = 15'h5634;
+  xd782fd925aaeccbb[111] = 15'h5670;
+  xd782fd925aaeccbb[112] = 15'h56ac;
+  xd782fd925aaeccbb[113] = 15'h56e8;
+  xd782fd925aaeccbb[114] = 15'h5725;
+  xd782fd925aaeccbb[115] = 15'h5761;
+  xd782fd925aaeccbb[116] = 15'h579e;
+  xd782fd925aaeccbb[117] = 15'h57db;
+  xd782fd925aaeccbb[118] = 15'h5818;
+  xd782fd925aaeccbb[119] = 15'h5855;
+  xd782fd925aaeccbb[120] = 15'h5892;
+  xd782fd925aaeccbb[121] = 15'h58cf;
+  xd782fd925aaeccbb[122] = 15'h590d;
+  xd782fd925aaeccbb[123] = 15'h594b;
+  xd782fd925aaeccbb[124] = 15'h5989;
+  xd782fd925aaeccbb[125] = 15'h59c7;
+  xd782fd925aaeccbb[126] = 15'h5a05;
+  xd782fd925aaeccbb[127] = 15'h5a44;
+  xd782fd925aaeccbb[128] = 15'h5a82;
+  xd782fd925aaeccbb[129] = 15'h5ac1;
+  xd782fd925aaeccbb[130] = 15'h5b00;
+  xd782fd925aaeccbb[131] = 15'h5b3f;
+  xd782fd925aaeccbb[132] = 15'h5b7f;
+  xd782fd925aaeccbb[133] = 15'h5bbe;
+  xd782fd925aaeccbb[134] = 15'h5bfe;
+  xd782fd925aaeccbb[135] = 15'h5c3e;
+  xd782fd925aaeccbb[136] = 15'h5c7e;
+  xd782fd925aaeccbb[137] = 15'h5cbe;
+  xd782fd925aaeccbb[138] = 15'h5cfe;
+  xd782fd925aaeccbb[139] = 15'h5d3f;
+  xd782fd925aaeccbb[140] = 15'h5d80;
+  xd782fd925aaeccbb[141] = 15'h5dc1;
+  xd782fd925aaeccbb[142] = 15'h5e02;
+  xd782fd925aaeccbb[143] = 15'h5e43;
+  xd782fd925aaeccbb[144] = 15'h5e84;
+  xd782fd925aaeccbb[145] = 15'h5ec6;
+  xd782fd925aaeccbb[146] = 15'h5f08;
+  xd782fd925aaeccbb[147] = 15'h5f4a;
+  xd782fd925aaeccbb[148] = 15'h5f8c;
+  xd782fd925aaeccbb[149] = 15'h5fce;
+  xd782fd925aaeccbb[150] = 15'h6011;
+  xd782fd925aaeccbb[151] = 15'h6053;
+  xd782fd925aaeccbb[152] = 15'h6096;
+  xd782fd925aaeccbb[153] = 15'h60d9;
+  xd782fd925aaeccbb[154] = 15'h611c;
+  xd782fd925aaeccbb[155] = 15'h6160;
+  xd782fd925aaeccbb[156] = 15'h61a3;
+  xd782fd925aaeccbb[157] = 15'h61e7;
+  xd782fd925aaeccbb[158] = 15'h622b;
+  xd782fd925aaeccbb[159] = 15'h626f;
+  xd782fd925aaeccbb[160] = 15'h62b4;
+  xd782fd925aaeccbb[161] = 15'h62f8;
+  xd782fd925aaeccbb[162] = 15'h633d;
+  xd782fd925aaeccbb[163] = 15'h6382;
+  xd782fd925aaeccbb[164] = 15'h63c7;
+  xd782fd925aaeccbb[165] = 15'h640c;
+  xd782fd925aaeccbb[166] = 15'h6451;
+  xd782fd925aaeccbb[167] = 15'h6497;
+  xd782fd925aaeccbb[168] = 15'h64dd;
+  xd782fd925aaeccbb[169] = 15'h6523;
+  xd782fd925aaeccbb[170] = 15'h6569;
+  xd782fd925aaeccbb[171] = 15'h65af;
+  xd782fd925aaeccbb[172] = 15'h65f6;
+  xd782fd925aaeccbb[173] = 15'h663d;
+  xd782fd925aaeccbb[174] = 15'h6684;
+  xd782fd925aaeccbb[175] = 15'h66cb;
+  xd782fd925aaeccbb[176] = 15'h6712;
+  xd782fd925aaeccbb[177] = 15'h675a;
+  xd782fd925aaeccbb[178] = 15'h67a2;
+  xd782fd925aaeccbb[179] = 15'h67e9;
+  xd782fd925aaeccbb[180] = 15'h6832;
+  xd782fd925aaeccbb[181] = 15'h687a;
+  xd782fd925aaeccbb[182] = 15'h68c2;
+  xd782fd925aaeccbb[183] = 15'h690b;
+  xd782fd925aaeccbb[184] = 15'h6954;
+  xd782fd925aaeccbb[185] = 15'h699d;
+  xd782fd925aaeccbb[186] = 15'h69e6;
+  xd782fd925aaeccbb[187] = 15'h6a30;
+  xd782fd925aaeccbb[188] = 15'h6a7a;
+  xd782fd925aaeccbb[189] = 15'h6ac4;
+  xd782fd925aaeccbb[190] = 15'h6b0e;
+  xd782fd925aaeccbb[191] = 15'h6b58;
+  xd782fd925aaeccbb[192] = 15'h6ba2;
+  xd782fd925aaeccbb[193] = 15'h6bed;
+  xd782fd925aaeccbb[194] = 15'h6c38;
+  xd782fd925aaeccbb[195] = 15'h6c83;
+  xd782fd925aaeccbb[196] = 15'h6ccf;
+  xd782fd925aaeccbb[197] = 15'h6d1a;
+  xd782fd925aaeccbb[198] = 15'h6d66;
+  xd782fd925aaeccbb[199] = 15'h6db2;
+  xd782fd925aaeccbb[200] = 15'h6dfe;
+  xd782fd925aaeccbb[201] = 15'h6e4a;
+  xd782fd925aaeccbb[202] = 15'h6e97;
+  xd782fd925aaeccbb[203] = 15'h6ee4;
+  xd782fd925aaeccbb[204] = 15'h6f30;
+  xd782fd925aaeccbb[205] = 15'h6f7e;
+  xd782fd925aaeccbb[206] = 15'h6fcb;
+  xd782fd925aaeccbb[207] = 15'h7019;
+  xd782fd925aaeccbb[208] = 15'h7066;
+  xd782fd925aaeccbb[209] = 15'h70b4;
+  xd782fd925aaeccbb[210] = 15'h7103;
+  xd782fd925aaeccbb[211] = 15'h7151;
+  xd782fd925aaeccbb[212] = 15'h71a0;
+  xd782fd925aaeccbb[213] = 15'h71ef;
+  xd782fd925aaeccbb[214] = 15'h723e;
+  xd782fd925aaeccbb[215] = 15'h728d;
+  xd782fd925aaeccbb[216] = 15'h72dd;
+  xd782fd925aaeccbb[217] = 15'h732c;
+  xd782fd925aaeccbb[218] = 15'h737c;
+  xd782fd925aaeccbb[219] = 15'h73cc;
+  xd782fd925aaeccbb[220] = 15'h741d;
+  xd782fd925aaeccbb[221] = 15'h746d;
+  xd782fd925aaeccbb[222] = 15'h74be;
+  xd782fd925aaeccbb[223] = 15'h750f;
+  xd782fd925aaeccbb[224] = 15'h7560;
+  xd782fd925aaeccbb[225] = 15'h75b2;
+  xd782fd925aaeccbb[226] = 15'h7604;
+  xd782fd925aaeccbb[227] = 15'h7655;
+  xd782fd925aaeccbb[228] = 15'h76a8;
+  xd782fd925aaeccbb[229] = 15'h76fa;
+  xd782fd925aaeccbb[230] = 15'h774d;
+  xd782fd925aaeccbb[231] = 15'h779f;
+  xd782fd925aaeccbb[232] = 15'h77f2;
+  xd782fd925aaeccbb[233] = 15'h7846;
+  xd782fd925aaeccbb[234] = 15'h7899;
+  xd782fd925aaeccbb[235] = 15'h78ed;
+  xd782fd925aaeccbb[236] = 15'h7941;
+  xd782fd925aaeccbb[237] = 15'h7995;
+  xd782fd925aaeccbb[238] = 15'h79e9;
+  xd782fd925aaeccbb[239] = 15'h7a3e;
+  xd782fd925aaeccbb[240] = 15'h7a93;
+  xd782fd925aaeccbb[241] = 15'h7ae8;
+  xd782fd925aaeccbb[242] = 15'h7b3d;
+  xd782fd925aaeccbb[243] = 15'h7b93;
+  xd782fd925aaeccbb[244] = 15'h7be8;
+  xd782fd925aaeccbb[245] = 15'h7c3e;
+  xd782fd925aaeccbb[246] = 15'h7c95;
+  xd782fd925aaeccbb[247] = 15'h7ceb;
+  xd782fd925aaeccbb[248] = 15'h7d42;
+  xd782fd925aaeccbb[249] = 15'h7d99;
+  xd782fd925aaeccbb[250] = 15'h7df0;
+  xd782fd925aaeccbb[251] = 15'h7e47;
+  xd782fd925aaeccbb[252] = 15'h7e9f;
+  xd782fd925aaeccbb[253] = 15'h7ef7;
+  xd782fd925aaeccbb[254] = 15'h7f4f;
+  xd782fd925aaeccbb[255] = 15'h7fa7;
+  x29fb9c085ade335b[ 0] = 15'h4000;
+  x29fb9c085ade335b[ 1] = 15'h4003;
+  x29fb9c085ade335b[ 2] = 15'h4006;
+  x29fb9c085ade335b[ 3] = 15'h4008;
+  x29fb9c085ade335b[ 4] = 15'h400b;
+  x29fb9c085ade335b[ 5] = 15'h400e;
+  x29fb9c085ade335b[ 6] = 15'h4011;
+  x29fb9c085ade335b[ 7] = 15'h4013;
+  x29fb9c085ade335b[ 8] = 15'h4016;
+  x29fb9c085ade335b[ 9] = 15'h4019;
+  x29fb9c085ade335b[10] = 15'h401c;
+  x29fb9c085ade335b[11] = 15'h401f;
+  x29fb9c085ade335b[12] = 15'h4021;
+  x29fb9c085ade335b[13] = 15'h4024;
+  x29fb9c085ade335b[14] = 15'h4027;
+  x29fb9c085ade335b[15] = 15'h402a;
+end
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+module x6a4c0dd9c714353f (
+  input wire signed [9:0] xd18730b1909718db,
+  input wire [28:0] xdb9b943ec93b35fc,
+  output wire [21:0] x9d772197046ce47f
+);
+wire [21:0] candidate;
+wire [2:0] x10e10b3fdb52a10b;
+xc323a3b3171b27fc x01a100f4192d0791(xd18730b1909718db,xdb9b943ec93b35fc,candidate,x10e10b3fdb52a10b);
+
+assign x9d772197046ce47f=x10e10b3fdb52a10b==3'd1 ? 22'b0 :
+                  x10e10b3fdb52a10b==3'd4 ? 22'h1fe000 : candidate;
+endmodule
+
+module xc323a3b3171b27fc (
+  input wire signed [9:0] xd18730b1909718db,
+  input wire [28:0] xdb9b943ec93b35fc,
+  output wire [21:0] xcf0405ebd4f41d2d,
+  output wire [2:0] x10e10b3fdb52a10b
+);
+wire [13:0] x321a68ef42d8d6fa = xdb9b943ec93b35fc[28:15];
+wire [14:0] x33bddb2bd0e38db4 = xdb9b943ec93b35fc[14:0];
+wire xa11a02805b980edc = x33bddb2bd0e38db4[14] && (|x33bddb2bd0e38db4[13:0] || x321a68ef42d8d6fa[0]);
+wire [14:0] xda0ec48dc24f6094 = {1'b0,x321a68ef42d8d6fa} + {14'b0,xa11a02805b980edc};
+wire signed [10:0] x26419bd0e20fc0c2 = {xd18730b1909718db[9],xd18730b1909718db} + 11'sd127 +
+                                {10'b0,xda0ec48dc24f6094[14]};
+wire [12:0] x704b22c542dfbc12 = xda0ec48dc24f6094[14] ? 13'b0 : xda0ec48dc24f6094[12:0];
+
+assign xcf0405ebd4f41d2d={1'b0,x26419bd0e20fc0c2[7:0],x704b22c542dfbc12};
+assign x10e10b3fdb52a10b=(xd18730b1909718db < -10'sd126) ? 3'd1 :
+                   (xd18730b1909718db > 10'sd127 || x26419bd0e20fc0c2 >= 11'sd255) ? 3'd4 : 3'd0;
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x19cbd1fad0f618b8 (
+  input  wire [16:0] xe2d06fe560891e78,
+  output wire [16:0] x0a77c499b0dbcd29
+);
+
+wire [8:0]  x9c1decf4beaf301f;
+wire [16:0] xd2c0cf596e5ca962;
+wire [33:0] xa4c2fe57e8292bea;
+wire [33:0] x026df9138bdd036d;
+wire [17:0] x5d47e2fb2e7ed04d;
+wire [17:0] x077901b18250b735;
+wire [34:0] xe2e738537aa84980;
+wire [34:0] x486eab54a2d75de2;
+
+x69b55c9dff3744c4 xcb9a73e635723633 (
+  .xe2d06fe560891e78(xe2d06fe560891e78),
+  .x9c1decf4beaf301f(x9c1decf4beaf301f)
+);
+
+assign xd2c0cf596e5ca962 = {x9c1decf4beaf301f, 8'b0};
+assign xa4c2fe57e8292bea = xe2d06fe560891e78 * xd2c0cf596e5ca962;
+assign x026df9138bdd036d = xa4c2fe57e8292bea + 34'h0000_8000;
+assign x5d47e2fb2e7ed04d = x026df9138bdd036d[33:16];
+assign x077901b18250b735 = 18'h2_0000 - x5d47e2fb2e7ed04d;
+assign xe2e738537aa84980 = xd2c0cf596e5ca962 * x077901b18250b735;
+assign x486eab54a2d75de2 = xe2e738537aa84980 + 35'h0000_8000;
+assign x0a77c499b0dbcd29 = x486eab54a2d75de2[32:16];
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x69b55c9dff3744c4 (
+  input  wire [16:0] xe2d06fe560891e78,
+  output wire [8:0]  x9c1decf4beaf301f
+);
+
+function [3:0] x51726913d0a020e8;
+  input [21:0] x8b28c4f6d46406ba;
+  input [16:0] xbb63372305c885cb;
+  integer x1111ffc69a90529b;
+  reg xcd994bec8a703508;
+  reg [31:0] product;
+  reg [31:0] xa7b79471676db027;
+  begin
+    x51726913d0a020e8 = 4'h0;
+    xcd994bec8a703508 = 1'b0;
+    xa7b79471676db027 = {10'b0, x8b28c4f6d46406ba};
+    for (x1111ffc69a90529b = 15; x1111ffc69a90529b >= 0; x1111ffc69a90529b = x1111ffc69a90529b - 1) begin
+      product = {15'b0, xbb63372305c885cb} * x1111ffc69a90529b;
+      if (!xcd994bec8a703508 && (xa7b79471676db027 >= product)) begin
+        x51726913d0a020e8 = x1111ffc69a90529b[3:0];
+        xcd994bec8a703508 = 1'b1;
+      end
+    end
+  end
+endfunction
+
+wire [16:0] xc50b49d75a433053;
+wire [21:0] xab60b510883f7ea8;
+wire [3:0]  x13ccce06761380f1;
+wire [21:0] xe03f023f212e0160;
+wire [21:0] x1208321c1e39bd86;
+wire [3:0]  xdcb9021f3f96e071;
+wire [21:0] xa1a73b9feda055ea;
+wire [8:0]  xac14f592f07896a4;
+wire        xdbf54fc4e639dae0;
+wire [21:0] x21bd9b372327c9ae;
+
+assign xc50b49d75a433053 = (xe2d06fe560891e78 == 17'b0) ? 17'd1 : xe2d06fe560891e78;
+assign x21bd9b372327c9ae = {5'b0, xc50b49d75a433053};
+
+assign xab60b510883f7ea8 = {1'b0, 1'b1, 16'b0, 4'b0};
+assign x13ccce06761380f1 = x51726913d0a020e8(xab60b510883f7ea8, xc50b49d75a433053);
+assign xe03f023f212e0160 = xab60b510883f7ea8 - (xc50b49d75a433053 * x13ccce06761380f1);
+
+assign x1208321c1e39bd86 = xe03f023f212e0160 << 4;
+assign xdcb9021f3f96e071 = x51726913d0a020e8(x1208321c1e39bd86, xc50b49d75a433053);
+assign xa1a73b9feda055ea = x1208321c1e39bd86 - (xc50b49d75a433053 * xdcb9021f3f96e071);
+
+assign xac14f592f07896a4 = {1'b0, x13ccce06761380f1, xdcb9021f3f96e071};
+assign xdbf54fc4e639dae0 = ((xa1a73b9feda055ea << 1) >= x21bd9b372327c9ae);
+assign x9c1decf4beaf301f = xac14f592f07896a4 + {8'b0, xdbf54fc4e639dae0};
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x5e9b89aa28c217ca (
+  input  wire [4:0]  x035bda0877fa5e2f,
+  input  wire        x418dae3c44f01c41,
+  input  wire        xa61294486d09be2f,
+  output reg  [16:0] x3988f3c576f05fec
+);
+
+always @* begin
+  case ({x418dae3c44f01c41, x418dae3c44f01c41 && xa61294486d09be2f, x035bda0877fa5e2f})
+    7'h00: x3988f3c576f05fec = 17'h0fc10; 7'h01: x3988f3c576f05fec = 17'h0f490;
+    7'h02: x3988f3c576f05fec = 17'h0ed70; 7'h03: x3988f3c576f05fec = 17'h0e6c0;
+    7'h04: x3988f3c576f05fec = 17'h0e070; 7'h05: x3988f3c576f05fec = 17'h0da70;
+    7'h06: x3988f3c576f05fec = 17'h0d4c0; 7'h07: x3988f3c576f05fec = 17'h0cf60;
+    7'h08: x3988f3c576f05fec = 17'h0ca40; 7'h09: x3988f3c576f05fec = 17'h0c560;
+    7'h0a: x3988f3c576f05fec = 17'h0c0c0; 7'h0b: x3988f3c576f05fec = 17'h0bc50;
+    7'h0c: x3988f3c576f05fec = 17'h0b810; 7'h0d: x3988f3c576f05fec = 17'h0b410;
+    7'h0e: x3988f3c576f05fec = 17'h0b030; 7'h0f: x3988f3c576f05fec = 17'h0ac70;
+    7'h10: x3988f3c576f05fec = 17'h0a8f0; 7'h11: x3988f3c576f05fec = 17'h0a580;
+    7'h12: x3988f3c576f05fec = 17'h0a230; 7'h13: x3988f3c576f05fec = 17'h09f10;
+    7'h14: x3988f3c576f05fec = 17'h09c10; 7'h15: x3988f3c576f05fec = 17'h09920;
+    7'h16: x3988f3c576f05fec = 17'h09650; 7'h17: x3988f3c576f05fec = 17'h093a0;
+    7'h18: x3988f3c576f05fec = 17'h09100; 7'h19: x3988f3c576f05fec = 17'h08e80;
+    7'h1a: x3988f3c576f05fec = 17'h08c10; 7'h1b: x3988f3c576f05fec = 17'h089b0;
+    7'h1c: x3988f3c576f05fec = 17'h08760; 7'h1d: x3988f3c576f05fec = 17'h08530;
+    7'h1e: x3988f3c576f05fec = 17'h08310; 7'h1f: x3988f3c576f05fec = 17'h08100;
+
+    7'h40: x3988f3c576f05fec = 17'h0fe00; 7'h41: x3988f3c576f05fec = 17'h0fa30;
+    7'h42: x3988f3c576f05fec = 17'h0f690; 7'h43: x3988f3c576f05fec = 17'h0f310;
+    7'h44: x3988f3c576f05fec = 17'h0efb0; 7'h45: x3988f3c576f05fec = 17'h0ec80;
+    7'h46: x3988f3c576f05fec = 17'h0e960; 7'h47: x3988f3c576f05fec = 17'h0e670;
+    7'h48: x3988f3c576f05fec = 17'h0e390; 7'h49: x3988f3c576f05fec = 17'h0e0d0;
+    7'h4a: x3988f3c576f05fec = 17'h0de20; 7'h4b: x3988f3c576f05fec = 17'h0db90;
+    7'h4c: x3988f3c576f05fec = 17'h0d910; 7'h4d: x3988f3c576f05fec = 17'h0d6b0;
+    7'h4e: x3988f3c576f05fec = 17'h0d460; 7'h4f: x3988f3c576f05fec = 17'h0d220;
+    7'h50: x3988f3c576f05fec = 17'h0cff0; 7'h51: x3988f3c576f05fec = 17'h0cdd0;
+    7'h52: x3988f3c576f05fec = 17'h0cbd0; 7'h53: x3988f3c576f05fec = 17'h0c9d0;
+    7'h54: x3988f3c576f05fec = 17'h0c7e0; 7'h55: x3988f3c576f05fec = 17'h0c600;
+    7'h56: x3988f3c576f05fec = 17'h0c430; 7'h57: x3988f3c576f05fec = 17'h0c260;
+    7'h58: x3988f3c576f05fec = 17'h0c0b0; 7'h59: x3988f3c576f05fec = 17'h0bf00;
+    7'h5a: x3988f3c576f05fec = 17'h0bd50; 7'h5b: x3988f3c576f05fec = 17'h0bbc0;
+    7'h5c: x3988f3c576f05fec = 17'h0ba30; 7'h5d: x3988f3c576f05fec = 17'h0b8b0;
+    7'h5e: x3988f3c576f05fec = 17'h0b730; 7'h5f: x3988f3c576f05fec = 17'h0b5c0;
+
+    7'h60: x3988f3c576f05fec = 17'h0b3a0; 7'h61: x3988f3c576f05fec = 17'h0b0f0;
+    7'h62: x3988f3c576f05fec = 17'h0ae50; 7'h63: x3988f3c576f05fec = 17'h0abe0;
+    7'h64: x3988f3c576f05fec = 17'h0a980; 7'h65: x3988f3c576f05fec = 17'h0a730;
+    7'h66: x3988f3c576f05fec = 17'h0a510; 7'h67: x3988f3c576f05fec = 17'h0a2f0;
+    7'h68: x3988f3c576f05fec = 17'h0a0e0; 7'h69: x3988f3c576f05fec = 17'h09ef0;
+    7'h6a: x3988f3c576f05fec = 17'h09d10; 7'h6b: x3988f3c576f05fec = 17'h09b40;
+    7'h6c: x3988f3c576f05fec = 17'h09980; 7'h6d: x3988f3c576f05fec = 17'h097d0;
+    7'h6e: x3988f3c576f05fec = 17'h09630; 7'h6f: x3988f3c576f05fec = 17'h09490;
+    7'h70: x3988f3c576f05fec = 17'h09310; 7'h71: x3988f3c576f05fec = 17'h09190;
+    7'h72: x3988f3c576f05fec = 17'h09020; 7'h73: x3988f3c576f05fec = 17'h08eb0;
+    7'h74: x3988f3c576f05fec = 17'h08d50; 7'h75: x3988f3c576f05fec = 17'h08c00;
+    7'h76: x3988f3c576f05fec = 17'h08ab0; 7'h77: x3988f3c576f05fec = 17'h08970;
+    7'h78: x3988f3c576f05fec = 17'h08840; 7'h79: x3988f3c576f05fec = 17'h08710;
+    7'h7a: x3988f3c576f05fec = 17'h085e0; 7'h7b: x3988f3c576f05fec = 17'h084c0;
+    7'h7c: x3988f3c576f05fec = 17'h083a0; 7'h7d: x3988f3c576f05fec = 17'h08290;
+    7'h7e: x3988f3c576f05fec = 17'h08180; 7'h7f: x3988f3c576f05fec = 17'h08080;
+    default: x3988f3c576f05fec = 17'h10000;
+  endcase
+end
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x65f0bddd22fda16a (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire        in_valid,
+  input  wire        x711a27792ee2ce86,
+  input  wire [21:0] xe722485e055d40b4,
+  output wire        out_valid,
+  output wire [21:0] x675c3d21ea7b374f
+);
+
+
+
+wire [2:0] x10e10b3fdb52a10b, x2bd5cf4c4a8383e8;
+wire [21:0] xdec2b85ed35d22f1;
+
+assign x675c3d21ea7b374f=(x2bd5cf4c4a8383e8==3'd1)?22'b0:xdec2b85ed35d22f1;
+assign x10e10b3fdb52a10b = (xe722485e055d40b4[20:13] == 0) ?
+                    ((|xe722485e055d40b4[12:0]) ? 3'd2 : 3'd1) :
+                    (xe722485e055d40b4[20:13] == 8'hff) ?
+                    ((|xe722485e055d40b4[12:0]) ? 3'd5 : 3'd4) : 3'd0;
+xc884f9c638a7499a x10f2f2cf1c5f6eda (
+  .clk(clk), .cpurst_b(cpurst_b), .in_valid(in_valid),
+  .x711a27792ee2ce86(x711a27792ee2ce86), .xe722485e055d40b4(xe722485e055d40b4),
+  .xfa9487741bfe35fc(x10e10b3fdb52a10b), .out_valid(out_valid),
+  .x675c3d21ea7b374f(xdec2b85ed35d22f1), .x047140d6a4ddaee7(x2bd5cf4c4a8383e8)
+);
+endmodule
+
+`timescale 1ns/1ps
+
+module xc884f9c638a7499a #(parameter x9f2c614f57341b7f=0) (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire        in_valid,
+  input  wire        x711a27792ee2ce86,
+  input  wire [21:0] xe722485e055d40b4,
+  input  wire [2:0]  xfa9487741bfe35fc,
+  output wire [2:0]  x047140d6a4ddaee7,
+  output wire        out_valid,
+  output wire [21:0] x675c3d21ea7b374f
+);
+
+reg         xd60950caef470c04, xbd4ce7493a8e85c1, x55e7f0eb7a38b29f, xaf4bb549eefb2864;
+reg         x02153adf40c27825, x7735a88cc7a67948, x8c5619c8d36cf49b;
+reg         x234ea01bf6d23a49, xdf19c013794013a3, x15d26613a9cfee5c, xf04140ae3af66493;
+reg         x8ebc9dbcc1aaa296, x3e1c50fd79387c44, xda3b1d19a86525de;
+reg         xae52db153cf8fdd1, x46845fe7154061e0, x4e80c486438b5f2a, x450ac90c4427ec5d;
+reg         xa90f5068b2e87c5e, x14e73ecccd1ea633, x129b107ce12892d8;
+reg         x93d617e02ceb91f4, x4e03ab2ff9a15897, x95e9487f27152098, x4fa589978be43f1b;
+reg         x98db348146addc0d, x78329f1ec7f7ab9f, xdd0736270599e18a;
+reg signed [9:0] x6cd9d3938a2204af, x84c1e946e367d537, x2b9de2e6f09ac283, xa1a6158f6388acb6;
+reg signed [9:0] xbcce02d3bd96bb73, x9bbe961bb50e8000, x3f4858feb90d4758;
+reg [17:0]  x1366a34bd1ee8c7e;
+reg [16:0]  x0d13935cde4e6b50, xa45b99ddad35b978, xa5a29d82f905c5ca, xdea119bdb574889c, x40bc346d5add3ed2;
+reg [17:0]  x0d6a264b784cd8ff;
+reg [13:0]  xedb87174c20e9367;
+reg [13:0]  xd2877d349ea45ea8;
+reg [17:0]  x24dc7904577a33d3;
+reg [17:0]  x25254845eb0d6cd9;
+
+wire [4:0]  x035bda0877fa5e2f;
+wire signed [9:0] xe2ada154b29bc7d8;
+wire        xa61294486d09be2f;
+wire [16:0] x3988f3c576f05fec;
+wire [17:0] x7c3a5fc799e6e9b1;
+wire [17:0] xaba03080d7b00c37;
+wire        x6c78966d0cb17306;
+wire [17:0] x26cbb2980ce3c9f0;
+wire [17:0] xcb0d9199a1616900;
+wire [17:0] x5951551e85a0646f;
+wire [17:0] x4222ccff04918211;
+wire [17:0] x31f0c697ee922faf;
+wire [17:0] xfd35166a37b5f7e2;
+wire [17:0] x7e34fda8c1ead996;
+wire signed [10:0] xe8303f22787cdd81;
+wire signed [10:0] x5147339ecdb106b9;
+wire                 xd172560660775236;
+wire [17:0]          xdd57f356b5c5b942;
+wire signed [10:0]   x5e66932187531cd7;
+wire signed [11:0]   x61f4656bf7705d92;
+wire [12:0]          x1842bbfb75aff320;
+
+assign x035bda0877fa5e2f = xe722485e055d40b4[12:8];
+assign xe2ada154b29bc7d8 = {2'b0, xe722485e055d40b4[20:13]} - 10'sd127;
+assign xa61294486d09be2f = xe2ada154b29bc7d8[0];
+assign x7c3a5fc799e6e9b1 = {1'b0, 1'b1, xe722485e055d40b4[12:0], 3'b0};
+assign xaba03080d7b00c37 = x711a27792ee2ce86 && xa61294486d09be2f ? (x7c3a5fc799e6e9b1 << 1) : x7c3a5fc799e6e9b1;
+
+
+assign x6c78966d0cb17306 = !x9f2c614f57341b7f && ((xfa9487741bfe35fc == 3'd1)
+                    || (xfa9487741bfe35fc == 3'd4)
+                    || (xfa9487741bfe35fc == 3'd5)
+                    || (x711a27792ee2ce86 && xe722485e055d40b4[21]));
+
+x5e9b89aa28c217ca xcb9a73e635723633 (
+  .x035bda0877fa5e2f(x035bda0877fa5e2f),
+  .x418dae3c44f01c41(x711a27792ee2ce86),
+  .xa61294486d09be2f(xa61294486d09be2f),
+  .x3988f3c576f05fec(x3988f3c576f05fec)
+);
+
+
+
+x241d76801fed7e3a #(.x7fca6a09a917f9ac(0)) x77738d6336b5b2d0 (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .xe0f1e563055aaa78(x1366a34bd1ee8c7e[17:4]),
+  .x4d9ca5ff295c356e(x0d13935cde4e6b50[16:3]),
+  .xb0ca91a13ea84d81(x26cbb2980ce3c9f0)
+);
+
+
+
+
+assign xcb0d9199a1616900 = 18'h20000 - x0d6a264b784cd8ff;
+x241d76801fed7e3a #(.x7fca6a09a917f9ac(0)) x63278b38d7e19131 (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .xe0f1e563055aaa78(x0d6a264b784cd8ff[17:4]),
+  .x4d9ca5ff295c356e(xa5a29d82f905c5ca[16:3]),
+  .xb0ca91a13ea84d81(x5951551e85a0646f)
+);
+x22f59d2b07bd0725 #(.x7fca6a09a917f9ac(0)) x7a82ca4d996c55bb (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .xe0f1e563055aaa78(xdea119bdb574889c[16:3]),
+  .x4d9ca5ff295c356e(xd2877d349ea45ea8),
+  .xb0ca91a13ea84d81(x4222ccff04918211)
+);
+
+
+
+
+
+assign x31f0c697ee922faf = x5951551e85a0646f >> 1;
+assign xfd35166a37b5f7e2 = 18'h18000 - x31f0c697ee922faf;
+x22f59d2b07bd0725 #(.x7fca6a09a917f9ac(0)) xc2df6e0c1c4716b7 (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .xe0f1e563055aaa78(x40bc346d5add3ed2[16:3]),
+  .x4d9ca5ff295c356e(xedb87174c20e9367),
+  .xb0ca91a13ea84d81(x7e34fda8c1ead996)
+);
+
+assign x5147339ecdb106b9 = {x3f4858feb90d4758[9], x3f4858feb90d4758};
+assign xe8303f22787cdd81 = xda3b1d19a86525de ? -(x5147339ecdb106b9 >>> 1) : -x5147339ecdb106b9;
+assign xd172560660775236 = (x25254845eb0d6cd9 == 18'h10000);
+assign xdd57f356b5c5b942 = xd172560660775236 ? x25254845eb0d6cd9 : (x25254845eb0d6cd9 << 1);
+assign x5e66932187531cd7 = xd172560660775236 ? xe8303f22787cdd81 : (xe8303f22787cdd81 - 11'sd1);
+assign x61f4656bf7705d92 = x5e66932187531cd7 + 12'sd127;
+assign x1842bbfb75aff320 = xdd57f356b5c5b942[15:3];
+
+
+
+wire x9cab6c5231a362c1=xdd0736270599e18a || x61f4656bf7705d92 <= 0;
+assign x047140d6a4ddaee7 = x9cab6c5231a362c1 ? 3'd1 : 3'd0;
+assign out_valid = x8c5619c8d36cf49b;
+
+
+
+
+wire x01c0381dca544997=x129b107ce12892d8;
+assign x675c3d21ea7b374f = {x01c0381dca544997,x61f4656bf7705d92[7:0],x1842bbfb75aff320};
+
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xd60950caef470c04<=0;xbd4ce7493a8e85c1<=0;x55e7f0eb7a38b29f<=0;xaf4bb549eefb2864<=0;
+    x02153adf40c27825<=0;x7735a88cc7a67948<=0;x8c5619c8d36cf49b<=0;
+  end else begin
+    xd60950caef470c04<=in_valid;xbd4ce7493a8e85c1<=xd60950caef470c04;x55e7f0eb7a38b29f<=xbd4ce7493a8e85c1;
+    xaf4bb549eefb2864<=x55e7f0eb7a38b29f;x02153adf40c27825<=xaf4bb549eefb2864;x7735a88cc7a67948<=x02153adf40c27825;x8c5619c8d36cf49b<=x7735a88cc7a67948;
+  end
+end
+
+
+always @(posedge clk) begin
+    x234ea01bf6d23a49 <= x711a27792ee2ce86;
+    xdf19c013794013a3 <= x234ea01bf6d23a49;
+    x15d26613a9cfee5c <= xdf19c013794013a3;
+    xf04140ae3af66493 <= x15d26613a9cfee5c;
+    x8ebc9dbcc1aaa296 <= xf04140ae3af66493;
+    x3e1c50fd79387c44 <= x8ebc9dbcc1aaa296;
+    xda3b1d19a86525de <= x3e1c50fd79387c44;
+    xae52db153cf8fdd1 <= x711a27792ee2ce86 ? 1'b0 : xe722485e055d40b4[21];
+    x46845fe7154061e0 <= xae52db153cf8fdd1;
+    x4e80c486438b5f2a <= x46845fe7154061e0;
+    x450ac90c4427ec5d <= x4e80c486438b5f2a;
+    xa90f5068b2e87c5e <= x450ac90c4427ec5d;
+    x14e73ecccd1ea633 <= xa90f5068b2e87c5e;
+    x129b107ce12892d8 <= x14e73ecccd1ea633;
+    x93d617e02ceb91f4 <= x6c78966d0cb17306;
+    x4e03ab2ff9a15897 <= x93d617e02ceb91f4;
+    x95e9487f27152098 <= x4e03ab2ff9a15897;
+    x4fa589978be43f1b <= x95e9487f27152098;
+    x98db348146addc0d <= x4fa589978be43f1b;
+    x78329f1ec7f7ab9f <= x98db348146addc0d;
+    xdd0736270599e18a <= x78329f1ec7f7ab9f;
+    x6cd9d3938a2204af <= xe2ada154b29bc7d8;
+    x84c1e946e367d537 <= x6cd9d3938a2204af;
+    x2b9de2e6f09ac283 <= x84c1e946e367d537;
+    xa1a6158f6388acb6 <= x2b9de2e6f09ac283;
+    xbcce02d3bd96bb73 <= xa1a6158f6388acb6;
+    x9bbe961bb50e8000 <= xbcce02d3bd96bb73;
+    x3f4858feb90d4758 <= x9bbe961bb50e8000;
+    x1366a34bd1ee8c7e <= xaba03080d7b00c37;
+    x0d13935cde4e6b50 <= x3988f3c576f05fec;
+    xa45b99ddad35b978 <= x0d13935cde4e6b50;
+    xa5a29d82f905c5ca <= xa45b99ddad35b978;
+    xdea119bdb574889c <= xa5a29d82f905c5ca;
+    x40bc346d5add3ed2 <= xdea119bdb574889c;
+    x0d6a264b784cd8ff <= x26cbb2980ce3c9f0;
+    xedb87174c20e9367 <= xfd35166a37b5f7e2[16:3];
+    xd2877d349ea45ea8 <= xcb0d9199a1616900[16:3];
+    x24dc7904577a33d3 <= x4222ccff04918211;
+    x25254845eb0d6cd9 <= x3e1c50fd79387c44 ? x7e34fda8c1ead996 : x24dc7904577a33d3;
+end
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+(* x3188d8127775eced = "yes" *)
+module x9431b661e2ea13e6 #(parameter x9f2c614f57341b7f=0, parameter x1ac63268f823b2d1=0, parameter x87ed749abdd93a27=0, parameter x9b08cc09b91ff46a=0, parameter xb67230d00e81e5fa=0) (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire        in_valid,
+  input  wire        x07f4d31d26e6e521,
+  input  wire [2:0]  x0c014b55b70e6cbb,
+  input  wire [15:0] xfe7ab404f5df7209,
+  input wire x4befd6b816980811,
+  input  wire [21:0] xcdcf23f6ade64f3f,
+  input  wire        x1ad1631690d2c849,
+  input  wire x2113707f5633ba1d,
+  input wire signed [9:0] xd18730b1909718db,
+  input wire [14:0] x0a40683585c667f9,
+  input wire [20:0] xead3fd0f9038a7a7,
+  input wire [14:0] x8e7a8b5e6e3be18c,
+  output reg         out_valid,
+  output reg         x752427999027db57,
+  output reg  [2:0]  x2b8f65f39bf1e0be,
+  output reg  [18:0] xa8ed38d9b97a5c69,
+  output reg         x5e15bafefc6897b8,
+  output reg  [21:0] x70538dfd2ad186bb,
+  output reg  [2:0]  x6b2ee21d8c6d75a9,
+  output reg  [2:0]  x53eda471f2ffb116,
+  output reg  [2:0]  xa0e5b95bd0d25e60,
+  output reg  [21:0] xab0a74e2907f005c,
+  input wire xfd96c179dd1a90fc, x5c6b3811fdb4a607,
+  output reg [3:0] xcfeb7539e189fea9
+);
+
+
+
+
+wire [2:0] xa2334374ec2d16c1, x57ca0b1ab5e4bc3f, x6dc264b7cd99af26;
+wire [2:0] x7d5bf7fea62e8dfb, x9a892c045db6b759, xe947134419c7a489;
+reg [2:0] x9c1d011035d73db7, x9ba842e14802d1b6, x70487210d9d9df9c;
+reg [2:0] x364f784b774d3943, xfe0bb96f565a408a, xdebf19d139788e8e;
+reg [2:0] xac50bdcd239b3ce5, x9f177ec11e420447, x165b771f12b6261c;
+reg [2:0] x0ffa381fdd8a145a, xc384ae7b671e7529;
+reg x5a1d256cac500d6d;
+wire [2:0] x9b4aa1839450a583;
+assign xa2334374ec2d16c1=x2113707f5633ba1d ? 3'd1 :
+                 (x1ac63268f823b2d1 && xfd96c179dd1a90fc) ? 3'd4 :
+                 (x87ed749abdd93a27 && x5c6b3811fdb4a607) ? 3'd3 : x9b4aa1839450a583;
+generate if(x87ed749abdd93a27)begin: xa58a72198d0c7fe2
+
+ assign x57ca0b1ab5e4bc3f=(x9b08cc09b91ff46a ? x4befd6b816980811 : xfe7ab404f5df7209[14:0]==0) ? 3'd1 : 3'd0;
+ assign x6dc264b7cd99af26=3'd0;
+end else begin: xbcd830bbfc51e625
+ x74e3902f4a4bef9b #(.x9f2c614f57341b7f(x9f2c614f57341b7f)) xdaab915774705712({xfe7ab404f5df7209,6'b0},x57ca0b1ab5e4bc3f);
+ x74e3902f4a4bef9b #(.x9f2c614f57341b7f(x9f2c614f57341b7f)) xa1b8b37b5e7b5071(xcdcf23f6ade64f3f,x6dc264b7cd99af26);
+end endgenerate
+
+assign x7d5bf7fea62e8dfb=3'd0;
+
+wire [24:0] x32d12478fdd6c92f;
+assign x9a892c045db6b759=(!x87ed749abdd93a27 && x32d12478fdd6c92f[24:22]==3'd3)?3'd0:x32d12478fdd6c92f[24:22];
+assign xeb6f8631b04a8769=(!x87ed749abdd93a27 && x32d12478fdd6c92f[24:22]==3'd3)?22'h1fdfff:x32d12478fdd6c92f[21:0];
+assign xe947134419c7a489=(x3b69367c4b3872f7==0)?3'd1:3'd0;
+
+localparam [2:0] x8892e084101a34a0 = 3'd1;
+localparam [2:0] xd1bc141d07804dc3 = 3'd2;
+localparam [2:0] x877c93a774151140 = 3'd3;
+localparam [2:0] x543f03db44e09832 = 3'd4;
+localparam [2:0] xe3ffb037d7836c0d = 3'd6;
+localparam [2:0] xce6afa13dc64854d = 3'd7;
+localparam [21:0] x1c07f8355d2fc2cd = 22'h0fe000;
+localparam [18:0] x7bf31e4c4f450640 = {14'h2000, 5'b0};
+
+wire [28:0] x34cf4ba5b31896a8;
+wire [21:0] x9f7c3ff372384d96;
+wire [18:0] xd13d96d3814c84ae;
+wire [19:0] x4ca900348e99cde6;
+wire [18:0] x2e1f3c1b3ff68cde;
+wire [4:0] x751d7c07ff3ba12e;
+wire [21:0] x972520f9224f4c36;
+wire [21:0] x80e15f64a94a2f49;
+wire [21:0] xeb6f8631b04a8769;
+wire x63a7b52adaf51c8f;
+
+reg         xd60950caef470c04;
+reg         x4bfaee73c83cacf4;
+reg [2:0]   xf1f37814c0980ba5;
+reg [18:0]  x92cbbc65fb41a4ab;
+reg         xe74c9b4da35deb1f;
+reg [21:0]  x6cd9d3938a2204af;
+wire [21:0] x0e79e301a47d452c = {x92cbbc65fb41a4ab, 3'b0};
+reg [21:0]  x1680cc7c182b5e62;
+
+reg         xbd4ce7493a8e85c1;
+reg         xc05b1cc4d2c8d022;
+reg [2:0]   xf8e97a056e789139;
+reg [18:0]  x7ea019a9fe40f57a;
+reg         xeb488303f6601580;
+reg [21:0]  x84c1e946e367d537;
+wire [21:0] x2895f7edf4142727 = {x7ea019a9fe40f57a, 3'b0};
+reg [21:0]  xcbf519c861b15a07;
+reg [18:0]  x6ed3d62743713123;
+reg [7:0]   x5591ea3185203774;
+reg [12:0]  xe7abf34b2fd2954d;
+reg [7:0]   x18754c60cacc7b6a;
+wire [19:0] x2d1034a35e07b800 =
+    {x18754c60cacc7b6a,xe7abf34b2fd2954d[11:0]} +
+    {7'b0,xe7abf34b2fd2954d[12],12'b0};
+
+reg         x55e7f0eb7a38b29f;
+reg         x86a10a7aff3dc9b1;
+reg [2:0]   x2cd7ad3a10a78118;
+reg [18:0]  x1d68e20af3ac43e9;
+reg         xb035c439451671a3;
+reg [21:0]  x2b9de2e6f09ac283;
+wire [21:0] xf1a40c10c1b9450b = {x1d68e20af3ac43e9, 3'b0};
+reg [21:0]  x3e2c7450e64b1910;
+reg [21:0]  x8713e3b0877e771f;
+reg [21:0]  x3ba1094e53a1e120;
+reg [18:0]  x3b69367c4b3872f7;
+reg [4:0]   x6a7f913cdcf050ac;
+
+reg [7:0]   xf21e8f243268db2d;
+reg [7:0]   x53090764695c97de;
+reg [13:0]  x16cf95d851c665be;
+reg [13:0]  x85e3c49767d43205;
+reg [18:0]  xe33d5f86b039b2e3;
+reg [18:0]  xc17c542f92f579df;
+reg         xa2426628aa1c277f;
+reg [7:0]   x722b356a34c6c89b;
+integer     xb74695cacf6e5096;
+
+
+
+
+
+
+
+function [18:0] x942f3f058833c391;
+  input [21:0] x780e54e100da4975;
+  reg [7:0] x8a098a2473a6037c;
+  reg [13:0] sig;
+  reg [18:0] x489895674a5f3494;
+  reg xf58581e8080d0596;
+  integer shift;
+  begin
+    x8a098a2473a6037c = x780e54e100da4975[20:13];
+    sig = (x8a098a2473a6037c == 0) ? {1'b0, x780e54e100da4975[12:0]} : {1'b1, x780e54e100da4975[12:0]};
+    x489895674a5f3494 = {sig, 5'b0};
+    if (x8a098a2473a6037c >= 8'd127) begin
+      x942f3f058833c391 = x7bf31e4c4f450640;
+    end else begin
+      shift = {24'b0, 8'd127} - {24'b0, x8a098a2473a6037c};
+      if (shift >= 19) begin
+        x942f3f058833c391 = {18'b0, |sig};
+      end else begin
+        xf58581e8080d0596 = |(x489895674a5f3494 & ((19'b1 << shift) - 19'b1));
+        x942f3f058833c391 = (x489895674a5f3494 >> shift) | {18'b0, xf58581e8080d0596};
+      end
+    end
+  end
+endfunction
+
+function [4:0] x9e111374fa3adcb9;
+  input [18:0] value;
+  begin
+    casez (value)
+      19'b1??????????????????: x9e111374fa3adcb9 = 5'd0;
+      19'b01?????????????????: x9e111374fa3adcb9 = 5'd1;
+      19'b001????????????????: x9e111374fa3adcb9 = 5'd2;
+      19'b0001???????????????: x9e111374fa3adcb9 = 5'd3;
+      19'b00001??????????????: x9e111374fa3adcb9 = 5'd4;
+      19'b000001?????????????: x9e111374fa3adcb9 = 5'd5;
+      19'b0000001????????????: x9e111374fa3adcb9 = 5'd6;
+      19'b00000001???????????: x9e111374fa3adcb9 = 5'd7;
+      19'b000000001??????????: x9e111374fa3adcb9 = 5'd8;
+      19'b0000000001?????????: x9e111374fa3adcb9 = 5'd9;
+      19'b00000000001????????: x9e111374fa3adcb9 = 5'd10;
+      19'b000000000001???????: x9e111374fa3adcb9 = 5'd11;
+      19'b0000000000001??????: x9e111374fa3adcb9 = 5'd12;
+      19'b00000000000001?????: x9e111374fa3adcb9 = 5'd13;
+      19'b000000000000001????: x9e111374fa3adcb9 = 5'd14;
+      19'b0000000000000001???: x9e111374fa3adcb9 = 5'd15;
+      19'b00000000000000001??: x9e111374fa3adcb9 = 5'd16;
+      19'b000000000000000001?: x9e111374fa3adcb9 = 5'd17;
+      19'b0000000000000000001: x9e111374fa3adcb9 = 5'd18;
+      default: x9e111374fa3adcb9 = 5'd19;
+    endcase
+  end
+endfunction
+
+function [21:0] x7a439968f75bd650;
+  input [19:0] xf12379b3093c3b54;
+  reg [7:0] x8a098a2473a6037c;
+  reg [18:0] xc9729a3958d2132f;
+  reg [13:0] x321a68ef42d8d6fa;
+  reg [14:0] xda0ec48dc24f6094;
+  begin
+    if (xf12379b3093c3b54[19]) begin
+      x8a098a2473a6037c = 8'd128;
+      xc9729a3958d2132f = {xf12379b3093c3b54[19:2], |xf12379b3093c3b54[1:0]};
+    end else begin
+      x8a098a2473a6037c = 8'd127;
+      xc9729a3958d2132f = xf12379b3093c3b54[18:0];
+    end
+    x321a68ef42d8d6fa = xc9729a3958d2132f[18:5];
+    xda0ec48dc24f6094 = {1'b0, x321a68ef42d8d6fa} +
+              (xc9729a3958d2132f[4] && (|xc9729a3958d2132f[3:0] || x321a68ef42d8d6fa[0]));
+    if (xda0ec48dc24f6094[14])
+      x7a439968f75bd650 = {1'b0, x8a098a2473a6037c + 1'b1, xda0ec48dc24f6094[13:1]};
+    else
+      x7a439968f75bd650 = {1'b0, x8a098a2473a6037c, xda0ec48dc24f6094[12:0]};
+  end
+endfunction
+
+function [21:0] x0e1bad41ab8fab5f;
+  input [18:0] xf12379b3093c3b54;
+  input [4:0] x2cd13840537b3037;
+  reg [18:0] xc9729a3958d2132f;
+  reg [13:0] x321a68ef42d8d6fa;
+  reg [14:0] xda0ec48dc24f6094;
+  reg [7:0] x8a098a2473a6037c;
+  begin
+    begin
+      xc9729a3958d2132f = xf12379b3093c3b54 << x2cd13840537b3037;
+      x8a098a2473a6037c = 8'd127 - {3'b0, x2cd13840537b3037};
+      x321a68ef42d8d6fa = xc9729a3958d2132f[18:5];
+      xda0ec48dc24f6094 = {1'b0, x321a68ef42d8d6fa} +
+                (xc9729a3958d2132f[4] && (|xc9729a3958d2132f[3:0] || x321a68ef42d8d6fa[0]));
+      if (xda0ec48dc24f6094[14])
+        x0e1bad41ab8fab5f = {1'b0, x8a098a2473a6037c + 1'b1, xda0ec48dc24f6094[13:1]};
+      else
+        x0e1bad41ab8fab5f = {1'b0, x8a098a2473a6037c, xda0ec48dc24f6094[12:0]};
+    end
+  end
+endfunction
+
+function [24:0] xf67613515f401d64;
+  input [19:0] xf12379b3093c3b54;
+  input [7:0] base_exp;
+  reg [7:0] x8a098a2473a6037c;
+  reg [18:0] xc9729a3958d2132f;
+  reg [13:0] x321a68ef42d8d6fa;
+  reg [14:0] xda0ec48dc24f6094;
+  reg [7:0] x609ae15b4c74a20e;
+  reg [12:0] x704b22c542dfbc12;
+  reg x692ae099a409d052;
+  reg [2:0] x2bd5cf4c4a8383e8;
+  reg [21:0] candidate;
+  begin
+    begin
+      if (xf12379b3093c3b54[19]) begin
+        x8a098a2473a6037c = base_exp + 1'b1;
+        xc9729a3958d2132f = {xf12379b3093c3b54[19:2], |xf12379b3093c3b54[1:0]};
+      end else begin
+        x8a098a2473a6037c = base_exp;
+        xc9729a3958d2132f = xf12379b3093c3b54[18:0];
+      end
+      x321a68ef42d8d6fa = xc9729a3958d2132f[18:5];
+      xda0ec48dc24f6094 = {1'b0, x321a68ef42d8d6fa} +
+                (xc9729a3958d2132f[4] && (|xc9729a3958d2132f[3:0] || x321a68ef42d8d6fa[0]));
+
+
+      x692ae099a409d052=(x8a098a2473a6037c == 8'hff) || (x8a098a2473a6037c == 8'hfe && xda0ec48dc24f6094[14]);
+      x609ae15b4c74a20e=x8a098a2473a6037c + {7'b0,xda0ec48dc24f6094[14]};
+
+
+      if (x8a098a2473a6037c==8'd1 && !xda0ec48dc24f6094[14] && !xda0ec48dc24f6094[13]) x609ae15b4c74a20e=0;
+      x704b22c542dfbc12=xda0ec48dc24f6094[14] ? xda0ec48dc24f6094[13:1] : xda0ec48dc24f6094[12:0];
+      candidate={1'b0,x609ae15b4c74a20e,x704b22c542dfbc12};
+      x2bd5cf4c4a8383e8=(xf12379b3093c3b54==0) ? 3'd1 : x692ae099a409d052 ? 3'd3 :
+                   x609ae15b4c74a20e==0 ? ((x704b22c542dfbc12==0) ? 3'd1 : 3'd2) : 3'd0;
+
+      xf67613515f401d64={x2bd5cf4c4a8383e8,candidate};
+    end
+  end
+endfunction
+
+
+
+
+
+
+
+always @* begin
+  if (x1680cc7c182b5e62[20:13] > x0e79e301a47d452c[20:13]) begin
+    xf21e8f243268db2d = (x1680cc7c182b5e62[20:13] == 0) ?
+                       8'd1 : x1680cc7c182b5e62[20:13];
+    x53090764695c97de = (x0e79e301a47d452c[20:13] == 0) ?
+                       8'd1 : x0e79e301a47d452c[20:13];
+    x16cf95d851c665be = (x1680cc7c182b5e62[20:13] == 0) ?
+                       {1'b0, x1680cc7c182b5e62[12:0]} :
+                       {1'b1, x1680cc7c182b5e62[12:0]};
+    x85e3c49767d43205 = (x0e79e301a47d452c[20:13] == 0) ?
+                       {1'b0, x0e79e301a47d452c[12:0]} :
+                       {1'b1, x0e79e301a47d452c[12:0]};
+  end else begin
+    xf21e8f243268db2d = (x0e79e301a47d452c[20:13] == 0) ?
+                       8'd1 : x0e79e301a47d452c[20:13];
+    x53090764695c97de = (x1680cc7c182b5e62[20:13] == 0) ?
+                       8'd1 : x1680cc7c182b5e62[20:13];
+    x16cf95d851c665be = (x0e79e301a47d452c[20:13] == 0) ?
+                       {1'b0, x0e79e301a47d452c[12:0]} :
+                       {1'b1, x0e79e301a47d452c[12:0]};
+    x85e3c49767d43205 = (x1680cc7c182b5e62[20:13] == 0) ?
+                       {1'b0, x1680cc7c182b5e62[12:0]} :
+                       {1'b1, x1680cc7c182b5e62[12:0]};
+  end
+  xe33d5f86b039b2e3 = {x16cf95d851c665be, 5'b0};
+  xc17c542f92f579df = {x85e3c49767d43205, 5'b0};
+  xb74695cacf6e5096 = {24'b0, xf21e8f243268db2d} -
+                 {24'b0, x53090764695c97de};
+  xa2426628aa1c277f = 1'b0;
+  if (xb74695cacf6e5096 >= 19) begin
+    xc17c542f92f579df = {18'b0, |x85e3c49767d43205};
+  end else if (xb74695cacf6e5096 != 0) begin
+    xa2426628aa1c277f = |(xc17c542f92f579df &
+                      ((19'b1 << xb74695cacf6e5096) - 19'b1));
+    xc17c542f92f579df = (xc17c542f92f579df >> xb74695cacf6e5096) |
+                       {18'b0, xa2426628aa1c277f};
+  end
+  x722b356a34c6c89b = xf21e8f243268db2d;
+end
+
+
+assign x34cf4ba5b31896a8={x0a40683585c667f9,14'b0}+{8'b0,xead3fd0f9038a7a7};
+generate if(xb67230d00e81e5fa)begin: xacd9abf4cdb416ec
+ wire signed [10:0] x26419bd0e20fc0c2={xd18730b1909718db[9],xd18730b1909718db}+11'sd127+{10'b0,x8e7a8b5e6e3be18c[14]};
+ assign x9f7c3ff372384d96={1'b0,x26419bd0e20fc0c2[7:0],x8e7a8b5e6e3be18c[14] ? 13'b0 : x8e7a8b5e6e3be18c[12:0]};
+ assign x9b4aa1839450a583=(xd18730b1909718db < -10'sd126) ? 3'd1 :
+                        (xd18730b1909718db > 10'sd127 || x26419bd0e20fc0c2 >= 11'sd255) ? 3'd4 : 3'd0;
+end else begin: x3704e8c7783fc2ae
+xc323a3b3171b27fc xeb661dcf9c01dfcc (
+  .xd18730b1909718db(xd18730b1909718db), .xdb9b943ec93b35fc(x34cf4ba5b31896a8),
+  .xcf0405ebd4f41d2d(x9f7c3ff372384d96),.x10e10b3fdb52a10b(x9b4aa1839450a583)
+);
+end endgenerate
+
+
+assign xd13d96d3814c84ae = x87ed749abdd93a27 ? x942f3f058833c391(x6cd9d3938a2204af) :
+                      x9c1d011035d73db7==3'd1 ? 19'b0 :
+                      x9c1d011035d73db7==3'd4 ? x7bf31e4c4f450640 : x942f3f058833c391(x6cd9d3938a2204af);
+assign x4ca900348e99cde6 = {1'b0, x7bf31e4c4f450640} + {1'b0, x6ed3d62743713123};
+
+assign x2e1f3c1b3ff68cde = x7bf31e4c4f450640 - x6ed3d62743713123;
+assign x751d7c07ff3ba12e = x9e111374fa3adcb9(x2e1f3c1b3ff68cde);
+assign x972520f9224f4c36 = x7a439968f75bd650(x4ca900348e99cde6);
+assign x32d12478fdd6c92f = xf67613515f401d64(
+                              x2d1034a35e07b800,
+                              x5591ea3185203774);
+assign x80e15f64a94a2f49 = x0e1bad41ab8fab5f(x3b69367c4b3872f7,
+                                        x6a7f913cdcf050ac);
+assign x63a7b52adaf51c8f = (x2cd7ad3a10a78118 == xd1bc141d07804dc3) ||
+                           (x2cd7ad3a10a78118 == x877c93a774151140);
+
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xd60950caef470c04 <= 1'b0;
+    x4bfaee73c83cacf4 <= 1'b0;
+    xe74c9b4da35deb1f <= 1'b0;
+    xbd4ce7493a8e85c1 <= 1'b0;
+    xc05b1cc4d2c8d022 <= 1'b0;
+    xeb488303f6601580 <= 1'b0;
+    x55e7f0eb7a38b29f <= 1'b0;
+    x86a10a7aff3dc9b1 <= 1'b0;
+    xb035c439451671a3 <= 1'b0;
+    out_valid <= 1'b0;
+    x752427999027db57 <= 1'b0;
+    x5e15bafefc6897b8 <= 1'b0;
+  end else begin
+    xd60950caef470c04 <= in_valid;
+    x4bfaee73c83cacf4 <= x07f4d31d26e6e521;
+    xe74c9b4da35deb1f <= x1ad1631690d2c849;
+    xbd4ce7493a8e85c1 <= xd60950caef470c04;
+    xc05b1cc4d2c8d022 <= x4bfaee73c83cacf4;
+    xeb488303f6601580 <= xe74c9b4da35deb1f;
+    x55e7f0eb7a38b29f <= xbd4ce7493a8e85c1;
+    x86a10a7aff3dc9b1 <= xc05b1cc4d2c8d022;
+    xb035c439451671a3 <= xeb488303f6601580;
+    out_valid <= x55e7f0eb7a38b29f;
+    x752427999027db57 <= x86a10a7aff3dc9b1;
+    x5e15bafefc6897b8 <= xb035c439451671a3;
+  end
+end
+
+
+always @(posedge clk) begin
+
+    xf1f37814c0980ba5 <= x0c014b55b70e6cbb;
+    x92cbbc65fb41a4ab <= {xfe7ab404f5df7209,3'b0};
+    x6cd9d3938a2204af <= x9f7c3ff372384d96;
+
+    x1680cc7c182b5e62 <= xcdcf23f6ade64f3f;
+
+
+    xf8e97a056e789139 <= xf1f37814c0980ba5;
+    x7ea019a9fe40f57a <= x92cbbc65fb41a4ab;
+    x84c1e946e367d537 <= x6cd9d3938a2204af;
+
+    xcbf519c861b15a07 <= x1680cc7c182b5e62;
+    x6ed3d62743713123 <= xd13d96d3814c84ae;
+    x5591ea3185203774 <= x722b356a34c6c89b;
+    xe7abf34b2fd2954d <= {1'b0,xe33d5f86b039b2e3[11:0]} + {1'b0,xc17c542f92f579df[11:0]};
+    x18754c60cacc7b6a <= {1'b0,xe33d5f86b039b2e3[18:12]} + {1'b0,xc17c542f92f579df[18:12]};
+
+
+
+    x2cd7ad3a10a78118 <= xf8e97a056e789139;
+    x1d68e20af3ac43e9 <= x7ea019a9fe40f57a;
+    x2b9de2e6f09ac283 <= x84c1e946e367d537;
+
+    x3e2c7450e64b1910 <= xcbf519c861b15a07;
+    x8713e3b0877e771f <= x972520f9224f4c36;
+    x3ba1094e53a1e120 <= xeb6f8631b04a8769;
+    x3b69367c4b3872f7 <= x2e1f3c1b3ff68cde;
+    x6a7f913cdcf050ac <= x751d7c07ff3ba12e;
+
+
+    x2b8f65f39bf1e0be <= x2cd7ad3a10a78118;
+    xa8ed38d9b97a5c69 <= x1d68e20af3ac43e9;
+    if (x2cd7ad3a10a78118 == x8892e084101a34a0)
+      xab0a74e2907f005c <= xf1a40c10c1b9450b;
+    else if (x2cd7ad3a10a78118 == xe3ffb037d7836c0d)
+
+
+
+
+
+      xab0a74e2907f005c <= (!x9f2c614f57341b7f && xf1a40c10c1b9450b[21]) ? xf1a40c10c1b9450b : x3ba1094e53a1e120;
+    else if (x2cd7ad3a10a78118 == xce6afa13dc64854d)
+      xab0a74e2907f005c <= x3e2c7450e64b1910;
+    else
+      xab0a74e2907f005c <= x8713e3b0877e771f;
+    if (x2cd7ad3a10a78118 == x543f03db44e09832)
+      x70538dfd2ad186bb <= x80e15f64a94a2f49;
+    else if (x63a7b52adaf51c8f)
+      x70538dfd2ad186bb <= x1d68e20af3ac43e9[18] ? x2b9de2e6f09ac283 : x1c07f8355d2fc2cd;
+    else
+      x70538dfd2ad186bb <= x2b9de2e6f09ac283;
+end
+
+
+always @(posedge clk) begin
+  x9c1d011035d73db7<=xa2334374ec2d16c1;x9ba842e14802d1b6<=x9c1d011035d73db7;x70487210d9d9df9c<=x9ba842e14802d1b6;
+  x364f784b774d3943<=x57ca0b1ab5e4bc3f;xfe0bb96f565a408a<=x364f784b774d3943;xdebf19d139788e8e<=xfe0bb96f565a408a;
+  xac50bdcd239b3ce5<=x6dc264b7cd99af26;x9f177ec11e420447<=xac50bdcd239b3ce5;x165b771f12b6261c<=x9f177ec11e420447;
+  x0ffa381fdd8a145a<=x7d5bf7fea62e8dfb;
+
+  xc384ae7b671e7529<=x87ed749abdd93a27 ? 3'd0 : x9a892c045db6b759;
+  x5a1d256cac500d6d<=x87ed749abdd93a27 && (x9a892c045db6b759==3'd3);
+  xa0e5b95bd0d25e60<=xdebf19d139788e8e;
+
+  xcfeb7539e189fea9<=0;
+  if(x87ed749abdd93a27)begin
+    if(x2cd7ad3a10a78118==3'd6 && x5a1d256cac500d6d)xcfeb7539e189fea9<=4'd9;
+    else if(x2cd7ad3a10a78118==3'd0 || x2cd7ad3a10a78118==3'd5)begin
+      if(x70487210d9d9df9c==3'd3)xcfeb7539e189fea9<=4'd10;
+    end else if(x70487210d9d9df9c==3'd1)begin
+      case(x2cd7ad3a10a78118)
+        3'd2:xcfeb7539e189fea9<=x1d68e20af3ac43e9[18]?4'd1:4'd3;
+        3'd3:xcfeb7539e189fea9<=x1d68e20af3ac43e9[18]?4'd2:4'd8;
+        3'd4:xcfeb7539e189fea9<=x1d68e20af3ac43e9[18]?4'd4:4'd3;
+        default:xcfeb7539e189fea9<=0;
+      endcase
+    end
+  end
+  if(x87ed749abdd93a27)x53eda471f2ffb116<=3'd0;
+  else if(x2cd7ad3a10a78118==x8892e084101a34a0)x53eda471f2ffb116<=xdebf19d139788e8e;
+  else if(x2cd7ad3a10a78118==xe3ffb037d7836c0d)
+    x53eda471f2ffb116<=(!x9f2c614f57341b7f && xf1a40c10c1b9450b[21]) ? xdebf19d139788e8e : xc384ae7b671e7529;
+  else if(x2cd7ad3a10a78118==xce6afa13dc64854d)x53eda471f2ffb116<=x165b771f12b6261c;
+  else x53eda471f2ffb116<=x0ffa381fdd8a145a;
+  if(x2cd7ad3a10a78118==x543f03db44e09832)x6b2ee21d8c6d75a9<=xe947134419c7a489;
+  else if(x63a7b52adaf51c8f)x6b2ee21d8c6d75a9<=x1d68e20af3ac43e9[18] ? x70487210d9d9df9c : 3'd0;
+  else x6b2ee21d8c6d75a9<=x70487210d9d9df9c;
+end
+
+endmodule
+
+
+
+module x74e3902f4a4bef9b #(parameter x9f2c614f57341b7f=0)(input wire [21:0] x9d772197046ce47f,output wire [2:0] x10e10b3fdb52a10b);
+wire x671e9f2830cc0722=(x9d772197046ce47f[20:13]==0);
+wire xc9d14102073ea40e=(&x9d772197046ce47f[20:13]);
+wire x855e78cf1f81c35d=(x9d772197046ce47f[12:0]==0);
+assign x10e10b3fdb52a10b=x671e9f2830cc0722 ? (x855e78cf1f81c35d ? 3'd1 : 3'd2) :
+                   (!x9f2c614f57341b7f && xc9d14102073ea40e) ? (x855e78cf1f81c35d ? 3'd4 : 3'd5) : 3'd0;
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+
+(* x3188d8127775eced = "yes" *)
+module xdf4e96d2519dddfd #(
+  parameter x9f2c614f57341b7f = 0,
+  parameter x5b18f1dc0139f341 = 5
+) (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire        in_valid,
+  input  wire        x07f4d31d26e6e521,
+  input  wire [2:0]  x0c014b55b70e6cbb,
+  input  wire [18:0] x9a515dc3044eb94d,
+  input  wire [21:0] x1619fdfa4e0137c7,
+  input  wire [21:0] xc04a046831baefd0,
+  input  wire [2:0]  xd1131cec2bf1a082, x8e115d7509d968f7, xcb94278d0de9b7fd,
+  input  wire        x1ad1631690d2c849,
+  output wire        out_valid,
+  output wire        x752427999027db57,
+  output wire [2:0]  x2b8f65f39bf1e0be,
+  output wire [18:0] xa8ed38d9b97a5c69,
+  output wire [21:0] x70538dfd2ad186bb,
+  output wire [21:0] x7aff7fa07e990cea,
+  output wire [2:0]  x6b2ee21d8c6d75a9, xa0e5b95bd0d25e60, x14a0a942776226f0,
+  output reg [21:0] xecf1d4f336147a39,x329929ff8f6310d0,xda03233819fd133a,
+  output wire        x5e15bafefc6897b8
+);
+
+localparam [2:0] xe3ffb037d7836c0d = 3'd6;
+
+reg         xa4d6a39bf5118770;
+reg         xd2c3393080718722;
+reg [2:0]   x919975f2e70d250c;
+reg [18:0]  xa011b9fc28ee0c6b;
+reg [21:0]  x456296a49b0a0f8b;
+reg [21:0]  x0c39b4c33466cf05;
+reg         x91685ff9c8ae1157;
+reg [2:0]   xc247869e119e5cc4 [0:x5b18f1dc0139f341-1];
+reg [18:0]  x68cc11a047992b46 [0:x5b18f1dc0139f341-1];
+reg [21:0]  x0823d9da7f96f3ad [0:x5b18f1dc0139f341-1];
+reg         xc3ccaa98f31001c4 [0:x5b18f1dc0139f341-1];
+reg         xdea5df03aaf6642c [0:x5b18f1dc0139f341-1];
+reg         x7f919f7747799d18;
+reg         xfdd216cfd2d5d586;
+reg [2:0]   x6a5db24728698729;
+reg [18:0]  x4ef7a1f021a52a4d;
+reg [21:0]  xd4b3bfbefcdb5997;
+reg [21:0]  x173cd55a0d559f09;
+reg         xeba2b69e41761097;
+reg [2:0] x3640e5ce75730629, x57563d9ba4fec406, x952f47db5c988ba2;
+reg [2:0] x3b23e49426f3a7a2 [0:x5b18f1dc0139f341-1];
+reg [2:0] xe0b059113a458091 [0:x5b18f1dc0139f341-1];
+reg [2:0] x7b17515227dc83c3, xafa7580905645b7d;
+assign x6b2ee21d8c6d75a9=x7b17515227dc83c3;
+assign xa0e5b95bd0d25e60=xafa7580905645b7d;
+function [21:0] x073921f7c9dc12bd;
+ input [21:0] b;
+ reg x7f228f25605cd001;
+ begin x7f228f25605cd001=(b[20:13]==0);x073921f7c9dc12bd={x7f228f25605cd001?8'd1:b[20:13],!x7f228f25605cd001,b[12:0]};end
+endfunction
+always @(posedge clk)begin
+ xecf1d4f336147a39<=x073921f7c9dc12bd(x0823d9da7f96f3ad[x5b18f1dc0139f341-1]);
+ x329929ff8f6310d0<=x073921f7c9dc12bd({x68cc11a047992b46[x5b18f1dc0139f341-1],3'b0});
+ xda03233819fd133a<=x073921f7c9dc12bd(x9e72ecd2f65b84c4);
+end
+integer xd8037f2dff8a176c;
+
+wire x91521ed101738367;
+wire [21:0] x9e72ecd2f65b84c4;
+wire [2:0] x1a513fa6d07a6d6b;
+reg [2:0] x12357a80532349d8;
+assign x14a0a942776226f0=x12357a80532349d8;
+
+xc884f9c638a7499a #(.x9f2c614f57341b7f(x9f2c614f57341b7f)) xaa4df3f9ce21c9da (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .in_valid(xa4d6a39bf5118770),
+  .x711a27792ee2ce86(x919975f2e70d250c == xe3ffb037d7836c0d),
+  .xe722485e055d40b4(x0c39b4c33466cf05),
+  .xfa9487741bfe35fc(x57563d9ba4fec406),
+  .x047140d6a4ddaee7(x1a513fa6d07a6d6b),
+  .out_valid(x91521ed101738367),
+  .x675c3d21ea7b374f(x9e72ecd2f65b84c4)
+);
+
+assign out_valid = x7f919f7747799d18;
+assign x752427999027db57 = xfdd216cfd2d5d586;
+assign x2b8f65f39bf1e0be = x6a5db24728698729;
+assign xa8ed38d9b97a5c69 = x4ef7a1f021a52a4d;
+assign x70538dfd2ad186bb = xd4b3bfbefcdb5997;
+assign x7aff7fa07e990cea = x173cd55a0d559f09;
+assign x5e15bafefc6897b8 = xeba2b69e41761097;
+
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xa4d6a39bf5118770<=0; xd2c3393080718722<=0; x91685ff9c8ae1157<=0;
+    x7f919f7747799d18<=0; xfdd216cfd2d5d586<=0; xeba2b69e41761097<=0;
+    for(xd8037f2dff8a176c=0;xd8037f2dff8a176c<x5b18f1dc0139f341;xd8037f2dff8a176c=xd8037f2dff8a176c+1)begin
+      xdea5df03aaf6642c[xd8037f2dff8a176c]<=0;xc3ccaa98f31001c4[xd8037f2dff8a176c]<=0;
+    end
+  end else begin
+    xa4d6a39bf5118770<=in_valid;xd2c3393080718722<=x07f4d31d26e6e521;x91685ff9c8ae1157<=x1ad1631690d2c849;
+    x7f919f7747799d18<=x91521ed101738367;
+    xfdd216cfd2d5d586<=xdea5df03aaf6642c[x5b18f1dc0139f341-1];
+    xeba2b69e41761097<=xc3ccaa98f31001c4[x5b18f1dc0139f341-1];
+    xdea5df03aaf6642c[0]<=xd2c3393080718722;xc3ccaa98f31001c4[0]<=x91685ff9c8ae1157;
+    for(xd8037f2dff8a176c=1;xd8037f2dff8a176c<x5b18f1dc0139f341;xd8037f2dff8a176c=xd8037f2dff8a176c+1)begin
+      xdea5df03aaf6642c[xd8037f2dff8a176c]<=xdea5df03aaf6642c[xd8037f2dff8a176c-1];xc3ccaa98f31001c4[xd8037f2dff8a176c]<=xc3ccaa98f31001c4[xd8037f2dff8a176c-1];
+    end
+  end
+end
+
+integer x5062736d7a9f8239;
+always @(posedge clk) begin
+    x919975f2e70d250c <= x0c014b55b70e6cbb;
+    xa011b9fc28ee0c6b <= x9a515dc3044eb94d;
+    x456296a49b0a0f8b <= x1619fdfa4e0137c7;
+    x0c39b4c33466cf05 <= xc04a046831baefd0;
+    x6a5db24728698729 <= xc247869e119e5cc4[x5b18f1dc0139f341-1];
+    x4ef7a1f021a52a4d <= x68cc11a047992b46[x5b18f1dc0139f341-1];
+    xd4b3bfbefcdb5997 <= x0823d9da7f96f3ad[x5b18f1dc0139f341-1];
+    x173cd55a0d559f09 <= x9e72ecd2f65b84c4;
+    xc247869e119e5cc4[0] <= x919975f2e70d250c;
+    x68cc11a047992b46[0] <= xa011b9fc28ee0c6b;
+    x0823d9da7f96f3ad[0] <= x456296a49b0a0f8b;
+    for (x5062736d7a9f8239 = 1; x5062736d7a9f8239 < x5b18f1dc0139f341; x5062736d7a9f8239 = x5062736d7a9f8239 + 1) begin
+      xc247869e119e5cc4[x5062736d7a9f8239] <= xc247869e119e5cc4[x5062736d7a9f8239 - 1];
+      x68cc11a047992b46[x5062736d7a9f8239] <= x68cc11a047992b46[x5062736d7a9f8239 - 1];
+      x0823d9da7f96f3ad[x5062736d7a9f8239] <= x0823d9da7f96f3ad[x5062736d7a9f8239 - 1];
+    end
+end
+
+integer x669c63627eb8aa13;
+always @(posedge clk) begin
+  x12357a80532349d8<=x1a513fa6d07a6d6b;
+  x3640e5ce75730629<=xd1131cec2bf1a082;
+  x57563d9ba4fec406<=x8e115d7509d968f7;
+  x952f47db5c988ba2<=xcb94278d0de9b7fd;
+  x3b23e49426f3a7a2[0]<=x3640e5ce75730629;
+  xe0b059113a458091[0]<=x952f47db5c988ba2;
+  for(x669c63627eb8aa13=1;x669c63627eb8aa13<x5b18f1dc0139f341;x669c63627eb8aa13=x669c63627eb8aa13+1)begin
+    x3b23e49426f3a7a2[x669c63627eb8aa13]<=x3b23e49426f3a7a2[x669c63627eb8aa13-1];
+    xe0b059113a458091[x669c63627eb8aa13]<=xe0b059113a458091[x669c63627eb8aa13-1];
+  end
+  x7b17515227dc83c3<=x3b23e49426f3a7a2[x5b18f1dc0139f341-1];
+  xafa7580905645b7d<=xe0b059113a458091[x5b18f1dc0139f341-1];
+end
+
+`ifndef SYNTHESIS
+
+
+function [2:0] x0d08fb070a01367e;
+  input [21:0] x760ad1ee4be538ea;
+  begin
+    x0d08fb070a01367e=3'd0;
+    case(x760ad1ee4be538ea[20:13])
+      8'h00:x0d08fb070a01367e=(|x760ad1ee4be538ea[12:0]) ? 3'd2 : 3'd1;
+      8'hff:x0d08fb070a01367e=(|x760ad1ee4be538ea[12:0]) ? 3'd5 : 3'd4;
+      default:x0d08fb070a01367e=3'd0;
+    endcase
+  end
+endfunction
+function [2:0] xdb4fe3a193b99a28;
+ input [21:0] x760ad1ee4be538ea;
+ begin xdb4fe3a193b99a28=x9f2c614f57341b7f ? (x760ad1ee4be538ea[20:0]==0 ? 3'd1 : 3'd0) : x0d08fb070a01367e(x760ad1ee4be538ea);end
+endfunction
+wire x2752800d016ec6b0=(x57563d9ba4fec406==3'd1)||
+                   (x57563d9ba4fec406==3'd4)||
+                   (x57563d9ba4fec406==3'd5)||
+                   ((x919975f2e70d250c==xe3ffb037d7836c0d)&&x0c39b4c33466cf05[21]);
+always @(posedge clk) if(cpurst_b)begin
+  if(in_valid && ({xd1131cec2bf1a082,x8e115d7509d968f7,xcb94278d0de9b7fd} !==
+    {((xd1131cec2bf1a082==3'd1 || xd1131cec2bf1a082==3'd3 || xd1131cec2bf1a082==3'd4) ? xd1131cec2bf1a082 : x0d08fb070a01367e(x1619fdfa4e0137c7)),((x9f2c614f57341b7f || x8e115d7509d968f7==3'd1 || x8e115d7509d968f7==3'd3) ? x8e115d7509d968f7 : xdb4fe3a193b99a28(xc04a046831baefd0)),xdb4fe3a193b99a28({x9a515dc3044eb94d,3'b0})}))
+    $fatal(1,"ACTU frontend class/data mismatch");
+  if(xa4d6a39bf5118770)begin
+    if({x3640e5ce75730629,x57563d9ba4fec406,x952f47db5c988ba2} !==
+       {((x3640e5ce75730629==3'd1 || x3640e5ce75730629==3'd3 || x3640e5ce75730629==3'd4) ? x3640e5ce75730629 : x0d08fb070a01367e(x456296a49b0a0f8b)),((x9f2c614f57341b7f || x57563d9ba4fec406==3'd1 || x57563d9ba4fec406==3'd3) ? x57563d9ba4fec406 : xdb4fe3a193b99a28(x0c39b4c33466cf05)),xdb4fe3a193b99a28({xa011b9fc28ee0c6b,3'b0})})
+      $fatal(1,"ACTU backend ingress class/data mismatch");
+    if(!x9f2c614f57341b7f && x57563d9ba4fec406!=3'd1 && x2752800d016ec6b0 !== ((x0c39b4c33466cf05[20:0]==0) ||
+       (x0c39b4c33466cf05[20:13]==8'hff) ||
+       ((x919975f2e70d250c==xe3ffb037d7836c0d)&&x0c39b4c33466cf05[21])))
+      $fatal(1,"ACTU class-derived nonlinear case differs from existing decode");
+  end
+  if(out_valid && ((x14a0a942776226f0==3'd0 && x0d08fb070a01367e(x7aff7fa07e990cea)!=3'd0) ||
+     (x14a0a942776226f0!=3'd0 && x14a0a942776226f0!=3'd1)))
+    $fatal(1,"ACTU reciprocal result class/data mismatch");
+  if(out_valid && ({x6b2ee21d8c6d75a9,xa0e5b95bd0d25e60} !==
+     {((x6b2ee21d8c6d75a9==3'd1 || x6b2ee21d8c6d75a9==3'd3 || x6b2ee21d8c6d75a9==3'd4) ? x6b2ee21d8c6d75a9 : x0d08fb070a01367e(x70538dfd2ad186bb)),xdb4fe3a193b99a28({xa8ed38d9b97a5c69,3'b0})}))
+    $fatal(1,"ACTU backend egress class/data mismatch");
+end
+`endif
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+
+
+(* x3188d8127775eced = "yes" *)
+module xe4e847f4485b9e6b #(
+  parameter x7fca6a09a917f9ac = 1
+) (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire [13:0] xe0f1e563055aaa78,
+  input  wire [13:0] x4d9ca5ff295c356e,
+  output wire [27:0] x1d01b50ef20d8e3e
+);
+
+reg [20:0] xcd24b009904ab3bf;
+reg [20:0] x12b0b92fa1edaa9f;
+
+assign x1d01b50ef20d8e3e = {7'b0, xcd24b009904ab3bf} + {x12b0b92fa1edaa9f, 7'b0};
+
+generate
+if (x7fca6a09a917f9ac) begin : xeb6e1d7903735431
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    xcd24b009904ab3bf <= 21'b0;
+    x12b0b92fa1edaa9f <= 21'b0;
+  end else begin
+    xcd24b009904ab3bf <= xe0f1e563055aaa78 * x4d9ca5ff295c356e[6:0];
+    x12b0b92fa1edaa9f <= xe0f1e563055aaa78 * x4d9ca5ff295c356e[13:7];
+  end
+end
+end else begin : xf4e9b898daa8e539
+
+  always @(posedge clk) begin
+    xcd24b009904ab3bf <= xe0f1e563055aaa78 * x4d9ca5ff295c356e[6:0];
+    x12b0b92fa1edaa9f <= xe0f1e563055aaa78 * x4d9ca5ff295c356e[13:7];
+  end
+end
+endgenerate
+
+endmodule
+
+
+(* x3188d8127775eced = "yes" *)
+module x241d76801fed7e3a #(parameter x7fca6a09a917f9ac=1)(
+ input wire clk, cpurst_b,
+ input wire [13:0] xe0f1e563055aaa78, x4d9ca5ff295c356e,
+ output wire [17:0] xb0ca91a13ea84d81
+);
+xf6bb5df156ac4696 #(.x7fca6a09a917f9ac(x7fca6a09a917f9ac),.x4b0afa1e1c2d5665(9)) x51f913b3a38f1afb (
+ .clk(clk),.cpurst_b(cpurst_b),.xe0f1e563055aaa78(xe0f1e563055aaa78),.x4d9ca5ff295c356e(x4d9ca5ff295c356e),
+ .xb0ca91a13ea84d81(xb0ca91a13ea84d81)
+);
+endmodule
+
+
+(* x3188d8127775eced = "yes" *)
+module x22f59d2b07bd0725 #(parameter x7fca6a09a917f9ac=1)(
+ input wire clk, cpurst_b,
+ input wire [13:0] xe0f1e563055aaa78, x4d9ca5ff295c356e,
+ output wire [17:0] xb0ca91a13ea84d81
+);
+xf6bb5df156ac4696 #(.x7fca6a09a917f9ac(x7fca6a09a917f9ac),.x4b0afa1e1c2d5665(10)) x51f913b3a38f1afb (
+ .clk(clk),.cpurst_b(cpurst_b),.xe0f1e563055aaa78(xe0f1e563055aaa78),.x4d9ca5ff295c356e(x4d9ca5ff295c356e),
+ .xb0ca91a13ea84d81(xb0ca91a13ea84d81)
+);
+endmodule
+
+
+
+
+
+module xf6bb5df156ac4696 #(
+ parameter x7fca6a09a917f9ac=1,
+ parameter x4b0afa1e1c2d5665=9
+)(
+ input wire clk, cpurst_b,
+ input wire [13:0] xe0f1e563055aaa78, x4d9ca5ff295c356e,
+ output wire [17:0] xb0ca91a13ea84d81
+);
+wire [27:0] xe162e86df05e14f5, xc9a6004ceddd8dff;
+generate
+if(x4b0afa1e1c2d5665==9) begin: x2b367b02c5c55a90
+wire xa04c57f36c23a951 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[0];
+wire xe422d29122b1f9c8 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[1];
+wire xb3da332a7527c620 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[2];
+wire x01d1e13170558095 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[3];
+wire x8656e5df02599a44 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[4];
+wire xcf74a7c7675c0902 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[5];
+wire xbf96d11bb7525b5b = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[6];
+wire xd42851e27a0ffb87 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[7];
+wire x716b9d3c2d10291e = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[8];
+wire x484ce93b550dd8a1 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[9];
+wire x3ec8015c399498ca = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[10];
+wire x6072db47a7fb813f = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[11];
+wire x6fe6b5e5bd25948d = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[12];
+wire x16d4b1fbda524ca5 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[13];
+wire xa051bf6249c1c875 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[0];
+wire x718dffdb6faaae1e = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[1];
+wire xf940fc594729718f = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[2];
+wire xe080c6a06c7abf53 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[3];
+wire x13b377cb817e7c34 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[4];
+wire x31ac44c2fb9b7984 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[5];
+wire x722c8e501196d649 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[6];
+wire xaf92b513d1cb16c1 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[7];
+wire xbb6bcec90171818c = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[8];
+wire xa1781ed9168c4462 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[9];
+wire xdf53b7a86774ff66 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[10];
+wire x9a27d3add528b80c = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[11];
+wire xd3765651842d63f1 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[12];
+wire x3fed4f22c7ddaeb2 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[13];
+wire xb34c4dbf5552137f = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[0];
+wire xb3c14ba30dfc158d = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[1];
+wire x1ee90a4b68043853 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[2];
+wire xb037c9968e1ded5e = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[3];
+wire x31fb04ee77fc46cf = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[4];
+wire x0f16d42ebae3899d = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[5];
+wire x894d8156d93ca533 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[6];
+wire xf1ae9bea26f609f8 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[7];
+wire x4e43ac04939f032f = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[8];
+wire xb4736e1e13f47327 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[9];
+wire xef077fd84e731415 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[10];
+wire xfb342b10591cef97 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[11];
+wire xada40ebd67fc5b1f = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[12];
+wire x5066ee7cc4366b1a = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[13];
+wire x63e6a851bab35ccf = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[0];
+wire x5671f0f13257e8b9 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[1];
+wire xc5e9bb93f3827f0c = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[2];
+wire x8a0b8602c4ad6fbc = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[3];
+wire xafb6082147ec26fd = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[4];
+wire x918888905e0ae9c0 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[5];
+wire x25704ca8a852cae1 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[6];
+wire x1ffce726b8a5e00c = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[7];
+wire xc5f16fa544570486 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[8];
+wire x0bb939a5581a6f78 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[9];
+wire xf2df520d9036cb57 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[10];
+wire x7e6bd093a0253cb7 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[11];
+wire xb8213c4ef462f308 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[12];
+wire xb299e4653fc300a7 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[13];
+wire x1c091cf3ff1c61ab = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[0];
+wire x27426cb87738c374 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[1];
+wire xb992094118c11ff0 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[2];
+wire x265177f55c060ffa = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[3];
+wire x62a7998084740468 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[4];
+wire x6c1f9e278b2bd208 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[5];
+wire x0921a1e56f558f86 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[6];
+wire x5806736c3dc1bc3e = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[7];
+wire xdc2bafc9f6f302ca = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[8];
+wire x2dacae1fdfe2e188 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[9];
+wire x6e2de924f83293bb = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[10];
+wire x698b468e21c2a45a = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[11];
+wire x7a8cf676eeaf378e = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[12];
+wire xbeeb0be40c66516b = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[13];
+wire x170240369598deed = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[0];
+wire xa4443795bb5ea4e3 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[1];
+wire x6de87f67ad240103 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[2];
+wire xf0abd2df089ff94a = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[3];
+wire x67d351fbf977c612 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[4];
+wire x3885aeac4126e3f5 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[5];
+wire xc596a79174557322 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[6];
+wire x447fdb655d8ec169 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[7];
+wire x03295db155ceb5d7 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[8];
+wire x0ddc696ef5e735f6 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[9];
+wire xb2c8b5527e58240b = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[10];
+wire x6766ea2dd3a88c45 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[11];
+wire xfc265648df0fcf8c = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[12];
+wire x8c5858536849bd26 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[13];
+wire x1d2be67cfce47373 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[0];
+wire x77e518f48dc92cf2 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[1];
+wire xfecf15b75a0182e2 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[2];
+wire x48119830a0edeb0d = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[3];
+wire x5853e61d04012882 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[4];
+wire xdf976d9080e6d074 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[5];
+wire x939e156bff8cd872 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[6];
+wire xfb1e86a02f2e876b = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[7];
+wire x374db9c51feffcdc = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[8];
+wire x096bfb6ad5d404a7 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[9];
+wire x26e1b91edb791858 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[10];
+wire xf07842dcfcf45e03 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[11];
+wire x4ec27b6a34d800eb = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[12];
+wire xe60d749cf91538bd = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[13];
+wire x8e3cd60c6d07b432 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[0];
+wire xd2f44aedcf41e2c7 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[1];
+wire x82f5120378e45020 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[2];
+wire x7d95e780b83c091d = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[3];
+wire x284673bc6e89c4c4 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[4];
+wire x64ad6d18028b84af = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[5];
+wire x765f1abaa1fe1f4f = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[6];
+wire x5829197c04b7a69f = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[7];
+wire xa2b68fc68b8495be = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[8];
+wire x37eb2931d14191e5 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[9];
+wire x64b877fc56604cdf = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[10];
+wire x1ba7db587088feae = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[11];
+wire xb43b8e9277870c7e = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[12];
+wire xdb763b1b66e2f342 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[13];
+wire x8d84193916b70729 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[0];
+wire x1cf840bd43dcbb41 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[1];
+wire x3b2606cdb5266270 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[2];
+wire xbdf0753249cc21eb = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[3];
+wire xa3f54d11feac0650 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[4];
+wire x963712e7eeedad27 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[5];
+wire xee635f84f2d0098b = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[6];
+wire xc5689926198737c5 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[7];
+wire x377d1f4c17477e3e = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[8];
+wire x9e0f20d299003e37 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[9];
+wire x0d0505d4651d58b8 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[10];
+wire x6e7c5473a85ca412 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[11];
+wire x415feafa3fa91b62 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[12];
+wire xf55b9637ca0cf61e = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[13];
+wire xcb52a258af818c79 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[0];
+wire xfd643d55f31ba041 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[1];
+wire x6ef057e22362799d = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[2];
+wire xf8084700870d6c3d = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[3];
+wire x8368387b7cb3da2a = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[4];
+wire x3ec90eafd0c47fbe = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[5];
+wire x87c95f61b23375c3 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[6];
+wire x1ee3802cb538e7c1 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[7];
+wire x5ec77928c0ed10c2 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[8];
+wire xac0b08bf08b937a3 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[9];
+wire x0b3094573f1af683 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[10];
+wire xb8a3b5da22228260 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[11];
+wire x01aff005108e59f4 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[12];
+wire x4ae6aa61eed0ea21 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[13];
+wire xa00be453057a90e5 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[0];
+wire xb30fbf27fbca4e6b = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[1];
+wire x2b2a2be63625d621 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[2];
+wire x8f450aad1d6de6ff = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[3];
+wire x06674de3aa1ea190 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[4];
+wire xa324a039ec8c6c40 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[5];
+wire xe75cee2ca5a8ef74 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[6];
+wire xb9be8634cf64c082 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[7];
+wire x1b5ae5d17f93bb42 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[8];
+wire xf5d0027fc48d56e9 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[9];
+wire xab6c53053dad4618 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[10];
+wire x8a396b7a9b73c290 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[11];
+wire xc55978ac61712adb = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[12];
+wire x79503f7c4e1dafb5 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[13];
+wire x0e1ec21e6e0c4c00 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[0];
+wire xfdb72d1dd0d9be9f = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[1];
+wire x7050110e56ef7284 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[2];
+wire x41474673835125b9 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[3];
+wire x3c0f7afbccbedaf0 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[4];
+wire x7e6cf632b8ef579f = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[5];
+wire x590ad2202ae6301c = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[6];
+wire xc1590a0a41164179 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[7];
+wire xcea62426e1082155 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[8];
+wire x07641828ac647536 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[9];
+wire x43ff58d8344fd57a = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[10];
+wire xdd9e780c2a4ac82a = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[11];
+wire xd53ba3ef5d0add7b = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[12];
+wire xd5bbbd3a6630b8e2 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[13];
+wire xbec58fe5b3c7ee5d = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[0];
+wire x0c599a7a0805c5dd = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[1];
+wire x9af59134409fdb29 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[2];
+wire xfe7b7b5036857d38 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[3];
+wire x04d9056e04b5564a = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[4];
+wire xd3f9fe937ef5d916 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[5];
+wire x26902444e3886c81 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[6];
+wire xe1125b8efd3d9324 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[7];
+wire x8c0f7f878da28724 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[8];
+wire x371f269ae44ca993 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[9];
+wire x861aa6edb0f88a8d = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[10];
+wire xab54e2ad93beb964 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[11];
+wire xed0468c631c48586 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[12];
+wire x86d7d9d6343ea35e = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[13];
+wire x6b7c96ecc867bb61 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[0];
+wire x776116beb703e176 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[1];
+wire x32e58fc5bceffc78 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[2];
+wire x3fc98fd8b25a855d = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[3];
+wire xdfb75fb3d8258815 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[4];
+wire xb1d18bca46c100cd = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[5];
+wire xf8bf7d6b40df63f3 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[6];
+wire xa2f30e109b7de13b = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[7];
+wire x57e3cd5d46055ab0 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[8];
+wire x00950242b0fb708a = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[9];
+wire x7d7205c64b317d8a = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[10];
+wire xbc0943b6070c14b8 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[11];
+wire xca70afa780451bc8 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[12];
+wire x308ab5a99d994289 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[13];
+wire x647c70ac77f927b3 = x16d4b1fbda524ca5 ^ xd3765651842d63f1;
+wire x118d7dd1ddcdf1b8 = x16d4b1fbda524ca5 & xd3765651842d63f1;
+wire xb2c7f892a969ca8d = x3fed4f22c7ddaeb2 ^ xada40ebd67fc5b1f;
+wire x82b86625cad758a2 = x3fed4f22c7ddaeb2 & xada40ebd67fc5b1f;
+wire x00fa11f6dfb89eb4 = x716b9d3c2d10291e ^ xaf92b513d1cb16c1;
+wire x0fb79107a07fde99 = x716b9d3c2d10291e & xaf92b513d1cb16c1;
+wire xa976bdc1f0e0d774 = x484ce93b550dd8a1 ^ xbb6bcec90171818c ^ xf1ae9bea26f609f8;
+wire x0d3a09d986888112 = (x484ce93b550dd8a1 & xbb6bcec90171818c) | (x484ce93b550dd8a1 & xf1ae9bea26f609f8) | (xbb6bcec90171818c & xf1ae9bea26f609f8);
+wire x8d797e386edcdeb9 = x3ec8015c399498ca ^ xa1781ed9168c4462 ^ x4e43ac04939f032f;
+wire xbf9507f2029f1b03 = (x3ec8015c399498ca & xa1781ed9168c4462) | (x3ec8015c399498ca & x4e43ac04939f032f) | (xa1781ed9168c4462 & x4e43ac04939f032f);
+wire xda3507511cbc98ca = x1ffce726b8a5e00c ^ x0921a1e56f558f86;
+wire xeaaf803dacc117c0 = x1ffce726b8a5e00c & x0921a1e56f558f86;
+wire xc6ad06832f1aef11 = x6072db47a7fb813f ^ xdf53b7a86774ff66 ^ xb4736e1e13f47327;
+wire xb39e77e1e25ca6ec = (x6072db47a7fb813f & xdf53b7a86774ff66) | (x6072db47a7fb813f & xb4736e1e13f47327) | (xdf53b7a86774ff66 & xb4736e1e13f47327);
+wire xb3cf34c5d1098e5a = xc5f16fa544570486 ^ x5806736c3dc1bc3e ^ xc596a79174557322;
+wire x4d7b9a5f80314ccf = (xc5f16fa544570486 & x5806736c3dc1bc3e) | (xc5f16fa544570486 & xc596a79174557322) | (x5806736c3dc1bc3e & xc596a79174557322);
+wire x10abd071ea8a30b0 = xdf976d9080e6d074 ^ x284673bc6e89c4c4;
+wire xad0e71713f4745b4 = xdf976d9080e6d074 & x284673bc6e89c4c4;
+wire xca0bd6fbcf7859b0 = x6fe6b5e5bd25948d ^ x9a27d3add528b80c ^ xef077fd84e731415;
+wire xdb06a8ac810a4a3f = (x6fe6b5e5bd25948d & x9a27d3add528b80c) | (x6fe6b5e5bd25948d & xef077fd84e731415) | (x9a27d3add528b80c & xef077fd84e731415);
+wire xabf40a700c03eaae = x0bb939a5581a6f78 ^ xdc2bafc9f6f302ca ^ x447fdb655d8ec169;
+wire x538767258b8af5c2 = (x0bb939a5581a6f78 & xdc2bafc9f6f302ca) | (x0bb939a5581a6f78 & x447fdb655d8ec169) | (xdc2bafc9f6f302ca & x447fdb655d8ec169);
+wire xaec990f57b76ed62 = x939e156bff8cd872 ^ x64ad6d18028b84af ^ xa3f54d11feac0650;
+wire x32af7ba5e522c78c = (x939e156bff8cd872 & x64ad6d18028b84af) | (x939e156bff8cd872 & xa3f54d11feac0650) | (x64ad6d18028b84af & xa3f54d11feac0650);
+wire xc4c44c0f1219b6ea = xf8084700870d6c3d ^ x2b2a2be63625d621;
+wire x53bf0a0b0e5031c5 = xf8084700870d6c3d & x2b2a2be63625d621;
+wire x408681fe3fc43540 = x647c70ac77f927b3 ^ xfb342b10591cef97 ^ xf2df520d9036cb57;
+wire x3b0584d584858572 = (x647c70ac77f927b3 & xfb342b10591cef97) | (x647c70ac77f927b3 & xf2df520d9036cb57) | (xfb342b10591cef97 & xf2df520d9036cb57);
+wire x0c27dfdf282fe4ba = x2dacae1fdfe2e188 ^ x03295db155ceb5d7 ^ xfb1e86a02f2e876b;
+wire xb98fefecd76947c9 = (x2dacae1fdfe2e188 & x03295db155ceb5d7) | (x2dacae1fdfe2e188 & xfb1e86a02f2e876b) | (x03295db155ceb5d7 & xfb1e86a02f2e876b);
+wire x93f044631d8f3777 = x765f1abaa1fe1f4f ^ x963712e7eeedad27 ^ x8368387b7cb3da2a;
+wire x158bbf5bc333201f = (x765f1abaa1fe1f4f & x963712e7eeedad27) | (x765f1abaa1fe1f4f & x8368387b7cb3da2a) | (x963712e7eeedad27 & x8368387b7cb3da2a);
+wire xb3c1313899299868 = x8f450aad1d6de6ff ^ x7050110e56ef7284 ^ x0c599a7a0805c5dd;
+wire x175b01a7a1fb9def = (x8f450aad1d6de6ff & x7050110e56ef7284) | (x8f450aad1d6de6ff & x0c599a7a0805c5dd) | (x7050110e56ef7284 & x0c599a7a0805c5dd);
+wire x124d99e0e273071e = x118d7dd1ddcdf1b8 ^ xb2c7f892a969ca8d ^ x7e6bd093a0253cb7;
+wire xabefb1e93bfb3904 = (x118d7dd1ddcdf1b8 & xb2c7f892a969ca8d) | (x118d7dd1ddcdf1b8 & x7e6bd093a0253cb7) | (xb2c7f892a969ca8d & x7e6bd093a0253cb7);
+wire xd29c78faee22c724 = x6e2de924f83293bb ^ x0ddc696ef5e735f6 ^ x374db9c51feffcdc;
+wire x69215065f1b9b3a9 = (x6e2de924f83293bb & x0ddc696ef5e735f6) | (x6e2de924f83293bb & x374db9c51feffcdc) | (x0ddc696ef5e735f6 & x374db9c51feffcdc);
+wire x18121d3a500158c3 = x5829197c04b7a69f ^ xee635f84f2d0098b ^ x3ec90eafd0c47fbe;
+wire x6b29c9769d0aa2d1 = (x5829197c04b7a69f & xee635f84f2d0098b) | (x5829197c04b7a69f & x3ec90eafd0c47fbe) | (xee635f84f2d0098b & x3ec90eafd0c47fbe);
+wire xf190a8a1a1db99a2 = x06674de3aa1ea190 ^ x41474673835125b9 ^ x9af59134409fdb29;
+wire x6090578c03bb27cc = (x06674de3aa1ea190 & x41474673835125b9) | (x06674de3aa1ea190 & x9af59134409fdb29) | (x41474673835125b9 & x9af59134409fdb29);
+wire x35824ce4deb7a571 = x82b86625cad758a2 ^ x5066ee7cc4366b1a ^ xb8213c4ef462f308;
+wire x3134ba4c9e838318 = (x82b86625cad758a2 & x5066ee7cc4366b1a) | (x82b86625cad758a2 & xb8213c4ef462f308) | (x5066ee7cc4366b1a & xb8213c4ef462f308);
+wire x43bd06b10d632d93 = x698b468e21c2a45a ^ xb2c8b5527e58240b ^ x096bfb6ad5d404a7;
+wire x7c7186c807135843 = (x698b468e21c2a45a & xb2c8b5527e58240b) | (x698b468e21c2a45a & x096bfb6ad5d404a7) | (xb2c8b5527e58240b & x096bfb6ad5d404a7);
+wire xc5b54cec455f316c = xa2b68fc68b8495be ^ xc5689926198737c5 ^ x87c95f61b23375c3;
+wire x9396be5b7c4794df = (xa2b68fc68b8495be & xc5689926198737c5) | (xa2b68fc68b8495be & x87c95f61b23375c3) | (xc5689926198737c5 & x87c95f61b23375c3);
+wire x7d55baa554f7d7c5 = xa324a039ec8c6c40 ^ x3c0f7afbccbedaf0 ^ xfe7b7b5036857d38;
+wire x5fff945f8119e056 = (xa324a039ec8c6c40 & x3c0f7afbccbedaf0) | (xa324a039ec8c6c40 & xfe7b7b5036857d38) | (x3c0f7afbccbedaf0 & xfe7b7b5036857d38);
+wire xc42d4c55b42427a1 = xb299e4653fc300a7 ^ x7a8cf676eeaf378e ^ x6766ea2dd3a88c45;
+wire x83ad39a12eeeb313 = (xb299e4653fc300a7 & x7a8cf676eeaf378e) | (xb299e4653fc300a7 & x6766ea2dd3a88c45) | (x7a8cf676eeaf378e & x6766ea2dd3a88c45);
+wire x8c8a5783d3e2206f = x26e1b91edb791858 ^ x37eb2931d14191e5 ^ x377d1f4c17477e3e;
+wire x36a81e661bc66c94 = (x26e1b91edb791858 & x37eb2931d14191e5) | (x26e1b91edb791858 & x377d1f4c17477e3e) | (x37eb2931d14191e5 & x377d1f4c17477e3e);
+wire xee51c6c7a426b098 = x1ee3802cb538e7c1 ^ xe75cee2ca5a8ef74 ^ x7e6cf632b8ef579f;
+wire x2e478ce409a98bff = (x1ee3802cb538e7c1 & xe75cee2ca5a8ef74) | (x1ee3802cb538e7c1 & x7e6cf632b8ef579f) | (xe75cee2ca5a8ef74 & x7e6cf632b8ef579f);
+wire xaf391273d04cab76 = xbeeb0be40c66516b ^ xfc265648df0fcf8c ^ xf07842dcfcf45e03;
+wire x24ed45a47b7b33c0 = (xbeeb0be40c66516b & xfc265648df0fcf8c) | (xbeeb0be40c66516b & xf07842dcfcf45e03) | (xfc265648df0fcf8c & xf07842dcfcf45e03);
+wire x423a706f5db69598 = x64b877fc56604cdf ^ x9e0f20d299003e37 ^ x5ec77928c0ed10c2;
+wire x19c94a5c0f907158 = (x64b877fc56604cdf & x9e0f20d299003e37) | (x64b877fc56604cdf & x5ec77928c0ed10c2) | (x9e0f20d299003e37 & x5ec77928c0ed10c2);
+wire xf5594f04b663f046 = x8c5858536849bd26 ^ x4ec27b6a34d800eb ^ x1ba7db587088feae;
+wire x425ebfa624f77017 = (x8c5858536849bd26 & x4ec27b6a34d800eb) | (x8c5858536849bd26 & x1ba7db587088feae) | (x4ec27b6a34d800eb & x1ba7db587088feae);
+wire xdd01484bce0de99c = xbf96d11bb7525b5b ^ x31ac44c2fb9b7984;
+wire x8815a27a04cad6a8 = xbf96d11bb7525b5b & x31ac44c2fb9b7984;
+wire x39344fbaee9f42f2 = xd42851e27a0ffb87 ^ x722c8e501196d649 ^ x0f16d42ebae3899d;
+wire x8795af373c254a58 = (xd42851e27a0ffb87 & x722c8e501196d649) | (xd42851e27a0ffb87 & x0f16d42ebae3899d) | (x722c8e501196d649 & x0f16d42ebae3899d);
+wire x4ac19aaef52904ad = xafb6082147ec26fd ^ x265177f55c060ffa;
+wire xdc2529a5a136b747 = xafb6082147ec26fd & x265177f55c060ffa;
+wire x0d91ee6e9606916d = x00fa11f6dfb89eb4 ^ x894d8156d93ca533 ^ x918888905e0ae9c0;
+wire x5275effea50aa0af = (x00fa11f6dfb89eb4 & x894d8156d93ca533) | (x00fa11f6dfb89eb4 & x918888905e0ae9c0) | (x894d8156d93ca533 & x918888905e0ae9c0);
+wire xca013270933e204c = x62a7998084740468 ^ xf0abd2df089ff94a ^ xfecf15b75a0182e2;
+wire x6df4bb9fc753a305 = (x62a7998084740468 & xf0abd2df089ff94a) | (x62a7998084740468 & xfecf15b75a0182e2) | (xf0abd2df089ff94a & xfecf15b75a0182e2);
+wire x8861f4db839cc28a = xd2f44aedcf41e2c7 ^ x8d84193916b70729;
+wire x6fafe4c69d1bbb14 = xd2f44aedcf41e2c7 & x8d84193916b70729;
+wire xca8d25b47751bb4a = x0fb79107a07fde99 ^ xa976bdc1f0e0d774 ^ x25704ca8a852cae1;
+wire x2967ee1693a7173c = (x0fb79107a07fde99 & xa976bdc1f0e0d774) | (x0fb79107a07fde99 & x25704ca8a852cae1) | (xa976bdc1f0e0d774 & x25704ca8a852cae1);
+wire x3ae73116e28de1f8 = x6c1f9e278b2bd208 ^ x67d351fbf977c612 ^ x48119830a0edeb0d;
+wire x195c5234117aeb87 = (x6c1f9e278b2bd208 & x67d351fbf977c612) | (x6c1f9e278b2bd208 & x48119830a0edeb0d) | (x67d351fbf977c612 & x48119830a0edeb0d);
+wire xdc24d5d7fa80ce6c = x82f5120378e45020 ^ x1cf840bd43dcbb41 ^ xcb52a258af818c79;
+wire x1159a92602942d7f = (x82f5120378e45020 & x1cf840bd43dcbb41) | (x82f5120378e45020 & xcb52a258af818c79) | (x1cf840bd43dcbb41 & xcb52a258af818c79);
+wire x148f137df05f828d = x0d3a09d986888112 ^ x8d797e386edcdeb9 ^ xda3507511cbc98ca;
+wire xdbfdfa6543608edf = (x0d3a09d986888112 & x8d797e386edcdeb9) | (x0d3a09d986888112 & xda3507511cbc98ca) | (x8d797e386edcdeb9 & xda3507511cbc98ca);
+wire x9372d287a020d0a7 = x3885aeac4126e3f5 ^ x5853e61d04012882 ^ x7d95e780b83c091d;
+wire x36adc72206dfc9d8 = (x3885aeac4126e3f5 & x5853e61d04012882) | (x3885aeac4126e3f5 & x7d95e780b83c091d) | (x5853e61d04012882 & x7d95e780b83c091d);
+wire xf5821a87b881c8ed = x3b2606cdb5266270 ^ xfd643d55f31ba041 ^ xa00be453057a90e5;
+wire x4581f8ac9a635106 = (x3b2606cdb5266270 & xfd643d55f31ba041) | (x3b2606cdb5266270 & xa00be453057a90e5) | (xfd643d55f31ba041 & xa00be453057a90e5);
+wire x9e721d5f19e930d2 = xbf9507f2029f1b03 ^ xeaaf803dacc117c0 ^ xc6ad06832f1aef11;
+wire x648e39bcc5d15988 = (xbf9507f2029f1b03 & xeaaf803dacc117c0) | (xbf9507f2029f1b03 & xc6ad06832f1aef11) | (xeaaf803dacc117c0 & xc6ad06832f1aef11);
+wire x4260e18539440185 = xb3cf34c5d1098e5a ^ x10abd071ea8a30b0 ^ xbdf0753249cc21eb;
+wire x5c6422814be1c4b2 = (xb3cf34c5d1098e5a & x10abd071ea8a30b0) | (xb3cf34c5d1098e5a & xbdf0753249cc21eb) | (x10abd071ea8a30b0 & xbdf0753249cc21eb);
+wire xf7971a489e42ec53 = x6ef057e22362799d ^ xb30fbf27fbca4e6b ^ x0e1ec21e6e0c4c00;
+wire xd0af9ab6fd5499c3 = (x6ef057e22362799d & xb30fbf27fbca4e6b) | (x6ef057e22362799d & x0e1ec21e6e0c4c00) | (xb30fbf27fbca4e6b & x0e1ec21e6e0c4c00);
+wire x41d7d0ae125cef47 = xb39e77e1e25ca6ec ^ x4d7b9a5f80314ccf ^ xad0e71713f4745b4;
+wire xac72382027e4e441 = (xb39e77e1e25ca6ec & x4d7b9a5f80314ccf) | (xb39e77e1e25ca6ec & xad0e71713f4745b4) | (x4d7b9a5f80314ccf & xad0e71713f4745b4);
+wire x282f2f555230e7d0 = xca0bd6fbcf7859b0 ^ xabf40a700c03eaae ^ xaec990f57b76ed62;
+wire x521ebf9fed8a8275 = (xca0bd6fbcf7859b0 & xabf40a700c03eaae) | (xca0bd6fbcf7859b0 & xaec990f57b76ed62) | (xabf40a700c03eaae & xaec990f57b76ed62);
+wire x086c8b881290424b = xc4c44c0f1219b6ea ^ xfdb72d1dd0d9be9f ^ xbec58fe5b3c7ee5d;
+wire x3fb7565679f94ac3 = (xc4c44c0f1219b6ea & xfdb72d1dd0d9be9f) | (xc4c44c0f1219b6ea & xbec58fe5b3c7ee5d) | (xfdb72d1dd0d9be9f & xbec58fe5b3c7ee5d);
+wire xf50ed1e6a685db79 = xdb06a8ac810a4a3f ^ x538767258b8af5c2 ^ x32af7ba5e522c78c;
+wire xa8889cfd24a89773 = (xdb06a8ac810a4a3f & x538767258b8af5c2) | (xdb06a8ac810a4a3f & x32af7ba5e522c78c) | (x538767258b8af5c2 & x32af7ba5e522c78c);
+wire xf742295407f89e74 = x53bf0a0b0e5031c5 ^ x408681fe3fc43540 ^ x0c27dfdf282fe4ba;
+wire xcfc88d01bac121f2 = (x53bf0a0b0e5031c5 & x408681fe3fc43540) | (x53bf0a0b0e5031c5 & x0c27dfdf282fe4ba) | (x408681fe3fc43540 & x0c27dfdf282fe4ba);
+wire x9d105e2fdd2969de = x93f044631d8f3777 ^ xb3c1313899299868 ^ x6b7c96ecc867bb61;
+wire xc22f40d5dfb58b4e = (x93f044631d8f3777 & xb3c1313899299868) | (x93f044631d8f3777 & x6b7c96ecc867bb61) | (xb3c1313899299868 & x6b7c96ecc867bb61);
+wire x7ec9bd3d6891fb08 = x3b0584d584858572 ^ xb98fefecd76947c9 ^ x158bbf5bc333201f;
+wire x38f09599529163da = (x3b0584d584858572 & xb98fefecd76947c9) | (x3b0584d584858572 & x158bbf5bc333201f) | (xb98fefecd76947c9 & x158bbf5bc333201f);
+wire x2c056af8353de8b3 = x175b01a7a1fb9def ^ x124d99e0e273071e ^ xd29c78faee22c724;
+wire x72a5a82c6ca4cc78 = (x175b01a7a1fb9def & x124d99e0e273071e) | (x175b01a7a1fb9def & xd29c78faee22c724) | (x124d99e0e273071e & xd29c78faee22c724);
+wire x2371f68c160bb383 = x18121d3a500158c3 ^ xf190a8a1a1db99a2 ^ x776116beb703e176;
+wire x3d3c514c0bd21b40 = (x18121d3a500158c3 & xf190a8a1a1db99a2) | (x18121d3a500158c3 & x776116beb703e176) | (xf190a8a1a1db99a2 & x776116beb703e176);
+wire xf289ad0489e88d72 = xabefb1e93bfb3904 ^ x69215065f1b9b3a9 ^ x6b29c9769d0aa2d1;
+wire x85df4d42984ddae0 = (xabefb1e93bfb3904 & x69215065f1b9b3a9) | (xabefb1e93bfb3904 & x6b29c9769d0aa2d1) | (x69215065f1b9b3a9 & x6b29c9769d0aa2d1);
+wire xf938fda0afca2569 = x6090578c03bb27cc ^ x35824ce4deb7a571 ^ x43bd06b10d632d93;
+wire xf24927b33ea87a2c = (x6090578c03bb27cc & x35824ce4deb7a571) | (x6090578c03bb27cc & x43bd06b10d632d93) | (x35824ce4deb7a571 & x43bd06b10d632d93);
+wire xb19ae26ac20ee43b = xc5b54cec455f316c ^ x7d55baa554f7d7c5 ^ x32e58fc5bceffc78;
+wire x29102d78a3d1fa2d = (xc5b54cec455f316c & x7d55baa554f7d7c5) | (xc5b54cec455f316c & x32e58fc5bceffc78) | (x7d55baa554f7d7c5 & x32e58fc5bceffc78);
+wire x5b3fe7a8a9710621 = x3134ba4c9e838318 ^ x7c7186c807135843 ^ x9396be5b7c4794df;
+wire x4be3779557ff8e7e = (x3134ba4c9e838318 & x7c7186c807135843) | (x3134ba4c9e838318 & x9396be5b7c4794df) | (x7c7186c807135843 & x9396be5b7c4794df);
+wire x5020c0d2da1bd463 = x5fff945f8119e056 ^ xc42d4c55b42427a1 ^ x8c8a5783d3e2206f;
+wire xc55cb60644b17375 = (x5fff945f8119e056 & xc42d4c55b42427a1) | (x5fff945f8119e056 & x8c8a5783d3e2206f) | (xc42d4c55b42427a1 & x8c8a5783d3e2206f);
+wire x114fbd7e5d4ee043 = xee51c6c7a426b098 ^ x04d9056e04b5564a ^ x3fc98fd8b25a855d;
+wire xa8d5a6feea794f28 = (xee51c6c7a426b098 & x04d9056e04b5564a) | (xee51c6c7a426b098 & x3fc98fd8b25a855d) | (x04d9056e04b5564a & x3fc98fd8b25a855d);
+wire x23d7bcf25ed3e1e2 = x83ad39a12eeeb313 ^ x36a81e661bc66c94 ^ x2e478ce409a98bff;
+wire xa1b73d74c077332d = (x83ad39a12eeeb313 & x36a81e661bc66c94) | (x83ad39a12eeeb313 & x2e478ce409a98bff) | (x36a81e661bc66c94 & x2e478ce409a98bff);
+wire xf6a48fc50d3165ef = xaf391273d04cab76 ^ x423a706f5db69598 ^ xb9be8634cf64c082;
+wire x518ec1bda886acf8 = (xaf391273d04cab76 & x423a706f5db69598) | (xaf391273d04cab76 & xb9be8634cf64c082) | (x423a706f5db69598 & xb9be8634cf64c082);
+wire x2a875f5af20adf9b = x590ad2202ae6301c ^ xd3f9fe937ef5d916 ^ xdfb75fb3d8258815;
+wire x306a6303df9fccf3 = (x590ad2202ae6301c & xd3f9fe937ef5d916) | (x590ad2202ae6301c & xdfb75fb3d8258815) | (xd3f9fe937ef5d916 & xdfb75fb3d8258815);
+wire x39447a90c021e5d8 = x24ed45a47b7b33c0 ^ x19c94a5c0f907158 ^ xf5594f04b663f046;
+wire x011e36decf81ca5d = (x24ed45a47b7b33c0 & x19c94a5c0f907158) | (x24ed45a47b7b33c0 & xf5594f04b663f046) | (x19c94a5c0f907158 & xf5594f04b663f046);
+wire x378167e3386736f4 = x0d0505d4651d58b8 ^ xac0b08bf08b937a3 ^ x1b5ae5d17f93bb42;
+wire x802bb4504e8394eb = (x0d0505d4651d58b8 & xac0b08bf08b937a3) | (x0d0505d4651d58b8 & x1b5ae5d17f93bb42) | (xac0b08bf08b937a3 & x1b5ae5d17f93bb42);
+wire x4ea9d91de144cb24 = xc1590a0a41164179 ^ x26902444e3886c81 ^ xb1d18bca46c100cd;
+wire x3a42279778432059 = (xc1590a0a41164179 & x26902444e3886c81) | (xc1590a0a41164179 & xb1d18bca46c100cd) | (x26902444e3886c81 & xb1d18bca46c100cd);
+wire xd235e562205cb237 = x425ebfa624f77017 ^ xe60d749cf91538bd ^ xb43b8e9277870c7e;
+wire x9d0432e7edf63f7c = (x425ebfa624f77017 & xe60d749cf91538bd) | (x425ebfa624f77017 & xb43b8e9277870c7e) | (xe60d749cf91538bd & xb43b8e9277870c7e);
+wire x72d0d36a9b89b283 = x6e7c5473a85ca412 ^ x0b3094573f1af683 ^ xf5d0027fc48d56e9;
+wire x99cb33bbf2c6bdbe = (x6e7c5473a85ca412 & x0b3094573f1af683) | (x6e7c5473a85ca412 & xf5d0027fc48d56e9) | (x0b3094573f1af683 & xf5d0027fc48d56e9);
+wire xeedccfffe91b8d5a = xcea62426e1082155 ^ xe1125b8efd3d9324 ^ xf8bf7d6b40df63f3;
+wire x520de504e5e95556 = (xcea62426e1082155 & xe1125b8efd3d9324) | (xcea62426e1082155 & xf8bf7d6b40df63f3) | (xe1125b8efd3d9324 & xf8bf7d6b40df63f3);
+wire x43267d99b000b162 = xdb763b1b66e2f342 ^ x415feafa3fa91b62 ^ xb8a3b5da22228260;
+wire x168905a9d4d63726 = (xdb763b1b66e2f342 & x415feafa3fa91b62) | (xdb763b1b66e2f342 & xb8a3b5da22228260) | (x415feafa3fa91b62 & xb8a3b5da22228260);
+wire xf7b7425905809cdf = xab6c53053dad4618 ^ x07641828ac647536 ^ x8c0f7f878da28724;
+wire x2d2ce0465c6e3a4a = (xab6c53053dad4618 & x07641828ac647536) | (xab6c53053dad4618 & x8c0f7f878da28724) | (x07641828ac647536 & x8c0f7f878da28724);
+wire x329c160a5222ea22 = xf55b9637ca0cf61e ^ x01aff005108e59f4 ^ x8a396b7a9b73c290;
+wire x8bd6b0eccb44aa65 = (xf55b9637ca0cf61e & x01aff005108e59f4) | (xf55b9637ca0cf61e & x8a396b7a9b73c290) | (x01aff005108e59f4 & x8a396b7a9b73c290);
+wire x68d44f5d00e81dcc = x8656e5df02599a44 ^ xe080c6a06c7abf53;
+wire xcd48f18099a1ef13 = x8656e5df02599a44 & xe080c6a06c7abf53;
+wire xfde850bb7c816213 = xcf74a7c7675c0902 ^ x13b377cb817e7c34 ^ xb037c9968e1ded5e;
+wire x5376bc0b773b123f = (xcf74a7c7675c0902 & x13b377cb817e7c34) | (xcf74a7c7675c0902 & xb037c9968e1ded5e) | (x13b377cb817e7c34 & xb037c9968e1ded5e);
+wire xe9b4911cfce011ae = xc5e9bb93f3827f0c ^ x27426cb87738c374;
+wire x6ce21bff50df0522 = xc5e9bb93f3827f0c & x27426cb87738c374;
+wire xa2ecb98d55dfacb5 = xdd01484bce0de99c ^ x31fb04ee77fc46cf ^ x8a0b8602c4ad6fbc;
+wire x7b7d8f37344d3389 = (xdd01484bce0de99c & x31fb04ee77fc46cf) | (xdd01484bce0de99c & x8a0b8602c4ad6fbc) | (x31fb04ee77fc46cf & x8a0b8602c4ad6fbc);
+wire xbd3af076ad1c3dac = xb992094118c11ff0 ^ xa4443795bb5ea4e3 ^ x1d2be67cfce47373;
+wire x5f8457b287d41ca4 = (xb992094118c11ff0 & xa4443795bb5ea4e3) | (xb992094118c11ff0 & x1d2be67cfce47373) | (xa4443795bb5ea4e3 & x1d2be67cfce47373);
+wire xa49227bdd34542ec = x8815a27a04cad6a8 ^ x39344fbaee9f42f2 ^ x4ac19aaef52904ad;
+wire x94e3f11e4473288c = (x8815a27a04cad6a8 & x39344fbaee9f42f2) | (x8815a27a04cad6a8 & x4ac19aaef52904ad) | (x39344fbaee9f42f2 & x4ac19aaef52904ad);
+wire x69a418edfe11dd4e = x6de87f67ad240103 ^ x77e518f48dc92cf2 ^ x8e3cd60c6d07b432;
+wire x24b57807f9d7a28e = (x6de87f67ad240103 & x77e518f48dc92cf2) | (x6de87f67ad240103 & x8e3cd60c6d07b432) | (x77e518f48dc92cf2 & x8e3cd60c6d07b432);
+wire x38c93fc7a7102055 = x8795af373c254a58 ^ xdc2529a5a136b747 ^ x0d91ee6e9606916d;
+wire x297bafd0752f1d1c = (x8795af373c254a58 & xdc2529a5a136b747) | (x8795af373c254a58 & x0d91ee6e9606916d) | (xdc2529a5a136b747 & x0d91ee6e9606916d);
+wire x5890c4d2a8903dd7 = xca013270933e204c ^ x8861f4db839cc28a ^ 1'b1;
+wire x5b125db75ecb77b4 = (xca013270933e204c & x8861f4db839cc28a) | (xca013270933e204c & 1'b1) | (x8861f4db839cc28a & 1'b1);
+wire x54e5d75a8286c35c = x5275effea50aa0af ^ x6df4bb9fc753a305 ^ x6fafe4c69d1bbb14;
+wire x4fafee1b6a902885 = (x5275effea50aa0af & x6df4bb9fc753a305) | (x5275effea50aa0af & x6fafe4c69d1bbb14) | (x6df4bb9fc753a305 & x6fafe4c69d1bbb14);
+wire x65d8b1b233b649e9 = xca8d25b47751bb4a ^ x3ae73116e28de1f8 ^ xdc24d5d7fa80ce6c;
+wire xb296c53253ef6d05 = (xca8d25b47751bb4a & x3ae73116e28de1f8) | (xca8d25b47751bb4a & xdc24d5d7fa80ce6c) | (x3ae73116e28de1f8 & xdc24d5d7fa80ce6c);
+wire xe3306aacecf1b621 = x2967ee1693a7173c ^ x195c5234117aeb87 ^ x1159a92602942d7f;
+wire x27fba13a3879f25b = (x2967ee1693a7173c & x195c5234117aeb87) | (x2967ee1693a7173c & x1159a92602942d7f) | (x195c5234117aeb87 & x1159a92602942d7f);
+wire x39080cd76456b1ae = x148f137df05f828d ^ x9372d287a020d0a7 ^ xf5821a87b881c8ed;
+wire xef31459d243ae1b6 = (x148f137df05f828d & x9372d287a020d0a7) | (x148f137df05f828d & xf5821a87b881c8ed) | (x9372d287a020d0a7 & xf5821a87b881c8ed);
+wire xa2d93dc16b2b7a07 = xdbfdfa6543608edf ^ x36adc72206dfc9d8 ^ x4581f8ac9a635106;
+wire xd97ae0face070ef2 = (xdbfdfa6543608edf & x36adc72206dfc9d8) | (xdbfdfa6543608edf & x4581f8ac9a635106) | (x36adc72206dfc9d8 & x4581f8ac9a635106);
+wire x37e3efeb444df2dd = x9e721d5f19e930d2 ^ x4260e18539440185 ^ xf7971a489e42ec53;
+wire xe583cfdf2a2b8f79 = (x9e721d5f19e930d2 & x4260e18539440185) | (x9e721d5f19e930d2 & xf7971a489e42ec53) | (x4260e18539440185 & xf7971a489e42ec53);
+wire x77d74b7080c97691 = x648e39bcc5d15988 ^ x5c6422814be1c4b2 ^ xd0af9ab6fd5499c3;
+wire x114ade36df74e22d = (x648e39bcc5d15988 & x5c6422814be1c4b2) | (x648e39bcc5d15988 & xd0af9ab6fd5499c3) | (x5c6422814be1c4b2 & xd0af9ab6fd5499c3);
+wire x916092d1c80d3a6f = x41d7d0ae125cef47 ^ x282f2f555230e7d0 ^ x086c8b881290424b;
+wire x3a40f80058a5ab1a = (x41d7d0ae125cef47 & x282f2f555230e7d0) | (x41d7d0ae125cef47 & x086c8b881290424b) | (x282f2f555230e7d0 & x086c8b881290424b);
+wire x826c821c0b0fe3ef = xac72382027e4e441 ^ x521ebf9fed8a8275 ^ x3fb7565679f94ac3;
+wire x7cdd23dbddcacd53 = (xac72382027e4e441 & x521ebf9fed8a8275) | (xac72382027e4e441 & x3fb7565679f94ac3) | (x521ebf9fed8a8275 & x3fb7565679f94ac3);
+wire x6e7d5971fe001949 = xf50ed1e6a685db79 ^ xf742295407f89e74 ^ x9d105e2fdd2969de;
+wire x68e99912e9d891c5 = (xf50ed1e6a685db79 & xf742295407f89e74) | (xf50ed1e6a685db79 & x9d105e2fdd2969de) | (xf742295407f89e74 & x9d105e2fdd2969de);
+wire xc9fa411247e3e560 = xa8889cfd24a89773 ^ xcfc88d01bac121f2 ^ xc22f40d5dfb58b4e;
+wire xecd7fc5566fc2fac = (xa8889cfd24a89773 & xcfc88d01bac121f2) | (xa8889cfd24a89773 & xc22f40d5dfb58b4e) | (xcfc88d01bac121f2 & xc22f40d5dfb58b4e);
+wire x51e30f04c191657b = x7ec9bd3d6891fb08 ^ x2c056af8353de8b3 ^ x2371f68c160bb383;
+wire xf7ca8e8b9c5474f6 = (x7ec9bd3d6891fb08 & x2c056af8353de8b3) | (x7ec9bd3d6891fb08 & x2371f68c160bb383) | (x2c056af8353de8b3 & x2371f68c160bb383);
+wire x7628647c9cdec74f = x38f09599529163da ^ x72a5a82c6ca4cc78 ^ x3d3c514c0bd21b40;
+wire xfde65ee4807c5809 = (x38f09599529163da & x72a5a82c6ca4cc78) | (x38f09599529163da & x3d3c514c0bd21b40) | (x72a5a82c6ca4cc78 & x3d3c514c0bd21b40);
+wire x46193b21d8cd143a = xf289ad0489e88d72 ^ xf938fda0afca2569 ^ xb19ae26ac20ee43b;
+wire x7fae7692345d4b02 = (xf289ad0489e88d72 & xf938fda0afca2569) | (xf289ad0489e88d72 & xb19ae26ac20ee43b) | (xf938fda0afca2569 & xb19ae26ac20ee43b);
+wire x15ff2eedb15e59ce = x85df4d42984ddae0 ^ xf24927b33ea87a2c ^ x29102d78a3d1fa2d;
+wire xd18d59e7c3125b6e = (x85df4d42984ddae0 & xf24927b33ea87a2c) | (x85df4d42984ddae0 & x29102d78a3d1fa2d) | (xf24927b33ea87a2c & x29102d78a3d1fa2d);
+wire xc8ca9ea9c3641f3d = x5b3fe7a8a9710621 ^ x5020c0d2da1bd463 ^ x114fbd7e5d4ee043;
+wire xa4317c40409b5a06 = (x5b3fe7a8a9710621 & x5020c0d2da1bd463) | (x5b3fe7a8a9710621 & x114fbd7e5d4ee043) | (x5020c0d2da1bd463 & x114fbd7e5d4ee043);
+wire xaf8bcc12b2381d52 = x4be3779557ff8e7e ^ xc55cb60644b17375 ^ xa8d5a6feea794f28;
+wire x3ae5d9840e55e0aa = (x4be3779557ff8e7e & xc55cb60644b17375) | (x4be3779557ff8e7e & xa8d5a6feea794f28) | (xc55cb60644b17375 & xa8d5a6feea794f28);
+wire x8cd0108903335e5c = x23d7bcf25ed3e1e2 ^ xf6a48fc50d3165ef ^ x2a875f5af20adf9b;
+wire xe271921e8187da37 = (x23d7bcf25ed3e1e2 & xf6a48fc50d3165ef) | (x23d7bcf25ed3e1e2 & x2a875f5af20adf9b) | (xf6a48fc50d3165ef & x2a875f5af20adf9b);
+wire x8c7be6dec7e77011 = xa1b73d74c077332d ^ x518ec1bda886acf8 ^ x306a6303df9fccf3;
+wire x2116fa0912b58b88 = (xa1b73d74c077332d & x518ec1bda886acf8) | (xa1b73d74c077332d & x306a6303df9fccf3) | (x518ec1bda886acf8 & x306a6303df9fccf3);
+wire x22d2a483ff6202ce = x39447a90c021e5d8 ^ x378167e3386736f4 ^ x4ea9d91de144cb24;
+wire x04db5b988e6d4f41 = (x39447a90c021e5d8 & x378167e3386736f4) | (x39447a90c021e5d8 & x4ea9d91de144cb24) | (x378167e3386736f4 & x4ea9d91de144cb24);
+wire xd8f4c2ba227b0ecd = x011e36decf81ca5d ^ x802bb4504e8394eb ^ x3a42279778432059;
+wire xce9a63a17178aed4 = (x011e36decf81ca5d & x802bb4504e8394eb) | (x011e36decf81ca5d & x3a42279778432059) | (x802bb4504e8394eb & x3a42279778432059);
+wire x0c7382d2fc890ebc = xd235e562205cb237 ^ x72d0d36a9b89b283 ^ xeedccfffe91b8d5a;
+wire xcc1dc5638666006e = (xd235e562205cb237 & x72d0d36a9b89b283) | (xd235e562205cb237 & xeedccfffe91b8d5a) | (x72d0d36a9b89b283 & xeedccfffe91b8d5a);
+wire x9789ec113d319af5 = x9d0432e7edf63f7c ^ x99cb33bbf2c6bdbe ^ x520de504e5e95556;
+wire xce15019f087a105a = (x9d0432e7edf63f7c & x99cb33bbf2c6bdbe) | (x9d0432e7edf63f7c & x520de504e5e95556) | (x99cb33bbf2c6bdbe & x520de504e5e95556);
+wire xb86f18e1c62cc8bc = x43267d99b000b162 ^ xf7b7425905809cdf ^ xa2f30e109b7de13b;
+wire x7fb7bb7c74fd19c3 = (x43267d99b000b162 & xf7b7425905809cdf) | (x43267d99b000b162 & xa2f30e109b7de13b) | (xf7b7425905809cdf & xa2f30e109b7de13b);
+wire x7e60a92c25d12bf3 = x168905a9d4d63726 ^ x2d2ce0465c6e3a4a ^ x329c160a5222ea22;
+wire x0396110ffc0afa02 = (x168905a9d4d63726 & x2d2ce0465c6e3a4a) | (x168905a9d4d63726 & x329c160a5222ea22) | (x2d2ce0465c6e3a4a & x329c160a5222ea22);
+wire xac32ffcd2bd0f28d = x43ff58d8344fd57a ^ x371f269ae44ca993 ^ x57e3cd5d46055ab0;
+wire x0f9ac649ccae56d8 = (x43ff58d8344fd57a & x371f269ae44ca993) | (x43ff58d8344fd57a & x57e3cd5d46055ab0) | (x371f269ae44ca993 & x57e3cd5d46055ab0);
+wire x0140a64e5bf93f01 = x8bd6b0eccb44aa65 ^ x4ae6aa61eed0ea21 ^ xc55978ac61712adb;
+wire xe2e4094908f0cf48 = (x8bd6b0eccb44aa65 & x4ae6aa61eed0ea21) | (x8bd6b0eccb44aa65 & xc55978ac61712adb) | (x4ae6aa61eed0ea21 & xc55978ac61712adb);
+wire xbdfd027d9403cca6 = xdd9e780c2a4ac82a ^ x861aa6edb0f88a8d ^ x00950242b0fb708a;
+wire x7be9caf5d15de3be = (xdd9e780c2a4ac82a & x861aa6edb0f88a8d) | (xdd9e780c2a4ac82a & x00950242b0fb708a) | (x861aa6edb0f88a8d & x00950242b0fb708a);
+wire xaf8425bdb78ee5aa = x79503f7c4e1dafb5 ^ xd53ba3ef5d0add7b ^ xab54e2ad93beb964;
+wire xeccdb1d6d1dda137 = (x79503f7c4e1dafb5 & xd53ba3ef5d0add7b) | (x79503f7c4e1dafb5 & xab54e2ad93beb964) | (xd53ba3ef5d0add7b & xab54e2ad93beb964);
+wire x0d4574da05278655 = x01d1e13170558095 ^ xf940fc594729718f;
+wire x244269025b70dbd4 = x01d1e13170558095 & xf940fc594729718f;
+wire x25e87cdbbd4fb3f1 = x68d44f5d00e81dcc ^ x1ee90a4b68043853 ^ x5671f0f13257e8b9;
+wire x28e6d779e2992c01 = (x68d44f5d00e81dcc & x1ee90a4b68043853) | (x68d44f5d00e81dcc & x5671f0f13257e8b9) | (x1ee90a4b68043853 & x5671f0f13257e8b9);
+wire xed9e1b3a5305aaf9 = xcd48f18099a1ef13 ^ xfde850bb7c816213 ^ xe9b4911cfce011ae;
+wire x07f38c56ae813798 = (xcd48f18099a1ef13 & xfde850bb7c816213) | (xcd48f18099a1ef13 & xe9b4911cfce011ae) | (xfde850bb7c816213 & xe9b4911cfce011ae);
+wire xf9f02ad95a951e90 = x5376bc0b773b123f ^ x6ce21bff50df0522 ^ xa2ecb98d55dfacb5;
+wire x96b9d4e52bcd0a3f = (x5376bc0b773b123f & x6ce21bff50df0522) | (x5376bc0b773b123f & xa2ecb98d55dfacb5) | (x6ce21bff50df0522 & xa2ecb98d55dfacb5);
+wire xfeb43499c803ad53 = x7b7d8f37344d3389 ^ x5f8457b287d41ca4 ^ xa49227bdd34542ec;
+wire xb6cf37d53f4e0afc = (x7b7d8f37344d3389 & x5f8457b287d41ca4) | (x7b7d8f37344d3389 & xa49227bdd34542ec) | (x5f8457b287d41ca4 & xa49227bdd34542ec);
+wire x3488619e315e9f40 = x94e3f11e4473288c ^ x24b57807f9d7a28e ^ x38c93fc7a7102055;
+wire x1f941fcf6d524028 = (x94e3f11e4473288c & x24b57807f9d7a28e) | (x94e3f11e4473288c & x38c93fc7a7102055) | (x24b57807f9d7a28e & x38c93fc7a7102055);
+wire x275fb7657ae5a314 = x297bafd0752f1d1c ^ x5b125db75ecb77b4 ^ x54e5d75a8286c35c;
+wire x26059e2b568a9e0f = (x297bafd0752f1d1c & x5b125db75ecb77b4) | (x297bafd0752f1d1c & x54e5d75a8286c35c) | (x5b125db75ecb77b4 & x54e5d75a8286c35c);
+wire x2643cf6450ea61ff = x4fafee1b6a902885 ^ xb296c53253ef6d05 ^ xe3306aacecf1b621;
+wire x712ef87ad81d7793 = (x4fafee1b6a902885 & xb296c53253ef6d05) | (x4fafee1b6a902885 & xe3306aacecf1b621) | (xb296c53253ef6d05 & xe3306aacecf1b621);
+wire x43f9590c0c3f367a = x27fba13a3879f25b ^ xef31459d243ae1b6 ^ xa2d93dc16b2b7a07;
+wire x8a0dbb4825c7b7b7 = (x27fba13a3879f25b & xef31459d243ae1b6) | (x27fba13a3879f25b & xa2d93dc16b2b7a07) | (xef31459d243ae1b6 & xa2d93dc16b2b7a07);
+wire x9b9c7647f1fce913 = xd97ae0face070ef2 ^ xe583cfdf2a2b8f79 ^ x77d74b7080c97691;
+wire x9beb6fd6d2cbdb90 = (xd97ae0face070ef2 & xe583cfdf2a2b8f79) | (xd97ae0face070ef2 & x77d74b7080c97691) | (xe583cfdf2a2b8f79 & x77d74b7080c97691);
+wire x11730c893a05bc66 = x114ade36df74e22d ^ x3a40f80058a5ab1a ^ x826c821c0b0fe3ef;
+wire x6d66fe5a16839de9 = (x114ade36df74e22d & x3a40f80058a5ab1a) | (x114ade36df74e22d & x826c821c0b0fe3ef) | (x3a40f80058a5ab1a & x826c821c0b0fe3ef);
+wire xee87e4b042acd2c7 = x7cdd23dbddcacd53 ^ x68e99912e9d891c5 ^ xc9fa411247e3e560;
+wire x8c3a12483289496c = (x7cdd23dbddcacd53 & x68e99912e9d891c5) | (x7cdd23dbddcacd53 & xc9fa411247e3e560) | (x68e99912e9d891c5 & xc9fa411247e3e560);
+wire xb410ee5549d142c8 = xecd7fc5566fc2fac ^ xf7ca8e8b9c5474f6 ^ x7628647c9cdec74f;
+wire xd12b0bcbcbe704e6 = (xecd7fc5566fc2fac & xf7ca8e8b9c5474f6) | (xecd7fc5566fc2fac & x7628647c9cdec74f) | (xf7ca8e8b9c5474f6 & x7628647c9cdec74f);
+wire x401c7018c491c774 = xfde65ee4807c5809 ^ x7fae7692345d4b02 ^ x15ff2eedb15e59ce;
+wire x363c7d569aa020ad = (xfde65ee4807c5809 & x7fae7692345d4b02) | (xfde65ee4807c5809 & x15ff2eedb15e59ce) | (x7fae7692345d4b02 & x15ff2eedb15e59ce);
+wire x8eaec0d628e610cd = xd18d59e7c3125b6e ^ xa4317c40409b5a06 ^ xaf8bcc12b2381d52;
+wire xc89797d0c679dc54 = (xd18d59e7c3125b6e & xa4317c40409b5a06) | (xd18d59e7c3125b6e & xaf8bcc12b2381d52) | (xa4317c40409b5a06 & xaf8bcc12b2381d52);
+wire xd3d544408ee461d3 = x3ae5d9840e55e0aa ^ xe271921e8187da37 ^ x8c7be6dec7e77011;
+wire x8232e51f4fdc3491 = (x3ae5d9840e55e0aa & xe271921e8187da37) | (x3ae5d9840e55e0aa & x8c7be6dec7e77011) | (xe271921e8187da37 & x8c7be6dec7e77011);
+wire xda0501a4f6b5a42d = x2116fa0912b58b88 ^ x04db5b988e6d4f41 ^ xd8f4c2ba227b0ecd;
+wire x5ce8461f642706b0 = (x2116fa0912b58b88 & x04db5b988e6d4f41) | (x2116fa0912b58b88 & xd8f4c2ba227b0ecd) | (x04db5b988e6d4f41 & xd8f4c2ba227b0ecd);
+wire x526705c68c87f59e = xce9a63a17178aed4 ^ xcc1dc5638666006e ^ x9789ec113d319af5;
+wire x96767e6cf7e6d6e6 = (xce9a63a17178aed4 & xcc1dc5638666006e) | (xce9a63a17178aed4 & x9789ec113d319af5) | (xcc1dc5638666006e & x9789ec113d319af5);
+wire x8c40e791d90299fa = xce15019f087a105a ^ x7fb7bb7c74fd19c3 ^ x7e60a92c25d12bf3;
+wire x2400062fe6fd15af = (xce15019f087a105a & x7fb7bb7c74fd19c3) | (xce15019f087a105a & x7e60a92c25d12bf3) | (x7fb7bb7c74fd19c3 & x7e60a92c25d12bf3);
+wire x9f74b8bb1559debe = x0396110ffc0afa02 ^ x0f9ac649ccae56d8 ^ x0140a64e5bf93f01;
+wire xd3853208c8443777 = (x0396110ffc0afa02 & x0f9ac649ccae56d8) | (x0396110ffc0afa02 & x0140a64e5bf93f01) | (x0f9ac649ccae56d8 & x0140a64e5bf93f01);
+wire x962c739589659c26 = xe2e4094908f0cf48 ^ x7be9caf5d15de3be ^ xaf8425bdb78ee5aa;
+wire x9a52fce6755398b3 = (xe2e4094908f0cf48 & x7be9caf5d15de3be) | (xe2e4094908f0cf48 & xaf8425bdb78ee5aa) | (x7be9caf5d15de3be & xaf8425bdb78ee5aa);
+wire x3c6797324250fa38 = xeccdb1d6d1dda137 ^ xd5bbbd3a6630b8e2 ^ xed0468c631c48586;
+wire x24e1e894bf930696 = (xeccdb1d6d1dda137 & xd5bbbd3a6630b8e2) | (xeccdb1d6d1dda137 & xed0468c631c48586) | (xd5bbbd3a6630b8e2 & xed0468c631c48586);
+wire xe50001f22b39239f = xb3da332a7527c620 ^ x718dffdb6faaae1e;
+wire xf5e8547ea0f764cb = xb3da332a7527c620 & x718dffdb6faaae1e;
+wire xed462da3a9fe5199 = x0d4574da05278655 ^ xb3c14ba30dfc158d ^ x63e6a851bab35ccf;
+wire x887510c3b7c01bd3 = (x0d4574da05278655 & xb3c14ba30dfc158d) | (x0d4574da05278655 & x63e6a851bab35ccf) | (xb3c14ba30dfc158d & x63e6a851bab35ccf);
+wire x9b2ded0dacaa8b7a = x244269025b70dbd4 ^ x25e87cdbbd4fb3f1 ^ x1c091cf3ff1c61ab;
+wire x8c3c301ba50eb5d7 = (x244269025b70dbd4 & x25e87cdbbd4fb3f1) | (x244269025b70dbd4 & x1c091cf3ff1c61ab) | (x25e87cdbbd4fb3f1 & x1c091cf3ff1c61ab);
+wire x800cab444cdad335 = x28e6d779e2992c01 ^ xed9e1b3a5305aaf9 ^ x170240369598deed;
+wire x25c740ec1858b10e = (x28e6d779e2992c01 & xed9e1b3a5305aaf9) | (x28e6d779e2992c01 & x170240369598deed) | (xed9e1b3a5305aaf9 & x170240369598deed);
+wire x69126de62a630b0e = x07f38c56ae813798 ^ xf9f02ad95a951e90 ^ xbd3af076ad1c3dac;
+wire x71fb18d6ed3f5b6b = (x07f38c56ae813798 & xf9f02ad95a951e90) | (x07f38c56ae813798 & xbd3af076ad1c3dac) | (xf9f02ad95a951e90 & xbd3af076ad1c3dac);
+wire xf660e45f5740b23a = x96b9d4e52bcd0a3f ^ xfeb43499c803ad53 ^ x69a418edfe11dd4e;
+wire x381b72f901d4858c = (x96b9d4e52bcd0a3f & xfeb43499c803ad53) | (x96b9d4e52bcd0a3f & x69a418edfe11dd4e) | (xfeb43499c803ad53 & x69a418edfe11dd4e);
+wire x50e838d293182e46 = xb6cf37d53f4e0afc ^ x3488619e315e9f40 ^ x5890c4d2a8903dd7;
+wire xd5bbda0a7e3b19b8 = (xb6cf37d53f4e0afc & x3488619e315e9f40) | (xb6cf37d53f4e0afc & x5890c4d2a8903dd7) | (x3488619e315e9f40 & x5890c4d2a8903dd7);
+wire x29e6608f062f1457 = x1f941fcf6d524028 ^ x275fb7657ae5a314 ^ x65d8b1b233b649e9;
+wire xfd3a16b0600ac5b9 = (x1f941fcf6d524028 & x275fb7657ae5a314) | (x1f941fcf6d524028 & x65d8b1b233b649e9) | (x275fb7657ae5a314 & x65d8b1b233b649e9);
+wire x84faa782d669e081 = x26059e2b568a9e0f ^ x2643cf6450ea61ff ^ x39080cd76456b1ae;
+wire x8dfa787cfef44211 = (x26059e2b568a9e0f & x2643cf6450ea61ff) | (x26059e2b568a9e0f & x39080cd76456b1ae) | (x2643cf6450ea61ff & x39080cd76456b1ae);
+wire x3af7195963e4bc1a = x712ef87ad81d7793 ^ x43f9590c0c3f367a ^ x37e3efeb444df2dd;
+wire x40bd334b3bc5c1d7 = (x712ef87ad81d7793 & x43f9590c0c3f367a) | (x712ef87ad81d7793 & x37e3efeb444df2dd) | (x43f9590c0c3f367a & x37e3efeb444df2dd);
+wire x4b3ad62a836d161d = x8a0dbb4825c7b7b7 ^ x9b9c7647f1fce913 ^ x916092d1c80d3a6f;
+wire xe77f90737138842b = (x8a0dbb4825c7b7b7 & x9b9c7647f1fce913) | (x8a0dbb4825c7b7b7 & x916092d1c80d3a6f) | (x9b9c7647f1fce913 & x916092d1c80d3a6f);
+wire x3dc07dd4edbc26f0 = x9beb6fd6d2cbdb90 ^ x11730c893a05bc66 ^ x6e7d5971fe001949;
+wire x542c9c6922a9413f = (x9beb6fd6d2cbdb90 & x11730c893a05bc66) | (x9beb6fd6d2cbdb90 & x6e7d5971fe001949) | (x11730c893a05bc66 & x6e7d5971fe001949);
+wire xe47eb875d623abf7 = x6d66fe5a16839de9 ^ xee87e4b042acd2c7 ^ x51e30f04c191657b;
+wire x5a77ee9f9094ceb3 = (x6d66fe5a16839de9 & xee87e4b042acd2c7) | (x6d66fe5a16839de9 & x51e30f04c191657b) | (xee87e4b042acd2c7 & x51e30f04c191657b);
+wire x0d60a5df7f2a2e77 = x8c3a12483289496c ^ xb410ee5549d142c8 ^ x46193b21d8cd143a;
+wire x2b3d0b72f95d6ba5 = (x8c3a12483289496c & xb410ee5549d142c8) | (x8c3a12483289496c & x46193b21d8cd143a) | (xb410ee5549d142c8 & x46193b21d8cd143a);
+wire x6461b207df2f3fb7 = xd12b0bcbcbe704e6 ^ x401c7018c491c774 ^ xc8ca9ea9c3641f3d;
+wire xcee6509bf9562bd3 = (xd12b0bcbcbe704e6 & x401c7018c491c774) | (xd12b0bcbcbe704e6 & xc8ca9ea9c3641f3d) | (x401c7018c491c774 & xc8ca9ea9c3641f3d);
+wire x203a8c76c9295f50 = x363c7d569aa020ad ^ x8eaec0d628e610cd ^ x8cd0108903335e5c;
+wire xb0caab52ff124378 = (x363c7d569aa020ad & x8eaec0d628e610cd) | (x363c7d569aa020ad & x8cd0108903335e5c) | (x8eaec0d628e610cd & x8cd0108903335e5c);
+wire x3894eded7b22354e = xc89797d0c679dc54 ^ xd3d544408ee461d3 ^ x22d2a483ff6202ce;
+wire x5012e64122f9da20 = (xc89797d0c679dc54 & xd3d544408ee461d3) | (xc89797d0c679dc54 & x22d2a483ff6202ce) | (xd3d544408ee461d3 & x22d2a483ff6202ce);
+wire x3e73e100a492ec02 = x8232e51f4fdc3491 ^ xda0501a4f6b5a42d ^ x0c7382d2fc890ebc;
+wire xd19fb9e089009ea1 = (x8232e51f4fdc3491 & xda0501a4f6b5a42d) | (x8232e51f4fdc3491 & x0c7382d2fc890ebc) | (xda0501a4f6b5a42d & x0c7382d2fc890ebc);
+wire x64497c9d94df5c1b = x5ce8461f642706b0 ^ x526705c68c87f59e ^ xb86f18e1c62cc8bc;
+wire x3605c12fb72ef63b = (x5ce8461f642706b0 & x526705c68c87f59e) | (x5ce8461f642706b0 & xb86f18e1c62cc8bc) | (x526705c68c87f59e & xb86f18e1c62cc8bc);
+wire x5946e00d408e339f = x96767e6cf7e6d6e6 ^ x8c40e791d90299fa ^ xac32ffcd2bd0f28d;
+wire x7abbb0125e2db3ba = (x96767e6cf7e6d6e6 & x8c40e791d90299fa) | (x96767e6cf7e6d6e6 & xac32ffcd2bd0f28d) | (x8c40e791d90299fa & xac32ffcd2bd0f28d);
+wire x2cc4d855c143fa89 = x2400062fe6fd15af ^ x9f74b8bb1559debe ^ xbdfd027d9403cca6;
+wire x1eb9865d49e522fb = (x2400062fe6fd15af & x9f74b8bb1559debe) | (x2400062fe6fd15af & xbdfd027d9403cca6) | (x9f74b8bb1559debe & xbdfd027d9403cca6);
+wire x57cba8b83af46084 = xd3853208c8443777 ^ x962c739589659c26 ^ x7d7205c64b317d8a;
+wire x589dbc4331e2b88f = (xd3853208c8443777 & x962c739589659c26) | (xd3853208c8443777 & x7d7205c64b317d8a) | (x962c739589659c26 & x7d7205c64b317d8a);
+wire x7fe35baf9e3b00e6 = x9a52fce6755398b3 ^ x3c6797324250fa38 ^ xbc0943b6070c14b8;
+wire xe73cd808d54a99fb = (x9a52fce6755398b3 & x3c6797324250fa38) | (x9a52fce6755398b3 & xbc0943b6070c14b8) | (x3c6797324250fa38 & xbc0943b6070c14b8);
+wire xa358242e3063d63f = x24e1e894bf930696 ^ x86d7d9d6343ea35e ^ xca70afa780451bc8;
+wire x4adc9a5b1b11bfb8 = (x24e1e894bf930696 & x86d7d9d6343ea35e) | (x24e1e894bf930696 & xca70afa780451bc8) | (x86d7d9d6343ea35e & xca70afa780451bc8);
+assign xe162e86df05e14f5 = {1'b0, x4adc9a5b1b11bfb8, xe73cd808d54a99fb, x589dbc4331e2b88f, x1eb9865d49e522fb, x7abbb0125e2db3ba, x3605c12fb72ef63b, xd19fb9e089009ea1, x5012e64122f9da20, xb0caab52ff124378, xcee6509bf9562bd3, x2b3d0b72f95d6ba5, x5a77ee9f9094ceb3, x542c9c6922a9413f, xe77f90737138842b, x40bd334b3bc5c1d7, x8dfa787cfef44211, xfd3a16b0600ac5b9, xd5bbda0a7e3b19b8, x381b72f901d4858c, x71fb18d6ed3f5b6b, x25c740ec1858b10e, x8c3c301ba50eb5d7, x887510c3b7c01bd3, xf5e8547ea0f764cb, xe50001f22b39239f, xe422d29122b1f9c8, xa04c57f36c23a951};
+assign xc9a6004ceddd8dff = {1'b0, x308ab5a99d994289, xa358242e3063d63f, x7fe35baf9e3b00e6, x57cba8b83af46084, x2cc4d855c143fa89, x5946e00d408e339f, x64497c9d94df5c1b, x3e73e100a492ec02, x3894eded7b22354e, x203a8c76c9295f50, x6461b207df2f3fb7, x0d60a5df7f2a2e77, xe47eb875d623abf7, x3dc07dd4edbc26f0, x4b3ad62a836d161d, x3af7195963e4bc1a, x84faa782d669e081, x29e6608f062f1457, x50e838d293182e46, xf660e45f5740b23a, x69126de62a630b0e, x800cab444cdad335, x9b2ded0dacaa8b7a, xed462da3a9fe5199, xb34c4dbf5552137f, xa051bf6249c1c875, 1'b0};
+end
+else begin: xdbc8cb0305737ce9
+wire xa04c57f36c23a951 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[0];
+wire xe422d29122b1f9c8 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[1];
+wire xb3da332a7527c620 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[2];
+wire x01d1e13170558095 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[3];
+wire x8656e5df02599a44 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[4];
+wire xcf74a7c7675c0902 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[5];
+wire xbf96d11bb7525b5b = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[6];
+wire xd42851e27a0ffb87 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[7];
+wire x716b9d3c2d10291e = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[8];
+wire x484ce93b550dd8a1 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[9];
+wire x3ec8015c399498ca = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[10];
+wire x6072db47a7fb813f = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[11];
+wire x6fe6b5e5bd25948d = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[12];
+wire x16d4b1fbda524ca5 = xe0f1e563055aaa78[0] & x4d9ca5ff295c356e[13];
+wire xa051bf6249c1c875 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[0];
+wire x718dffdb6faaae1e = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[1];
+wire xf940fc594729718f = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[2];
+wire xe080c6a06c7abf53 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[3];
+wire x13b377cb817e7c34 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[4];
+wire x31ac44c2fb9b7984 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[5];
+wire x722c8e501196d649 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[6];
+wire xaf92b513d1cb16c1 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[7];
+wire xbb6bcec90171818c = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[8];
+wire xa1781ed9168c4462 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[9];
+wire xdf53b7a86774ff66 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[10];
+wire x9a27d3add528b80c = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[11];
+wire xd3765651842d63f1 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[12];
+wire x3fed4f22c7ddaeb2 = xe0f1e563055aaa78[1] & x4d9ca5ff295c356e[13];
+wire xb34c4dbf5552137f = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[0];
+wire xb3c14ba30dfc158d = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[1];
+wire x1ee90a4b68043853 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[2];
+wire xb037c9968e1ded5e = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[3];
+wire x31fb04ee77fc46cf = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[4];
+wire x0f16d42ebae3899d = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[5];
+wire x894d8156d93ca533 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[6];
+wire xf1ae9bea26f609f8 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[7];
+wire x4e43ac04939f032f = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[8];
+wire xb4736e1e13f47327 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[9];
+wire xef077fd84e731415 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[10];
+wire xfb342b10591cef97 = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[11];
+wire xada40ebd67fc5b1f = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[12];
+wire x5066ee7cc4366b1a = xe0f1e563055aaa78[2] & x4d9ca5ff295c356e[13];
+wire x63e6a851bab35ccf = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[0];
+wire x5671f0f13257e8b9 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[1];
+wire xc5e9bb93f3827f0c = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[2];
+wire x8a0b8602c4ad6fbc = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[3];
+wire xafb6082147ec26fd = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[4];
+wire x918888905e0ae9c0 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[5];
+wire x25704ca8a852cae1 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[6];
+wire x1ffce726b8a5e00c = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[7];
+wire xc5f16fa544570486 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[8];
+wire x0bb939a5581a6f78 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[9];
+wire xf2df520d9036cb57 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[10];
+wire x7e6bd093a0253cb7 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[11];
+wire xb8213c4ef462f308 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[12];
+wire xb299e4653fc300a7 = xe0f1e563055aaa78[3] & x4d9ca5ff295c356e[13];
+wire x1c091cf3ff1c61ab = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[0];
+wire x27426cb87738c374 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[1];
+wire xb992094118c11ff0 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[2];
+wire x265177f55c060ffa = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[3];
+wire x62a7998084740468 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[4];
+wire x6c1f9e278b2bd208 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[5];
+wire x0921a1e56f558f86 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[6];
+wire x5806736c3dc1bc3e = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[7];
+wire xdc2bafc9f6f302ca = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[8];
+wire x2dacae1fdfe2e188 = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[9];
+wire x6e2de924f83293bb = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[10];
+wire x698b468e21c2a45a = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[11];
+wire x7a8cf676eeaf378e = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[12];
+wire xbeeb0be40c66516b = xe0f1e563055aaa78[4] & x4d9ca5ff295c356e[13];
+wire x170240369598deed = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[0];
+wire xa4443795bb5ea4e3 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[1];
+wire x6de87f67ad240103 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[2];
+wire xf0abd2df089ff94a = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[3];
+wire x67d351fbf977c612 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[4];
+wire x3885aeac4126e3f5 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[5];
+wire xc596a79174557322 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[6];
+wire x447fdb655d8ec169 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[7];
+wire x03295db155ceb5d7 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[8];
+wire x0ddc696ef5e735f6 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[9];
+wire xb2c8b5527e58240b = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[10];
+wire x6766ea2dd3a88c45 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[11];
+wire xfc265648df0fcf8c = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[12];
+wire x8c5858536849bd26 = xe0f1e563055aaa78[5] & x4d9ca5ff295c356e[13];
+wire x1d2be67cfce47373 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[0];
+wire x77e518f48dc92cf2 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[1];
+wire xfecf15b75a0182e2 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[2];
+wire x48119830a0edeb0d = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[3];
+wire x5853e61d04012882 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[4];
+wire xdf976d9080e6d074 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[5];
+wire x939e156bff8cd872 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[6];
+wire xfb1e86a02f2e876b = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[7];
+wire x374db9c51feffcdc = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[8];
+wire x096bfb6ad5d404a7 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[9];
+wire x26e1b91edb791858 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[10];
+wire xf07842dcfcf45e03 = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[11];
+wire x4ec27b6a34d800eb = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[12];
+wire xe60d749cf91538bd = xe0f1e563055aaa78[6] & x4d9ca5ff295c356e[13];
+wire x8e3cd60c6d07b432 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[0];
+wire xd2f44aedcf41e2c7 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[1];
+wire x82f5120378e45020 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[2];
+wire x7d95e780b83c091d = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[3];
+wire x284673bc6e89c4c4 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[4];
+wire x64ad6d18028b84af = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[5];
+wire x765f1abaa1fe1f4f = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[6];
+wire x5829197c04b7a69f = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[7];
+wire xa2b68fc68b8495be = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[8];
+wire x37eb2931d14191e5 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[9];
+wire x64b877fc56604cdf = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[10];
+wire x1ba7db587088feae = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[11];
+wire xb43b8e9277870c7e = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[12];
+wire xdb763b1b66e2f342 = xe0f1e563055aaa78[7] & x4d9ca5ff295c356e[13];
+wire x8d84193916b70729 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[0];
+wire x1cf840bd43dcbb41 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[1];
+wire x3b2606cdb5266270 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[2];
+wire xbdf0753249cc21eb = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[3];
+wire xa3f54d11feac0650 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[4];
+wire x963712e7eeedad27 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[5];
+wire xee635f84f2d0098b = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[6];
+wire xc5689926198737c5 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[7];
+wire x377d1f4c17477e3e = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[8];
+wire x9e0f20d299003e37 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[9];
+wire x0d0505d4651d58b8 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[10];
+wire x6e7c5473a85ca412 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[11];
+wire x415feafa3fa91b62 = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[12];
+wire xf55b9637ca0cf61e = xe0f1e563055aaa78[8] & x4d9ca5ff295c356e[13];
+wire xcb52a258af818c79 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[0];
+wire xfd643d55f31ba041 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[1];
+wire x6ef057e22362799d = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[2];
+wire xf8084700870d6c3d = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[3];
+wire x8368387b7cb3da2a = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[4];
+wire x3ec90eafd0c47fbe = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[5];
+wire x87c95f61b23375c3 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[6];
+wire x1ee3802cb538e7c1 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[7];
+wire x5ec77928c0ed10c2 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[8];
+wire xac0b08bf08b937a3 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[9];
+wire x0b3094573f1af683 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[10];
+wire xb8a3b5da22228260 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[11];
+wire x01aff005108e59f4 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[12];
+wire x4ae6aa61eed0ea21 = xe0f1e563055aaa78[9] & x4d9ca5ff295c356e[13];
+wire xa00be453057a90e5 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[0];
+wire xb30fbf27fbca4e6b = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[1];
+wire x2b2a2be63625d621 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[2];
+wire x8f450aad1d6de6ff = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[3];
+wire x06674de3aa1ea190 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[4];
+wire xa324a039ec8c6c40 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[5];
+wire xe75cee2ca5a8ef74 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[6];
+wire xb9be8634cf64c082 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[7];
+wire x1b5ae5d17f93bb42 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[8];
+wire xf5d0027fc48d56e9 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[9];
+wire xab6c53053dad4618 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[10];
+wire x8a396b7a9b73c290 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[11];
+wire xc55978ac61712adb = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[12];
+wire x79503f7c4e1dafb5 = xe0f1e563055aaa78[10] & x4d9ca5ff295c356e[13];
+wire x0e1ec21e6e0c4c00 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[0];
+wire xfdb72d1dd0d9be9f = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[1];
+wire x7050110e56ef7284 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[2];
+wire x41474673835125b9 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[3];
+wire x3c0f7afbccbedaf0 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[4];
+wire x7e6cf632b8ef579f = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[5];
+wire x590ad2202ae6301c = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[6];
+wire xc1590a0a41164179 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[7];
+wire xcea62426e1082155 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[8];
+wire x07641828ac647536 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[9];
+wire x43ff58d8344fd57a = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[10];
+wire xdd9e780c2a4ac82a = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[11];
+wire xd53ba3ef5d0add7b = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[12];
+wire xd5bbbd3a6630b8e2 = xe0f1e563055aaa78[11] & x4d9ca5ff295c356e[13];
+wire xbec58fe5b3c7ee5d = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[0];
+wire x0c599a7a0805c5dd = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[1];
+wire x9af59134409fdb29 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[2];
+wire xfe7b7b5036857d38 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[3];
+wire x04d9056e04b5564a = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[4];
+wire xd3f9fe937ef5d916 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[5];
+wire x26902444e3886c81 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[6];
+wire xe1125b8efd3d9324 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[7];
+wire x8c0f7f878da28724 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[8];
+wire x371f269ae44ca993 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[9];
+wire x861aa6edb0f88a8d = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[10];
+wire xab54e2ad93beb964 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[11];
+wire xed0468c631c48586 = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[12];
+wire x86d7d9d6343ea35e = xe0f1e563055aaa78[12] & x4d9ca5ff295c356e[13];
+wire x6b7c96ecc867bb61 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[0];
+wire x776116beb703e176 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[1];
+wire x32e58fc5bceffc78 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[2];
+wire x3fc98fd8b25a855d = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[3];
+wire xdfb75fb3d8258815 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[4];
+wire xb1d18bca46c100cd = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[5];
+wire xf8bf7d6b40df63f3 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[6];
+wire xa2f30e109b7de13b = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[7];
+wire x57e3cd5d46055ab0 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[8];
+wire x00950242b0fb708a = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[9];
+wire x7d7205c64b317d8a = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[10];
+wire xbc0943b6070c14b8 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[11];
+wire xca70afa780451bc8 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[12];
+wire x308ab5a99d994289 = xe0f1e563055aaa78[13] & x4d9ca5ff295c356e[13];
+wire x647c70ac77f927b3 = x16d4b1fbda524ca5 ^ xd3765651842d63f1;
+wire x118d7dd1ddcdf1b8 = x16d4b1fbda524ca5 & xd3765651842d63f1;
+wire xb2c7f892a969ca8d = x3fed4f22c7ddaeb2 ^ xada40ebd67fc5b1f;
+wire x82b86625cad758a2 = x3fed4f22c7ddaeb2 & xada40ebd67fc5b1f;
+wire xa976bdc1f0e0d774 = x484ce93b550dd8a1 ^ xbb6bcec90171818c ^ xf1ae9bea26f609f8;
+wire x0d3a09d986888112 = (x484ce93b550dd8a1 & xbb6bcec90171818c) | (x484ce93b550dd8a1 & xf1ae9bea26f609f8) | (xbb6bcec90171818c & xf1ae9bea26f609f8);
+wire x8d797e386edcdeb9 = x3ec8015c399498ca ^ xa1781ed9168c4462 ^ x4e43ac04939f032f;
+wire xbf9507f2029f1b03 = (x3ec8015c399498ca & xa1781ed9168c4462) | (x3ec8015c399498ca & x4e43ac04939f032f) | (xa1781ed9168c4462 & x4e43ac04939f032f);
+wire xda3507511cbc98ca = x1ffce726b8a5e00c ^ x0921a1e56f558f86;
+wire xeaaf803dacc117c0 = x1ffce726b8a5e00c & x0921a1e56f558f86;
+wire xc6ad06832f1aef11 = x6072db47a7fb813f ^ xdf53b7a86774ff66 ^ xb4736e1e13f47327;
+wire xb39e77e1e25ca6ec = (x6072db47a7fb813f & xdf53b7a86774ff66) | (x6072db47a7fb813f & xb4736e1e13f47327) | (xdf53b7a86774ff66 & xb4736e1e13f47327);
+wire xb3cf34c5d1098e5a = xc5f16fa544570486 ^ x5806736c3dc1bc3e ^ xc596a79174557322;
+wire x4d7b9a5f80314ccf = (xc5f16fa544570486 & x5806736c3dc1bc3e) | (xc5f16fa544570486 & xc596a79174557322) | (x5806736c3dc1bc3e & xc596a79174557322);
+wire x10abd071ea8a30b0 = xdf976d9080e6d074 ^ x284673bc6e89c4c4;
+wire xad0e71713f4745b4 = xdf976d9080e6d074 & x284673bc6e89c4c4;
+wire xca0bd6fbcf7859b0 = x6fe6b5e5bd25948d ^ x9a27d3add528b80c ^ xef077fd84e731415;
+wire xdb06a8ac810a4a3f = (x6fe6b5e5bd25948d & x9a27d3add528b80c) | (x6fe6b5e5bd25948d & xef077fd84e731415) | (x9a27d3add528b80c & xef077fd84e731415);
+wire xabf40a700c03eaae = x0bb939a5581a6f78 ^ xdc2bafc9f6f302ca ^ x447fdb655d8ec169;
+wire x538767258b8af5c2 = (x0bb939a5581a6f78 & xdc2bafc9f6f302ca) | (x0bb939a5581a6f78 & x447fdb655d8ec169) | (xdc2bafc9f6f302ca & x447fdb655d8ec169);
+wire xaec990f57b76ed62 = x939e156bff8cd872 ^ x64ad6d18028b84af ^ xa3f54d11feac0650;
+wire x32af7ba5e522c78c = (x939e156bff8cd872 & x64ad6d18028b84af) | (x939e156bff8cd872 & xa3f54d11feac0650) | (x64ad6d18028b84af & xa3f54d11feac0650);
+wire xc4c44c0f1219b6ea = xf8084700870d6c3d ^ x2b2a2be63625d621;
+wire x53bf0a0b0e5031c5 = xf8084700870d6c3d & x2b2a2be63625d621;
+wire x408681fe3fc43540 = x647c70ac77f927b3 ^ xfb342b10591cef97 ^ xf2df520d9036cb57;
+wire x3b0584d584858572 = (x647c70ac77f927b3 & xfb342b10591cef97) | (x647c70ac77f927b3 & xf2df520d9036cb57) | (xfb342b10591cef97 & xf2df520d9036cb57);
+wire x0c27dfdf282fe4ba = x2dacae1fdfe2e188 ^ x03295db155ceb5d7 ^ xfb1e86a02f2e876b;
+wire xb98fefecd76947c9 = (x2dacae1fdfe2e188 & x03295db155ceb5d7) | (x2dacae1fdfe2e188 & xfb1e86a02f2e876b) | (x03295db155ceb5d7 & xfb1e86a02f2e876b);
+wire x93f044631d8f3777 = x765f1abaa1fe1f4f ^ x963712e7eeedad27 ^ x8368387b7cb3da2a;
+wire x158bbf5bc333201f = (x765f1abaa1fe1f4f & x963712e7eeedad27) | (x765f1abaa1fe1f4f & x8368387b7cb3da2a) | (x963712e7eeedad27 & x8368387b7cb3da2a);
+wire xb3c1313899299868 = x8f450aad1d6de6ff ^ x7050110e56ef7284 ^ x0c599a7a0805c5dd;
+wire x175b01a7a1fb9def = (x8f450aad1d6de6ff & x7050110e56ef7284) | (x8f450aad1d6de6ff & x0c599a7a0805c5dd) | (x7050110e56ef7284 & x0c599a7a0805c5dd);
+wire x124d99e0e273071e = x118d7dd1ddcdf1b8 ^ xb2c7f892a969ca8d ^ x7e6bd093a0253cb7;
+wire xabefb1e93bfb3904 = (x118d7dd1ddcdf1b8 & xb2c7f892a969ca8d) | (x118d7dd1ddcdf1b8 & x7e6bd093a0253cb7) | (xb2c7f892a969ca8d & x7e6bd093a0253cb7);
+wire xd29c78faee22c724 = x6e2de924f83293bb ^ x0ddc696ef5e735f6 ^ x374db9c51feffcdc;
+wire x69215065f1b9b3a9 = (x6e2de924f83293bb & x0ddc696ef5e735f6) | (x6e2de924f83293bb & x374db9c51feffcdc) | (x0ddc696ef5e735f6 & x374db9c51feffcdc);
+wire x18121d3a500158c3 = x5829197c04b7a69f ^ xee635f84f2d0098b ^ x3ec90eafd0c47fbe;
+wire x6b29c9769d0aa2d1 = (x5829197c04b7a69f & xee635f84f2d0098b) | (x5829197c04b7a69f & x3ec90eafd0c47fbe) | (xee635f84f2d0098b & x3ec90eafd0c47fbe);
+wire xf190a8a1a1db99a2 = x06674de3aa1ea190 ^ x41474673835125b9 ^ x9af59134409fdb29;
+wire x6090578c03bb27cc = (x06674de3aa1ea190 & x41474673835125b9) | (x06674de3aa1ea190 & x9af59134409fdb29) | (x41474673835125b9 & x9af59134409fdb29);
+wire x35824ce4deb7a571 = x82b86625cad758a2 ^ x5066ee7cc4366b1a ^ xb8213c4ef462f308;
+wire x3134ba4c9e838318 = (x82b86625cad758a2 & x5066ee7cc4366b1a) | (x82b86625cad758a2 & xb8213c4ef462f308) | (x5066ee7cc4366b1a & xb8213c4ef462f308);
+wire x43bd06b10d632d93 = x698b468e21c2a45a ^ xb2c8b5527e58240b ^ x096bfb6ad5d404a7;
+wire x7c7186c807135843 = (x698b468e21c2a45a & xb2c8b5527e58240b) | (x698b468e21c2a45a & x096bfb6ad5d404a7) | (xb2c8b5527e58240b & x096bfb6ad5d404a7);
+wire xc5b54cec455f316c = xa2b68fc68b8495be ^ xc5689926198737c5 ^ x87c95f61b23375c3;
+wire x9396be5b7c4794df = (xa2b68fc68b8495be & xc5689926198737c5) | (xa2b68fc68b8495be & x87c95f61b23375c3) | (xc5689926198737c5 & x87c95f61b23375c3);
+wire x7d55baa554f7d7c5 = xa324a039ec8c6c40 ^ x3c0f7afbccbedaf0 ^ xfe7b7b5036857d38;
+wire x5fff945f8119e056 = (xa324a039ec8c6c40 & x3c0f7afbccbedaf0) | (xa324a039ec8c6c40 & xfe7b7b5036857d38) | (x3c0f7afbccbedaf0 & xfe7b7b5036857d38);
+wire xc42d4c55b42427a1 = xb299e4653fc300a7 ^ x7a8cf676eeaf378e ^ x6766ea2dd3a88c45;
+wire x83ad39a12eeeb313 = (xb299e4653fc300a7 & x7a8cf676eeaf378e) | (xb299e4653fc300a7 & x6766ea2dd3a88c45) | (x7a8cf676eeaf378e & x6766ea2dd3a88c45);
+wire x8c8a5783d3e2206f = x26e1b91edb791858 ^ x37eb2931d14191e5 ^ x377d1f4c17477e3e;
+wire x36a81e661bc66c94 = (x26e1b91edb791858 & x37eb2931d14191e5) | (x26e1b91edb791858 & x377d1f4c17477e3e) | (x37eb2931d14191e5 & x377d1f4c17477e3e);
+wire xee51c6c7a426b098 = x1ee3802cb538e7c1 ^ xe75cee2ca5a8ef74 ^ x7e6cf632b8ef579f;
+wire x2e478ce409a98bff = (x1ee3802cb538e7c1 & xe75cee2ca5a8ef74) | (x1ee3802cb538e7c1 & x7e6cf632b8ef579f) | (xe75cee2ca5a8ef74 & x7e6cf632b8ef579f);
+wire xaf391273d04cab76 = xbeeb0be40c66516b ^ xfc265648df0fcf8c ^ xf07842dcfcf45e03;
+wire x24ed45a47b7b33c0 = (xbeeb0be40c66516b & xfc265648df0fcf8c) | (xbeeb0be40c66516b & xf07842dcfcf45e03) | (xfc265648df0fcf8c & xf07842dcfcf45e03);
+wire x423a706f5db69598 = x64b877fc56604cdf ^ x9e0f20d299003e37 ^ x5ec77928c0ed10c2;
+wire x19c94a5c0f907158 = (x64b877fc56604cdf & x9e0f20d299003e37) | (x64b877fc56604cdf & x5ec77928c0ed10c2) | (x9e0f20d299003e37 & x5ec77928c0ed10c2);
+wire xf5594f04b663f046 = x8c5858536849bd26 ^ x4ec27b6a34d800eb ^ x1ba7db587088feae;
+wire x425ebfa624f77017 = (x8c5858536849bd26 & x4ec27b6a34d800eb) | (x8c5858536849bd26 & x1ba7db587088feae) | (x4ec27b6a34d800eb & x1ba7db587088feae);
+wire xdd01484bce0de99c = xbf96d11bb7525b5b ^ x31ac44c2fb9b7984;
+wire x8815a27a04cad6a8 = xbf96d11bb7525b5b & x31ac44c2fb9b7984;
+wire x39344fbaee9f42f2 = xd42851e27a0ffb87 ^ x722c8e501196d649 ^ x0f16d42ebae3899d;
+wire x8795af373c254a58 = (xd42851e27a0ffb87 & x722c8e501196d649) | (xd42851e27a0ffb87 & x0f16d42ebae3899d) | (x722c8e501196d649 & x0f16d42ebae3899d);
+wire x4ac19aaef52904ad = xafb6082147ec26fd ^ x265177f55c060ffa;
+wire xdc2529a5a136b747 = xafb6082147ec26fd & x265177f55c060ffa;
+wire x0d91ee6e9606916d = x716b9d3c2d10291e ^ xaf92b513d1cb16c1 ^ x894d8156d93ca533;
+wire x5275effea50aa0af = (x716b9d3c2d10291e & xaf92b513d1cb16c1) | (x716b9d3c2d10291e & x894d8156d93ca533) | (xaf92b513d1cb16c1 & x894d8156d93ca533);
+wire xca013270933e204c = x918888905e0ae9c0 ^ x62a7998084740468 ^ xf0abd2df089ff94a;
+wire x6df4bb9fc753a305 = (x918888905e0ae9c0 & x62a7998084740468) | (x918888905e0ae9c0 & xf0abd2df089ff94a) | (x62a7998084740468 & xf0abd2df089ff94a);
+wire x8861f4db839cc28a = xfecf15b75a0182e2 ^ xd2f44aedcf41e2c7;
+wire x6fafe4c69d1bbb14 = xfecf15b75a0182e2 & xd2f44aedcf41e2c7;
+wire xca8d25b47751bb4a = xa976bdc1f0e0d774 ^ x25704ca8a852cae1 ^ x6c1f9e278b2bd208;
+wire x2967ee1693a7173c = (xa976bdc1f0e0d774 & x25704ca8a852cae1) | (xa976bdc1f0e0d774 & x6c1f9e278b2bd208) | (x25704ca8a852cae1 & x6c1f9e278b2bd208);
+wire x3ae73116e28de1f8 = x67d351fbf977c612 ^ x48119830a0edeb0d ^ x82f5120378e45020;
+wire x195c5234117aeb87 = (x67d351fbf977c612 & x48119830a0edeb0d) | (x67d351fbf977c612 & x82f5120378e45020) | (x48119830a0edeb0d & x82f5120378e45020);
+wire xdc24d5d7fa80ce6c = x1cf840bd43dcbb41 ^ xcb52a258af818c79 ^ 1'b1;
+wire x1159a92602942d7f = (x1cf840bd43dcbb41 & xcb52a258af818c79) | (x1cf840bd43dcbb41 & 1'b1) | (xcb52a258af818c79 & 1'b1);
+wire x148f137df05f828d = x0d3a09d986888112 ^ x8d797e386edcdeb9 ^ xda3507511cbc98ca;
+wire xdbfdfa6543608edf = (x0d3a09d986888112 & x8d797e386edcdeb9) | (x0d3a09d986888112 & xda3507511cbc98ca) | (x8d797e386edcdeb9 & xda3507511cbc98ca);
+wire x9372d287a020d0a7 = x3885aeac4126e3f5 ^ x5853e61d04012882 ^ x7d95e780b83c091d;
+wire x36adc72206dfc9d8 = (x3885aeac4126e3f5 & x5853e61d04012882) | (x3885aeac4126e3f5 & x7d95e780b83c091d) | (x5853e61d04012882 & x7d95e780b83c091d);
+wire xf5821a87b881c8ed = x3b2606cdb5266270 ^ xfd643d55f31ba041 ^ xa00be453057a90e5;
+wire x4581f8ac9a635106 = (x3b2606cdb5266270 & xfd643d55f31ba041) | (x3b2606cdb5266270 & xa00be453057a90e5) | (xfd643d55f31ba041 & xa00be453057a90e5);
+wire x9e721d5f19e930d2 = xbf9507f2029f1b03 ^ xeaaf803dacc117c0 ^ xc6ad06832f1aef11;
+wire x648e39bcc5d15988 = (xbf9507f2029f1b03 & xeaaf803dacc117c0) | (xbf9507f2029f1b03 & xc6ad06832f1aef11) | (xeaaf803dacc117c0 & xc6ad06832f1aef11);
+wire x4260e18539440185 = xb3cf34c5d1098e5a ^ x10abd071ea8a30b0 ^ xbdf0753249cc21eb;
+wire x5c6422814be1c4b2 = (xb3cf34c5d1098e5a & x10abd071ea8a30b0) | (xb3cf34c5d1098e5a & xbdf0753249cc21eb) | (x10abd071ea8a30b0 & xbdf0753249cc21eb);
+wire xf7971a489e42ec53 = x6ef057e22362799d ^ xb30fbf27fbca4e6b ^ x0e1ec21e6e0c4c00;
+wire xd0af9ab6fd5499c3 = (x6ef057e22362799d & xb30fbf27fbca4e6b) | (x6ef057e22362799d & x0e1ec21e6e0c4c00) | (xb30fbf27fbca4e6b & x0e1ec21e6e0c4c00);
+wire x41d7d0ae125cef47 = xb39e77e1e25ca6ec ^ x4d7b9a5f80314ccf ^ xad0e71713f4745b4;
+wire xac72382027e4e441 = (xb39e77e1e25ca6ec & x4d7b9a5f80314ccf) | (xb39e77e1e25ca6ec & xad0e71713f4745b4) | (x4d7b9a5f80314ccf & xad0e71713f4745b4);
+wire x282f2f555230e7d0 = xca0bd6fbcf7859b0 ^ xabf40a700c03eaae ^ xaec990f57b76ed62;
+wire x521ebf9fed8a8275 = (xca0bd6fbcf7859b0 & xabf40a700c03eaae) | (xca0bd6fbcf7859b0 & xaec990f57b76ed62) | (xabf40a700c03eaae & xaec990f57b76ed62);
+wire x086c8b881290424b = xc4c44c0f1219b6ea ^ xfdb72d1dd0d9be9f ^ xbec58fe5b3c7ee5d;
+wire x3fb7565679f94ac3 = (xc4c44c0f1219b6ea & xfdb72d1dd0d9be9f) | (xc4c44c0f1219b6ea & xbec58fe5b3c7ee5d) | (xfdb72d1dd0d9be9f & xbec58fe5b3c7ee5d);
+wire xf50ed1e6a685db79 = xdb06a8ac810a4a3f ^ x538767258b8af5c2 ^ x32af7ba5e522c78c;
+wire xa8889cfd24a89773 = (xdb06a8ac810a4a3f & x538767258b8af5c2) | (xdb06a8ac810a4a3f & x32af7ba5e522c78c) | (x538767258b8af5c2 & x32af7ba5e522c78c);
+wire xf742295407f89e74 = x53bf0a0b0e5031c5 ^ x408681fe3fc43540 ^ x0c27dfdf282fe4ba;
+wire xcfc88d01bac121f2 = (x53bf0a0b0e5031c5 & x408681fe3fc43540) | (x53bf0a0b0e5031c5 & x0c27dfdf282fe4ba) | (x408681fe3fc43540 & x0c27dfdf282fe4ba);
+wire x9d105e2fdd2969de = x93f044631d8f3777 ^ xb3c1313899299868 ^ x6b7c96ecc867bb61;
+wire xc22f40d5dfb58b4e = (x93f044631d8f3777 & xb3c1313899299868) | (x93f044631d8f3777 & x6b7c96ecc867bb61) | (xb3c1313899299868 & x6b7c96ecc867bb61);
+wire x7ec9bd3d6891fb08 = x3b0584d584858572 ^ xb98fefecd76947c9 ^ x158bbf5bc333201f;
+wire x38f09599529163da = (x3b0584d584858572 & xb98fefecd76947c9) | (x3b0584d584858572 & x158bbf5bc333201f) | (xb98fefecd76947c9 & x158bbf5bc333201f);
+wire x2c056af8353de8b3 = x175b01a7a1fb9def ^ x124d99e0e273071e ^ xd29c78faee22c724;
+wire x72a5a82c6ca4cc78 = (x175b01a7a1fb9def & x124d99e0e273071e) | (x175b01a7a1fb9def & xd29c78faee22c724) | (x124d99e0e273071e & xd29c78faee22c724);
+wire x2371f68c160bb383 = x18121d3a500158c3 ^ xf190a8a1a1db99a2 ^ x776116beb703e176;
+wire x3d3c514c0bd21b40 = (x18121d3a500158c3 & xf190a8a1a1db99a2) | (x18121d3a500158c3 & x776116beb703e176) | (xf190a8a1a1db99a2 & x776116beb703e176);
+wire xf289ad0489e88d72 = xabefb1e93bfb3904 ^ x69215065f1b9b3a9 ^ x6b29c9769d0aa2d1;
+wire x85df4d42984ddae0 = (xabefb1e93bfb3904 & x69215065f1b9b3a9) | (xabefb1e93bfb3904 & x6b29c9769d0aa2d1) | (x69215065f1b9b3a9 & x6b29c9769d0aa2d1);
+wire xf938fda0afca2569 = x6090578c03bb27cc ^ x35824ce4deb7a571 ^ x43bd06b10d632d93;
+wire xf24927b33ea87a2c = (x6090578c03bb27cc & x35824ce4deb7a571) | (x6090578c03bb27cc & x43bd06b10d632d93) | (x35824ce4deb7a571 & x43bd06b10d632d93);
+wire xb19ae26ac20ee43b = xc5b54cec455f316c ^ x7d55baa554f7d7c5 ^ x32e58fc5bceffc78;
+wire x29102d78a3d1fa2d = (xc5b54cec455f316c & x7d55baa554f7d7c5) | (xc5b54cec455f316c & x32e58fc5bceffc78) | (x7d55baa554f7d7c5 & x32e58fc5bceffc78);
+wire x5b3fe7a8a9710621 = x3134ba4c9e838318 ^ x7c7186c807135843 ^ x9396be5b7c4794df;
+wire x4be3779557ff8e7e = (x3134ba4c9e838318 & x7c7186c807135843) | (x3134ba4c9e838318 & x9396be5b7c4794df) | (x7c7186c807135843 & x9396be5b7c4794df);
+wire x5020c0d2da1bd463 = x5fff945f8119e056 ^ xc42d4c55b42427a1 ^ x8c8a5783d3e2206f;
+wire xc55cb60644b17375 = (x5fff945f8119e056 & xc42d4c55b42427a1) | (x5fff945f8119e056 & x8c8a5783d3e2206f) | (xc42d4c55b42427a1 & x8c8a5783d3e2206f);
+wire x114fbd7e5d4ee043 = xee51c6c7a426b098 ^ x04d9056e04b5564a ^ x3fc98fd8b25a855d;
+wire xa8d5a6feea794f28 = (xee51c6c7a426b098 & x04d9056e04b5564a) | (xee51c6c7a426b098 & x3fc98fd8b25a855d) | (x04d9056e04b5564a & x3fc98fd8b25a855d);
+wire x23d7bcf25ed3e1e2 = x83ad39a12eeeb313 ^ x36a81e661bc66c94 ^ x2e478ce409a98bff;
+wire xa1b73d74c077332d = (x83ad39a12eeeb313 & x36a81e661bc66c94) | (x83ad39a12eeeb313 & x2e478ce409a98bff) | (x36a81e661bc66c94 & x2e478ce409a98bff);
+wire xf6a48fc50d3165ef = xaf391273d04cab76 ^ x423a706f5db69598 ^ xb9be8634cf64c082;
+wire x518ec1bda886acf8 = (xaf391273d04cab76 & x423a706f5db69598) | (xaf391273d04cab76 & xb9be8634cf64c082) | (x423a706f5db69598 & xb9be8634cf64c082);
+wire x2a875f5af20adf9b = x590ad2202ae6301c ^ xd3f9fe937ef5d916 ^ xdfb75fb3d8258815;
+wire x306a6303df9fccf3 = (x590ad2202ae6301c & xd3f9fe937ef5d916) | (x590ad2202ae6301c & xdfb75fb3d8258815) | (xd3f9fe937ef5d916 & xdfb75fb3d8258815);
+wire x39447a90c021e5d8 = x24ed45a47b7b33c0 ^ x19c94a5c0f907158 ^ xf5594f04b663f046;
+wire x011e36decf81ca5d = (x24ed45a47b7b33c0 & x19c94a5c0f907158) | (x24ed45a47b7b33c0 & xf5594f04b663f046) | (x19c94a5c0f907158 & xf5594f04b663f046);
+wire x378167e3386736f4 = x0d0505d4651d58b8 ^ xac0b08bf08b937a3 ^ x1b5ae5d17f93bb42;
+wire x802bb4504e8394eb = (x0d0505d4651d58b8 & xac0b08bf08b937a3) | (x0d0505d4651d58b8 & x1b5ae5d17f93bb42) | (xac0b08bf08b937a3 & x1b5ae5d17f93bb42);
+wire x4ea9d91de144cb24 = xc1590a0a41164179 ^ x26902444e3886c81 ^ xb1d18bca46c100cd;
+wire x3a42279778432059 = (xc1590a0a41164179 & x26902444e3886c81) | (xc1590a0a41164179 & xb1d18bca46c100cd) | (x26902444e3886c81 & xb1d18bca46c100cd);
+wire xd235e562205cb237 = x425ebfa624f77017 ^ xe60d749cf91538bd ^ xb43b8e9277870c7e;
+wire x9d0432e7edf63f7c = (x425ebfa624f77017 & xe60d749cf91538bd) | (x425ebfa624f77017 & xb43b8e9277870c7e) | (xe60d749cf91538bd & xb43b8e9277870c7e);
+wire x72d0d36a9b89b283 = x6e7c5473a85ca412 ^ x0b3094573f1af683 ^ xf5d0027fc48d56e9;
+wire x99cb33bbf2c6bdbe = (x6e7c5473a85ca412 & x0b3094573f1af683) | (x6e7c5473a85ca412 & xf5d0027fc48d56e9) | (x0b3094573f1af683 & xf5d0027fc48d56e9);
+wire xeedccfffe91b8d5a = xcea62426e1082155 ^ xe1125b8efd3d9324 ^ xf8bf7d6b40df63f3;
+wire x520de504e5e95556 = (xcea62426e1082155 & xe1125b8efd3d9324) | (xcea62426e1082155 & xf8bf7d6b40df63f3) | (xe1125b8efd3d9324 & xf8bf7d6b40df63f3);
+wire x43267d99b000b162 = xdb763b1b66e2f342 ^ x415feafa3fa91b62 ^ xb8a3b5da22228260;
+wire x168905a9d4d63726 = (xdb763b1b66e2f342 & x415feafa3fa91b62) | (xdb763b1b66e2f342 & xb8a3b5da22228260) | (x415feafa3fa91b62 & xb8a3b5da22228260);
+wire xf7b7425905809cdf = xab6c53053dad4618 ^ x07641828ac647536 ^ x8c0f7f878da28724;
+wire x2d2ce0465c6e3a4a = (xab6c53053dad4618 & x07641828ac647536) | (xab6c53053dad4618 & x8c0f7f878da28724) | (x07641828ac647536 & x8c0f7f878da28724);
+wire x329c160a5222ea22 = xf55b9637ca0cf61e ^ x01aff005108e59f4 ^ x8a396b7a9b73c290;
+wire x8bd6b0eccb44aa65 = (xf55b9637ca0cf61e & x01aff005108e59f4) | (xf55b9637ca0cf61e & x8a396b7a9b73c290) | (x01aff005108e59f4 & x8a396b7a9b73c290);
+wire x68d44f5d00e81dcc = x8656e5df02599a44 ^ xe080c6a06c7abf53;
+wire xcd48f18099a1ef13 = x8656e5df02599a44 & xe080c6a06c7abf53;
+wire xfde850bb7c816213 = xcf74a7c7675c0902 ^ x13b377cb817e7c34 ^ xb037c9968e1ded5e;
+wire x5376bc0b773b123f = (xcf74a7c7675c0902 & x13b377cb817e7c34) | (xcf74a7c7675c0902 & xb037c9968e1ded5e) | (x13b377cb817e7c34 & xb037c9968e1ded5e);
+wire xe9b4911cfce011ae = xc5e9bb93f3827f0c ^ x27426cb87738c374;
+wire x6ce21bff50df0522 = xc5e9bb93f3827f0c & x27426cb87738c374;
+wire xa2ecb98d55dfacb5 = xdd01484bce0de99c ^ x31fb04ee77fc46cf ^ x8a0b8602c4ad6fbc;
+wire x7b7d8f37344d3389 = (xdd01484bce0de99c & x31fb04ee77fc46cf) | (xdd01484bce0de99c & x8a0b8602c4ad6fbc) | (x31fb04ee77fc46cf & x8a0b8602c4ad6fbc);
+wire xbd3af076ad1c3dac = xb992094118c11ff0 ^ xa4443795bb5ea4e3 ^ x1d2be67cfce47373;
+wire x5f8457b287d41ca4 = (xb992094118c11ff0 & xa4443795bb5ea4e3) | (xb992094118c11ff0 & x1d2be67cfce47373) | (xa4443795bb5ea4e3 & x1d2be67cfce47373);
+wire xa49227bdd34542ec = x8815a27a04cad6a8 ^ x39344fbaee9f42f2 ^ x4ac19aaef52904ad;
+wire x94e3f11e4473288c = (x8815a27a04cad6a8 & x39344fbaee9f42f2) | (x8815a27a04cad6a8 & x4ac19aaef52904ad) | (x39344fbaee9f42f2 & x4ac19aaef52904ad);
+wire x69a418edfe11dd4e = x6de87f67ad240103 ^ x77e518f48dc92cf2 ^ x8e3cd60c6d07b432;
+wire x24b57807f9d7a28e = (x6de87f67ad240103 & x77e518f48dc92cf2) | (x6de87f67ad240103 & x8e3cd60c6d07b432) | (x77e518f48dc92cf2 & x8e3cd60c6d07b432);
+wire x38c93fc7a7102055 = x8795af373c254a58 ^ xdc2529a5a136b747 ^ x0d91ee6e9606916d;
+wire x297bafd0752f1d1c = (x8795af373c254a58 & xdc2529a5a136b747) | (x8795af373c254a58 & x0d91ee6e9606916d) | (xdc2529a5a136b747 & x0d91ee6e9606916d);
+wire x5890c4d2a8903dd7 = xca013270933e204c ^ x8861f4db839cc28a ^ x8d84193916b70729;
+wire x5b125db75ecb77b4 = (xca013270933e204c & x8861f4db839cc28a) | (xca013270933e204c & x8d84193916b70729) | (x8861f4db839cc28a & x8d84193916b70729);
+wire x54e5d75a8286c35c = x5275effea50aa0af ^ x6df4bb9fc753a305 ^ x6fafe4c69d1bbb14;
+wire x4fafee1b6a902885 = (x5275effea50aa0af & x6df4bb9fc753a305) | (x5275effea50aa0af & x6fafe4c69d1bbb14) | (x6df4bb9fc753a305 & x6fafe4c69d1bbb14);
+wire x65d8b1b233b649e9 = xca8d25b47751bb4a ^ x3ae73116e28de1f8 ^ xdc24d5d7fa80ce6c;
+wire xb296c53253ef6d05 = (xca8d25b47751bb4a & x3ae73116e28de1f8) | (xca8d25b47751bb4a & xdc24d5d7fa80ce6c) | (x3ae73116e28de1f8 & xdc24d5d7fa80ce6c);
+wire xe3306aacecf1b621 = x2967ee1693a7173c ^ x195c5234117aeb87 ^ x1159a92602942d7f;
+wire x27fba13a3879f25b = (x2967ee1693a7173c & x195c5234117aeb87) | (x2967ee1693a7173c & x1159a92602942d7f) | (x195c5234117aeb87 & x1159a92602942d7f);
+wire x39080cd76456b1ae = x148f137df05f828d ^ x9372d287a020d0a7 ^ xf5821a87b881c8ed;
+wire xef31459d243ae1b6 = (x148f137df05f828d & x9372d287a020d0a7) | (x148f137df05f828d & xf5821a87b881c8ed) | (x9372d287a020d0a7 & xf5821a87b881c8ed);
+wire xa2d93dc16b2b7a07 = xdbfdfa6543608edf ^ x36adc72206dfc9d8 ^ x4581f8ac9a635106;
+wire xd97ae0face070ef2 = (xdbfdfa6543608edf & x36adc72206dfc9d8) | (xdbfdfa6543608edf & x4581f8ac9a635106) | (x36adc72206dfc9d8 & x4581f8ac9a635106);
+wire x37e3efeb444df2dd = x9e721d5f19e930d2 ^ x4260e18539440185 ^ xf7971a489e42ec53;
+wire xe583cfdf2a2b8f79 = (x9e721d5f19e930d2 & x4260e18539440185) | (x9e721d5f19e930d2 & xf7971a489e42ec53) | (x4260e18539440185 & xf7971a489e42ec53);
+wire x77d74b7080c97691 = x648e39bcc5d15988 ^ x5c6422814be1c4b2 ^ xd0af9ab6fd5499c3;
+wire x114ade36df74e22d = (x648e39bcc5d15988 & x5c6422814be1c4b2) | (x648e39bcc5d15988 & xd0af9ab6fd5499c3) | (x5c6422814be1c4b2 & xd0af9ab6fd5499c3);
+wire x916092d1c80d3a6f = x41d7d0ae125cef47 ^ x282f2f555230e7d0 ^ x086c8b881290424b;
+wire x3a40f80058a5ab1a = (x41d7d0ae125cef47 & x282f2f555230e7d0) | (x41d7d0ae125cef47 & x086c8b881290424b) | (x282f2f555230e7d0 & x086c8b881290424b);
+wire x826c821c0b0fe3ef = xac72382027e4e441 ^ x521ebf9fed8a8275 ^ x3fb7565679f94ac3;
+wire x7cdd23dbddcacd53 = (xac72382027e4e441 & x521ebf9fed8a8275) | (xac72382027e4e441 & x3fb7565679f94ac3) | (x521ebf9fed8a8275 & x3fb7565679f94ac3);
+wire x6e7d5971fe001949 = xf50ed1e6a685db79 ^ xf742295407f89e74 ^ x9d105e2fdd2969de;
+wire x68e99912e9d891c5 = (xf50ed1e6a685db79 & xf742295407f89e74) | (xf50ed1e6a685db79 & x9d105e2fdd2969de) | (xf742295407f89e74 & x9d105e2fdd2969de);
+wire xc9fa411247e3e560 = xa8889cfd24a89773 ^ xcfc88d01bac121f2 ^ xc22f40d5dfb58b4e;
+wire xecd7fc5566fc2fac = (xa8889cfd24a89773 & xcfc88d01bac121f2) | (xa8889cfd24a89773 & xc22f40d5dfb58b4e) | (xcfc88d01bac121f2 & xc22f40d5dfb58b4e);
+wire x51e30f04c191657b = x7ec9bd3d6891fb08 ^ x2c056af8353de8b3 ^ x2371f68c160bb383;
+wire xf7ca8e8b9c5474f6 = (x7ec9bd3d6891fb08 & x2c056af8353de8b3) | (x7ec9bd3d6891fb08 & x2371f68c160bb383) | (x2c056af8353de8b3 & x2371f68c160bb383);
+wire x7628647c9cdec74f = x38f09599529163da ^ x72a5a82c6ca4cc78 ^ x3d3c514c0bd21b40;
+wire xfde65ee4807c5809 = (x38f09599529163da & x72a5a82c6ca4cc78) | (x38f09599529163da & x3d3c514c0bd21b40) | (x72a5a82c6ca4cc78 & x3d3c514c0bd21b40);
+wire x46193b21d8cd143a = xf289ad0489e88d72 ^ xf938fda0afca2569 ^ xb19ae26ac20ee43b;
+wire x7fae7692345d4b02 = (xf289ad0489e88d72 & xf938fda0afca2569) | (xf289ad0489e88d72 & xb19ae26ac20ee43b) | (xf938fda0afca2569 & xb19ae26ac20ee43b);
+wire x15ff2eedb15e59ce = x85df4d42984ddae0 ^ xf24927b33ea87a2c ^ x29102d78a3d1fa2d;
+wire xd18d59e7c3125b6e = (x85df4d42984ddae0 & xf24927b33ea87a2c) | (x85df4d42984ddae0 & x29102d78a3d1fa2d) | (xf24927b33ea87a2c & x29102d78a3d1fa2d);
+wire xc8ca9ea9c3641f3d = x5b3fe7a8a9710621 ^ x5020c0d2da1bd463 ^ x114fbd7e5d4ee043;
+wire xa4317c40409b5a06 = (x5b3fe7a8a9710621 & x5020c0d2da1bd463) | (x5b3fe7a8a9710621 & x114fbd7e5d4ee043) | (x5020c0d2da1bd463 & x114fbd7e5d4ee043);
+wire xaf8bcc12b2381d52 = x4be3779557ff8e7e ^ xc55cb60644b17375 ^ xa8d5a6feea794f28;
+wire x3ae5d9840e55e0aa = (x4be3779557ff8e7e & xc55cb60644b17375) | (x4be3779557ff8e7e & xa8d5a6feea794f28) | (xc55cb60644b17375 & xa8d5a6feea794f28);
+wire x8cd0108903335e5c = x23d7bcf25ed3e1e2 ^ xf6a48fc50d3165ef ^ x2a875f5af20adf9b;
+wire xe271921e8187da37 = (x23d7bcf25ed3e1e2 & xf6a48fc50d3165ef) | (x23d7bcf25ed3e1e2 & x2a875f5af20adf9b) | (xf6a48fc50d3165ef & x2a875f5af20adf9b);
+wire x8c7be6dec7e77011 = xa1b73d74c077332d ^ x518ec1bda886acf8 ^ x306a6303df9fccf3;
+wire x2116fa0912b58b88 = (xa1b73d74c077332d & x518ec1bda886acf8) | (xa1b73d74c077332d & x306a6303df9fccf3) | (x518ec1bda886acf8 & x306a6303df9fccf3);
+wire x22d2a483ff6202ce = x39447a90c021e5d8 ^ x378167e3386736f4 ^ x4ea9d91de144cb24;
+wire x04db5b988e6d4f41 = (x39447a90c021e5d8 & x378167e3386736f4) | (x39447a90c021e5d8 & x4ea9d91de144cb24) | (x378167e3386736f4 & x4ea9d91de144cb24);
+wire xd8f4c2ba227b0ecd = x011e36decf81ca5d ^ x802bb4504e8394eb ^ x3a42279778432059;
+wire xce9a63a17178aed4 = (x011e36decf81ca5d & x802bb4504e8394eb) | (x011e36decf81ca5d & x3a42279778432059) | (x802bb4504e8394eb & x3a42279778432059);
+wire x0c7382d2fc890ebc = xd235e562205cb237 ^ x72d0d36a9b89b283 ^ xeedccfffe91b8d5a;
+wire xcc1dc5638666006e = (xd235e562205cb237 & x72d0d36a9b89b283) | (xd235e562205cb237 & xeedccfffe91b8d5a) | (x72d0d36a9b89b283 & xeedccfffe91b8d5a);
+wire x9789ec113d319af5 = x9d0432e7edf63f7c ^ x99cb33bbf2c6bdbe ^ x520de504e5e95556;
+wire xce15019f087a105a = (x9d0432e7edf63f7c & x99cb33bbf2c6bdbe) | (x9d0432e7edf63f7c & x520de504e5e95556) | (x99cb33bbf2c6bdbe & x520de504e5e95556);
+wire xb86f18e1c62cc8bc = x43267d99b000b162 ^ xf7b7425905809cdf ^ xa2f30e109b7de13b;
+wire x7fb7bb7c74fd19c3 = (x43267d99b000b162 & xf7b7425905809cdf) | (x43267d99b000b162 & xa2f30e109b7de13b) | (xf7b7425905809cdf & xa2f30e109b7de13b);
+wire x7e60a92c25d12bf3 = x168905a9d4d63726 ^ x2d2ce0465c6e3a4a ^ x329c160a5222ea22;
+wire x0396110ffc0afa02 = (x168905a9d4d63726 & x2d2ce0465c6e3a4a) | (x168905a9d4d63726 & x329c160a5222ea22) | (x2d2ce0465c6e3a4a & x329c160a5222ea22);
+wire xac32ffcd2bd0f28d = x43ff58d8344fd57a ^ x371f269ae44ca993 ^ x57e3cd5d46055ab0;
+wire x0f9ac649ccae56d8 = (x43ff58d8344fd57a & x371f269ae44ca993) | (x43ff58d8344fd57a & x57e3cd5d46055ab0) | (x371f269ae44ca993 & x57e3cd5d46055ab0);
+wire x0140a64e5bf93f01 = x8bd6b0eccb44aa65 ^ x4ae6aa61eed0ea21 ^ xc55978ac61712adb;
+wire xe2e4094908f0cf48 = (x8bd6b0eccb44aa65 & x4ae6aa61eed0ea21) | (x8bd6b0eccb44aa65 & xc55978ac61712adb) | (x4ae6aa61eed0ea21 & xc55978ac61712adb);
+wire xbdfd027d9403cca6 = xdd9e780c2a4ac82a ^ x861aa6edb0f88a8d ^ x00950242b0fb708a;
+wire x7be9caf5d15de3be = (xdd9e780c2a4ac82a & x861aa6edb0f88a8d) | (xdd9e780c2a4ac82a & x00950242b0fb708a) | (x861aa6edb0f88a8d & x00950242b0fb708a);
+wire xaf8425bdb78ee5aa = x79503f7c4e1dafb5 ^ xd53ba3ef5d0add7b ^ xab54e2ad93beb964;
+wire xeccdb1d6d1dda137 = (x79503f7c4e1dafb5 & xd53ba3ef5d0add7b) | (x79503f7c4e1dafb5 & xab54e2ad93beb964) | (xd53ba3ef5d0add7b & xab54e2ad93beb964);
+wire x0d4574da05278655 = x01d1e13170558095 ^ xf940fc594729718f;
+wire x244269025b70dbd4 = x01d1e13170558095 & xf940fc594729718f;
+wire x25e87cdbbd4fb3f1 = x68d44f5d00e81dcc ^ x1ee90a4b68043853 ^ x5671f0f13257e8b9;
+wire x28e6d779e2992c01 = (x68d44f5d00e81dcc & x1ee90a4b68043853) | (x68d44f5d00e81dcc & x5671f0f13257e8b9) | (x1ee90a4b68043853 & x5671f0f13257e8b9);
+wire xed9e1b3a5305aaf9 = xcd48f18099a1ef13 ^ xfde850bb7c816213 ^ xe9b4911cfce011ae;
+wire x07f38c56ae813798 = (xcd48f18099a1ef13 & xfde850bb7c816213) | (xcd48f18099a1ef13 & xe9b4911cfce011ae) | (xfde850bb7c816213 & xe9b4911cfce011ae);
+wire xf9f02ad95a951e90 = x5376bc0b773b123f ^ x6ce21bff50df0522 ^ xa2ecb98d55dfacb5;
+wire x96b9d4e52bcd0a3f = (x5376bc0b773b123f & x6ce21bff50df0522) | (x5376bc0b773b123f & xa2ecb98d55dfacb5) | (x6ce21bff50df0522 & xa2ecb98d55dfacb5);
+wire xfeb43499c803ad53 = x7b7d8f37344d3389 ^ x5f8457b287d41ca4 ^ xa49227bdd34542ec;
+wire xb6cf37d53f4e0afc = (x7b7d8f37344d3389 & x5f8457b287d41ca4) | (x7b7d8f37344d3389 & xa49227bdd34542ec) | (x5f8457b287d41ca4 & xa49227bdd34542ec);
+wire x3488619e315e9f40 = x94e3f11e4473288c ^ x24b57807f9d7a28e ^ x38c93fc7a7102055;
+wire x1f941fcf6d524028 = (x94e3f11e4473288c & x24b57807f9d7a28e) | (x94e3f11e4473288c & x38c93fc7a7102055) | (x24b57807f9d7a28e & x38c93fc7a7102055);
+wire x275fb7657ae5a314 = x297bafd0752f1d1c ^ x5b125db75ecb77b4 ^ x54e5d75a8286c35c;
+wire x26059e2b568a9e0f = (x297bafd0752f1d1c & x5b125db75ecb77b4) | (x297bafd0752f1d1c & x54e5d75a8286c35c) | (x5b125db75ecb77b4 & x54e5d75a8286c35c);
+wire x2643cf6450ea61ff = x4fafee1b6a902885 ^ xb296c53253ef6d05 ^ xe3306aacecf1b621;
+wire x712ef87ad81d7793 = (x4fafee1b6a902885 & xb296c53253ef6d05) | (x4fafee1b6a902885 & xe3306aacecf1b621) | (xb296c53253ef6d05 & xe3306aacecf1b621);
+wire x43f9590c0c3f367a = x27fba13a3879f25b ^ xef31459d243ae1b6 ^ xa2d93dc16b2b7a07;
+wire x8a0dbb4825c7b7b7 = (x27fba13a3879f25b & xef31459d243ae1b6) | (x27fba13a3879f25b & xa2d93dc16b2b7a07) | (xef31459d243ae1b6 & xa2d93dc16b2b7a07);
+wire x9b9c7647f1fce913 = xd97ae0face070ef2 ^ xe583cfdf2a2b8f79 ^ x77d74b7080c97691;
+wire x9beb6fd6d2cbdb90 = (xd97ae0face070ef2 & xe583cfdf2a2b8f79) | (xd97ae0face070ef2 & x77d74b7080c97691) | (xe583cfdf2a2b8f79 & x77d74b7080c97691);
+wire x11730c893a05bc66 = x114ade36df74e22d ^ x3a40f80058a5ab1a ^ x826c821c0b0fe3ef;
+wire x6d66fe5a16839de9 = (x114ade36df74e22d & x3a40f80058a5ab1a) | (x114ade36df74e22d & x826c821c0b0fe3ef) | (x3a40f80058a5ab1a & x826c821c0b0fe3ef);
+wire xee87e4b042acd2c7 = x7cdd23dbddcacd53 ^ x68e99912e9d891c5 ^ xc9fa411247e3e560;
+wire x8c3a12483289496c = (x7cdd23dbddcacd53 & x68e99912e9d891c5) | (x7cdd23dbddcacd53 & xc9fa411247e3e560) | (x68e99912e9d891c5 & xc9fa411247e3e560);
+wire xb410ee5549d142c8 = xecd7fc5566fc2fac ^ xf7ca8e8b9c5474f6 ^ x7628647c9cdec74f;
+wire xd12b0bcbcbe704e6 = (xecd7fc5566fc2fac & xf7ca8e8b9c5474f6) | (xecd7fc5566fc2fac & x7628647c9cdec74f) | (xf7ca8e8b9c5474f6 & x7628647c9cdec74f);
+wire x401c7018c491c774 = xfde65ee4807c5809 ^ x7fae7692345d4b02 ^ x15ff2eedb15e59ce;
+wire x363c7d569aa020ad = (xfde65ee4807c5809 & x7fae7692345d4b02) | (xfde65ee4807c5809 & x15ff2eedb15e59ce) | (x7fae7692345d4b02 & x15ff2eedb15e59ce);
+wire x8eaec0d628e610cd = xd18d59e7c3125b6e ^ xa4317c40409b5a06 ^ xaf8bcc12b2381d52;
+wire xc89797d0c679dc54 = (xd18d59e7c3125b6e & xa4317c40409b5a06) | (xd18d59e7c3125b6e & xaf8bcc12b2381d52) | (xa4317c40409b5a06 & xaf8bcc12b2381d52);
+wire xd3d544408ee461d3 = x3ae5d9840e55e0aa ^ xe271921e8187da37 ^ x8c7be6dec7e77011;
+wire x8232e51f4fdc3491 = (x3ae5d9840e55e0aa & xe271921e8187da37) | (x3ae5d9840e55e0aa & x8c7be6dec7e77011) | (xe271921e8187da37 & x8c7be6dec7e77011);
+wire xda0501a4f6b5a42d = x2116fa0912b58b88 ^ x04db5b988e6d4f41 ^ xd8f4c2ba227b0ecd;
+wire x5ce8461f642706b0 = (x2116fa0912b58b88 & x04db5b988e6d4f41) | (x2116fa0912b58b88 & xd8f4c2ba227b0ecd) | (x04db5b988e6d4f41 & xd8f4c2ba227b0ecd);
+wire x526705c68c87f59e = xce9a63a17178aed4 ^ xcc1dc5638666006e ^ x9789ec113d319af5;
+wire x96767e6cf7e6d6e6 = (xce9a63a17178aed4 & xcc1dc5638666006e) | (xce9a63a17178aed4 & x9789ec113d319af5) | (xcc1dc5638666006e & x9789ec113d319af5);
+wire x8c40e791d90299fa = xce15019f087a105a ^ x7fb7bb7c74fd19c3 ^ x7e60a92c25d12bf3;
+wire x2400062fe6fd15af = (xce15019f087a105a & x7fb7bb7c74fd19c3) | (xce15019f087a105a & x7e60a92c25d12bf3) | (x7fb7bb7c74fd19c3 & x7e60a92c25d12bf3);
+wire x9f74b8bb1559debe = x0396110ffc0afa02 ^ x0f9ac649ccae56d8 ^ x0140a64e5bf93f01;
+wire xd3853208c8443777 = (x0396110ffc0afa02 & x0f9ac649ccae56d8) | (x0396110ffc0afa02 & x0140a64e5bf93f01) | (x0f9ac649ccae56d8 & x0140a64e5bf93f01);
+wire x962c739589659c26 = xe2e4094908f0cf48 ^ x7be9caf5d15de3be ^ xaf8425bdb78ee5aa;
+wire x9a52fce6755398b3 = (xe2e4094908f0cf48 & x7be9caf5d15de3be) | (xe2e4094908f0cf48 & xaf8425bdb78ee5aa) | (x7be9caf5d15de3be & xaf8425bdb78ee5aa);
+wire x3c6797324250fa38 = xeccdb1d6d1dda137 ^ xd5bbbd3a6630b8e2 ^ xed0468c631c48586;
+wire x24e1e894bf930696 = (xeccdb1d6d1dda137 & xd5bbbd3a6630b8e2) | (xeccdb1d6d1dda137 & xed0468c631c48586) | (xd5bbbd3a6630b8e2 & xed0468c631c48586);
+wire xe50001f22b39239f = xb3da332a7527c620 ^ x718dffdb6faaae1e;
+wire xf5e8547ea0f764cb = xb3da332a7527c620 & x718dffdb6faaae1e;
+wire xed462da3a9fe5199 = x0d4574da05278655 ^ xb3c14ba30dfc158d ^ x63e6a851bab35ccf;
+wire x887510c3b7c01bd3 = (x0d4574da05278655 & xb3c14ba30dfc158d) | (x0d4574da05278655 & x63e6a851bab35ccf) | (xb3c14ba30dfc158d & x63e6a851bab35ccf);
+wire x9b2ded0dacaa8b7a = x244269025b70dbd4 ^ x25e87cdbbd4fb3f1 ^ x1c091cf3ff1c61ab;
+wire x8c3c301ba50eb5d7 = (x244269025b70dbd4 & x25e87cdbbd4fb3f1) | (x244269025b70dbd4 & x1c091cf3ff1c61ab) | (x25e87cdbbd4fb3f1 & x1c091cf3ff1c61ab);
+wire x800cab444cdad335 = x28e6d779e2992c01 ^ xed9e1b3a5305aaf9 ^ x170240369598deed;
+wire x25c740ec1858b10e = (x28e6d779e2992c01 & xed9e1b3a5305aaf9) | (x28e6d779e2992c01 & x170240369598deed) | (xed9e1b3a5305aaf9 & x170240369598deed);
+wire x69126de62a630b0e = x07f38c56ae813798 ^ xf9f02ad95a951e90 ^ xbd3af076ad1c3dac;
+wire x71fb18d6ed3f5b6b = (x07f38c56ae813798 & xf9f02ad95a951e90) | (x07f38c56ae813798 & xbd3af076ad1c3dac) | (xf9f02ad95a951e90 & xbd3af076ad1c3dac);
+wire xf660e45f5740b23a = x96b9d4e52bcd0a3f ^ xfeb43499c803ad53 ^ x69a418edfe11dd4e;
+wire x381b72f901d4858c = (x96b9d4e52bcd0a3f & xfeb43499c803ad53) | (x96b9d4e52bcd0a3f & x69a418edfe11dd4e) | (xfeb43499c803ad53 & x69a418edfe11dd4e);
+wire x50e838d293182e46 = xb6cf37d53f4e0afc ^ x3488619e315e9f40 ^ x5890c4d2a8903dd7;
+wire xd5bbda0a7e3b19b8 = (xb6cf37d53f4e0afc & x3488619e315e9f40) | (xb6cf37d53f4e0afc & x5890c4d2a8903dd7) | (x3488619e315e9f40 & x5890c4d2a8903dd7);
+wire x29e6608f062f1457 = x1f941fcf6d524028 ^ x275fb7657ae5a314 ^ x65d8b1b233b649e9;
+wire xfd3a16b0600ac5b9 = (x1f941fcf6d524028 & x275fb7657ae5a314) | (x1f941fcf6d524028 & x65d8b1b233b649e9) | (x275fb7657ae5a314 & x65d8b1b233b649e9);
+wire x84faa782d669e081 = x26059e2b568a9e0f ^ x2643cf6450ea61ff ^ x39080cd76456b1ae;
+wire x8dfa787cfef44211 = (x26059e2b568a9e0f & x2643cf6450ea61ff) | (x26059e2b568a9e0f & x39080cd76456b1ae) | (x2643cf6450ea61ff & x39080cd76456b1ae);
+wire x3af7195963e4bc1a = x712ef87ad81d7793 ^ x43f9590c0c3f367a ^ x37e3efeb444df2dd;
+wire x40bd334b3bc5c1d7 = (x712ef87ad81d7793 & x43f9590c0c3f367a) | (x712ef87ad81d7793 & x37e3efeb444df2dd) | (x43f9590c0c3f367a & x37e3efeb444df2dd);
+wire x4b3ad62a836d161d = x8a0dbb4825c7b7b7 ^ x9b9c7647f1fce913 ^ x916092d1c80d3a6f;
+wire xe77f90737138842b = (x8a0dbb4825c7b7b7 & x9b9c7647f1fce913) | (x8a0dbb4825c7b7b7 & x916092d1c80d3a6f) | (x9b9c7647f1fce913 & x916092d1c80d3a6f);
+wire x3dc07dd4edbc26f0 = x9beb6fd6d2cbdb90 ^ x11730c893a05bc66 ^ x6e7d5971fe001949;
+wire x542c9c6922a9413f = (x9beb6fd6d2cbdb90 & x11730c893a05bc66) | (x9beb6fd6d2cbdb90 & x6e7d5971fe001949) | (x11730c893a05bc66 & x6e7d5971fe001949);
+wire xe47eb875d623abf7 = x6d66fe5a16839de9 ^ xee87e4b042acd2c7 ^ x51e30f04c191657b;
+wire x5a77ee9f9094ceb3 = (x6d66fe5a16839de9 & xee87e4b042acd2c7) | (x6d66fe5a16839de9 & x51e30f04c191657b) | (xee87e4b042acd2c7 & x51e30f04c191657b);
+wire x0d60a5df7f2a2e77 = x8c3a12483289496c ^ xb410ee5549d142c8 ^ x46193b21d8cd143a;
+wire x2b3d0b72f95d6ba5 = (x8c3a12483289496c & xb410ee5549d142c8) | (x8c3a12483289496c & x46193b21d8cd143a) | (xb410ee5549d142c8 & x46193b21d8cd143a);
+wire x6461b207df2f3fb7 = xd12b0bcbcbe704e6 ^ x401c7018c491c774 ^ xc8ca9ea9c3641f3d;
+wire xcee6509bf9562bd3 = (xd12b0bcbcbe704e6 & x401c7018c491c774) | (xd12b0bcbcbe704e6 & xc8ca9ea9c3641f3d) | (x401c7018c491c774 & xc8ca9ea9c3641f3d);
+wire x203a8c76c9295f50 = x363c7d569aa020ad ^ x8eaec0d628e610cd ^ x8cd0108903335e5c;
+wire xb0caab52ff124378 = (x363c7d569aa020ad & x8eaec0d628e610cd) | (x363c7d569aa020ad & x8cd0108903335e5c) | (x8eaec0d628e610cd & x8cd0108903335e5c);
+wire x3894eded7b22354e = xc89797d0c679dc54 ^ xd3d544408ee461d3 ^ x22d2a483ff6202ce;
+wire x5012e64122f9da20 = (xc89797d0c679dc54 & xd3d544408ee461d3) | (xc89797d0c679dc54 & x22d2a483ff6202ce) | (xd3d544408ee461d3 & x22d2a483ff6202ce);
+wire x3e73e100a492ec02 = x8232e51f4fdc3491 ^ xda0501a4f6b5a42d ^ x0c7382d2fc890ebc;
+wire xd19fb9e089009ea1 = (x8232e51f4fdc3491 & xda0501a4f6b5a42d) | (x8232e51f4fdc3491 & x0c7382d2fc890ebc) | (xda0501a4f6b5a42d & x0c7382d2fc890ebc);
+wire x64497c9d94df5c1b = x5ce8461f642706b0 ^ x526705c68c87f59e ^ xb86f18e1c62cc8bc;
+wire x3605c12fb72ef63b = (x5ce8461f642706b0 & x526705c68c87f59e) | (x5ce8461f642706b0 & xb86f18e1c62cc8bc) | (x526705c68c87f59e & xb86f18e1c62cc8bc);
+wire x5946e00d408e339f = x96767e6cf7e6d6e6 ^ x8c40e791d90299fa ^ xac32ffcd2bd0f28d;
+wire x7abbb0125e2db3ba = (x96767e6cf7e6d6e6 & x8c40e791d90299fa) | (x96767e6cf7e6d6e6 & xac32ffcd2bd0f28d) | (x8c40e791d90299fa & xac32ffcd2bd0f28d);
+wire x2cc4d855c143fa89 = x2400062fe6fd15af ^ x9f74b8bb1559debe ^ xbdfd027d9403cca6;
+wire x1eb9865d49e522fb = (x2400062fe6fd15af & x9f74b8bb1559debe) | (x2400062fe6fd15af & xbdfd027d9403cca6) | (x9f74b8bb1559debe & xbdfd027d9403cca6);
+wire x57cba8b83af46084 = xd3853208c8443777 ^ x962c739589659c26 ^ x7d7205c64b317d8a;
+wire x589dbc4331e2b88f = (xd3853208c8443777 & x962c739589659c26) | (xd3853208c8443777 & x7d7205c64b317d8a) | (x962c739589659c26 & x7d7205c64b317d8a);
+wire x7fe35baf9e3b00e6 = x9a52fce6755398b3 ^ x3c6797324250fa38 ^ xbc0943b6070c14b8;
+wire xe73cd808d54a99fb = (x9a52fce6755398b3 & x3c6797324250fa38) | (x9a52fce6755398b3 & xbc0943b6070c14b8) | (x3c6797324250fa38 & xbc0943b6070c14b8);
+wire xa358242e3063d63f = x24e1e894bf930696 ^ x86d7d9d6343ea35e ^ xca70afa780451bc8;
+wire x4adc9a5b1b11bfb8 = (x24e1e894bf930696 & x86d7d9d6343ea35e) | (x24e1e894bf930696 & xca70afa780451bc8) | (x86d7d9d6343ea35e & xca70afa780451bc8);
+assign xe162e86df05e14f5 = {1'b0, x4adc9a5b1b11bfb8, xe73cd808d54a99fb, x589dbc4331e2b88f, x1eb9865d49e522fb, x7abbb0125e2db3ba, x3605c12fb72ef63b, xd19fb9e089009ea1, x5012e64122f9da20, xb0caab52ff124378, xcee6509bf9562bd3, x2b3d0b72f95d6ba5, x5a77ee9f9094ceb3, x542c9c6922a9413f, xe77f90737138842b, x40bd334b3bc5c1d7, x8dfa787cfef44211, xfd3a16b0600ac5b9, xd5bbda0a7e3b19b8, x381b72f901d4858c, x71fb18d6ed3f5b6b, x25c740ec1858b10e, x8c3c301ba50eb5d7, x887510c3b7c01bd3, xf5e8547ea0f764cb, xe50001f22b39239f, xe422d29122b1f9c8, xa04c57f36c23a951};
+assign xc9a6004ceddd8dff = {1'b0, x308ab5a99d994289, xa358242e3063d63f, x7fe35baf9e3b00e6, x57cba8b83af46084, x2cc4d855c143fa89, x5946e00d408e339f, x64497c9d94df5c1b, x3e73e100a492ec02, x3894eded7b22354e, x203a8c76c9295f50, x6461b207df2f3fb7, x0d60a5df7f2a2e77, xe47eb875d623abf7, x3dc07dd4edbc26f0, x4b3ad62a836d161d, x3af7195963e4bc1a, x84faa782d669e081, x29e6608f062f1457, x50e838d293182e46, xf660e45f5740b23a, x69126de62a630b0e, x800cab444cdad335, x9b2ded0dacaa8b7a, xed462da3a9fe5199, xb34c4dbf5552137f, xa051bf6249c1c875, 1'b0};
+end
+endgenerate
+
+
+wire [x4b0afa1e1c2d5665:0] xfdc3fef46a54d5b7 = {1'b0,xe162e86df05e14f5[x4b0afa1e1c2d5665-1:0]} +
+                         {1'b0,xc9a6004ceddd8dff[x4b0afa1e1c2d5665-1:0]};
+reg [17:0] xd2127be5a08a31e2, x8deeb2bfdb717400;
+reg xb35e91cb70ad2fff;
+assign xb0ca91a13ea84d81 = xd2127be5a08a31e2 + x8deeb2bfdb717400 + {17'b0,xb35e91cb70ad2fff};
+generate if(x7fca6a09a917f9ac)begin: xeb6e1d7903735431
+ always @(posedge clk or negedge cpurst_b)begin
+  if(!cpurst_b)begin xd2127be5a08a31e2<=0;x8deeb2bfdb717400<=0;xb35e91cb70ad2fff<=0;end
+  else begin
+   xd2127be5a08a31e2<=xe162e86df05e14f5[x4b0afa1e1c2d5665 +: 18];
+   x8deeb2bfdb717400<=xc9a6004ceddd8dff[x4b0afa1e1c2d5665 +: 18];
+   xb35e91cb70ad2fff<=xfdc3fef46a54d5b7[x4b0afa1e1c2d5665];
+  end
+ end
+end else begin: xf4e9b898daa8e539
+ always @(posedge clk)begin
+  xd2127be5a08a31e2<=xe162e86df05e14f5[x4b0afa1e1c2d5665 +: 18];
+  x8deeb2bfdb717400<=xc9a6004ceddd8dff[x4b0afa1e1c2d5665 +: 18];
+  xb35e91cb70ad2fff<=xfdc3fef46a54d5b7[x4b0afa1e1c2d5665];
+ end
+end endgenerate
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+
+module xf3dfe651e39dceb7 (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire        x7373467841c567de,
+  input  wire        x3eddf5e3b67886fb,
+  input  wire        xc5616d1568de599d,
+  input  wire [21:0] x05c9e39241edd196,
+  output reg         x87135bafee9bbf7e,
+  output reg         x2091c57624fe8afe,
+  output reg  [21:0] x1b56e1f33ca284c9
+);
+
+reg [21:0] xe3ac424340253ad1 [0:4];
+reg [2:0]  x52ea56ab9478fefe;
+reg [2:0]  x0fd20adda7100bbd;
+reg        x37905ba2f6ae31b6;
+reg        x43e88a04a1962fcf;
+
+reg        xef925374bc1cbc2f, x383bf57f08ff5b6f, xc5d425edd05f27c4, x487eb87fcba3ca19;
+reg        xb640556b50a5e95d, xf0e8fbec3840b83c, xa75fa5e1625163f1, x83d07a2bda5f270c;
+reg        x029d7d438611564a, x2e56bd6f66cd044f, x3a4b1e9e9ab6fbc1, x0508e680b66dc092;
+
+
+reg xb74bd59660dc91f8, x5580080ddcbd6880, x118498b91b1956b3;
+reg xe7f4b8d300f7360b;
+reg xc17be6be59525220, x533097027c29cb95;
+reg [7:0] xcdc1e33ada7608bf, x1b905cdd385cc735;
+reg [18:0] xd12c59771b6be0a1;
+reg [13:0] x7512975e7fdc2156;
+
+reg        xdabc82719fe91b80;
+reg xaf8ba7f513016bc4, x4b30dfb39054149c;
+reg [7:0]  xbb32259423c3fbe9;
+reg [18:0] x841d052c19f234a5;
+reg [18:0] x01ed699ad67b5c74;
+
+reg        x199c6f7fa2ff1274;
+reg x7fc3abf2d453b01a, xc85962b4cb3e746f;
+reg [7:0]  x558b5bb9be457be4;
+reg [19:0] x4996fd65db449e57;
+
+reg        x63e5e83a4a004a09;
+reg x9e6e100ce0b8c1f0, xf377196d07f54da9;
+reg [7:0]  x16f5c4b9c06e7c31;
+reg [18:0] x34c1f9685bfd9737;
+
+reg [21:0] x3e006b8ec62b3616;
+
+wire [21:0] x6cd1168bcdac4e3a =
+    (x52ea56ab9478fefe == 3'd1) ? xe3ac424340253ad1[0] :
+    (x52ea56ab9478fefe == 3'd2) ? xe3ac424340253ad1[1] :
+    (x52ea56ab9478fefe == 3'd3) ? xe3ac424340253ad1[2] :
+    (x52ea56ab9478fefe == 3'd4) ? xe3ac424340253ad1[3] : xe3ac424340253ad1[4];
+wire [21:0] xce387506a6389c9d =
+    (x52ea56ab9478fefe == 3'd2) ? xe3ac424340253ad1[0] :
+    (x52ea56ab9478fefe == 3'd3) ? xe3ac424340253ad1[1] :
+    (x52ea56ab9478fefe == 3'd4) ? xe3ac424340253ad1[2] : xe3ac424340253ad1[3];
+
+wire x8bb7f0747509915a = x487eb87fcba3ca19;
+wire x64c025c05f533d1f = x3eddf5e3b67886fb && (x0fd20adda7100bbd >= 3'd5);
+wire x8dd5d75ffbd02c25 = x37905ba2f6ae31b6 && !x43e88a04a1962fcf &&
+                    (x52ea56ab9478fefe >= 3'd2);
+wire xf979ab2f4ae362f5 = x37905ba2f6ae31b6 && !x43e88a04a1962fcf &&
+                    (x52ea56ab9478fefe == 3'd1);
+wire [21:0] x6ca90eea3ac76f22 = (x52ea56ab9478fefe != 0) ?
+                              x6cd1168bcdac4e3a : x3e006b8ec62b3616;
+wire op_valid = x3eddf5e3b67886fb || x8dd5d75ffbd02c25;
+wire [21:0] x9665c3c5cba08943 = x8dd5d75ffbd02c25 ? x6cd1168bcdac4e3a : x05c9e39241edd196;
+wire [21:0] x692dda03be157ced = x8dd5d75ffbd02c25 ? xce387506a6389c9d :
+                       ((x0fd20adda7100bbd < 3'd5) ? 22'b0 : x6ca90eea3ac76f22);
+
+reg        x2c744dc83ee908c1;
+reg xe213e024b095624e, x5329e003ae5473e3;
+reg [7:0]  x400635e9754a10a0;
+reg [7:0]  x43089295d129ee42;
+reg [13:0] x36e481f4bb989eed;
+reg [13:0] xe4ba019814c7cf37;
+reg [18:0] x8bbf92940c91dad1;
+reg [18:0] x21f75113f57ffcf7;
+reg        x36d4482cd129792a;
+reg [7:0]  xe7562c5fd6c02584;
+reg [13:0] x783855d7f034e27f;
+
+reg [18:0] x77a73d906297e2db;
+reg [7:0]  xc0916b29a36b4622;
+reg [13:0] xf5f34324da307998;
+reg [14:0] x1c74200e797f1b8f;
+
+always @* begin
+  x36e481f4bb989eed = (x9665c3c5cba08943[20:13] == 0) ? {1'b0,x9665c3c5cba08943[12:0]} :
+                                             {1'b1,x9665c3c5cba08943[12:0]};
+  xe4ba019814c7cf37 = (x692dda03be157ced[20:13] == 0) ? {1'b0,x692dda03be157ced[12:0]} :
+                                             {1'b1,x692dda03be157ced[12:0]};
+
+
+  x2c744dc83ee908c1 = (x36e481f4bb989eed==0)||(xe4ba019814c7cf37==0);
+  xe213e024b095624e = (x36e481f4bb989eed==0)?x692dda03be157ced[21]:x9665c3c5cba08943[21];
+  x5329e003ae5473e3 = (x36e481f4bb989eed==0)?(x692dda03be157ced[20:13]==0):(x9665c3c5cba08943[20:13]==0);
+  begin
+
+
+    if (x692dda03be157ced[20:13] > x9665c3c5cba08943[20:13]) begin
+      x400635e9754a10a0 = (x692dda03be157ced[20:13] == 0) ? 8'd1 : x692dda03be157ced[20:13];
+      x43089295d129ee42 = (x9665c3c5cba08943[20:13] == 0) ? 8'd1 : x9665c3c5cba08943[20:13];
+      x8bbf92940c91dad1 = {xe4ba019814c7cf37,5'b0};
+      x783855d7f034e27f = x36e481f4bb989eed;
+    end else begin
+      x400635e9754a10a0 = (x9665c3c5cba08943[20:13] == 0) ? 8'd1 : x9665c3c5cba08943[20:13];
+      x43089295d129ee42 = (x692dda03be157ced[20:13] == 0) ? 8'd1 : x692dda03be157ced[20:13];
+      x8bbf92940c91dad1 = {x36e481f4bb989eed,5'b0};
+      x783855d7f034e27f = xe4ba019814c7cf37;
+    end
+    xe7562c5fd6c02584 = x400635e9754a10a0 - x43089295d129ee42;
+  end
+end
+
+always @* begin
+  x36d4482cd129792a = 1'b0;
+  x21f75113f57ffcf7 = 19'b0;
+  begin
+    if (x1b905cdd385cc735 >= 19)
+      x21f75113f57ffcf7 = {18'b0,|x7512975e7fdc2156};
+    else if (x1b905cdd385cc735 == 0)
+      x21f75113f57ffcf7 = {x7512975e7fdc2156,5'b0};
+    else begin
+      x36d4482cd129792a = |({x7512975e7fdc2156,5'b0} &
+                       ((19'b1 << x1b905cdd385cc735) - 19'b1));
+      x21f75113f57ffcf7 = ({x7512975e7fdc2156,5'b0} >> x1b905cdd385cc735) |
+                        {18'b0,x36d4482cd129792a};
+    end
+  end
+end
+
+always @* begin
+  xc0916b29a36b4622 = x558b5bb9be457be4;
+  if (x4996fd65db449e57[19]) begin
+    x77a73d906297e2db = {x4996fd65db449e57[19:2],|x4996fd65db449e57[1:0]};
+    xc0916b29a36b4622 = x558b5bb9be457be4 + 1'b1;
+  end else begin
+    x77a73d906297e2db = x4996fd65db449e57[18:0];
+  end
+end
+
+always @* begin
+  xf5f34324da307998 = x34c1f9685bfd9737[18:5];
+  x1c74200e797f1b8f = {1'b0,xf5f34324da307998} +
+                  (x34c1f9685bfd9737[4] &&
+                   (|x34c1f9685bfd9737[3:0] || xf5f34324da307998[0]));
+end
+
+function [21:0] x3a3659f5d4df112a;
+  input        x9184da4ec6575023;
+  input x94ca0ae689fb53cd;
+  input x2ae9798ebf6c1a1e;
+  input [7:0]  x8a098a2473a6037c;
+  input [14:0] xda0ec48dc24f6094;
+  begin
+    if (x9184da4ec6575023)
+      x3a3659f5d4df112a = {x94ca0ae689fb53cd, (x2ae9798ebf6c1a1e?8'b0:x8a098a2473a6037c), xda0ec48dc24f6094[12:0]};
+    else if ((x8a098a2473a6037c == 8'hff) ||
+             ((x8a098a2473a6037c == 8'hfe) && xda0ec48dc24f6094[14]))
+      x3a3659f5d4df112a = {1'b0,8'hfe,13'h1fff};
+    else if (xda0ec48dc24f6094[14])
+      x3a3659f5d4df112a = {1'b0,x8a098a2473a6037c + 1'b1,xda0ec48dc24f6094[13:1]};
+    else
+      x3a3659f5d4df112a = {1'b0,x8a098a2473a6037c,xda0ec48dc24f6094[12:0]};
+  end
+endfunction
+
+
+
+
+always @(posedge clk) begin
+    if (op_valid) begin
+      xe7f4b8d300f7360b <= x2c744dc83ee908c1;
+      xc17be6be59525220 <= xe213e024b095624e;
+      x533097027c29cb95 <= x5329e003ae5473e3;
+      xcdc1e33ada7608bf <= x400635e9754a10a0;
+      xd12c59771b6be0a1 <= x8bbf92940c91dad1;
+      x1b905cdd385cc735 <= xe7562c5fd6c02584;
+      x7512975e7fdc2156 <= x783855d7f034e27f;
+    end
+    if (xb74bd59660dc91f8) begin
+      xdabc82719fe91b80 <= xe7f4b8d300f7360b;
+      xaf8ba7f513016bc4 <= xc17be6be59525220;
+      x4b30dfb39054149c <= x533097027c29cb95;
+      xbb32259423c3fbe9 <= xcdc1e33ada7608bf;
+      x841d052c19f234a5 <= xd12c59771b6be0a1;
+      x01ed699ad67b5c74 <= x21f75113f57ffcf7;
+    end
+    if (xef925374bc1cbc2f) begin
+      x199c6f7fa2ff1274 <= xdabc82719fe91b80;
+      x7fc3abf2d453b01a <= xaf8ba7f513016bc4;
+      xc85962b4cb3e746f <= x4b30dfb39054149c;
+      x558b5bb9be457be4 <= xbb32259423c3fbe9;
+      x4996fd65db449e57 <= {1'b0,x841d052c19f234a5} + {1'b0,x01ed699ad67b5c74};
+    end
+    if (x383bf57f08ff5b6f) begin
+      x63e5e83a4a004a09 <= x199c6f7fa2ff1274;
+      x9e6e100ce0b8c1f0 <= x7fc3abf2d453b01a;
+      xf377196d07f54da9 <= xc85962b4cb3e746f;
+      x16f5c4b9c06e7c31 <= xc0916b29a36b4622;
+      x34c1f9685bfd9737 <= x77a73d906297e2db;
+    end
+    if (xc5d425edd05f27c4)
+      x3e006b8ec62b3616 <= x3a3659f5d4df112a(
+          x63e5e83a4a004a09,x9e6e100ce0b8c1f0,xf377196d07f54da9,x16f5c4b9c06e7c31,x1c74200e797f1b8f);
+end
+
+
+
+always @(posedge clk) begin
+  if (x8bb7f0747509915a) begin
+    xe3ac424340253ad1[0] <= x3e006b8ec62b3616;
+    xe3ac424340253ad1[1] <= xe3ac424340253ad1[0];
+    xe3ac424340253ad1[2] <= xe3ac424340253ad1[1];
+    xe3ac424340253ad1[3] <= xe3ac424340253ad1[2];
+    xe3ac424340253ad1[4] <= xe3ac424340253ad1[3];
+  end
+end
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    x52ea56ab9478fefe <= 3'b0;
+    x0fd20adda7100bbd <= 3'b0;
+    x37905ba2f6ae31b6 <= 1'b0;
+    x43e88a04a1962fcf <= 1'b0;
+    x87135bafee9bbf7e <= 1'b0;
+    x2091c57624fe8afe <= 1'b0;
+    x1b56e1f33ca284c9 <= 22'b0;
+    xb74bd59660dc91f8 <= 1'b0; x5580080ddcbd6880 <= 1'b0; x118498b91b1956b3 <= 1'b0;
+    xef925374bc1cbc2f <= 1'b0; x383bf57f08ff5b6f <= 1'b0;
+    xc5d425edd05f27c4 <= 1'b0; x487eb87fcba3ca19 <= 1'b0;
+    xb640556b50a5e95d <= 1'b0; xf0e8fbec3840b83c <= 1'b0;
+    xa75fa5e1625163f1 <= 1'b0; x83d07a2bda5f270c <= 1'b0;
+    x029d7d438611564a <= 1'b0; x2e56bd6f66cd044f <= 1'b0;
+    x3a4b1e9e9ab6fbc1 <= 1'b0; x0508e680b66dc092 <= 1'b0;
+  end else if (x7373467841c567de) begin
+    x52ea56ab9478fefe <= 3'b0;
+    x0fd20adda7100bbd <= 3'b0;
+    x37905ba2f6ae31b6 <= 1'b0;
+    x43e88a04a1962fcf <= 1'b0;
+    x87135bafee9bbf7e <= 1'b0;
+    x2091c57624fe8afe <= 1'b0;
+    x1b56e1f33ca284c9 <= 22'b0;
+    xb74bd59660dc91f8 <= 1'b0; x5580080ddcbd6880 <= 1'b0; x118498b91b1956b3 <= 1'b0;
+    xef925374bc1cbc2f <= 1'b0; x383bf57f08ff5b6f <= 1'b0;
+    xc5d425edd05f27c4 <= 1'b0; x487eb87fcba3ca19 <= 1'b0;
+    xb640556b50a5e95d <= 1'b0; xf0e8fbec3840b83c <= 1'b0;
+    xa75fa5e1625163f1 <= 1'b0; x83d07a2bda5f270c <= 1'b0;
+    x029d7d438611564a <= 1'b0; x2e56bd6f66cd044f <= 1'b0;
+    x3a4b1e9e9ab6fbc1 <= 1'b0; x0508e680b66dc092 <= 1'b0;
+  end else begin
+    x87135bafee9bbf7e <= 1'b0;
+
+    xb74bd59660dc91f8 <= op_valid;
+    x5580080ddcbd6880 <= x3eddf5e3b67886fb && xc5616d1568de599d;
+    x118498b91b1956b3 <= x8dd5d75ffbd02c25;
+    xef925374bc1cbc2f <= xb74bd59660dc91f8;
+    xb640556b50a5e95d <= x5580080ddcbd6880;
+    x029d7d438611564a <= x118498b91b1956b3;
+
+    x383bf57f08ff5b6f <= xef925374bc1cbc2f;
+    xf0e8fbec3840b83c <= xb640556b50a5e95d;
+    x2e56bd6f66cd044f <= x029d7d438611564a;
+
+    xc5d425edd05f27c4 <= x383bf57f08ff5b6f;
+    xa75fa5e1625163f1 <= xf0e8fbec3840b83c;
+    x3a4b1e9e9ab6fbc1 <= x2e56bd6f66cd044f;
+
+    x487eb87fcba3ca19 <= xc5d425edd05f27c4;
+    x83d07a2bda5f270c <= xa75fa5e1625163f1;
+    x0508e680b66dc092 <= x3a4b1e9e9ab6fbc1;
+
+    if (x3eddf5e3b67886fb && x0fd20adda7100bbd < 3'd5)
+      x0fd20adda7100bbd <= x0fd20adda7100bbd + 1'b1;
+
+    if (x8bb7f0747509915a) begin
+      if (x83d07a2bda5f270c)
+        x37905ba2f6ae31b6 <= 1'b1;
+      if (x0508e680b66dc092)
+        x43e88a04a1962fcf <= 1'b0;
+    end
+
+    if (x8dd5d75ffbd02c25)
+      x43e88a04a1962fcf <= 1'b1;
+
+    if (xf979ab2f4ae362f5) begin
+      x1b56e1f33ca284c9 <= x6cd1168bcdac4e3a;
+      x87135bafee9bbf7e <= 1'b1;
+      x2091c57624fe8afe <= 1'b1;
+      x37905ba2f6ae31b6 <= 1'b0;
+      x52ea56ab9478fefe <= 3'b0;
+    end else if (x8dd5d75ffbd02c25) begin
+      x52ea56ab9478fefe <= x52ea56ab9478fefe - 3'd2;
+    end else begin
+      case ({x8bb7f0747509915a,x64c025c05f533d1f})
+        2'b10: x52ea56ab9478fefe <= x52ea56ab9478fefe + 1'b1;
+        2'b01: x52ea56ab9478fefe <= x52ea56ab9478fefe - 1'b1;
+        default: x52ea56ab9478fefe <= x52ea56ab9478fefe;
+      endcase
+    end
+  end
+end
+
+`ifndef SYNTHESIS
+always @(posedge clk) begin
+  if (cpurst_b && !x7373467841c567de && x3eddf5e3b67886fb && x37905ba2f6ae31b6) begin
+    $fatal(1,"ACTU softmax RSUM accepted input during drain");
+  end
+  if (cpurst_b && !x7373467841c567de && x52ea56ab9478fefe > 5) begin
+    $fatal(1,"ACTU softmax RSUM partial pipe overflow");
+  end
+end
+`endif
+
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+
+(* x3188d8127775eced = "yes" *)
+module x5993fbaeb81ba274 #(
+  parameter xd0f517ffd8516f95 = 6
+) (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire        in_valid,
+  input  wire        x07f4d31d26e6e521,
+  input  wire [2:0]  x0c014b55b70e6cbb,
+  input  wire [18:0] x9a515dc3044eb94d,
+  input  wire [21:0] x1619fdfa4e0137c7,
+  input  wire [21:0] xb1e06a5aa2d530ae,
+  input  wire        x1ad1631690d2c849,
+  output wire        out_valid,
+  output wire [2:0]  x2b8f65f39bf1e0be,
+  output wire [31:0] out_value,
+  output wire        x3b740bbeff83b5da,
+  output wire        xe70f7bd65e2c651b,
+  output wire [31:0] x552b4bba01a61e3c
+);
+
+function [2:0] x0c15ec3e847f6df0;
+ input [21:0] b;
+ begin
+  x0c15ec3e847f6df0=(b[20:13]==0) ? ((|b[12:0])?3'd2:3'd1) :
+           (&b[20:13]) ? ((|b[12:0])?3'd5:3'd4) : 3'd0;
+ end
+endfunction
+xcee1a8b144f4826e #(.xd0f517ffd8516f95(xd0f517ffd8516f95)) x10f2f2cf1c5f6eda (
+ .clk(clk),.cpurst_b(cpurst_b),.in_valid(in_valid),.x07f4d31d26e6e521(x07f4d31d26e6e521),
+ .x0c014b55b70e6cbb(x0c014b55b70e6cbb),.x9a515dc3044eb94d(x9a515dc3044eb94d),
+ .x1619fdfa4e0137c7(x1619fdfa4e0137c7),.xb1e06a5aa2d530ae(xb1e06a5aa2d530ae),
+ .xf29e24021503fa48(4'd0),
+ .xcb94278d0de9b7fd(x0c15ec3e847f6df0({x9a515dc3044eb94d,3'b0})),
+ .xd1131cec2bf1a082(x0c15ec3e847f6df0(x1619fdfa4e0137c7)),.x92a5dd60c179f70a(x0c15ec3e847f6df0(xb1e06a5aa2d530ae)),
+ .x3ca01ec9648aadfb(22'b0),.xaa7ee61f7698910b(22'b0),.xcd37e2098d3a7379(22'b0),
+ .x1ad1631690d2c849(x1ad1631690d2c849),.out_valid(out_valid),.x2b8f65f39bf1e0be(x2b8f65f39bf1e0be),
+ .out_value(out_value),.x3b740bbeff83b5da(x3b740bbeff83b5da),
+ .xe70f7bd65e2c651b(xe70f7bd65e2c651b),.x552b4bba01a61e3c(x552b4bba01a61e3c)
+);
+endmodule
+
+`timescale 1ns/1ps
+
+
+
+
+(* x3188d8127775eced = "yes" *)
+module xcee1a8b144f4826e #(
+  parameter xe5e03e1976b2ce57 = 0,
+  parameter x9f2c614f57341b7f = 0,
+  parameter x015938ff1d552e97 = 0,
+  parameter x24da24fd67a8f0da = 0,
+  parameter xd0f517ffd8516f95 = 6
+) (
+  input  wire        clk,
+  input  wire        cpurst_b,
+  input  wire        in_valid,
+  input  wire        x07f4d31d26e6e521,
+  input  wire [2:0]  x0c014b55b70e6cbb,
+  input  wire [18:0] x9a515dc3044eb94d,
+  input  wire [21:0] x1619fdfa4e0137c7,
+  input  wire [21:0] xb1e06a5aa2d530ae,
+  input  wire [3:0]  xf29e24021503fa48,
+  input  wire [2:0]  xd1131cec2bf1a082, xcb94278d0de9b7fd, x92a5dd60c179f70a,
+  input wire [21:0] x3ca01ec9648aadfb, xaa7ee61f7698910b, xcd37e2098d3a7379,
+  input  wire        x1ad1631690d2c849,
+  output wire        out_valid,
+  output wire [2:0]  x2b8f65f39bf1e0be,
+  output wire [31:0] out_value,
+  output wire        x3b740bbeff83b5da,
+  output wire        xe70f7bd65e2c651b,
+  output wire [31:0] x552b4bba01a61e3c
+);
+
+localparam [2:0] x85449cebc7be13be = 3'd0;
+localparam [2:0] xd1bc141d07804dc3  = 3'd2;
+localparam [2:0] x877c93a774151140     = 3'd3;
+localparam [2:0] x543f03db44e09832     = 3'd4;
+localparam [2:0] x8aaca36627d8e8d2  = 3'd5;
+localparam [2:0] xce6afa13dc64854d = 3'd7;
+localparam integer x2e87c7df32522a4e = xd0f517ffd8516f95 - 6;
+
+reg [xd0f517ffd8516f95-1:0] x103d5a7e4f5cfd61;
+reg [2:0]             xc247869e119e5cc4 [0:xd0f517ffd8516f95-1];
+reg [31:0]            x4477e191973880d1 [0:x2e87c7df32522a4e];
+
+
+
+reg               x81525d75426703f6;
+reg [2:0]         xcb1f8d6053d5939f;
+reg [18:0]        x55d735d39d779784;
+reg [21:0]        x161c9e26a1d8bc91;
+reg [21:0]        x7a238ab51aec6689;
+
+
+wire [2:0] xa82411d3139ecbdb = xc247869e119e5cc4[0];
+reg [18:0]        x1a17011872111116;
+reg [21:0]        x15c14d762e6f8f85;
+reg               x4e2f7b0eee641b1c;
+reg               x354b5517c9635aec;
+reg               xfb261a26b383e240;
+reg signed [11:0] xed7a6c31848aa017;
+
+
+wire [2:0] xb371debf60fae012 = xc247869e119e5cc4[1];
+reg [18:0]        xc215111e2560060d;
+reg [21:0]        xcff40294b503a930;
+reg               xfaa9a2ac99e321b8;
+reg               x93f5b21572f2746a;
+reg               xd548d4fb54b8af3b;
+reg signed [11:0] x23332bf0426600fa;
+reg [27:0]        xc2e92c0d710e5b2f;
+
+
+wire [2:0] x708164e2cc8fffec = xc247869e119e5cc4[2];
+reg [18:0] xd105ebe0e087cf99;
+reg [21:0] x44bea8896bfc1a8e;
+reg [21:0] x795f5ab883834c40;
+
+
+wire [2:0] x8dbef63afa610b70 = xc247869e119e5cc4[3];
+reg [21:0]        x4e5b6f81153786b6;
+reg               x9b381104f5817a8d;
+reg               xf1e5947de5297f8b;
+reg               x0162d908e99672b8;
+reg signed [11:0] x331e82d748b086cb;
+
+
+wire [2:0] x112eef570b5a3ed9 = xc247869e119e5cc4[4];
+reg [21:0]        xe61c33f0477167b5;
+reg               x554ae9373c8d71ec;
+reg               x50d17d4124095bc0;
+reg               x271b0dd9fe21e743;
+reg signed [11:0] x1fdd9a07a41821a7;
+reg [27:0]        x3c01540a1d004ffa;
+
+
+reg [2:0] x63b46842d6632da0, xfaff00868e7b486e, x1434087f2b5db46e;
+reg [2:0] x1a05f4f6121c8566, xc5e526b9c0ec39fd;
+reg [2:0] xdab566e4c94ba320, x9a72d14bd8cbffa7;
+reg [2:0] x7429621a2cbb23f7, x75af8873524f854a, xcb82889700d710ab;
+reg [2:0] x5ac5e4a074072053, x21bed629d1b19f80;
+wire [2:0] x6684b7c80e0fe7bc = (xcb1f8d6053d5939f==xce6afa13dc64854d) ?
+                      xfaff00868e7b486e : x63b46842d6632da0;
+wire [2:0] xbd43c055e7b1435e = ((xcb1f8d6053d5939f==x85449cebc7be13be) ||
+                         (xcb1f8d6053d5939f==x8aaca36627d8e8d2)) ?
+                         x63b46842d6632da0 : x1434087f2b5db46e;
+wire [2:0] x8fd0db2af7534f09 = ((x708164e2cc8fffec==xd1bc141d07804dc3) ||
+                         (x708164e2cc8fffec==x543f03db44e09832) ||
+                         (x708164e2cc8fffec==xce6afa13dc64854d)) ?
+                         xcb82889700d710ab : x75af8873524f854a;
+wire [24:0] xaf74261dc1bf053e, x2faf490bde756e35;
+wire [2:0] xdedee321aa31e040 = (x112eef570b5a3ed9==x877c93a774151140) ?
+                       x2faf490bde756e35[24:22] : x21bed629d1b19f80;
+function x07eaa39573d487ac;
+ input [2:0] xef6b44fa8f9b5a0a;
+ begin x07eaa39573d487ac=(xef6b44fa8f9b5a0a==3'd4)||(xef6b44fa8f9b5a0a==3'd5); end
+endfunction
+always @(posedge clk) begin
+ x63b46842d6632da0<=xd1131cec2bf1a082;xfaff00868e7b486e<=xcb94278d0de9b7fd;
+ x1434087f2b5db46e<=x92a5dd60c179f70a;
+ x1a05f4f6121c8566<=xfaff00868e7b486e;xc5e526b9c0ec39fd<=xbd43c055e7b1435e;
+ xdab566e4c94ba320<=x1a05f4f6121c8566;x9a72d14bd8cbffa7<=xc5e526b9c0ec39fd;
+ x7429621a2cbb23f7<=xdab566e4c94ba320;x75af8873524f854a<=x9a72d14bd8cbffa7;
+ xcb82889700d710ab<=xaf74261dc1bf053e[24:22];
+ x5ac5e4a074072053<=x8fd0db2af7534f09;x21bed629d1b19f80<=x5ac5e4a074072053;
+end
+
+integer xd8037f2dff8a176c;
+
+wire [21:0] xef16696908b36c6a;
+wire [21:0] x62e47c5659f06a35;
+wire [13:0] xdf62abfdda8539ea;
+wire [13:0] xe1158ca9ab19f30d;
+wire        xc2529b49409d7b91;
+wire        x7bbee623178446ce;
+wire        x369f8d80fd1b6e46;
+wire signed [11:0] xc6f8843813b4e83c;
+wire [27:0] x233804f4ecebc07b;
+wire [21:0] x3609ba97ebbe6c11;
+
+wire [21:0] x1f297430e78178c2;
+wire [13:0] x421dac2df34b40ee;
+wire [13:0] x9ea46fe07af36e3b;
+wire        xf3d10bb66bdbb34a;
+wire        xe2fae800f8ac1912;
+wire        x15021f90c3452f25;
+wire signed [11:0] xdf8008c98866db32;
+wire [27:0] x1e5a2a7c6052b0bd;
+wire [21:0] x0b3ebb64e350ca32;
+wire [21:0] x70a7d03b3e8bce03;
+wire [21:0] x9813fcecdc7973d1;
+wire [31:0] x72152180b3e38828;
+wire [21:0] x235b21112b73af2d;
+
+assign out_valid = x103d5a7e4f5cfd61[xd0f517ffd8516f95-1];
+assign x2b8f65f39bf1e0be = xc247869e119e5cc4[xd0f517ffd8516f95-1];
+assign out_value = x4477e191973880d1[x2e87c7df32522a4e];
+
+function [15:0] x6ef3755822fb0355;
+  input [21:0] x760ad1ee4be538ea;
+  begin
+    x6ef3755822fb0355 = x760ad1ee4be538ea[21:6] +
+                    {15'b0, (x760ad1ee4be538ea[5] && (|x760ad1ee4be538ea[4:0] || x760ad1ee4be538ea[6]))};
+  end
+endfunction
+
+
+
+function [23:0] xa910a68f8ab63eef;
+ input signed [11:0] exp_in;
+ input [27:0] product;
+ reg [13:0] x321a68ef42d8d6fa;
+ reg guard_bit,sticky_bit;
+ reg [14:0] xda0ec48dc24f6094;
+ reg signed [11:0] x97cda9793923e6e5;
+ reg signed [12:0] x61f4656bf7705d92;
+ begin
+  x97cda9793923e6e5=exp_in;
+  if(product[27])begin
+   x321a68ef42d8d6fa=product[27:14];guard_bit=product[13];sticky_bit=|product[12:0];
+   x97cda9793923e6e5=x97cda9793923e6e5+12'sd1;
+  end else begin
+   x321a68ef42d8d6fa=product[26:13];guard_bit=product[12];sticky_bit=|product[11:0];
+  end
+  xda0ec48dc24f6094={1'b0,x321a68ef42d8d6fa}+{14'b0,guard_bit&&(sticky_bit||x321a68ef42d8d6fa[0])};
+  if(xda0ec48dc24f6094[14])begin xda0ec48dc24f6094=xda0ec48dc24f6094>>1;x97cda9793923e6e5=x97cda9793923e6e5+12'sd1;end
+  x61f4656bf7705d92=x97cda9793923e6e5+13'sd127;
+  xa910a68f8ab63eef={(product==0)||(x97cda9793923e6e5 < -12'sd126),
+                 x61f4656bf7705d92>=13'sd255,x61f4656bf7705d92[7:0],xda0ec48dc24f6094[13:0]};
+ end
+endfunction
+function [2:0] x2b6fe9d8cd01ba7a;
+ input xf6d81a7be2220a76,x0f9a5cffa6bd3780,xf88db06b04c86e31,x310e1873f68d5d88;
+ begin
+  x2b6fe9d8cd01ba7a=xf6d81a7be2220a76 ? 3'd1 : x0f9a5cffa6bd3780 ? 3'd5 :
+                xf88db06b04c86e31 ? 3'd1 : x310e1873f68d5d88 ? 3'd4 : 3'd0;
+ end
+endfunction
+
+function [21:0] x073921f7c9dc12bd;
+ input [21:0] b;
+ begin x073921f7c9dc12bd={b[20:13]==0?8'd1:b[20:13],(b[20:13]!=0),b[12:0]};end
+endfunction
+reg [21:0] x9996c3874b12e9ab,xa532eb8ebc6f975c,xbe7bde7199e16e46;
+reg [21:0] x1c4609f18f56c8b4,x5ab99c2fed77d6d2,x707c84373dcebca6;
+wire [21:0] x75737e8de3090eb0=x9996c3874b12e9ab;
+wire [23:0] x6d4fd97778feaadb=xa910a68f8ab63eef(x23332bf0426600fa,xc2e92c0d710e5b2f);
+wire [23:0] xd5869a1268f5e9e6=xa910a68f8ab63eef(x1fdd9a07a41821a7,x3c01540a1d004ffa);
+wire xd3cd259977e9f658=(!x93f5b21572f2746a && xd548d4fb54b8af3b)?1'b0:xfaa9a2ac99e321b8;
+wire xec5b95fdb8d61865=(!x50d17d4124095bc0 && x271b0dd9fe21e743)?1'b0:x554ae9373c8d71ec;
+always @(posedge clk)begin
+ x9996c3874b12e9ab <= (x0c014b55b70e6cbb==xce6afa13dc64854d) ?
+   (x24da24fd67a8f0da?xaa7ee61f7698910b:x073921f7c9dc12bd({x9a515dc3044eb94d,3'b0})) :
+   (x24da24fd67a8f0da?x3ca01ec9648aadfb:x073921f7c9dc12bd(x1619fdfa4e0137c7));
+ xa532eb8ebc6f975c<=x24da24fd67a8f0da?xaa7ee61f7698910b:x073921f7c9dc12bd({x9a515dc3044eb94d,3'b0});
+ xbe7bde7199e16e46<=x24da24fd67a8f0da?xcd37e2098d3a7379:x073921f7c9dc12bd(xb1e06a5aa2d530ae);
+ x1c4609f18f56c8b4<=xa532eb8ebc6f975c;
+ x5ab99c2fed77d6d2<=x1c4609f18f56c8b4;
+ x707c84373dcebca6<=x5ab99c2fed77d6d2;
+end
+
+
+
+assign xef16696908b36c6a =
+    (xcb1f8d6053d5939f == xce6afa13dc64854d) ?
+    {x55d735d39d779784, 3'b0} : x161c9e26a1d8bc91;
+assign x62e47c5659f06a35 = ((xcb1f8d6053d5939f == x85449cebc7be13be) ||
+                      (xcb1f8d6053d5939f == x8aaca36627d8e8d2)) ?
+                     x161c9e26a1d8bc91 : x7a238ab51aec6689;
+assign xdf62abfdda8539ea=x75737e8de3090eb0[13:0];
+assign xe1158ca9ab19f30d=xbe7bde7199e16e46[13:0];
+assign xc2529b49409d7b91 = xef16696908b36c6a[21] ^ x7a238ab51aec6689[21];
+assign x7bbee623178446ce = (x6684b7c80e0fe7bc == 3'd1) ||
+                   (x1434087f2b5db46e == 3'd1);
+assign x369f8d80fd1b6e46 = !x9f2c614f57341b7f && (x07eaa39573d487ac(x6684b7c80e0fe7bc) ||
+                      x07eaa39573d487ac(x1434087f2b5db46e));
+assign xc6f8843813b4e83c=$signed({4'b0,x75737e8de3090eb0[21:14]})+
+                $signed({4'b0,xbe7bde7199e16e46[21:14]})-12'sd254;
+
+
+xe4e847f4485b9e6b #(.x7fca6a09a917f9ac(0)) xdede092d243d6380 (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .xe0f1e563055aaa78(xdf62abfdda8539ea),
+  .x4d9ca5ff295c356e(xe1158ca9ab19f30d),
+  .x1d01b50ef20d8e3e(x233804f4ecebc07b)
+);
+assign x3609ba97ebbe6c11 = xaf74261dc1bf053e[21:0];
+assign xaf74261dc1bf053e={x2b6fe9d8cd01ba7a(x93f5b21572f2746a,xd548d4fb54b8af3b,x6d4fd97778feaadb[23],x6d4fd97778feaadb[22]),
+                xd3cd259977e9f658,x6d4fd97778feaadb[21:14],x6d4fd97778feaadb[12:0]};
+
+
+
+
+assign x1f297430e78178c2 = {xd105ebe0e087cf99, 3'b0};
+assign x421dac2df34b40ee=x707c84373dcebca6[13:0];
+
+
+assign x9ea46fe07af36e3b={1'b1,x795f5ab883834c40[12:0]};
+assign xf3d10bb66bdbb34a = x1f297430e78178c2[21] ^ x795f5ab883834c40[21];
+assign xe2fae800f8ac1912 = (x7429621a2cbb23f7 == 3'd1) ||
+                   (xcb82889700d710ab == 3'd1);
+assign x15021f90c3452f25 = !x9f2c614f57341b7f && (x07eaa39573d487ac(x7429621a2cbb23f7) ||
+                      x07eaa39573d487ac(xcb82889700d710ab));
+assign xdf8008c98866db32=$signed({4'b0,x707c84373dcebca6[21:14]})+
+                $signed({4'b0,x795f5ab883834c40[20:13]})-12'sd254;
+xe4e847f4485b9e6b #(.x7fca6a09a917f9ac(0)) x608b45b4138f9185 (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .xe0f1e563055aaa78(x421dac2df34b40ee),
+  .x4d9ca5ff295c356e(x9ea46fe07af36e3b),
+  .x1d01b50ef20d8e3e(x1e5a2a7c6052b0bd)
+);
+assign x0b3ebb64e350ca32 = x2faf490bde756e35[21:0];
+assign x2faf490bde756e35={x2b6fe9d8cd01ba7a(x50d17d4124095bc0,x271b0dd9fe21e743,xd5869a1268f5e9e6[23],xd5869a1268f5e9e6[22]),
+                xec5b95fdb8d61865,xd5869a1268f5e9e6[21:14],xd5869a1268f5e9e6[12:0]};
+
+
+assign x70a7d03b3e8bce03 =
+    (x708164e2cc8fffec == x877c93a774151140) ? {xd105ebe0e087cf99,3'b0} :
+    (x708164e2cc8fffec == xd1bc141d07804dc3) ? x795f5ab883834c40 :
+    ((x708164e2cc8fffec == x543f03db44e09832) ?
+       {xd105ebe0e087cf99[18], x795f5ab883834c40[20:0]} :
+     ((x708164e2cc8fffec == xce6afa13dc64854d) ?
+       x795f5ab883834c40 : x44bea8896bfc1a8e));
+assign x9813fcecdc7973d1 = (x112eef570b5a3ed9 == x877c93a774151140) ?
+                           x0b3ebb64e350ca32 : xe61c33f0477167b5;
+wire [15:0] x0b5b0b085dccbdf0=x6ef3755822fb0355(x9813fcecdc7973d1);
+
+reg [3:0] x7bda30841f028a43[0:5];
+reg [5:0] xceac64abeafe4a2c;
+reg x253ecef281848ed0, xcc2601c45f307367;
+integer xad98208fc75de0b9;
+always @(posedge clk)begin
+ xceac64abeafe4a2c<={xceac64abeafe4a2c[4:0],x92a5dd60c179f70a==3'd1};
+ x7bda30841f028a43[0]<=xf29e24021503fa48;
+ for(xad98208fc75de0b9=1;xad98208fc75de0b9<6;xad98208fc75de0b9=xad98208fc75de0b9+1)
+  x7bda30841f028a43[xad98208fc75de0b9]<=x7bda30841f028a43[xad98208fc75de0b9-1];
+end
+function [15:0] x1ec5e5d6e062287c;
+ input [3:0] x88339dd4dd11e92c;
+ begin
+  case(x88339dd4dd11e92c)
+   1:x1ec5e5d6e062287c=16'h0000; 2:x1ec5e5d6e062287c=16'h8000;
+   3:x1ec5e5d6e062287c=16'h3f80; 4:x1ec5e5d6e062287c=16'hbf80;
+   5:x1ec5e5d6e062287c=16'h7f80; 6:x1ec5e5d6e062287c=16'hff80;
+   8:x1ec5e5d6e062287c=xe61c33f0477167b5[21:6];
+   9:x1ec5e5d6e062287c=16'h1f80;
+   10:x1ec5e5d6e062287c=16'h7ef8;
+   default:x1ec5e5d6e062287c=16'h7fc0;
+  endcase
+ end
+endfunction
+
+
+wire x059deec3473a37fb=xe5e03e1976b2ce57 && (x112eef570b5a3ed9==3'd1 || x112eef570b5a3ed9==3'd6) ? 1'b0 :
+               xe5e03e1976b2ce57 && x112eef570b5a3ed9==3'd7 && xceac64abeafe4a2c[5] ? xcc2601c45f307367 : x9813fcecdc7973d1[21];
+wire [3:0] xa8b99dab0bb5d160=xdedee321aa31e040==3'd1 ? (x059deec3473a37fb?4'd2:4'd1) :
+                          xdedee321aa31e040==3'd4 ? (x9813fcecdc7973d1[21]?4'd6:4'd5) :
+                          xdedee321aa31e040==3'd5 ? 4'd7 : 4'd0;
+wire [3:0] xe016a26f43b05706=xe5e03e1976b2ce57 && x7bda30841f028a43[5]!=0 ?
+                         x7bda30841f028a43[5] : xa8b99dab0bb5d160;
+assign x72152180b3e38828={xe016a26f43b05706==0 ? x0b5b0b085dccbdf0 : x1ec5e5d6e062287c(xe016a26f43b05706),16'b0};
+
+generate if(!x015938ff1d552e97)begin: xcc816e000494244f
+xf3dfe651e39dceb7 x6c363b5408305d1a (
+  .clk(clk),
+  .cpurst_b(cpurst_b),
+  .x7373467841c567de(x1ad1631690d2c849),
+  .x3eddf5e3b67886fb(in_valid && (x0c014b55b70e6cbb == x8aaca36627d8e8d2)),
+  .xc5616d1568de599d(x07f4d31d26e6e521),
+  .x05c9e39241edd196(x1619fdfa4e0137c7),
+  .x87135bafee9bbf7e(x3b740bbeff83b5da),
+  .x2091c57624fe8afe(xe70f7bd65e2c651b),
+  .x1b56e1f33ca284c9(x235b21112b73af2d)
+);
+end else begin: x2f889b26c0236e29
+ assign x3b740bbeff83b5da=0;assign xe70f7bd65e2c651b=0;assign x235b21112b73af2d=0;
+end endgenerate
+assign x552b4bba01a61e3c = {x235b21112b73af2d, 10'b0};
+
+
+
+always @(posedge clk or negedge cpurst_b) begin
+  if (!cpurst_b) begin
+    x81525d75426703f6 <= 1'b0;
+
+    x103d5a7e4f5cfd61 <= {xd0f517ffd8516f95{1'b0}};
+  end else begin
+    x81525d75426703f6 <= in_valid;
+
+    x103d5a7e4f5cfd61[0] <= x81525d75426703f6;
+    for (xd8037f2dff8a176c = 1; xd8037f2dff8a176c < xd0f517ffd8516f95; xd8037f2dff8a176c = xd8037f2dff8a176c + 1) begin
+      x103d5a7e4f5cfd61[xd8037f2dff8a176c] <= x103d5a7e4f5cfd61[xd8037f2dff8a176c - 1];
+    end
+  end
+end
+
+integer x5062736d7a9f8239;
+always @(posedge clk) begin
+    xcb1f8d6053d5939f <= x0c014b55b70e6cbb;
+    xc247869e119e5cc4[0] <= xcb1f8d6053d5939f;
+    for (x5062736d7a9f8239 = 1; x5062736d7a9f8239 < xd0f517ffd8516f95; x5062736d7a9f8239 = x5062736d7a9f8239 + 1)
+      xc247869e119e5cc4[x5062736d7a9f8239] <= xc247869e119e5cc4[x5062736d7a9f8239 - 1];
+
+
+    x55d735d39d779784 <= x9a515dc3044eb94d;
+    x161c9e26a1d8bc91 <= x1619fdfa4e0137c7;
+    x7a238ab51aec6689 <= xb1e06a5aa2d530ae;
+
+
+    x1a17011872111116 <= x55d735d39d779784;
+    x15c14d762e6f8f85 <= x62e47c5659f06a35;
+    x4e2f7b0eee641b1c <= xc2529b49409d7b91;
+    x354b5517c9635aec <= x7bbee623178446ce;
+    xfb261a26b383e240 <= x369f8d80fd1b6e46;
+    xed7a6c31848aa017 <= xc6f8843813b4e83c;
+
+
+    xc215111e2560060d <= x1a17011872111116;
+    xcff40294b503a930 <= x15c14d762e6f8f85;
+    xfaa9a2ac99e321b8 <= x4e2f7b0eee641b1c;
+    x93f5b21572f2746a <= x354b5517c9635aec;
+    xd548d4fb54b8af3b <= xfb261a26b383e240;
+    x23332bf0426600fa <= xed7a6c31848aa017;
+    xc2e92c0d710e5b2f <= x233804f4ecebc07b;
+
+
+    xd105ebe0e087cf99 <= xc215111e2560060d;
+    x44bea8896bfc1a8e <= xcff40294b503a930;
+    x795f5ab883834c40 <= x3609ba97ebbe6c11;
+
+
+    x253ecef281848ed0<=xd105ebe0e087cf99[18];
+    xcc2601c45f307367<=x253ecef281848ed0;
+    x4e5b6f81153786b6 <= x70a7d03b3e8bce03;
+    x9b381104f5817a8d <= xf3d10bb66bdbb34a;
+    xf1e5947de5297f8b <= xe2fae800f8ac1912;
+    x0162d908e99672b8 <= x15021f90c3452f25;
+    x331e82d748b086cb <= xdf8008c98866db32;
+
+
+    xe61c33f0477167b5 <= x4e5b6f81153786b6;
+    x554ae9373c8d71ec <= x9b381104f5817a8d;
+    x50d17d4124095bc0 <= xf1e5947de5297f8b;
+    x271b0dd9fe21e743 <= x0162d908e99672b8;
+    x1fdd9a07a41821a7 <= x331e82d748b086cb;
+    x3c01540a1d004ffa <= x1e5a2a7c6052b0bd;
+
+
+    x4477e191973880d1[0] <= x72152180b3e38828;
+    for (x5062736d7a9f8239 = 1; x5062736d7a9f8239 <= x2e87c7df32522a4e; x5062736d7a9f8239 = x5062736d7a9f8239 + 1)
+      x4477e191973880d1[x5062736d7a9f8239] <= x4477e191973880d1[x5062736d7a9f8239 - 1];
+
+end
+
+`ifndef SYNTHESIS
+function [2:0] xeaca6bc2a85c6aaa;
+ input [21:0] b;
+ begin
+  case(b[20:13])
+   0:xeaca6bc2a85c6aaa=(b[12:0]==0)?3'd1:3'd2;
+   255:xeaca6bc2a85c6aaa=(b[12:0]==0)?3'd4:3'd5;
+   default:xeaca6bc2a85c6aaa=3'd0;
+  endcase
+ end
+endfunction
+always @(posedge clk) if(cpurst_b) begin
+ if(in_valid && x24da24fd67a8f0da &&
+    ({x3ca01ec9648aadfb,xaa7ee61f7698910b,xcd37e2098d3a7379} !==
+     {x073921f7c9dc12bd(x1619fdfa4e0137c7),
+      x073921f7c9dc12bd({x9a515dc3044eb94d,3'b0}),
+      x073921f7c9dc12bd(xb1e06a5aa2d530ae)}))
+  $fatal(1,"finalizer prepared operand alignment mismatch");
+
+
+ if(in_valid && (({xd1131cec2bf1a082,xcb94278d0de9b7fd} !==
+   {(x24da24fd67a8f0da && (xd1131cec2bf1a082==3'd1 || xd1131cec2bf1a082==3'd3 || xd1131cec2bf1a082==3'd4) ? xd1131cec2bf1a082 : xeaca6bc2a85c6aaa(x1619fdfa4e0137c7)),(xe5e03e1976b2ce57 ? (x9a515dc3044eb94d[17:0]==0 ? 3'd1 : 3'd0) : (x9f2c614f57341b7f && x9a515dc3044eb94d[17:10]==255 ? 3'd0 : xeaca6bc2a85c6aaa({x9a515dc3044eb94d,3'b0})))}) ||
+   ((!x24da24fd67a8f0da || x92a5dd60c179f70a!=3'd1) &&
+    x92a5dd60c179f70a !== xeaca6bc2a85c6aaa(xb1e06a5aa2d530ae))))
+  $fatal(1,"finalizer input class mismatch");
+ if(!x9f2c614f57341b7f && x103d5a7e4f5cfd61[2] && xcb82889700d710ab==0 && xeaca6bc2a85c6aaa(x795f5ab883834c40)!=0)
+  $fatal(1,"finalizer M2 class mismatch");
+ if(!x9f2c614f57341b7f && x103d5a7e4f5cfd61[4] && xdedee321aa31e040==0 && xeaca6bc2a85c6aaa(x9813fcecdc7973d1)!=0)
+  $fatal(1,"finalizer output pack class mismatch");
+end
+`endif
 
 endmodule
 
@@ -8009,7 +14385,7 @@ module x1bf8829620a3095a #(
   output wire                         cmpu_start_ready,
   output wire                         cmpu_sync_stall,
   output wire                         cmpu_busy,
-  output wire                         cmpu_result_update,
+  output wire                         xd3f9dbb53dd08b63,
   output wire [15:0]                  cmpu_max_value,
   output wire [15:0]                  cmpu_argmax_idx,
   output wire [15:0]                  cmpu_min_value,
@@ -8209,7 +14585,7 @@ module x1bf8829620a3095a #(
     .cmpu_start_ready(cmpu_start_ready),
     .cmpu_sync_stall(cmpu_sync_stall),
     .cmpu_busy(cmpu_busy),
-    .cmpu_result_update(cmpu_result_update),
+    .xd3f9dbb53dd08b63(xd3f9dbb53dd08b63),
     .cmpu_max_value(cmpu_max_value),
     .cmpu_argmax_idx(cmpu_argmax_idx),
     .cmpu_min_value(cmpu_min_value),
@@ -9248,9 +15624,9 @@ module x1e95fb5529aae9a8(
 parameter ADDR_WIDTH       = 14;
 parameter DATA_WIDTH       = 64;
 parameter BYTE_WIDTH       = DATA_WIDTH / 8;
-parameter LANES            = 2;
-parameter xc1e73af4d96b9d55 = LANES * DATA_WIDTH;
-parameter x06a416ad25a85770 = LANES * BYTE_WIDTH;
+parameter x50191cc99802a285            = 2;
+parameter xc1e73af4d96b9d55 = x50191cc99802a285 * DATA_WIDTH;
+parameter x06a416ad25a85770 = x50191cc99802a285 * BYTE_WIDTH;
 parameter xf33a3d23b7d86cb5 = 4;
 parameter x1edacd58b2f9b15e  = 10;
 parameter [2:0] x558b43053524a8b0 = 3'd0;
@@ -9292,7 +15668,7 @@ reg  [xf33a3d23b7d86cb5-1:0]        x0b8b027e08acba11;
 assign x5f6f4b66736e4a96[xf33a3d23b7d86cb5-1:0] = x525ff688869ab187[xf33a3d23b7d86cb5-1:0];
 assign xa95144e53eff6030[xf33a3d23b7d86cb5-1:0] =
     x5f6f4b66736e4a96[xf33a3d23b7d86cb5-1:0] + {{xf33a3d23b7d86cb5-1{1'b0}}, 1'b1};
-assign xc72d74d100d398d1 = (LANES == 2);
+assign xc72d74d100d398d1 = (x50191cc99802a285 == 2);
 assign x4b66b2705572d83f[x1edacd58b2f9b15e-1:0] =
     x525ff688869ab187[x1edacd58b2f9b15e+xf33a3d23b7d86cb5-1:xf33a3d23b7d86cb5];
 assign x66b9daefa71e217a[xc1e73af4d96b9d55-1:0] = x4435cbe145553070[xc1e73af4d96b9d55-1:0];
@@ -9327,7 +15703,7 @@ assign x8cd6f6eb166fcdb4[xf33a3d23b7d86cb5-1:0] = x6babe16abe92802a[xf33a3d23b7d
 assign xe29970454cda29cc[xf33a3d23b7d86cb5-1:0] = x0b8b027e08acba11[xf33a3d23b7d86cb5-1:0];
 
 generate
-  if (LANES == 1) begin: x7429b288ce764a75
+  if (x50191cc99802a285 == 1) begin: x7429b288ce764a75
     wire xca5b279a27191912;
     assign xca5b279a27191912 = |x0b8b027e08acba11[xf33a3d23b7d86cb5-1:0];
     assign xfbd7438120039621[DATA_WIDTH-1:0] = xf229922c64067fc3[DATA_WIDTH-1:0];
@@ -9462,8 +15838,8 @@ assign x07550446b0891516[1:0] =
 
 generate
   for (x563e4c528db597c3 = 0; x563e4c528db597c3 < 4; x563e4c528db597c3 = x563e4c528db597c3 + 1) begin: xd9ddaade2bab9217
-    
-    
+
+
     assign x45e0aad9f7f5b380[x563e4c528db597c3*x0b202966b4d1bebe
                                   +: x0b202966b4d1bebe] =
         x19f673fc68732f6d[0]
@@ -9740,7 +16116,7 @@ generate
 endgenerate
 
 x1e95fb5529aae9a8 #(
-  .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .LANES(1),
+  .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .x50191cc99802a285(1),
   .xf33a3d23b7d86cb5(xf33a3d23b7d86cb5),
   .x1edacd58b2f9b15e(x1edacd58b2f9b15e), .x558b43053524a8b0(3'd1), .xca50b1f85c41f767(1)
 ) xbe9b17ba1dfeb788 (
@@ -9762,7 +16138,7 @@ x1e95fb5529aae9a8 #(
 );
 
 x1e95fb5529aae9a8 #(
-  .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .LANES(2),
+  .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .x50191cc99802a285(2),
   .xf33a3d23b7d86cb5(xf33a3d23b7d86cb5),
   .x1edacd58b2f9b15e(x1edacd58b2f9b15e), .x558b43053524a8b0(3'd3), .xca50b1f85c41f767(1)
 ) x9a37f46fde69e85f (
@@ -9805,7 +16181,7 @@ always @(posedge clk or negedge cpurst_b) begin
 end
 
 x1e95fb5529aae9a8 #(
-  .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .LANES(2),
+  .ADDR_WIDTH(ADDR_WIDTH), .DATA_WIDTH(DATA_WIDTH), .x50191cc99802a285(2),
   .xf33a3d23b7d86cb5(xf33a3d23b7d86cb5),
   .x1edacd58b2f9b15e(x1edacd58b2f9b15e), .x558b43053524a8b0(3'd5), .xca50b1f85c41f767(0)
 ) x97b99e71456dc0d1 (
@@ -9883,7 +16259,7 @@ output [xb9377408880f7051*BYTE_WIDTH-1:0] xf2dcb1e1e6779825;
 output [xb9377408880f7051-1:0]         x709699a62667a480;
 
 wire [ADDR_WIDTH-1:0]         x525ff688869ab187;
-wire                          req_valid;
+wire                          x74c0d78af745a25a;
 wire                          xc661e27b0e40fbff;
 wire [2:0]                    xd99b5542ad761de6;
 wire [2:0]                    x5476d414ef291fb9;
@@ -9916,14 +16292,14 @@ assign x30c45fa545b73f56 = xd99b5542ad761de6[0] == x7908935e23a351c6[0];
 assign xe2ba21524eb891af = x5476d414ef291fb9[0] == x7908935e23a351c6[0];
 assign x0ef88ca02257434c = xc01defb843df4cf0 && x30c45fa545b73f56;
 assign x23c9100822ef54a4 = x49f65fa5b26c1621 && xe2ba21524eb891af && !x0ef88ca02257434c;
-assign req_valid = x0ef88ca02257434c || x23c9100822ef54a4;
+assign x74c0d78af745a25a = x0ef88ca02257434c || x23c9100822ef54a4;
 assign xc661e27b0e40fbff = x23c9100822ef54a4;
 assign x525ff688869ab187 = x23c9100822ef54a4 ? x24fe591e647efd46 : x766868a032fc36d2;
 assign xe3cd18cff2413a93 = x525ff688869ab187[xf33a3d23b7d86cb5-1:1];
 assign x84725b2367d2b421 = xe3cd18cff2413a93 - x7908935e23a351c6;
 assign x1bfe98cdefc66a9e = x84725b2367d2b421[2:1];
 assign x6b6f63b9447ad309 = xe3cd18cff2413a93[0] == x7908935e23a351c6[0];
-assign x58ea6cd9900f2c80 = req_valid && x6b6f63b9447ad309;
+assign x58ea6cd9900f2c80 = x74c0d78af745a25a && x6b6f63b9447ad309;
 assign x1a89588640de09b9 = x0ef88ca02257434c;
 assign x00b0ee1d6404f1de = x23c9100822ef54a4;
 assign x1067f7bf1c178b09 =
@@ -10338,8 +16714,8 @@ parameter BYTE_WIDTH      = DATA_WIDTH / 8;
 parameter x3d6a1a57bf972fc3      = DATA_WIDTH == 128 ? 4 : 3;
 parameter xd844bf59a110aac0  = DATA_WIDTH / 64;
 parameter x29ee97bfe41be44a = 4;
-parameter FIFO_DEPTH      = 4;
-parameter FIFO_PTR_WIDTH  = 2;
+parameter x412a5f55a63459bc      = 4;
+parameter x7ed31fcf0a78d415  = 2;
 parameter [3:0] xfd465f4c8fde7498 = 4'd3;
 
 localparam [31:0] x3f1c37cf37ebcdae = BYTE_WIDTH;
@@ -10388,8 +16764,8 @@ output                      x64b6a8bc0f2b82fe;
 
 reg [AXI_ADDR_WIDTH-1:0]    x28f81586410d2170;
 reg [DTCM_ADDR_WIDTH-1:0]   dtcm_addr;
-reg [DATA_WIDTH-1:0]        xc253979efee49a79 [0:FIFO_DEPTH-1];
-reg [BYTE_WIDTH-1:0]        x7b828f61077d122c [0:FIFO_DEPTH-1];
+reg [DATA_WIDTH-1:0]        xc253979efee49a79 [0:x412a5f55a63459bc-1];
+reg [BYTE_WIDTH-1:0]        x7b828f61077d122c [0:x412a5f55a63459bc-1];
 reg [31:0]                  xc64af22b0a017b1a;
 reg [31:0]                  x24a53649df82e89f;
 reg [31:0]                  x46806669ba75968c;
@@ -10408,9 +16784,9 @@ reg [DATA_WIDTH-1:0]        x8c713cae1024966a;
 reg [DATA_WIDTH-1:0]        x300e23c2cd378ae5;
 reg [BYTE_WIDTH-1:0]        x67d3b4318b354c45;
 reg                         x8edb92f3f298616f;
-reg [FIFO_PTR_WIDTH-1:0]    x4d9d062d939ce786;
-reg [FIFO_PTR_WIDTH-1:0]    x266aa6751cb99420;
-reg [FIFO_PTR_WIDTH:0]      fifo_count;
+reg [x7ed31fcf0a78d415-1:0]    x4d9d062d939ce786;
+reg [x7ed31fcf0a78d415-1:0]    x266aa6751cb99420;
+reg [x7ed31fcf0a78d415:0]      fifo_count;
 reg [2:0]                   x1022ce81776aa95b;
 
 wire [31:0]                 xba97977c92571b8a;
@@ -10473,8 +16849,8 @@ assign x030898a2bc3a86e4[BYTE_WIDTH-1:0] =
        ? {BYTE_WIDTH{1'b1}}
        : x459f29b7dfa37c1a[BYTE_WIDTH-1:0];
 assign xa748ea918efba003 = x6c5b5a42818751f9 == xe47c37555348cd79 || x6c5b5a42818751f9 == x806e47d01f6f3364;
-assign x6020888b128ecc3c = fifo_count == {FIFO_PTR_WIDTH+1{1'b0}};
-assign x2b6d31d0b9174d6c = fifo_count == FIFO_DEPTH[FIFO_PTR_WIDTH:0];
+assign x6020888b128ecc3c = fifo_count == {x7ed31fcf0a78d415+1{1'b0}};
+assign x2b6d31d0b9174d6c = fifo_count == x412a5f55a63459bc[x7ed31fcf0a78d415:0];
 assign x1ca7ff0a0c61a145 = axi_arvalid && axi_arready;
 assign x7885ecd465bdfb11 = xa748ea918efba003 && axi_rvalid && axi_rready;
 assign xfdeddb96f530e97b = xa748ea918efba003 && !x6020888b128ecc3c && x115f585a9e8b8edc;
@@ -10511,9 +16887,9 @@ always @(posedge clk or negedge cpurst_b) begin
     x07d33a3998127a24 <= 32'b0;
     xbb362b2bd16daa0d <= 32'b0;
     x38885ef93a4811b6 <= 32'b0;
-    x4d9d062d939ce786 <= {FIFO_PTR_WIDTH{1'b0}};
-    x266aa6751cb99420 <= {FIFO_PTR_WIDTH{1'b0}};
-    fifo_count <= {FIFO_PTR_WIDTH+1{1'b0}};
+    x4d9d062d939ce786 <= {x7ed31fcf0a78d415{1'b0}};
+    x266aa6751cb99420 <= {x7ed31fcf0a78d415{1'b0}};
+    fifo_count <= {x7ed31fcf0a78d415+1{1'b0}};
     x1022ce81776aa95b <= 3'b0;
     xad536eeae8d7ff49 <= 4'b0;
     x1c170e7e3959e8de <= {DATA_WIDTH{1'b0}};
@@ -10521,7 +16897,7 @@ always @(posedge clk or negedge cpurst_b) begin
     x300e23c2cd378ae5 <= {DATA_WIDTH{1'b0}};
     x67d3b4318b354c45 <= {BYTE_WIDTH{1'b0}};
     x8edb92f3f298616f <= 1'b0;
-    for (x8e6e8fd856efba2d = 0; x8e6e8fd856efba2d < FIFO_DEPTH; x8e6e8fd856efba2d = x8e6e8fd856efba2d + 1) begin
+    for (x8e6e8fd856efba2d = 0; x8e6e8fd856efba2d < x412a5f55a63459bc; x8e6e8fd856efba2d = x8e6e8fd856efba2d + 1) begin
       xc253979efee49a79[x8e6e8fd856efba2d] <= {DATA_WIDTH{1'b0}};
       x7b828f61077d122c[x8e6e8fd856efba2d] <= {BYTE_WIDTH{1'b0}};
     end
@@ -10531,9 +16907,9 @@ always @(posedge clk or negedge cpurst_b) begin
     if (x7885ecd465bdfb11) begin
       xc253979efee49a79[x266aa6751cb99420] <= axi_rdata[DATA_WIDTH-1:0];
       x7b828f61077d122c[x266aa6751cb99420] <= x030898a2bc3a86e4[BYTE_WIDTH-1:0];
-      x266aa6751cb99420 <= x266aa6751cb99420 == FIFO_DEPTH[FIFO_PTR_WIDTH-1:0] - 1'b1
-                     ? {FIFO_PTR_WIDTH{1'b0}}
-                     : x266aa6751cb99420 + {{FIFO_PTR_WIDTH-1{1'b0}}, 1'b1};
+      x266aa6751cb99420 <= x266aa6751cb99420 == x412a5f55a63459bc[x7ed31fcf0a78d415-1:0] - 1'b1
+                     ? {x7ed31fcf0a78d415{1'b0}}
+                     : x266aa6751cb99420 + {{x7ed31fcf0a78d415-1{1'b0}}, 1'b1};
       x46806669ba75968c <= x46806669ba75968c > x3f1c37cf37ebcdae[31:0]
                          ? x46806669ba75968c - x3f1c37cf37ebcdae[31:0]
                          : 32'b0;
@@ -10543,15 +16919,15 @@ always @(posedge clk or negedge cpurst_b) begin
 
     if (xfdeddb96f530e97b) begin
       dtcm_addr <= dtcm_addr + xd844bf59a110aac0[DTCM_ADDR_WIDTH-1:0];
-      x4d9d062d939ce786 <= x4d9d062d939ce786 == FIFO_DEPTH[FIFO_PTR_WIDTH-1:0] - 1'b1
-                     ? {FIFO_PTR_WIDTH{1'b0}}
-                     : x4d9d062d939ce786 + {{FIFO_PTR_WIDTH-1{1'b0}}, 1'b1};
+      x4d9d062d939ce786 <= x4d9d062d939ce786 == x412a5f55a63459bc[x7ed31fcf0a78d415-1:0] - 1'b1
+                     ? {x7ed31fcf0a78d415{1'b0}}
+                     : x4d9d062d939ce786 + {{x7ed31fcf0a78d415-1{1'b0}}, 1'b1};
     end
 
     if (x7885ecd465bdfb11 && !xfdeddb96f530e97b)
-      fifo_count <= fifo_count + {{FIFO_PTR_WIDTH{1'b0}}, 1'b1};
+      fifo_count <= fifo_count + {{x7ed31fcf0a78d415{1'b0}}, 1'b1};
     else if (!x7885ecd465bdfb11 && xfdeddb96f530e97b)
-      fifo_count <= fifo_count - {{FIFO_PTR_WIDTH{1'b0}}, 1'b1};
+      fifo_count <= fifo_count - {{x7ed31fcf0a78d415{1'b0}}, 1'b1};
 
     if (xaaa6a0cba0cd3547) begin
       xc253979efee49a79[x266aa6751cb99420] <= xc0c3d72c3095360e[DATA_WIDTH-1:0];
@@ -10579,9 +16955,9 @@ always @(posedge clk or negedge cpurst_b) begin
           xbb362b2bd16daa0d <= 32'b0;
           x38885ef93a4811b6 <= 32'b0;
           x8edb92f3f298616f <= xd3d7eb7b3ff963d7;
-          x4d9d062d939ce786 <= {FIFO_PTR_WIDTH{1'b0}};
-          x266aa6751cb99420 <= {FIFO_PTR_WIDTH{1'b0}};
-          fifo_count <= {FIFO_PTR_WIDTH+1{1'b0}};
+          x4d9d062d939ce786 <= {x7ed31fcf0a78d415{1'b0}};
+          x266aa6751cb99420 <= {x7ed31fcf0a78d415{1'b0}};
+          fifo_count <= {x7ed31fcf0a78d415+1{1'b0}};
           if (xd3d7eb7b3ff963d7) begin
             x07d33a3998127a24 <= xba97977c92571b8a[31:0] > x29ee97bfe41be44a[31:0]
                            ? x29ee97bfe41be44a[31:0] : xba97977c92571b8a[31:0];
@@ -10648,9 +17024,9 @@ always @(posedge clk or negedge cpurst_b) begin
           x28f81586410d2170 <= x28f81586410d2170 +
             ({{(AXI_ADDR_WIDTH-32){1'b0}}, x07d33a3998127a24} << x3d6a1a57bf972fc3);
           xc64af22b0a017b1a <= xc64af22b0a017b1a - x07d33a3998127a24;
-          x4d9d062d939ce786 <= {FIFO_PTR_WIDTH{1'b0}};
-          x266aa6751cb99420 <= {FIFO_PTR_WIDTH{1'b0}};
-          fifo_count <= {(FIFO_PTR_WIDTH+1){1'b0}};
+          x4d9d062d939ce786 <= {x7ed31fcf0a78d415{1'b0}};
+          x266aa6751cb99420 <= {x7ed31fcf0a78d415{1'b0}};
+          fifo_count <= {(x7ed31fcf0a78d415+1){1'b0}};
           xbb362b2bd16daa0d <= 32'b0;
           x38885ef93a4811b6 <= 32'b0;
           if (xc64af22b0a017b1a == x07d33a3998127a24) begin
@@ -10833,6 +17209,259 @@ assign x817c9956921a3685[3:0] = xfd465f4c8fde7498[3:0];
 endmodule
 
 
+
+module x02d008ea33a6ff05 #(
+  parameter DEPTH = 16,
+  parameter PTR_WIDTH = (DEPTH <= 2) ? 1 : $clog2(DEPTH),
+  parameter ROW_COUNT = DEPTH / 2,
+  parameter x3575b74fc0424693 = (ROW_COUNT <= 2) ? 1 : $clog2(ROW_COUNT)
+) (
+  input  wire         clk,
+  input  wire         reset_b,
+  input  wire         push_valid,
+  output wire         push_ready,
+  input  wire [127:0] x9bb00c0ff636ef8e,
+  input  wire [15:0]  x0015bb91095da19b,
+  input  wire [15:0]  xcd72d839f1512cbd,
+  output wire         pop_valid,
+  input  wire         x0c0c0a96fb70e72b,
+  output wire [127:0] xa16220748d9824db,
+  output wire [15:0]  x32c81ad3e8936ec5,
+  output wire [15:0]  x379f36ebce83bf27,
+  output wire [PTR_WIDTH:0] xb865dc8c34603ce4
+);
+
+
+
+  reg [63:0] x8f1a3c159716d13c [0:ROW_COUNT-1];
+  reg [63:0] xc132d18e5d1a778c [0:ROW_COUNT-1];
+  reg [63:0] xa040b13c1ae61790 [0:ROW_COUNT-1];
+  reg [63:0] x23a1f25bd9ecc9cf [0:ROW_COUNT-1];
+  reg [15:0] xcf78a46e1d6883da [0:ROW_COUNT-1];
+  reg [15:0] x65a613dcb636c841 [0:ROW_COUNT-1];
+  reg [15:0] x940bae93d87984d9 [0:ROW_COUNT-1];
+  reg [15:0] x03784efbeef5f686 [0:ROW_COUNT-1];
+
+  reg         xeffdb7b3177b7fc9;
+  reg [127:0] xa7ed1f5aec22ed45;
+  reg [15:0]  xb952b1399c56847c;
+  reg [15:0]  x80456cd7471e598f;
+  reg         x80c917ca5b9e92c2;
+  reg [127:0] x4bc047a63c149c07;
+  reg [15:0]  x9c3eed49a4854de2;
+  reg [15:0]  x620ab38bfe50fab1;
+  reg [PTR_WIDTH-1:0] x726aa42e13b0cd76;
+  reg [PTR_WIDTH-1:0] x0e1c728ead918830;
+  reg [PTR_WIDTH:0] x14c9839eea0fd770;
+
+  wire xe88ef763e44cc27b = x80c917ca5b9e92c2 && x0c0c0a96fb70e72b;
+  wire x541609d17e9e1a90 = !x80c917ca5b9e92c2 || xe88ef763e44cc27b;
+  wire x5c9c9e8cd00ba69f = x14c9839eea0fd770 == DEPTH[PTR_WIDTH:0];
+  wire xc2c090b9ced49277 = x726aa42e13b0cd76[0];
+  wire xb5d8e3e765d8393e = x0e1c728ead918830[0];
+  wire xd44061cbd3eb5ad6 = xeffdb7b3177b7fc9 && !x5c9c9e8cd00ba69f;
+  wire xdfb6ebf800bdc2e3 = xd44061cbd3eb5ad6 && (xc2c090b9ced49277 == xb5d8e3e765d8393e);
+  wire x4196c319ecdcbd84 = x541609d17e9e1a90 && (x14c9839eea0fd770 != 0) &&
+                   !xdfb6ebf800bdc2e3;
+  wire x2b2c950677d5f3eb = xd44061cbd3eb5ad6;
+  wire xd811e6b3e0adfa92 = push_valid && push_ready;
+  wire [x3575b74fc0424693-1:0] x37486fec446d556c = x726aa42e13b0cd76[PTR_WIDTH-1:1];
+  wire [x3575b74fc0424693-1:0] x8376a1d0379f0c9e = x0e1c728ead918830[PTR_WIDTH-1:1];
+
+  assign push_ready = !xeffdb7b3177b7fc9 || x2b2c950677d5f3eb;
+  assign pop_valid = x80c917ca5b9e92c2;
+  assign xa16220748d9824db = x4bc047a63c149c07;
+  assign x32c81ad3e8936ec5 = x9c3eed49a4854de2;
+  assign x379f36ebce83bf27 = x620ab38bfe50fab1;
+  assign xb865dc8c34603ce4 = x14c9839eea0fd770 + xeffdb7b3177b7fc9 + x80c917ca5b9e92c2;
+
+  always @(posedge clk or negedge reset_b) begin
+    if (!reset_b) begin
+      xeffdb7b3177b7fc9 <= 1'b0;
+      xa7ed1f5aec22ed45 <= 128'b0;
+      xb952b1399c56847c <= 16'b0;
+      x80456cd7471e598f <= 16'b0;
+      x80c917ca5b9e92c2 <= 1'b0;
+      x4bc047a63c149c07 <= 128'b0;
+      x9c3eed49a4854de2 <= 16'b0;
+      x620ab38bfe50fab1 <= 16'b0;
+      x726aa42e13b0cd76 <= {PTR_WIDTH{1'b0}};
+      x0e1c728ead918830 <= {PTR_WIDTH{1'b0}};
+      x14c9839eea0fd770 <= {(PTR_WIDTH+1){1'b0}};
+    end else begin
+      if (xd811e6b3e0adfa92) begin
+        xeffdb7b3177b7fc9 <= 1'b1;
+        xa7ed1f5aec22ed45 <= x9bb00c0ff636ef8e;
+        xb952b1399c56847c <= x0015bb91095da19b;
+        x80456cd7471e598f <= xcd72d839f1512cbd;
+      end else if (x2b2c950677d5f3eb) begin
+        xeffdb7b3177b7fc9 <= 1'b0;
+      end
+
+      if (xe88ef763e44cc27b)
+        x80c917ca5b9e92c2 <= 1'b0;
+      if (x4196c319ecdcbd84) begin
+        x80c917ca5b9e92c2 <= 1'b1;
+        if (xb5d8e3e765d8393e) begin
+          x4bc047a63c149c07 <= {x23a1f25bd9ecc9cf[x8376a1d0379f0c9e], xa040b13c1ae61790[x8376a1d0379f0c9e]};
+          x9c3eed49a4854de2 <= x65a613dcb636c841[x8376a1d0379f0c9e];
+          x620ab38bfe50fab1 <= x03784efbeef5f686[x8376a1d0379f0c9e];
+        end else begin
+          x4bc047a63c149c07 <= {xc132d18e5d1a778c[x8376a1d0379f0c9e], x8f1a3c159716d13c[x8376a1d0379f0c9e]};
+          x9c3eed49a4854de2 <= xcf78a46e1d6883da[x8376a1d0379f0c9e];
+          x620ab38bfe50fab1 <= x940bae93d87984d9[x8376a1d0379f0c9e];
+        end
+        x0e1c728ead918830 <= x0e1c728ead918830 + {{PTR_WIDTH-1{1'b0}}, 1'b1};
+      end
+
+      if (x2b2c950677d5f3eb) begin
+        if (xc2c090b9ced49277) begin
+          xa040b13c1ae61790[x37486fec446d556c] <= xa7ed1f5aec22ed45[63:0];
+          x23a1f25bd9ecc9cf[x37486fec446d556c] <= xa7ed1f5aec22ed45[127:64];
+          x65a613dcb636c841[x37486fec446d556c] <= xb952b1399c56847c;
+          x03784efbeef5f686[x37486fec446d556c] <= x80456cd7471e598f;
+        end else begin
+          x8f1a3c159716d13c[x37486fec446d556c] <= xa7ed1f5aec22ed45[63:0];
+          xc132d18e5d1a778c[x37486fec446d556c] <= xa7ed1f5aec22ed45[127:64];
+          xcf78a46e1d6883da[x37486fec446d556c] <= xb952b1399c56847c;
+          x940bae93d87984d9[x37486fec446d556c] <= x80456cd7471e598f;
+        end
+        x726aa42e13b0cd76 <= x726aa42e13b0cd76 + {{PTR_WIDTH-1{1'b0}}, 1'b1};
+      end
+
+      case ({x2b2c950677d5f3eb, x4196c319ecdcbd84})
+        2'b10: x14c9839eea0fd770 <= x14c9839eea0fd770 + 1'b1;
+        2'b01: x14c9839eea0fd770 <= x14c9839eea0fd770 - 1'b1;
+        default: x14c9839eea0fd770 <= x14c9839eea0fd770;
+      endcase
+    end
+  end
+
+endmodule
+
+
+
+module x441fd2377a83b2d7 #(
+  parameter AXI_ADDR_WIDTH = 40,
+  parameter DTCM_ADDR_WIDTH = 14,
+  parameter x412a5f55a63459bc = 16,
+  parameter x7ed31fcf0a78d415 = (x412a5f55a63459bc <= 2) ? 1 : $clog2(x412a5f55a63459bc)
+) (
+  input  wire                       clk,
+  input  wire                       reset_b,
+  input  wire                       cmd_valid,
+  output wire                       cmd_ready,
+  input  wire [AXI_ADDR_WIDTH-1:0]  x8c89f31a666143d3,
+  input  wire [DTCM_ADDR_WIDTH-1:0] x2ac3fbef41d90af0,
+  output wire [AXI_ADDR_WIDTH-1:0]  axi_araddr,
+  output wire [7:0]                 axi_arlen,
+  output wire                       axi_arvalid,
+  input  wire                       axi_arready,
+  input  wire [127:0]               axi_rdata,
+  input  wire                       axi_rvalid,
+  output wire                       axi_rready,
+  output wire                       dtcm_req,
+  output wire [DTCM_ADDR_WIDTH-1:0] dtcm_addr,
+  output wire [127:0]               dtcm_wdata,
+  output wire [15:0]                dtcm_wstrb,
+  input  wire                       dtcm_ready,
+  output wire                       xce94ae43a16c19ab,
+  output wire                       busy,
+  output wire [2:0]                 x20951fc346f02548,
+  output wire [8:0]                 xd19a7cd860d529e1,
+  output wire [3:0]                 xc6f749809d5b4ec1,
+  output wire                       x155a2fbcc60d6039,
+  output wire [x7ed31fcf0a78d415:0]    xfe225bf9e2f5bef3,
+  output wire [x7ed31fcf0a78d415:0]    x7eff54722e301c35
+);
+
+  reg [DTCM_ADDR_WIDTH-1:0] x3363f07c99c1980a [0:x412a5f55a63459bc-1];
+  reg [x7ed31fcf0a78d415-1:0] xbc330e3914579336;
+  reg [x7ed31fcf0a78d415-1:0] x50acd7ac11812f4f;
+  reg [x7ed31fcf0a78d415:0] x29602d9e6dc703fa;
+  wire x5878a48f8ec8173c = x29602d9e6dc703fa == x412a5f55a63459bc[x7ed31fcf0a78d415:0];
+  wire x75f065f1880e52da = x29602d9e6dc703fa == 0;
+  wire [DTCM_ADDR_WIDTH-1:0] x3a8191f4af4c920f =
+    x3363f07c99c1980a[x50acd7ac11812f4f];
+
+  wire xe855361f4332b208;
+  wire x0da431cdd6ceb643;
+  wire [127:0] x4c93a3804119e1fd;
+  wire [15:0] x581e4622c456e681;
+  wire [15:0] xe959b994a9ee07d4;
+  wire [x7ed31fcf0a78d415:0] x29328f22be30ea6d;
+  wire x40ac5defce11953b =
+    (x29602d9e6dc703fa + x29328f22be30ea6d) >= x412a5f55a63459bc[x7ed31fcf0a78d415:0];
+  wire xaf1bc702bbd9244d;
+  wire x117b17ed531b1159;
+  wire x5ed51b06558b5521;
+  reg [2:0] x777e13d109f0076b;
+
+  assign cmd_ready = !x40ac5defce11953b && !x5878a48f8ec8173c && axi_arready;
+  assign axi_arvalid = cmd_valid && !x40ac5defce11953b && !x5878a48f8ec8173c;
+  assign axi_araddr = x8c89f31a666143d3;
+  assign axi_arlen = 8'd0;
+  assign xaf1bc702bbd9244d = axi_arvalid && axi_arready;
+  assign axi_rready = !x75f065f1880e52da && xe855361f4332b208;
+  assign x117b17ed531b1159 = axi_rvalid && axi_rready;
+  assign dtcm_req = x0da431cdd6ceb643;
+  assign dtcm_addr = xe959b994a9ee07d4[DTCM_ADDR_WIDTH-1:0];
+  assign dtcm_wdata = x4c93a3804119e1fd;
+  assign dtcm_wstrb = x581e4622c456e681;
+  assign x5ed51b06558b5521 = x0da431cdd6ceb643 && dtcm_ready;
+  assign xce94ae43a16c19ab = x5ed51b06558b5521;
+  assign busy = !x75f065f1880e52da || (x29328f22be30ea6d != 0);
+  assign xfe225bf9e2f5bef3 = x29602d9e6dc703fa;
+  assign x7eff54722e301c35 = x29328f22be30ea6d;
+  assign x155a2fbcc60d6039 = xaf1bc702bbd9244d;
+  assign x20951fc346f02548 = x2ac3fbef41d90af0[3:1] -
+                         (x777e13d109f0076b + 3'd3);
+  assign xd19a7cd860d529e1 = 9'd1;
+  assign xc6f749809d5b4ec1 = 4'd3;
+
+  x02d008ea33a6ff05 #(
+    .DEPTH(x412a5f55a63459bc)
+  ) x48ff3a944b2dad0b (
+    .clk(clk),
+    .reset_b(reset_b),
+    .push_valid(x117b17ed531b1159),
+    .push_ready(xe855361f4332b208),
+    .x9bb00c0ff636ef8e(axi_rdata),
+    .x0015bb91095da19b(16'hffff),
+    .xcd72d839f1512cbd({{(16-DTCM_ADDR_WIDTH){1'b0}}, x3a8191f4af4c920f}),
+    .pop_valid(x0da431cdd6ceb643),
+    .x0c0c0a96fb70e72b(dtcm_ready),
+    .xa16220748d9824db(x4c93a3804119e1fd),
+    .x32c81ad3e8936ec5(x581e4622c456e681),
+    .x379f36ebce83bf27(xe959b994a9ee07d4),
+    .xb865dc8c34603ce4(x29328f22be30ea6d)
+  );
+
+  always @(posedge clk or negedge reset_b) begin
+    if (!reset_b) begin
+      xbc330e3914579336 <= {x7ed31fcf0a78d415{1'b0}};
+      x50acd7ac11812f4f <= {x7ed31fcf0a78d415{1'b0}};
+      x29602d9e6dc703fa <= {(x7ed31fcf0a78d415+1){1'b0}};
+      x777e13d109f0076b <= 3'b0;
+    end else begin
+      x777e13d109f0076b <= x777e13d109f0076b + 1'b1;
+      if (xaf1bc702bbd9244d) begin
+        x3363f07c99c1980a[xbc330e3914579336] <= x2ac3fbef41d90af0;
+        xbc330e3914579336 <= xbc330e3914579336 + 1'b1;
+      end
+      if (x117b17ed531b1159)
+        x50acd7ac11812f4f <= x50acd7ac11812f4f + 1'b1;
+      case ({xaf1bc702bbd9244d, x117b17ed531b1159})
+        2'b10: x29602d9e6dc703fa <= x29602d9e6dc703fa + 1'b1;
+        2'b01: x29602d9e6dc703fa <= x29602d9e6dc703fa - 1'b1;
+        default: x29602d9e6dc703fa <= x29602d9e6dc703fa;
+      endcase
+    end
+  end
+
+endmodule
+
+
 module x98e56c7acf672e14 #(
   parameter ADDR_WIDTH = 14,
   parameter DATA_WIDTH = 64,
@@ -10958,7 +17587,7 @@ module x98e56c7acf672e14 #(
   cmpu_start_ready,
   cmpu_sync_stall,
   cmpu_busy,
-  cmpu_result_update,
+  xd3f9dbb53dd08b63,
   cmpu_max_value,
   cmpu_argmax_idx,
   cmpu_min_value,
@@ -11109,7 +17738,7 @@ output                        cmpu_cmd_ready;
 output                        cmpu_start_ready;
 output                        cmpu_sync_stall;
 output                        cmpu_busy;
-output                        cmpu_result_update;
+output                        xd3f9dbb53dd08b63;
 output [15:0]                 cmpu_max_value;
 output [15:0]                 cmpu_argmax_idx;
 output [15:0]                 cmpu_min_value;
@@ -11186,7 +17815,7 @@ wire [xb9377408880f7051-1:0]           x602a422b066f1487;
 wire [xb9377408880f7051*BYTE_WIDTH-1:0] x03a7fdde31b10905;
 wire [xf33a3d23b7d86cb5-1:0]   xb6d29253b7dcfdb6;
 wire [xb9377408880f7051-1:0]           x6f326f2882d547b2;
-wire                          actu_done_valid;
+wire                          xc9e195fca232987e;
 wire                          x8f18350e84af8ec9;
 wire                          x28ba4ce418cdf5f0;
 wire [15:0]                   x42e570996ac9c00b;
@@ -11354,7 +17983,7 @@ x4bbf3983a85b95aa #(
   .x8768390ef0b6ba5a(xb6d29253b7dcfdb6[xf33a3d23b7d86cb5-1:0])
 );
 
-edge_accel_unit #(
+xe6fc70430181fea9 #(
   .ADDR_WIDTH(16)
 ) xe739481fd28a6cb1 (
   .clk(clk),
@@ -11376,7 +18005,7 @@ edge_accel_unit #(
   .actu_start_ready(actu_start_ready),
   .actu_sync_stall(actu_sync_stall),
   .actu_busy(actu_busy),
-  .actu_done_valid(actu_done_valid),
+  .xc9e195fca232987e(xc9e195fca232987e),
   .cmpu_cmd_setcsr_mode(cmpu_cmd_setcsr_mode),
   .cmpu_cmd_setcsr_req(cmpu_cmd_setcsr_req),
   .cmpu_cmd_setlhs_ptr(cmpu_cmd_setlhs_ptr),
@@ -11395,22 +18024,22 @@ edge_accel_unit #(
   .cmpu_start_ready(cmpu_start_ready),
   .cmpu_sync_stall(cmpu_sync_stall),
   .cmpu_busy(cmpu_busy),
-  .cmpu_done_valid(),
-  .cmpu_result_update(cmpu_result_update),
+  .x0f4f7eca2d02943c(),
+  .xd3f9dbb53dd08b63(xd3f9dbb53dd08b63),
   .cmpu_max_value(cmpu_max_value),
   .cmpu_argmax_idx(cmpu_argmax_idx),
   .cmpu_min_value(cmpu_min_value),
   .cmpu_argmin_idx(cmpu_argmin_idx),
-  .dtcm_rd_req(x8f18350e84af8ec9),
-  .dtcm_rd_ready(x28ba4ce418cdf5f0),
-  .dtcm_rd_addr(x42e570996ac9c00b[15:0]),
-  .dtcm_rd_rvalid(x1dd1d22fc7c0ccf4),
-  .dtcm_rd_rdata(x77b7a92ebbd2cae5[127:0]),
-  .dtcm_wr_req(xea16ae5272114c36),
-  .dtcm_wr_ready(x990c16c57b8dfb92),
-  .dtcm_wr_addr(x647f4ce5a267e895[15:0]),
-  .dtcm_wr_wdata(x14ea86284b1f7941[127:0]),
-  .dtcm_wr_wstrb(xad71af5ed3d94239[15:0]),
+  .x5f3cc0def5502ace(x8f18350e84af8ec9),
+  .x4fe09624591c7f4b(x28ba4ce418cdf5f0),
+  .x7ab8fd55211427d6(x42e570996ac9c00b[15:0]),
+  .x93db181369f80dae(x1dd1d22fc7c0ccf4),
+  .xfa30783cb1636705(x77b7a92ebbd2cae5[127:0]),
+  .x5b333385bf17516a(xea16ae5272114c36),
+  .xc50a7a2c9e2c40aa(x990c16c57b8dfb92),
+  .xec1a2d76f44d7fbc(x647f4ce5a267e895[15:0]),
+  .x51896265f00d5ad3(x14ea86284b1f7941[127:0]),
+  .xe9a52f489c6c6ba6(xad71af5ed3d94239[15:0]),
   .actu_last_sum_bits(actu_last_sum_bits)
 );
 
@@ -11524,17 +18153,17 @@ x0d3c2554e5b235aa #(
   .x339c6056beb99768(x7d034da4c133ac56)
 );
 
-edge_dma_a2d_stream #(
+x441fd2377a83b2d7 #(
   .AXI_ADDR_WIDTH(40),
   .DTCM_ADDR_WIDTH(ADDR_WIDTH),
-  .FIFO_DEPTH(16)
+  .x412a5f55a63459bc(16)
 ) x0190f3285332b405 (
   .clk(clk),
   .reset_b(cpurst_b),
   .cmd_valid(xf253e04eaeac629d),
   .cmd_ready(xe1479181ae378b69),
-  .cmd_axi_addr(x736cc918b4bdb02d),
-  .cmd_dtcm_addr(xd295b6098abb3b77),
+  .x8c89f31a666143d3(x736cc918b4bdb02d),
+  .x2ac3fbef41d90af0(xd295b6098abb3b77),
   .axi_araddr(x02f866a029d275e7),
   .axi_arlen(xb889b3ae533000d8),
   .axi_arvalid(x5b1a6bfcf21c4797),
@@ -11547,14 +18176,14 @@ edge_dma_a2d_stream #(
   .dtcm_wdata(xc34818105c60661d),
   .dtcm_wstrb(x885ad3f6f41061ec),
   .dtcm_ready(xc749616e43b9846f && x23b7339c2cd8c8d8),
-  .beat_done(xc741cb8afdee49ee),
+  .xce94ae43a16c19ab(xc741cb8afdee49ee),
   .busy(xa98993e5edb54ae7),
-  .lease_channel(x40e4b061b4fc8825),
-  .lease_cycles(x1f83ba593cfdceea),
-  .lease_delay(xb5e02e29c14afb8d),
-  .lease_valid(xe4e905387a4c42df),
-  .outstanding_count(),
-  .buffered_count()
+  .x20951fc346f02548(x40e4b061b4fc8825),
+  .xd19a7cd860d529e1(x1f83ba593cfdceea),
+  .xc6f749809d5b4ec1(xb5e02e29c14afb8d),
+  .x155a2fbcc60d6039(xe4e905387a4c42df),
+  .xfe225bf9e2f5bef3(),
+  .x7eff54722e301c35()
 );
 
 x734274012586dfe9 #(
@@ -11607,6 +18236,682 @@ x734274012586dfe9 #(
   .xf2d6068abb876836        (xbed01a79d349c924[31:0])
 );
 
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+
+module xbd1afeeb690de696 #(parameter xb67230d00e81e5fa=0) (
+  input wire clk, cpurst_b, in_valid, x07f4d31d26e6e521, x1ad1631690d2c849,
+  input wire [2:0] x0c014b55b70e6cbb,
+  input wire [15:0] xfe7ab404f5df7209,
+  input wire [31:0] xcbdbbedc2b1fe017,
+  output reg out_valid, x752427999027db57, x5e15bafefc6897b8,
+  output reg [2:0] x2b8f65f39bf1e0be,
+  output reg [15:0] x4b9e3fbe0c56b6e2,
+  output reg [21:0] x75b9dcdb9fff8c36,
+  output reg xfef20c0badacfc02,
+  output reg signed [9:0] x5d1d03d0888e8f8b,
+  output reg [20:0] x9d2efa32e2b2d343,
+  output reg [14:0] x6d8d004e68174851,
+  output reg [5:0] x8aee5aedd9f54fdc,
+  output reg [11:0] x7da19ed0b4176b4b,
+  output reg xdfdd68cfd7ae5882, x8581e1c4ed64d3cb,
+  output reg [14:0] x1dde0c49a7c90648
+);
+wire [15:0] x2dd37dc43c3e0c75;
+reg [18:0] x6d448d39c64155f3;
+reg x0565cfdadddf4aee, x447f9b55aa551e60;
+wire xaed4860fb238021b;
+reg xf99e321f212d508a, x76ef5390d8c52030, xa3d3091f46fcfe34, x286c3aac13eecab2;
+reg [21:0] x5279c09f66455661 [0:2];
+reg [2:0] x31fe7fe948137d0d;
+wire [8:0] xcd9b841a9882eabe={1'b0,xfe7ab404f5df7209[14:7]}+9'd1;
+reg [15:0] xb93d619722e70893;
+reg [23:0] x88369c3da160efd5;
+reg x3f4ac1e3e01bce56, xebe71c3c43f3df95;
+reg [5:0] xdf2d61bb74bb4d9b;
+reg [2:0] xf295233e23064221 [0:5];
+reg [15:0] x7d4dea7cc25a7b92 [0:5];
+reg [21:0] xc170289bc49cf7b7 [0:5];
+reg [5:0] x903464eec02da697, x345df85d83d2707b;
+integer xd8037f2dff8a176c;
+function [21:0] x146750c942269008;
+  input [15:0] value;
+  input [2:0] x45b61ec9431591ff;
+  reg [15:0] xb0fcc7e450e2d7f1;
+  reg [7:0] x7ee445d3cc8d203d;
+  begin
+    xb0fcc7e450e2d7f1={1'b1,value[14:0]};
+    x7ee445d3cc8d203d=value[14:7]+8'd1;
+
+
+    if (x45b61ec9431591ff==3'd4)
+      xb0fcc7e450e2d7f1=value[14:7]==0 ? {1'b1,7'b0,value[6:0],1'b0} :
+                             {1'b1,x7ee445d3cc8d203d,value[6:0]};
+    if (x45b61ec9431591ff==3'd2 || x45b61ec9431591ff==3'd3 || x45b61ec9431591ff==3'd4) x146750c942269008={xb0fcc7e450e2d7f1,6'b0};
+    else x146750c942269008={value,6'b0};
+  end
+endfunction
+
+x6b899d44f829acbc xac2643fea0442f85 (
+  .clk(clk),.cpurst_b(cpurst_b),.in_valid(in_valid),
+  .xc799180b931a86a1(xfe7ab404f5df7209),.x10ab0a4c238598c1(xcbdbbedc2b1fe017[31:16]),
+  .out_valid(),.x07b8a02451450d4e(),.xd81c8e64b652c458(),
+  .x683df3e54c875c96(xaed4860fb238021b),.xddb87f401f7ac295(x2dd37dc43c3e0c75)
+);
+wire x9ff60d17f4ddaac9, x5bf608d4374acee9, xa07ea0a5bd244486;
+wire [18:0] x9fad699f4aba56f6;
+wire signed [9:0] x1f82489a8762f99f;
+wire [11:0] x9592be5261d65ea3;
+
+x276249ae1ef34927 #(.x098db0d03de50ec8(1)) x4e12ff5cea6eb2b9 (
+  .x9d772197046ce47f(xf295233e23064221[2]==3'd5 ? {x2dd37dc43c3e0c75,6'b0} : x5279c09f66455661[2]),
+  .xf88db06b04c86e31(x9ff60d17f4ddaac9),.x6869683b07d543f4(x5bf608d4374acee9),.x6a96928e7e971573(x9fad699f4aba56f6),.xf651c54676bd6def(xa07ea0a5bd244486)
+);
+
+wire [25:0] x2cbae953a9229999=x6d448d39c64155f3*7'd85;
+wire [23:0] xdcd8afa6c9768c47=x6d448d39c64155f3*5'd23;
+
+xa5ce4b1c974d4052 x6d2e446f5ca4d0f9 (
+  .x9333fd776fae5490(x3f4ac1e3e01bce56),.xde01c582bc2e847f(xb93d619722e70893),.xcb8fc45e33abcf92(x88369c3da160efd5),
+  .xd18730b1909718db(x1f82489a8762f99f),.xa7a9a3908bf4ba86(x9592be5261d65ea3)
+);
+wire [14:0] xbabe5f63d306976f;
+wire [5:0] xc9fb6decf14870ed;
+
+reg [14:0] xbbba7c4984eedc45;
+reg [5:0] xe34a3a947f69d448;
+reg signed [9:0] x18e50e77087fdaaf;
+reg [11:0] xe887c393759575e7;
+reg x28f842efa6596554,x5b471c6afa1e0e37,xeaf470e5ce100085;
+
+assign xc9fb6decf14870ed[0]=(16'h5ad2 >> x9592be5261d65ea3[3:0]) & 1'b1;
+assign xc9fb6decf14870ed[1]=(16'hc9b6 >> x9592be5261d65ea3[3:0]) & 1'b1;
+assign xc9fb6decf14870ed[2]=(16'h6d24 >> x9592be5261d65ea3[3:0]) & 1'b1;
+assign xc9fb6decf14870ed[3]=(16'h8e38 >> x9592be5261d65ea3[3:0]) & 1'b1;
+assign xc9fb6decf14870ed[4]=(16'h0fc0 >> x9592be5261d65ea3[3:0]) & 1'b1;
+assign xc9fb6decf14870ed[5]=(16'hf000 >> x9592be5261d65ea3[3:0]) & 1'b1;
+
+wire [15:0] xa6bac5936a647635=16'b1 << x9592be5261d65ea3[11:8];
+wire [14:0] x850e544c94dbb873 [0:15];
+assign x850e544c94dbb873[0][0]=(16'hf9a4 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][1]=(16'had38 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][2]=(16'h9b6a >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][3]=(16'h78e6 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][4]=(16'h52b4 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][5]=(16'hc992 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][6]=(16'h6d24 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][7]=(16'h8e38 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][8]=(16'h0fc0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][9]=(16'hf000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][10]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][11]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][12]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[0][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][0]=(16'h8ea9 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][1]=(16'hfe64 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][2]=(16'h01e3 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][3]=(16'hffe0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][4]=(16'haab5 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][5]=(16'h666c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][6]=(16'h4b49 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][7]=(16'h8c71 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][8]=(16'hf07e >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][9]=(16'h007f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][10]=(16'hff80 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][11]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][12]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[1][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][0]=(16'hfc9b >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][1]=(16'ha923 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][2]=(16'hce3c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][3]=(16'hf03f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][4]=(16'h556a >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][5]=(16'hcce6 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][6]=(16'h694b >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][7]=(16'h8e73 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][8]=(16'h0f83 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][9]=(16'h0ffc >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][10]=(16'h0fff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][11]=(16'hf000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][12]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[2][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][0]=(16'hc0d4 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][1]=(16'hffcd >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][2]=(16'haa96 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][3]=(16'h3318 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][4]=(16'h694a >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][5]=(16'he739 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][6]=(16'hb5ad >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][7]=(16'hc631 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][8]=(16'hf83e >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][9]=(16'hffc0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][10]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][11]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][12]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[3][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][0]=(16'h5fca >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][1]=(16'h356c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][2]=(16'hf325 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][3]=(16'h5a49 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][4]=(16'h36db >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][5]=(16'h0e38 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][6]=(16'hab52 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][7]=(16'h339c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][8]=(16'hc3e0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][9]=(16'hfc00 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][10]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][11]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][12]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[4][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][0]=(16'h560d >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][1]=(16'h9803 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][2]=(16'he000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][3]=(16'h5555 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][4]=(16'h3333 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][5]=(16'h0f0f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][6]=(16'haa55 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][7]=(16'hcc66 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][8]=(16'h0f87 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][9]=(16'hf007 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][10]=(16'h0007 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][11]=(16'h0007 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][12]=(16'hfff8 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[5][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][0]=(16'h357f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][1]=(16'h0cd5 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][2]=(16'h5699 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][3]=(16'h324b >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][4]=(16'hf1c7 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][5]=(16'hf03f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][6]=(16'ha555 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][7]=(16'h3999 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][8]=(16'h3e1e >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][9]=(16'hc01f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][10]=(16'hffe0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][11]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][12]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[6][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][0]=(16'h7eac >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][1]=(16'h2b30 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][2]=(16'he695 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][3]=(16'h1e73 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][4]=(16'h01f0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][5]=(16'h000f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][6]=(16'haaaa >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][7]=(16'h3333 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][8]=(16'h3c3c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][9]=(16'hc03f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][10]=(16'h003f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][11]=(16'hffc0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][12]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[7][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][0]=(16'ha81a >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][1]=(16'hcff9 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][2]=(16'h0ff8 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][3]=(16'h0ff8 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][4]=(16'h0ff8 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][5]=(16'h0ff8 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][6]=(16'ha552 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][7]=(16'h3663 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][8]=(16'h387c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][9]=(16'hc07f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][10]=(16'hff80 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][11]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][12]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][13]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[8][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][0]=(16'hf2c0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][1]=(16'hf1aa >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][2]=(16'ha533 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][3]=(16'hc63c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][4]=(16'h07c0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][5]=(16'hf800 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][6]=(16'haaaa >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][7]=(16'h3333 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][8]=(16'h3c3c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][9]=(16'hc03f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][10]=(16'h003f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][11]=(16'h003f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][12]=(16'h003f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][13]=(16'hffc0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[9][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][0]=(16'hafd4 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][1]=(16'h9a98 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][2]=(16'h79b5 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][3]=(16'had26 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][4]=(16'h31c7 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][5]=(16'h3e07 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][6]=(16'h9552 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][7]=(16'hd99b >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][8]=(16'h1e1c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][9]=(16'he01f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][10]=(16'hffe0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][11]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][12]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][13]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[10][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][0]=(16'h0288 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][1]=(16'h54f7 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][2]=(16'h6700 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][3]=(16'hd2aa >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][4]=(16'h9b33 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][5]=(16'h1c3c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][6]=(16'hb56a >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][7]=(16'h264c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][8]=(16'hc78f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][9]=(16'hf80f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][10]=(16'h000f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][11]=(16'hfff0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][12]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][13]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[11][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][0]=(16'hc41a >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][1]=(16'h67f9 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][2]=(16'h2d52 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][3]=(16'he336 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][4]=(16'hb5a4 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][5]=(16'h39c7 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][6]=(16'h6b52 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][7]=(16'h4d9b >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][8]=(16'h71e3 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][9]=(16'h7e03 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][10]=(16'h7ffc >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][11]=(16'h7fff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][12]=(16'h8000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][13]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[12][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][0]=(16'hb1ac >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][1]=(16'hc065 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][2]=(16'hffe3 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][3]=(16'hffe0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][4]=(16'h554a >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][5]=(16'h6673 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][6]=(16'h2d29 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][7]=(16'h49b2 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][8]=(16'h8e3c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][9]=(16'h0fc0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][10]=(16'hf000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][11]=(16'h0000 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][12]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][13]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[13][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][0]=(16'h7cc8 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][1]=(16'h83a2 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][2]=(16'haacc >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][3]=(16'hccf0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][4]=(16'ha5aa >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][5]=(16'hc933 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][6]=(16'h5b69 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][7]=(16'h6db2 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][8]=(16'h71c3 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][9]=(16'h81fc >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][10]=(16'h01ff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][11]=(16'hfe00 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][12]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][13]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[14][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][0]=(16'hfacd >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][1]=(16'hf9a9 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][2]=(16'hf864 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][3]=(16'h52b6 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][4]=(16'h366d >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][5]=(16'ha4b6 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][6]=(16'h6d92 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][7]=(16'hb6db >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][8]=(16'hc71c >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][9]=(16'hf81f >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][10]=(16'hffe0 >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][11]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][12]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][13]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign x850e544c94dbb873[15][14]=(16'hffff >> x9592be5261d65ea3[7:4]) & 1'b1;
+assign xbabe5f63d306976f=(x850e544c94dbb873[0] & {15{xa6bac5936a647635[0]}}) | (x850e544c94dbb873[1] & {15{xa6bac5936a647635[1]}}) | (x850e544c94dbb873[2] & {15{xa6bac5936a647635[2]}}) | (x850e544c94dbb873[3] & {15{xa6bac5936a647635[3]}}) | (x850e544c94dbb873[4] & {15{xa6bac5936a647635[4]}}) | (x850e544c94dbb873[5] & {15{xa6bac5936a647635[5]}}) | (x850e544c94dbb873[6] & {15{xa6bac5936a647635[6]}}) | (x850e544c94dbb873[7] & {15{xa6bac5936a647635[7]}}) | (x850e544c94dbb873[8] & {15{xa6bac5936a647635[8]}}) | (x850e544c94dbb873[9] & {15{xa6bac5936a647635[9]}}) | (x850e544c94dbb873[10] & {15{xa6bac5936a647635[10]}}) | (x850e544c94dbb873[11] & {15{xa6bac5936a647635[11]}}) | (x850e544c94dbb873[12] & {15{xa6bac5936a647635[12]}}) | (x850e544c94dbb873[13] & {15{xa6bac5936a647635[13]}}) | (x850e544c94dbb873[14] & {15{xa6bac5936a647635[14]}}) | (x850e544c94dbb873[15] & {15{xa6bac5936a647635[15]}});
+wire [20:0] x9806bf1a0e080db2=xbbba7c4984eedc45*xe34a3a947f69d448;
+wire [28:0] x76de7ade59d56a0b={xbbba7c4984eedc45,14'b0}+{8'b0,x9806bf1a0e080db2};
+wire xe1a6101c482a354a=x76de7ade59d56a0b[14] && (|x76de7ade59d56a0b[13:0] || x76de7ade59d56a0b[15]);
+
+
+
+wire x6f8ad4cbdea11082=(xbbba7c4984eedc45[0] & x9806bf1a0e080db2[14]) |
+ ((xbbba7c4984eedc45[0] ^ x9806bf1a0e080db2[14]) &
+ ((|x9806bf1a0e080db2[13:0]) | (xbbba7c4984eedc45[1] ^ x9806bf1a0e080db2[15])));
+wire [6:0] xb2421ef0609083a2={1'b0,xbbba7c4984eedc45[6:1]}+{1'b0,x9806bf1a0e080db2[20:15]};
+wire [6:0] x730dc0c433217aac={1'b0,xbbba7c4984eedc45[6:1]}+{1'b0,x9806bf1a0e080db2[20:15]}+{6'b0,x6f8ad4cbdea11082};
+wire [8:0] xcc41b12489c99594={1'b0,xbbba7c4984eedc45[14:7]}+9'd1;
+
+wire x24beb9792c5a289d=x730dc0c433217aac[6] && (&xbbba7c4984eedc45[14:7]) && !xb2421ef0609083a2[6] && !(xbbba7c4984eedc45[0] & x9806bf1a0e080db2[14]);
+wire [14:0] x96731564a76400bd={x24beb9792c5a289d,x730dc0c433217aac[6] ? xcc41b12489c99594[7:0] : xbbba7c4984eedc45[14:7],x730dc0c433217aac[5:0]};
+always @(posedge clk) begin
+  x1dde0c49a7c90648<=xb67230d00e81e5fa ? x96731564a76400bd : 15'b0;
+  xbbba7c4984eedc45<=xbabe5f63d306976f;xe34a3a947f69d448<=xc9fb6decf14870ed;x18e50e77087fdaaf<=x1f82489a8762f99f;xe887c393759575e7<=x9592be5261d65ea3;
+  x28f842efa6596554<=xebe71c3c43f3df95;x5b471c6afa1e0e37<=x76ef5390d8c52030;xeaf470e5ce100085<=x286c3aac13eecab2;
+  x6d8d004e68174851<=xb67230d00e81e5fa ? 15'b0 : xbbba7c4984eedc45;x8aee5aedd9f54fdc<=xe34a3a947f69d448;
+  x9d2efa32e2b2d343<=xb67230d00e81e5fa ? 21'b0 : x9806bf1a0e080db2;
+  x5279c09f66455661[0]<=x146750c942269008(xfe7ab404f5df7209,x0c014b55b70e6cbb);
+  x31fe7fe948137d0d<={x31fe7fe948137d0d[1:0],x0c014b55b70e6cbb==3'd4 && xcd9b841a9882eabe>=9'd255};
+  for(xd8037f2dff8a176c=1;xd8037f2dff8a176c<3;xd8037f2dff8a176c=xd8037f2dff8a176c+1)x5279c09f66455661[xd8037f2dff8a176c]<=x5279c09f66455661[xd8037f2dff8a176c-1];
+  xb93d619722e70893<=x2cbae953a9229999[25:10]; x88369c3da160efd5<=xdcd8afa6c9768c47; x3f4ac1e3e01bce56<=x0565cfdadddf4aee; xebe71c3c43f3df95<=x447f9b55aa551e60;
+
+  xf99e321f212d508a<=xf295233e23064221[2]==3'd5 && xaed4860fb238021b && !x2dd37dc43c3e0c75[15];
+  x76ef5390d8c52030<=xf99e321f212d508a;
+  xa3d3091f46fcfe34<=xa07ea0a5bd244486;x286c3aac13eecab2<=xa3d3091f46fcfe34;x8581e1c4ed64d3cb<=xeaf470e5ce100085;
+  x6d448d39c64155f3<=x9fad699f4aba56f6;x0565cfdadddf4aee<=x5bf608d4374acee9 && (|x9fad699f4aba56f6);x447f9b55aa551e60<=x9ff60d17f4ddaac9 ||
+    (xf295233e23064221[2]==3'd5 && xaed4860fb238021b && x2dd37dc43c3e0c75[15]) || x31fe7fe948137d0d[2];
+  xf295233e23064221[0]<=x0c014b55b70e6cbb;
+  x7d4dea7cc25a7b92[0]<=xfe7ab404f5df7209;
+
+  xc170289bc49cf7b7[0]<=(x0c014b55b70e6cbb==3'd7) ? xcbdbbedc2b1fe017[31:10] : {xcbdbbedc2b1fe017[31:16],6'b0};
+  for(xd8037f2dff8a176c=1;xd8037f2dff8a176c<6;xd8037f2dff8a176c=xd8037f2dff8a176c+1)begin
+    xf295233e23064221[xd8037f2dff8a176c]<=xf295233e23064221[xd8037f2dff8a176c-1];x7d4dea7cc25a7b92[xd8037f2dff8a176c]<=x7d4dea7cc25a7b92[xd8037f2dff8a176c-1];xc170289bc49cf7b7[xd8037f2dff8a176c]<=xc170289bc49cf7b7[xd8037f2dff8a176c-1];
+  end
+  x2b8f65f39bf1e0be<=xf295233e23064221[5]; x4b9e3fbe0c56b6e2<=x7d4dea7cc25a7b92[5];
+  x75b9dcdb9fff8c36<=xc170289bc49cf7b7[5];
+  xfef20c0badacfc02<=x28f842efa6596554; x5d1d03d0888e8f8b<=x18e50e77087fdaaf; xdfdd68cfd7ae5882<=x5b471c6afa1e0e37; x7da19ed0b4176b4b<=xe887c393759575e7;
+end
+always @(posedge clk or negedge cpurst_b)
+  if (!cpurst_b) begin
+    out_valid<=1'b0; xdf2d61bb74bb4d9b<=0; x903464eec02da697<=0; x345df85d83d2707b<=0; x752427999027db57<=0; x5e15bafefc6897b8<=0;
+  end else begin
+    xdf2d61bb74bb4d9b<={xdf2d61bb74bb4d9b[4:0],in_valid};
+    out_valid<=xdf2d61bb74bb4d9b[5];
+    x903464eec02da697<={x903464eec02da697[4:0],x07f4d31d26e6e521}; x345df85d83d2707b<={x345df85d83d2707b[4:0],x1ad1631690d2c849};
+    x752427999027db57<=x903464eec02da697[5]; x5e15bafefc6897b8<=x345df85d83d2707b[5];
+  end
+endmodule
+
+
+`timescale 1ns/1ps
+
+module x97d24c2d40c368c6(input [21:0] x9d772197046ce47f,output xf88db06b04c86e31,output signed [9:0] xd18730b1909718db,output [11:0] xa7a9a3908bf4ba86);
+wire x6869683b07d543f4;wire [18:0] x6a96928e7e971573;
+wire signed [9:0] x4dd4071995193ff3;wire [11:0] x638e62cf30c7676e;
+xd0bb5c4b393bb69c x5324f59384952ed5(x9d772197046ce47f,xf88db06b04c86e31,x6869683b07d543f4,x6a96928e7e971573);
+xe777a37b2cb65809 s(x6869683b07d543f4,x6a96928e7e971573,x4dd4071995193ff3,x638e62cf30c7676e);
+assign xd18730b1909718db=x9d772197046ce47f==22'h1fe000 ? 10'sd128 : x4dd4071995193ff3;
+assign xa7a9a3908bf4ba86=x9d772197046ce47f==22'h1fe000 ? 12'b0 : x638e62cf30c7676e;
+endmodule
+module xd0bb5c4b393bb69c(input [21:0] x9d772197046ce47f,output xf88db06b04c86e31,x6869683b07d543f4,output [18:0] x6a96928e7e971573);
+
+
+wire [18:0] xdafcdacde93df642;
+x276249ae1ef34927 x01a100f4192d0791(x9d772197046ce47f,xf88db06b04c86e31,x6869683b07d543f4,xdafcdacde93df642);
+assign x6a96928e7e971573=(&x9d772197046ce47f[20:13]) ? 19'b0 : xdafcdacde93df642;
+endmodule
+module x276249ae1ef34927 #(parameter x098db0d03de50ec8=0)(input [21:0] x9d772197046ce47f,output xf88db06b04c86e31,x6869683b07d543f4,output [18:0] x6a96928e7e971573,output xf651c54676bd6def);
+wire [7:0] x6cc26abd1a3c3bf1=x9d772197046ce47f[20:13];
+wire [28:0] xbe3dcee48caab7a0={15'b0,1'b1,x9d772197046ce47f[12:0]} << x6cc26abd1a3c3bf1[3:0];
+wire [18:0] x33db4888e5d5bd6e=x6cc26abd1a3c3bf1[7] ? xbe3dcee48caab7a0[18:0] : {6'b0,xbe3dcee48caab7a0[28:16]};
+assign x6869683b07d543f4=x9d772197046ce47f[21];
+assign xf88db06b04c86e31=x6869683b07d543f4 && x9d772197046ce47f>=22'h30ab80;
+assign xf651c54676bd6def=!x6869683b07d543f4 && x9d772197046ce47f[20:0]>=21'h10ac00;
+
+assign x6a96928e7e971573=x098db0d03de50ec8 ? (x6cc26abd1a3c3bf1<115 ? 19'b0 : x33db4888e5d5bd6e) :
+ (xf88db06b04c86e31 || x6cc26abd1a3c3bf1<115) ? 19'b0 : xf651c54676bd6def ? 19'd360448 : x33db4888e5d5bd6e;
+endmodule
+module xe777a37b2cb65809(input x6869683b07d543f4,input [18:0] x6a96928e7e971573,output signed [9:0] xd18730b1909718db,output [11:0] xa7a9a3908bf4ba86);
+wire [33:0] product=x6a96928e7e971573*15'd23637;
+wire x9333fd776fae5490=x6869683b07d543f4 && (|x6a96928e7e971573);
+
+assign xd18730b1909718db={2'b0,product[33:26]}^{10{x9333fd776fae5490}};
+assign xa7a9a3908bf4ba86=product[25:14]^{12{x9333fd776fae5490}};
+endmodule
+
+module xa5ce4b1c974d4052(input x9333fd776fae5490,input [15:0] xde01c582bc2e847f,input [23:0] xcb8fc45e33abcf92,output signed [9:0] xd18730b1909718db,output [11:0] xa7a9a3908bf4ba86);
+wire [24:0] x8b41b03c63d6c612={1'b0,xcb8fc45e33abcf92}+xde01c582bc2e847f;
+wire [19:0] xb6ee7399485e45d2=x8b41b03c63d6c612[23:4];
+assign xd18730b1909718db={2'b0,xb6ee7399485e45d2[19:12]}^{10{x9333fd776fae5490}};
+assign xa7a9a3908bf4ba86=xb6ee7399485e45d2[11:0]^{12{x9333fd776fae5490}};
+endmodule
+
+
+`timescale 1ns/1ps
+
+
+module x6536adfd9f784090 (
+  input wire [15:0] xc799180b931a86a1, x10ab0a4c238598c1,
+  output wire [15:0] x07b8a02451450d4e
+);
+wire [39:0] x662be82a96f4a11b;
+wire [31:0] xf38dfe5cc6dbea9c;
+wire [20:0] x971bf27d275023bb;
+xfac5bf32486bab49 x7e7dd95fcf1cb194(xc799180b931a86a1,x10ab0a4c238598c1,x662be82a96f4a11b);
+x9bce4973dc164ec0 xf7121fb939183d89(x662be82a96f4a11b,xf38dfe5cc6dbea9c);
+x4da5642d9a7d50c7 x24232da48eec2a47(xf38dfe5cc6dbea9c,x971bf27d275023bb);
+wire [15:0] xc1f0b3df6e7bafaf;
+xc5611f0f4a3c50b2 x863efe5736a9f8b4(x971bf27d275023bb,xc1f0b3df6e7bafaf);
+
+assign x07b8a02451450d4e=xc799180b931a86a1[14:0]==0 ? {~x10ab0a4c238598c1[15],x10ab0a4c238598c1[14:0]} :
+                  x10ab0a4c238598c1[14:0]==0 ? xc799180b931a86a1 :
+                  (&xc799180b931a86a1[14:7]) || (&x10ab0a4c238598c1[14:7]) ? 16'h7fc0 : xc1f0b3df6e7bafaf;
+endmodule
+
+
+module x6b899d44f829acbc (
+  input wire clk, cpurst_b, in_valid,
+  input wire [15:0] xc799180b931a86a1, x10ab0a4c238598c1,
+  output wire out_valid,
+  output reg [15:0] x07b8a02451450d4e,
+  output wire [15:0] xd81c8e64b652c458,
+  output wire x683df3e54c875c96,
+  output wire [15:0] xddb87f401f7ac295
+);
+wire [39:0] x662be82a96f4a11b;
+wire [31:0] xf38dfe5cc6dbea9c;
+wire [20:0] x971bf27d275023bb;
+wire [15:0] xeb03d9f391e6fef2;
+wire [33:0] xb67e5a771211489b;
+reg [33:0] xec8650cbc62a24df;
+
+
+reg [20:0] xe7589805e4b3a799;
+wire [21:0] x3762f5cf1c2beab8;
+reg [21:0] x9b010ca3dec4fd05;
+reg [3:0] xdf2d61bb74bb4d9b;
+xfac5bf32486bab49 x7e7dd95fcf1cb194(xc799180b931a86a1,x10ab0a4c238598c1,x662be82a96f4a11b);
+xf05d05f8a1db285e x47c0e5d16fa3d35a(x662be82a96f4a11b,xb67e5a771211489b);
+x78ea63afb42ebbdc xc4a55192ac778e84(xec8650cbc62a24df,xf38dfe5cc6dbea9c);
+x4da5642d9a7d50c7 x24232da48eec2a47(xf38dfe5cc6dbea9c,x971bf27d275023bb);
+xa36b4fa56027e3f0 x07564ef1940b7d5b(xe7589805e4b3a799,x3762f5cf1c2beab8);
+xa91d88e8b700c1a2 x1e60aa8779d15f34(x9b010ca3dec4fd05,xeb03d9f391e6fef2,x683df3e54c875c96,xddb87f401f7ac295);
+assign xd81c8e64b652c458=xeb03d9f391e6fef2;
+always @(posedge clk) begin
+  xec8650cbc62a24df<=xb67e5a771211489b; xe7589805e4b3a799<=x971bf27d275023bb; x9b010ca3dec4fd05<=x3762f5cf1c2beab8;
+  x07b8a02451450d4e<=xeb03d9f391e6fef2;
+end
+always @(posedge clk or negedge cpurst_b)
+  if (!cpurst_b) xdf2d61bb74bb4d9b<=0;
+  else xdf2d61bb74bb4d9b<={xdf2d61bb74bb4d9b[2:0],in_valid};
+assign out_valid=xdf2d61bb74bb4d9b[3];
+endmodule
+
+
+
+module xfac5bf32486bab49 (
+  input wire [15:0] xc799180b931a86a1, x10ab0a4c238598c1,
+  output wire [39:0] x49d38354441c94d5
+);
+wire [15:0] a=xc799180b931a86a1;
+wire [15:0] b={~x10ab0a4c238598c1[15],x10ab0a4c238598c1[14:0]};
+wire x9be7c2b9532ff459=b[14:0]>a[14:0];
+
+wire [7:0] xf9cb78b8873d47dd=(a[14:7]==0)?8'd1:a[14:7];
+wire [7:0] xafbe0df816e89f6e=(b[14:7]==0)?8'd1:b[14:7];
+wire [7:0] xfa7869a243c03b3b=xf9cb78b8873d47dd-xafbe0df816e89f6e;
+wire [7:0] x996c536c44108a51=xafbe0df816e89f6e-xf9cb78b8873d47dd;
+wire [7:0] x5961b0ec735ae29f=x9be7c2b9532ff459?xafbe0df816e89f6e:xf9cb78b8873d47dd;
+wire [7:0] shift=x9be7c2b9532ff459?x996c536c44108a51:xfa7869a243c03b3b;
+wire [10:0] xf0d402bf75ca4298={(|a[14:7]),a[6:0],3'b0};
+wire [10:0] xdbecfc48bfe6f8d0={(|b[14:7]),b[6:0],3'b0};
+wire [10:0] xcc648cd0b22740d4=x9be7c2b9532ff459?xdbecfc48bfe6f8d0:xf0d402bf75ca4298;
+wire [10:0] xbb4f47e7677e03fa=x9be7c2b9532ff459?xf0d402bf75ca4298:xdbecfc48bfe6f8d0;
+wire x6869683b07d543f4=x9be7c2b9532ff459?b[15]:a[15];
+wire x87987abf06c9eb17=a[15]==b[15];
+assign x49d38354441c94d5={x6869683b07d543f4,x5961b0ec735ae29f,x87987abf06c9eb17,xcc648cd0b22740d4,xbb4f47e7677e03fa,shift};
+endmodule
+
+
+module x9bce4973dc164ec0 (
+  input wire [39:0] x49d38354441c94d5,
+  output wire [31:0] x45e1e4977f50a264
+);
+wire [33:0] xb67e5a771211489b;
+xf05d05f8a1db285e x47c0e5d16fa3d35a(x49d38354441c94d5,xb67e5a771211489b);
+x78ea63afb42ebbdc xc4a55192ac778e84(xb67e5a771211489b,x45e1e4977f50a264);
+endmodule
+
+
+module xf05d05f8a1db285e (
+  input wire [39:0] x49d38354441c94d5,
+  output wire [33:0] x3f102f3e23e44d15
+);
+wire [7:0] shift=x49d38354441c94d5[7:0];
+wire [10:0] xbb4f47e7677e03fa=x49d38354441c94d5[18:8];
+reg [10:0] xbe3dcee48caab7a0;
+always @* begin
+  if ((|shift[7:4]) || (&shift[3:2])) xbe3dcee48caab7a0={10'b0,|xbb4f47e7677e03fa};
+  else case(shift[3:2])
+    2'd1: xbe3dcee48caab7a0={4'b0,xbb4f47e7677e03fa[10:5],|xbb4f47e7677e03fa[4:0]};
+    2'd2: xbe3dcee48caab7a0={8'b0,xbb4f47e7677e03fa[10:9],|xbb4f47e7677e03fa[8:0]};
+    default: xbe3dcee48caab7a0=xbb4f47e7677e03fa;
+  endcase
+end
+assign x3f102f3e23e44d15={x49d38354441c94d5[39:19],xbe3dcee48caab7a0,shift[1:0]};
+endmodule
+
+module x78ea63afb42ebbdc (
+  input wire [33:0] x49d38354441c94d5,
+  output wire [31:0] x45e1e4977f50a264
+);
+wire [10:0] xbb4f47e7677e03fa=x49d38354441c94d5[12:2];
+reg [10:0] xbe3dcee48caab7a0;
+always @* begin
+  case(x49d38354441c94d5[1:0])
+    2'd1: xbe3dcee48caab7a0={1'b0,xbb4f47e7677e03fa[10:2],|xbb4f47e7677e03fa[1:0]};
+    2'd2: xbe3dcee48caab7a0={2'b0,xbb4f47e7677e03fa[10:3],|xbb4f47e7677e03fa[2:0]};
+    2'd3: xbe3dcee48caab7a0={3'b0,xbb4f47e7677e03fa[10:4],|xbb4f47e7677e03fa[3:0]};
+    default: xbe3dcee48caab7a0=xbb4f47e7677e03fa;
+  endcase
+end
+assign x45e1e4977f50a264={x49d38354441c94d5[33:13],xbe3dcee48caab7a0};
+endmodule
+
+module x4da5642d9a7d50c7 (
+  input wire [31:0] x49d38354441c94d5,
+  output wire [20:0] x971bf27d275023bb
+);
+wire x6869683b07d543f4,x87987abf06c9eb17;
+wire [7:0] x6cc26abd1a3c3bf1;
+wire [10:0] xcc648cd0b22740d4,xb0114b7fb65ecad2;
+assign {x6869683b07d543f4,x6cc26abd1a3c3bf1,x87987abf06c9eb17,xcc648cd0b22740d4,xb0114b7fb65ecad2}=x49d38354441c94d5;
+wire [10:0] xba8a6b121710931e=xb0114b7fb65ecad2^{11{!x87987abf06c9eb17}};
+wire [11:0] x78660dd50ba19740={1'b0,xcc648cd0b22740d4}+{1'b0,xba8a6b121710931e}+{11'b0,!x87987abf06c9eb17};
+wire [11:0] sum={x78660dd50ba19740[11]&&x87987abf06c9eb17,x78660dd50ba19740[10:0]};
+assign x971bf27d275023bb={x6869683b07d543f4,x6cc26abd1a3c3bf1,sum};
+endmodule
+
+module xc5611f0f4a3c50b2 (
+  input wire [20:0] x49d38354441c94d5,
+  output reg [15:0] x07b8a02451450d4e
+);
+wire x6869683b07d543f4;
+wire [7:0] x5961b0ec735ae29f;
+wire [11:0] sum;
+assign {x6869683b07d543f4,x5961b0ec735ae29f,sum}=x49d38354441c94d5;
+reg [10:0] xa77a1acdf183f83b,x195683b5469054b6;
+reg [3:0] count;
+reg [8:0] x6cc26abd1a3c3bf1,xda0ec48dc24f6094;
+reg xa11a02805b980edc;
+always @* begin
+  xa77a1acdf183f83b=sum[11]?{sum[11:2],|sum[1:0]}:sum[10:0];
+  x6cc26abd1a3c3bf1={1'b0,x5961b0ec735ae29f}+{8'b0,sum[11]};
+  x195683b5469054b6=xa77a1acdf183f83b; count=0;
+  if(x195683b5469054b6[10:3]==0)begin x195683b5469054b6=x195683b5469054b6<<8;count=count+4'd8;end
+  if(x195683b5469054b6[10:7]==0)begin x195683b5469054b6=x195683b5469054b6<<4;count=count+4'd4;end
+  if(x195683b5469054b6[10:9]==0)begin x195683b5469054b6=x195683b5469054b6<<2;count=count+4'd2;end
+  if(!x195683b5469054b6[10])begin x195683b5469054b6=x195683b5469054b6<<1;count=count+4'd1;end
+  if({5'b0,count}>=x6cc26abd1a3c3bf1)begin
+    count=x6cc26abd1a3c3bf1[3:0]-4'd1;
+    xa77a1acdf183f83b=xa77a1acdf183f83b<<count;
+  end else xa77a1acdf183f83b=x195683b5469054b6;
+  x6cc26abd1a3c3bf1=x6cc26abd1a3c3bf1-{5'b0,count};
+  xa11a02805b980edc=xa77a1acdf183f83b[2]&&(|xa77a1acdf183f83b[1:0]||xa77a1acdf183f83b[3]);
+  xda0ec48dc24f6094={1'b0,xa77a1acdf183f83b[10:3]}+{8'b0,xa11a02805b980edc};
+  if(xda0ec48dc24f6094[8])begin xda0ec48dc24f6094=xda0ec48dc24f6094>>1;x6cc26abd1a3c3bf1=x6cc26abd1a3c3bf1+9'd1;end
+  if(!xda0ec48dc24f6094[7])x6cc26abd1a3c3bf1=0;
+  if(sum==0)x07b8a02451450d4e=0;
+  else if(x6cc26abd1a3c3bf1>=255)x07b8a02451450d4e={x6869683b07d543f4,8'hff,7'b0};
+  else x07b8a02451450d4e={x6869683b07d543f4,x6cc26abd1a3c3bf1[7:0],xda0ec48dc24f6094[6:0]};
+end
+endmodule
+
+
+
+module xa36b4fa56027e3f0 (
+ input wire [20:0] x49d38354441c94d5,
+ output wire [21:0] x3762f5cf1c2beab8
+);
+wire x6869683b07d543f4;
+wire [7:0] x5961b0ec735ae29f;
+wire [11:0] sum;
+assign {x6869683b07d543f4,x5961b0ec735ae29f,sum}=x49d38354441c94d5;
+reg [10:0] xa77a1acdf183f83b,x195683b5469054b6;
+reg [3:0] count;
+reg [8:0] x6cc26abd1a3c3bf1;
+always @* begin
+ xa77a1acdf183f83b=sum[11]?{sum[11:2],|sum[1:0]}:sum[10:0];
+ x6cc26abd1a3c3bf1={1'b0,x5961b0ec735ae29f}+{8'b0,sum[11]};
+ x195683b5469054b6=xa77a1acdf183f83b;count=0;
+ if(x195683b5469054b6[10:3]==0)begin x195683b5469054b6=x195683b5469054b6<<8;count=count+4'd8;end
+ if(x195683b5469054b6[10:7]==0)begin x195683b5469054b6=x195683b5469054b6<<4;count=count+4'd4;end
+ if(x195683b5469054b6[10:9]==0)begin x195683b5469054b6=x195683b5469054b6<<2;count=count+4'd2;end
+ if(!x195683b5469054b6[10])begin x195683b5469054b6=x195683b5469054b6<<1;count=count+4'd1;end
+ if({5'b0,count}>=x6cc26abd1a3c3bf1)begin
+  count=x6cc26abd1a3c3bf1[3:0]-4'd1;
+  xa77a1acdf183f83b=xa77a1acdf183f83b<<count;
+ end else xa77a1acdf183f83b=x195683b5469054b6;
+ x6cc26abd1a3c3bf1=x6cc26abd1a3c3bf1-{5'b0,count};
+end
+assign x3762f5cf1c2beab8={x6869683b07d543f4,(sum==0),x6cc26abd1a3c3bf1,xa77a1acdf183f83b};
+endmodule
+
+
+module xa91d88e8b700c1a2 (
+ input wire [21:0] x49d38354441c94d5,
+ output reg [15:0] x07b8a02451450d4e,
+ output wire x310e1873f68d5d88,
+ output wire [15:0] x37b1ecb9812d9d0b
+);
+wire x6869683b07d543f4,zero;
+assign x310e1873f68d5d88=!zero && x6cc26abd1a3c3bf1>=255;
+
+assign x37b1ecb9812d9d0b={x6869683b07d543f4,x6cc26abd1a3c3bf1[7:0],xda0ec48dc24f6094[6:0]};
+wire [8:0] xc0916b29a36b4622;
+wire [10:0] xa77a1acdf183f83b;
+assign {x6869683b07d543f4,zero,xc0916b29a36b4622,xa77a1acdf183f83b}=x49d38354441c94d5;
+reg [8:0] x6cc26abd1a3c3bf1,xda0ec48dc24f6094;
+reg xa11a02805b980edc;
+always @* begin
+ x6cc26abd1a3c3bf1=xc0916b29a36b4622;
+ xa11a02805b980edc=xa77a1acdf183f83b[2]&&(|xa77a1acdf183f83b[1:0]||xa77a1acdf183f83b[3]);
+ xda0ec48dc24f6094={1'b0,xa77a1acdf183f83b[10:3]}+{8'b0,xa11a02805b980edc};
+ if(xda0ec48dc24f6094[8])begin xda0ec48dc24f6094=xda0ec48dc24f6094>>1;x6cc26abd1a3c3bf1=x6cc26abd1a3c3bf1+9'd1;end
+ if(!xda0ec48dc24f6094[7])x6cc26abd1a3c3bf1=0;
+ if(zero)x07b8a02451450d4e=0;
+ else if(x6cc26abd1a3c3bf1>=255)x07b8a02451450d4e={x6869683b07d543f4,8'hff,7'b0};
+ else x07b8a02451450d4e={x6869683b07d543f4,x6cc26abd1a3c3bf1[7:0],xda0ec48dc24f6094[6:0]};
+end
 endmodule
 
 
@@ -11721,9 +19026,9 @@ module edge_core_edge32_top #(
     .DTCM_SEGMENT_NUM(DTCM_SEGMENT_NUM)) x47c9b31b5de7ac58(
     .forever_cpuclk(forever_cpuclk),.cpurst_b(cpurst_b),.mem_region_base(mem_region_base),
     .mem_region_mask(mem_region_mask),.mem_region_enable(mem_region_enable),
-    .req_valid(accel_req_valid),.req_ready(x535245d9729c427c),.req_inst(accel_req_inst),
-    .req_capture_value(accel_req_src1),.resp_valid(accel_resp_valid),
-    .resp_error(accel_resp_error),.resp_value(accel_resp_value),
+    .x74c0d78af745a25a(accel_req_valid),.x1eae06400be9ae01(x535245d9729c427c),.x9de335eb005dcb34(accel_req_inst),
+    .x22ba05321e93915c(accel_req_src1),.x6788c74469d1d8fe(accel_resp_valid),
+    .x0f37dd3cd17e48f6(accel_resp_error),.x26f114d64a2ebc83(accel_resp_value),
     .x0e5a4e5909945f64(dtcm_lsu_addr),.xa19e6d071ff22e5a(dtcm_lsu_req),
     .x3582c14df66f2c5f(dtcm_lsu_we),.x0653869c426add10(dtcm_lsu_wdata),
     .x55630933c4e2398f(dtcm_lsu_wstrb),.x598d194db1cb59dc(dtcm_lsu_rdata),
