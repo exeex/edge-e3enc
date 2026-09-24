@@ -6,12 +6,12 @@
   "private_sram_inputs": 4,
   "public_rtl_inputs": 42,
   "public_sram_inputs": 5,
-  "semantic_symbols": 5433,
+  "semantic_symbols": 5434,
   "obfuscated_symbols": 5056,
   "public_symbols": 1263,
-  "source_warning_count": 620,
-  "mixed_warning_count": 620,
-  "soc_warning_count": 620,
+  "source_warning_count": 667,
+  "mixed_warning_count": 667,
+  "soc_warning_count": 667,
   "salt_sha256": "38ee42f41e1b2025d2658fac6a7a0c0cdc46bed166cd5ea7c4c342342a55da35",
   "public_roots": [
     "src/edge-32"
