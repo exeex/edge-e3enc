@@ -4051,6 +4051,7 @@ wire [ADDR_WIDTH-1:0] x1846e3f33813e065;
 wire [x26926d642d594097-1:0] xad645960da94ede3;
 wire x419f90ec2ff0547c;
 wire x1e84f4badee4c334;
+wire xbe9626bc6715ccda;
 wire x9df27c591216d021;
 wire xc3a3f5fd7c9bfe71;
 wire x44a01e6d9a258a56;
@@ -4319,12 +4320,17 @@ assign xa07fa4ca3cdda77a = x9be107c658cf41ab
                           && !x7d88bd85a9438b1f[1] && !x7d88bd85a9438b1f[2]
                           && !x7d88bd85a9438b1f[4]
                           && !x069c4c273163a807;
+
+
+
+assign xbe9626bc6715ccda = ({1'b0, x359b2eebd1543ae9} + x59ff1e5f30404201
+                           < x90ddd1157a710b35) || x1e84f4badee4c334;
 assign x1a34daf2ac8a1045 = ((x4370f119ad0abcaa && x030e571b55ffdc93
                        && (x10b43088cfb290c3
                            || (xd00a2a5515950a03 >= {1'b0, x44510986d4275310}))
                        && (x9557b843186c4c12 < xe233540541df263f))
                        || xa07fa4ca3cdda77a)
-                     && x4eb4b05c91fbf1f9;
+                     && x4eb4b05c91fbf1f9 && xbe9626bc6715ccda;
 assign x24c58b0d0eb7318e = x3d32ab200cadc25a && xa942108030f28473 && xb3fe3acba3846b67;
 assign x4196c319ecdcbd84 = x45bf1b6682ad028c
                 && !(x24c58b0d0eb7318e && xa4271ff8b1b590af)
@@ -4751,6 +4757,11 @@ always @(posedge clk or negedge cpurst_b) begin
     endcase
 
 `ifndef SYNTHESIS
+    if (x419f90ec2ff0547c && (x359b2eebd1543ae9 == x90ddd1157a710b35)
+        && !x1e84f4badee4c334) begin
+      $display("tensor P FIFO overflow");
+      $finish;
+    end
     if (x326f149e6dde3966 && !x1ca8c7f9e5f3a662) begin
       $display("tensor output FIFO overflow addr=%h phase=%h count=%0d",
                x0fe55b606bb0942b[143:128], xf1a0a65469e31261,
